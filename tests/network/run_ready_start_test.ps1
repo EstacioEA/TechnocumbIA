@@ -34,9 +34,9 @@ function Wait-ReadyStartMarkers([string[]]$names, [int]$timeoutSeconds) {
 		foreach ($entry in $processes) {
 			$entry.Process.Refresh()
 			if ($entry.Process.HasExited) {
-				$marker = if ($entry.Role -eq 'host') { 'host-start-received' } else { "$($entry.Name)-lobby-start-received" }
+				$marker = if ($entry.Role -eq 'host') { 'host-game-started' } else { "$($entry.Name)-game-started" }
 				if (-not (Test-Path -LiteralPath (Join-Path $markerDir "$marker.ok"))) {
-					throw "Proceso $($entry.Name) terminó antes de confirmar lobby_start (exit $($entry.Process.ExitCode))."
+					throw "Proceso $($entry.Name) terminó antes de confirmar la sesión de juego (exit $($entry.Process.ExitCode))."
 				}
 			}
 		}
@@ -64,11 +64,24 @@ try {
 	foreach ($name in $clientNames) { $startMarkers += "$name-lobby-start-received" }
 	Wait-ReadyStartMarkers $startMarkers 15
 
-	foreach ($entry in $processes) {
+	$gameMarkers = @('host-game-started')
+	foreach ($name in $clientNames) { $gameMarkers += "$name-game-started" }
+	Wait-ReadyStartMarkers $gameMarkers 15
+
+	# Close clients one at a time so the authoritative host can process each
+	# disconnect before the next peer closes its ENet transport.
+	foreach ($name in $clientNames) {
+		New-Item -ItemType File -Path (Join-Path $markerDir "shutdown-$name.signal") | Out-Null
+		$entry = $processes | Where-Object { $_.Name -eq $name }
 		if (-not $entry.Process.WaitForExit(5000)) {
-			throw "El proceso $($entry.Name) no finalizó tras confirmar lobby_start."
+			throw "El cliente $name no finalizó tras la señal de cierre ordenado."
 		}
+		if ($entry.Process.ExitCode -ne 0) { throw "El cliente $name terminó con código $($entry.Process.ExitCode)." }
+		Start-Sleep -Milliseconds 250
 	}
+	New-Item -ItemType File -Path (Join-Path $markerDir 'shutdown-host.signal') | Out-Null
+	if (-not $hostProcess.WaitForExit(5000)) { throw 'El host no finalizó tras la señal de cierre ordenado.' }
+	if ($hostProcess.ExitCode -ne 0) { throw "El host terminó con código $($hostProcess.ExitCode)." }
 
 	$errors = @()
 	foreach ($entry in $processes) {
@@ -78,7 +91,7 @@ try {
 		if ($errText -match 'READY_START_TEST_FAIL|ERROR:|SCRIPT ERROR:') { $errors += $entry.Name }
 	}
 	if ($errors.Count -gt 0) { throw "Errores Godot/test en procesos: $($errors -join ', ')." }
-	Write-Output 'READY_START_TEST: PASS (bloqueos host/cliente, seis ready y lobby_start replicado)'
+	Write-Output 'READY_START_TEST: PASS (bloqueos host/cliente, seis ready, lobby_start y snapshot inicial recibido por los seis procesos; cierre ordenado)'
 }
 catch {
 	foreach ($entry in $processes) {

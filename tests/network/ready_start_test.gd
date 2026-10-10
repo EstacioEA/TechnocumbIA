@@ -1,6 +1,7 @@
 extends SceneTree
 
 const LobbyScene = preload("res://scenes/lobby/lobby.tscn")
+const GameEnums = preload("res://scripts/shared/game_enums.gd")
 const TEST_ADDRESS := "127.0.0.1"
 const TIMEOUT_SECONDS := 35.0
 
@@ -168,8 +169,52 @@ func _on_lobby_start() -> void:
 
 
 func _finish_after_start() -> void:
-	await create_timer(1.0).timeout
-	quit(0)
+	var started_marker := "%s-game-started" % _player_name if _role == "client" else "host-game-started"
+	var deadline := Time.get_ticks_msec() + 10000
+	while Time.get_ticks_msec() < deadline:
+		if _has_started_game_session():
+			_mark(started_marker)
+			print("GAME_SESSION_READY role=%s name=%s" % [_role, _player_name])
+			await _wait_for_shutdown_request()
+			_manager.close_session()
+			await process_frame
+			quit(0)
+			return
+		await create_timer(0.1).timeout
+	_fail("lobby_start se recibió, pero no llegó un estado inicial válido de ronda.")
+
+
+func _has_started_game_session() -> bool:
+	var session := root.get_node_or_null("PapoiGameSession")
+	if session == null:
+		return false
+	if _role == "host":
+		var game_state: Node = session.get("_game_state")
+		if game_state == null:
+			return false
+		var snapshot: Dictionary = game_state.get_snapshot()
+		return int(snapshot.get("phase", -1)) in [GameEnums.GamePhase.COUNTDOWN, GameEnums.GamePhase.ACTIVE] \
+			and int(snapshot.get("round_number", 0)) == 1 \
+			and snapshot.get("players", []).size() == 6
+
+	var remote_revision := int(session.get("_last_remote_revision"))
+	var hud: Node = session.get("_hud")
+	if remote_revision < 0 or hud == null:
+		return false
+	var snapshot: Dictionary = hud.get("_last_snapshot")
+	return int(snapshot.get("phase", -1)) in [GameEnums.GamePhase.COUNTDOWN, GameEnums.GamePhase.ACTIVE] \
+		and int(snapshot.get("round_number", 0)) == 1 \
+		and snapshot.get("players", []).size() == 6
+
+
+func _wait_for_shutdown_request() -> void:
+	var signal_path := _marker_dir.path_join("shutdown-%s.signal" % _player_name)
+	var deadline := Time.get_ticks_msec() + 20000
+	while Time.get_ticks_msec() < deadline:
+		if FileAccess.file_exists(signal_path):
+			return
+		await create_timer(0.05).timeout
+	_fail("Timeout esperando cierre coordinado desde el runner.")
 
 
 func _check_host_start_button(expected_disabled: bool) -> bool:
