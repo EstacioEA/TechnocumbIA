@@ -22,12 +22,19 @@ const PAPA_SPAWN := Vector2(1010.0, 384.0)
 const BEAST_SPAWN := Vector2(1040.0, 512.0)
 const POT_ZONE := Rect2(544.0, 304.0, 112.0, 160.0)
 const ESCAPE_ZONE := Rect2(80.0, 288.0, 128.0, 192.0)
+const ROUTES := [
+	Rect2(208.0, 288.0, 272.0, 192.0),
+	Rect2(720.0, 288.0, 272.0, 192.0),
+	Rect2(480.0, 176.0, 240.0, 64.0),
+	Rect2(480.0, 528.0, 240.0, 64.0),
+]
 
 var _beast_gate_open := false
 var _zones: Dictionary = {}
 
 func _ready() -> void:
 	_create_boundaries()
+	_create_spawn_markers()
 	_create_zones()
 	queue_redraw()
 
@@ -38,6 +45,15 @@ func get_spawn_points() -> Dictionary:
 		"papa": PAPA_SPAWN,
 		"beast": BEAST_SPAWN,
 	}
+
+func get_map_bounds() -> Rect2:
+	return MAP_BOUNDS
+
+func get_route_rects() -> Array[Rect2]:
+	return ROUTES.duplicate()
+
+func is_position_inside_map(position: Vector2) -> bool:
+	return MAP_BOUNDS.has_point(position)
 
 func is_position_in_pot(position: Vector2) -> bool:
 	return POT_ZONE.has_point(position)
@@ -87,6 +103,34 @@ func _create_boundaries() -> void:
 	gate.add_child(gate_shape)
 	add_child(gate)
 
+func _create_spawn_markers() -> void:
+	var spawn_groups := {
+		"AttackerSpawns": ATTACKER_SPAWNS,
+		"DefenderSpawns": DEFENDER_SPAWNS,
+	}
+	for group_name in spawn_groups:
+		var group := Node2D.new()
+		group.name = group_name
+		add_child(group)
+		var points: Array = spawn_groups[group_name]
+		for index in points.size():
+			var marker := Marker2D.new()
+			marker.name = "%s%d" % [group_name.trim_suffix("s"), index + 1]
+			marker.position = points[index]
+			group.add_child(marker)
+
+	var special_spawns := Node2D.new()
+	special_spawns.name = "SpecialSpawns"
+	add_child(special_spawns)
+	for spawn_data in [
+		{"name": "PapaSpawn", "position": PAPA_SPAWN},
+		{"name": "BeastSpawn", "position": BEAST_SPAWN},
+	]:
+		var marker := Marker2D.new()
+		marker.name = spawn_data["name"]
+		marker.position = spawn_data["position"]
+		special_spawns.add_child(marker)
+
 func _create_zones() -> void:
 	_create_zone("PotZone", POT_ZONE)
 	_create_zone("EscapeZone", ESCAPE_ZONE)
@@ -108,6 +152,8 @@ func _create_zone(zone_name: String, rectangle: Rect2) -> void:
 func _draw() -> void:
 	draw_rect(MAP_BOUNDS, Color("#1c2638"), true)
 	draw_rect(Rect2(80.0, 160.0, 1040.0, 448.0), Color("#273b4f"), true)
+	for route in ROUTES:
+		draw_rect(route, Color("#3e5e70"), true)
 	draw_rect(Rect2(80.0, 288.0, 128.0, 192.0), Color("#244e5a"), true)
 	draw_rect(Rect2(992.0, 288.0, 128.0, 192.0), Color("#563c50"), true)
 	draw_rect(Rect2(480.0, 240.0, 240.0, 288.0), Color("#394456"), true)
@@ -119,3 +165,5 @@ func _draw() -> void:
 	draw_string(ThemeDB.fallback_font, Vector2(530.0, 292.0), "SALA DE LA OLLA", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color.WHITE)
 	draw_string(ThemeDB.fallback_font, Vector2(540.0, 392.0), "OLLA", HORIZONTAL_ALIGNMENT_LEFT, -1, 26, Color("#ffe6a7"))
 	draw_string(ThemeDB.fallback_font, Vector2(702.0, 310.0), "ENTRADA BESTIA", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#f0c674"))
+	draw_string(ThemeDB.fallback_font, Vector2(470.0, 150.0), "RUTA NORTE", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#b8d8e8"))
+	draw_string(ThemeDB.fallback_font, Vector2(470.0, 620.0), "RUTA SUR", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#b8d8e8"))

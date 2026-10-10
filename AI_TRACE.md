@@ -49,3 +49,22 @@
 - Pruebas: análisis/editor headless, escena lobby, test de estado, test de combate y escena de jugador pasaron con Godot 4.7.2.
 - Trazabilidad: se restauraron entradas previas de `AI_TRACE.md` desde `fbc7a49` tras una actualización de `develop` que lo había eliminado; esta entrada se anexó al final.
 - Limitaciones: no se ejecutó prueba LAN multiinstancia ni una escena completa de partida integrada. El motor quedó en TEMP, fuera del repositorio.
+
+## 2026-10-09 — K01 mapa y puntos de spawn
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: completar el mapa base de Papoi con límites, bases, sala de olla, barrera de Bestia, rutas y puntos de spawn identificables.
+- Rama: `Krystal_Giraldo/map-spawns`, basada en `develop` actualizado.
+- Archivos: `scripts/map/papoi_map.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-09-2328-K01-map-spawns.md`, `AI_TRACE.md`.
+- Resumen: se añadieron rutas declaradas, API de límites y rutas, y nodos `Marker2D` nombrados para atacantes, defensores, Papa y Bestia. Se mantuvo separada la lógica de zonas y objetivos de K02/K03.
+- Limitaciones: `project.godot` ya existe en la rama integrada, pero no hay ejecutable Godot 4; carga y colisiones quedan BLOCKED para validación runtime. El arte es procedural y no se afirma autorización legal de recursos externos. Esta actualización queda solo en el árbol local y no se publicará remotamente.
+
+## 2026-10-09 — validación runtime K01
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: TESTING / DOCUMENTATION
+- Tarea: validar K01 después de configurar Godot 4 global.
+- Archivos: `tests/qa/k01_map_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-09-2328-K01-map-spawns.md`.
+- Resumen: Godot 4.7.2 ejecutó la escena del mapa y la prueba headless `K01_MAP_TEST`, verificando instanciación, spawns, rutas, límite exterior y barrera cerrada. K01 pasó a `DONE`.
+- Limitaciones: el escaneo completo del editor aún reporta errores preexistentes en lobby y red, fuera del alcance de K01. Este registro permanece local y no se publicará remotamente.
