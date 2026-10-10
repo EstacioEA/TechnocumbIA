@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnj7gxfqffjn5"
-path="res://.godot/imported/cazador_sprites.jpeg-dbe108e667ce3ca2d135a43d2f8596da.ctex"
+uid="uid://dqkggmj3ifpev"
+path="res://.godot/imported/cazador_sprites.png-ff6866b18ae31817aad76bd79a6027fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characteres/cazador/cazador_sprites.jpeg"
-dest_files=["res://.godot/imported/cazador_sprites.jpeg-dbe108e667ce3ca2d135a43d2f8596da.ctex"]
+source_file="res://assets/characteres/cazador/cazador_sprites.png"
+dest_files=["res://.godot/imported/cazador_sprites.png-ff6866b18ae31817aad76bd79a6027fe.ctex"]
 
 [params]
 

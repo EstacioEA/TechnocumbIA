@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7wvvfhdhmqu7"
-path="res://.godot/imported/papa_sprites.jpeg-2d1db7d856476d34eb035e0f2e5937e7.ctex"
+uid="uid://6bjnk8osunkt"
+path="res://.godot/imported/papa_sprites.png-ae1146e8228853e6a92e675af00191bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characteres/papa/papa_sprites.jpeg"
-dest_files=["res://.godot/imported/papa_sprites.jpeg-2d1db7d856476d34eb035e0f2e5937e7.ctex"]
+source_file="res://assets/characteres/papa/papa_sprites.png"
+dest_files=["res://.godot/imported/papa_sprites.png-ae1146e8228853e6a92e675af00191bb.ctex"]
 
 [params]
 
