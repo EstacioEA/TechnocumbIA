@@ -173,6 +173,16 @@
 - Resumen: se corrigió la guarda que impedía rescates antes de la aparición de Bestia. `K03_COOKING_ESCAPE_TEST`, `K01_MAP_TEST` y `K02_POT_ZONE_TEST` pasaron con Godot 4.7.2.
 - Limitaciones: la señal `escape_reached` aún debe conectarse al GameState autoritativo para resolver la ronda; no se creó commit ni se publicó AI_TRACE.md.
 
+## 2026-10-10 — K04 HUD y pantallas de resultado
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: implementar HUD autoritativo de fase, ronda, temporizadores, marcador, vidas, rol, pasiva, cooldowns, desconexión y resultados.
+- Rama: `Krystal_Giraldo/hud-results`, basada en `develop` actualizado.
+- Archivos: `scripts/ui/papoi_hud.gd`, `tests/qa/k04_hud_results_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0220-K04-hud-results.md`.
+- Resumen: el HUD consume snapshots de GameState sin modificar autoridad, distingue tiempo de ronda y fase/cocción, muestra contexto del jugador, resultados derivados del host y errores de desconexión en pantalla.
+- Limitaciones: la integración LAN debe alimentar snapshots y desconexiones; K05 queda pendiente de J03, V05 y M05. AI_TRACE.md permanece local y no se publica remotamente.
+
 ## 2026-10-10 — V02 input y movimiento
 
 - Rama: `Valeria_Piza/player-movement`, basada en `main` actualizado.

@@ -24,10 +24,11 @@
 - Evidencia: `tests/qa/k03_cooking_escape_test.gd` pasó con Godot 4.7.2 headless; validó autorización host, cocción, acceso/rescate de Bestia, transición a escape y base atacante.
 
 ## K04 — HUD y pantallas de resultado
-- Estado: TODO
+- Estado: DONE
 - Depende de: E02, K03
 - Mostrar fase, ronda, timer, marcador, vidas, rol, pasiva y cooldowns.
 - Aceptación: datos visibles sin logs; resultado de ronda y partida legibles; estados desconectados tienen mensaje.
+- Evidencia: `tests/qa/k04_hud_results_test.gd` pasó con Godot 4.7.2 headless; validó HUD de ronda/cocción, contexto del jugador, resultados y desconexión.
 
 ## K05 — Matriz QA de integración
 - Estado: TODO
