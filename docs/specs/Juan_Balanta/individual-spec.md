@@ -46,7 +46,7 @@ Permitir que un host cree la partida y que hasta cinco clientes se conecten por 
 - [x] Una desconexión elimina al jugador de la lista y actualiza el estado.
 - [x] Existe un comando o procedimiento documentado para ejecutar host y clientes localmente.
 
-Evidencia: criterios de host/cliente/procedimiento en `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`; seis jugadores, rechazo del séptimo y desconexión en `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`; disponibilidad del inicio solo para host en `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`. Las pruebas usaron procesos separados en loopback; no validan dos equipos físicos ni firewall LAN.
+Evidencia: criterios de host/cliente/procedimiento en `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`; seis jugadores, rechazo del séptimo y desconexión en `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`; disponibilidad del inicio solo para host en `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`; desconexiones y puente runtime red/estado en `docs/handoffs/2026-10-10-0223-J05-runtime-disconnect-bridge.md`. La prueba física de dos equipos queda pendiente y bloqueada en J06.
 
 ## Entregable de sesión
 Crear un handoff con evidencias de conexión, desconexión, límite de jugadores y cualquier limitación de prueba.

@@ -65,7 +65,7 @@ try {
 	$seventh = Start-LobbyProcess 'seventh' 'seventh'
 	Wait-LobbyMarkers @('seventh-rejected') 12
 	$seventh.Refresh()
-	if (-not $seventh.HasExited) {
+	if (-not $seventh.HasExited -and -not $seventh.WaitForExit(3000)) {
 		throw 'El proceso del séptimo jugador no cerró tras ser rechazado.'
 	}
 
