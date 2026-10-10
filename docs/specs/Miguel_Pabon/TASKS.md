@@ -29,8 +29,8 @@
 - Aceptación: no ataca antes de aparecer; no entra fuera de cocción; cooldowns validan host. Evidencia: `tests/combat/test_beast_access_state.gd`.
 
 ## M05 — Trampa, pasivas y enfurecimiento
-- Estado: TODO
+- Estado: DONE
 - Depende de: M03, M04, K03
 - Rama sugerida: `Miguel_Pabon/abilities-enrage`
 - Trampa MVP, efecto Tanque/Cazador/Porta Papas y enfurecimiento tras cocción.
-- Aceptación: cada pasiva tiene efecto observable; cooldown de trampa funciona; Bestia obtiene boost/enrage.
+- Aceptación: cada pasiva tiene efecto observable; cooldown de trampa funciona; Bestia obtiene boost/enrage. Evidencia: `tests/combat/test_abilities_enrage_state.gd`.

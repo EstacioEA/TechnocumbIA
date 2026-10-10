@@ -2,6 +2,8 @@ class_name PapoiCookingEscape
 extends RefCounted
 
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
+const PapaCaptureStateData = preload("res://scripts/combat/papa_capture_state.gd")
+const BeastAccessStateData = preload("res://scripts/combat/beast_access_state.gd")
 
 signal phase_changed(previous_phase: int, current_phase: int)
 signal cooking_started(papa_id: int, carrier_id: int)
@@ -23,13 +25,13 @@ var carrier_id := -1
 var papa_state := GameEnums.PapaState.FREE
 var objective_text := "Captura a Papa y llévala a la olla."
 
-var _capture_state: PapaCaptureState
-var _beast_access: BeastAccessState
+var _capture_state: RefCounted
+var _beast_access: RefCounted
 
 func _init(
 	is_host: bool = false,
-	capture_state: PapaCaptureState = null,
-	beast_access: BeastAccessState = null
+	capture_state: RefCounted = null,
+	beast_access: RefCounted = null
 ) -> void:
 	host_authority = is_host
 	_capture_state = capture_state

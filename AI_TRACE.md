@@ -239,3 +239,23 @@
 - Archivos: `scripts/combat/beast_access_state.gd`, `tests/combat/test_beast_access_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0205-M04-beast-access.md`.
 - Resumen: se agregó control host-authoritativo de aparición a 30 segundos, ataque básico/especial con cooldowns y acceso a sala condicionado a cocción.
 - Limitaciones: el daño final lo resolverá GameState/M03; el enfurecimiento queda para M05 y la identificación final debe conectarse al rol Bestia explícito.
+
+## 2026-10-10 — M05 trampa, pasivas y enfurecimiento
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar trampa MVP, efectos de Tanque/Cazador/Porta Papas y enfurecimiento de Bestia.
+- Rama: `Miguel_Pabon/abilities-enrage`, basada en `develop`.
+- Archivos: `scripts/abilities/abilities_enrage_state.gd`, `tests/combat/test_abilities_enrage_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0225-M05-abilities-enrage.md`.
+- Resumen: se agregó control host-authoritativo de trampa con cooldown, efectos observables de las tres pasivas y enfurecimiento tras cocción con boost de velocidad y cooldowns reducidos.
+- Limitaciones: la señal de cocción y los multiplicadores deben conectarse al host/GameState durante la integración; los valores de balance son temporales.
+
+## 2026-10-10 — validación final M05 y compatibilidad K03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: TESTING / DEBUGGING / DOCUMENTATION
+- Tarea: validar M05 y corregir la carga headless de K03.
+- Rama: `Miguel_Pabon/abilities-enrage`, basada en `develop`.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `docs/handoffs/2026-10-10-0225-M05-abilities-enrage.md`, `AI_TRACE.md`.
+- Resumen: M05 pasó su prueba específica y la regresión de Bestia; K03 pasó después de relajar las referencias tipadas del coordinador a `RefCounted`, manteniendo la autoridad del host.
+- Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
+- Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
