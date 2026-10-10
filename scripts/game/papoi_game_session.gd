@@ -447,6 +447,9 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 	if not _tower_key_state.configure_round(attacker_ids):
 		_push_integration_error("TowerKeyState rechazó la configuración de ronda.")
 		return
+	if not _tower_key_state.spawn_at(_map.to_global(_map.TOWER_KEY_SPAWN)):
+		_push_integration_error("TowerKeyState no pudo colocar la llave inicial.")
+		return
 	_cooking_flow = CookingEscapeData.new(true, _capture_state, _beast_state)
 	_cooking_flow.cooking_completed.connect(_on_cooking_completed)
 	_cooking_flow.cooking_cancelled.connect(_on_cooking_cancelled)
