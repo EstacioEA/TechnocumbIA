@@ -209,7 +209,6 @@
   headless.
 - Resultado del bloque de tareas Valeria: V01 a V05 completadas.
 
-
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -290,3 +289,13 @@
 - Resumen: M05 pasó su prueba específica y la regresión de Bestia; K03 pasó después de relajar las referencias tipadas del coordinador a `RefCounted`, manteniendo la autoridad del host.
 - Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
 - Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
+
+## 2026-10-10 — K05 matriz QA de integración
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: ejecutar y documentar la matriz P0 de integración LAN 3v3.
+- Rama: `Krystal_Giraldo/qa-matrix`, basada en `develop` actualizado.
+- Archivos: `tests/qa/p0_lan_3v3_matrix.md`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0235-K05-qa-matrix.md`, `AI_TRACE.md`.
+- Resumen: se ejecutaron pruebas headless de mapa, colisiones, spawns, Papa/olla, cocción, rescate, escape, HUD, resultados, estados de combate, transporte LAN y ready/start. La matriz queda con P0-01 a P0-11 PASS y P0-12 BLOCKED.
+- Limitaciones: el runner de lobby detecta `SEVENTH_REJECTED`, pero falla porque el proceso rechazado no termina; por dependencia del pre-match, la prueba de desconexión durante partida no puede completarse. No se modificó la red ni el runner fuera del alcance de K05. Esta entrada se mantiene local y no se publica remotamente.
