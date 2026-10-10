@@ -351,6 +351,17 @@
 - Pruebas: GM03 y regresión GM02 pasaron con Godot 4.7.2; `git diff --check` pasó.
 - Limitaciones: los eventos reales todavía deben conectarse durante GM04/integración.
 
+## 2026-10-10 — GM04 feedback de impactos, desconexión y preview
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear feedback visual de impactos/acciones y desconexión, con hoja que separa señales reales de previews simuladas.
+- Rama: `Miguel_Pabon/graphics-role-feedback`, basada en `Miguel_Pabon/graphics-papa-feedback`.
+- Archivos: `assets/ui/feedback/impact.svg`, `assets/ui/feedback/action.svg`, `assets/ui/feedback/disconnect.svg`, `scripts/ui/role_feedback.gd`, `scenes/ui/role_feedback.tscn`, `tests/ui/gm04_role_feedback_test.gd`, `tests/ui/gm04_role_feedback_preview.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0609-GM04-role-feedback.md`.
+- Resumen: se añadió un panel compacto que diferencia impacto, acción y desconexión, etiqueta la fuente real/simulada y evita cubrir jugador, Papa o HUD.
+- Pruebas: GM04 y regresiones GM02/GM03 pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: la preview usa datos simulados y la conexión a señales reales del host queda para integración posterior.
+
 ## 2026-10-10 — E04 integración y smoke test
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio

@@ -54,5 +54,6 @@
 - Evidencia: `scenes/ui/papa_objective_feedback.tscn`; `tests/ui/gm03_papa_feedback_test.gd`.
 
 ### GM04 — Impacto/desconexión y preview
-- Estado: TODO; depende de: GM02/GM03.
+- Estado: DONE; depende de: GM02/GM03.
 - Aceptación: señales no confunden desconexión con victoria; hoja distingue eventos reales de simulados; HUD y jugadores no se tapan.
+- Evidencia: `scenes/ui/role_feedback.tscn`; `tests/ui/gm04_role_feedback_test.gd`; preview: `tests/ui/gm04_role_feedback_preview.gd`.
