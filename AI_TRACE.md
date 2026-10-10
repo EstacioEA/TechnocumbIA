@@ -829,3 +829,16 @@
 - Pruebas: no se ejecutaron pruebas J05 porque faltan los prerequisitos; no se afirma PASS. `git diff --check` PASS.
 - Limitaciones: el runner multiinstancia, tres corridas loopback y prueba LAN física quedan pendientes hasta integrar E05-A, M06 y E05-B.
 - Handoff: `docs/handoffs/2026-10-10-1231-J05-prerequisite-blocker.md`.
+
+## 2026-10-10 — Edwar completa E05-A: reloj autoritativo de olla
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DEBUGGING / TESTING / DOCUMENTATION
+- Tarea: E05-A — retirar el reloj paralelo y hacer que el objetivo refleje el snapshot autoritativo.
+- Rama: `Edwar_Estacio/pot-escape-clock`, creada desde `main` actualizado y avanzó por fast-forward a `develop` (`0e988e0`) para incluir dependencias E01–E04; `main` no se modificó.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `scripts/game/papoi_game_session.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1244-Edwar-E05A-authoritative-pot-clock.md`, `AI_TRACE.md`.
+- Resumen: se eliminó `COOKING_DURATION_SECONDS` de 30 s y `advance_host_clock`; GameSession deja de decrementar el reloj local. PapoiCookingEscape refleja fase, tiempo, Papa y salida desde GameState y emite eventos por transiciones recibidas.
+- Pruebas: Godot 4.7.2 headless — `tests/qa/k03_cooking_escape_test.gd` PASS; `tests/game/game_integration_test.gd` PASS (warning previo por casing de import Bestia); `tests/game/game_state_test.gd` PASS (warnings esperados de rechazos probados). `git diff --check` se ejecuta al cierre de esta entrada.
+- Limitaciones: M06 aún debe completar la interacción de depósito/rescate y validar el cruce host-side de cualquier atacante para llamar `register_escape`; J05 y la prueba LAN manual siguen pendientes. Sin commit ni push.
+- Handoff: `docs/handoffs/2026-10-10-1244-Edwar-E05A-authoritative-pot-clock.md`.

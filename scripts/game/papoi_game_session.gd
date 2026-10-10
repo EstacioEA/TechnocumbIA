@@ -113,8 +113,6 @@ func _process(delta: float) -> void:
 		_lives_state.tick(delta)
 	if _beast_state != null:
 		_beast_state.tick(delta)
-	if _cooking_flow != null and _cooking_flow.phase == _cooking_flow.PHASE_POT_COOKING:
-		_cooking_flow.advance_host_clock(delta)
 	_snapshot_elapsed += delta
 	if _snapshot_dirty and _snapshot_elapsed >= SNAPSHOT_INTERVAL_SECONDS:
 		_snapshot_elapsed = 0.0
@@ -388,6 +386,8 @@ func _on_escape_reached(_carrier_id: int) -> void:
 func _on_authoritative_state_changed(snapshot: Dictionary) -> void:
 	if not _is_active_server():
 		return
+	if _cooking_flow != null:
+		_cooking_flow.apply_authoritative_state(snapshot)
 	_ensure_player_nodes(snapshot)
 	_render_snapshot(_compose_snapshot(snapshot))
 	_schedule_snapshot()
@@ -439,6 +439,7 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 		_push_integration_error("TowerKeyState rechazó la configuración de ronda.")
 		return
 	_cooking_flow = CookingEscapeData.new(true, _capture_state, _beast_state)
+	_cooking_flow.apply_authoritative_state(snapshot)
 	_cooking_flow.cooking_completed.connect(_on_cooking_completed)
 	_cooking_flow.escape_reached.connect(_on_escape_reached)
 	_round_models_ready = true

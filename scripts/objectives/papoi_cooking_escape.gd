@@ -12,7 +12,6 @@ signal cooking_completed(papa_id: int)
 signal escape_reached(carrier_id: int)
 signal transition_rejected(reason: String)
 
-const COOKING_DURATION_SECONDS := 30.0
 const PHASE_ACTIVE := 0
 const PHASE_POT_COOKING := 1
 const PHASE_ESCAPE := 2
@@ -24,6 +23,7 @@ var papa_id := -1
 var carrier_id := -1
 var papa_state := GameEnums.PapaState.FREE
 var objective_text := "Captura a Papa y llévala a la olla."
+var escape_available := false
 
 var _capture_state: RefCounted
 var _beast_access: RefCounted
@@ -40,8 +40,8 @@ func _init(
 func start_cooking(is_inside_pot: bool) -> bool:
 	if not _host_only():
 		return _reject("Solo el host puede iniciar la cocción.")
-	if phase != PHASE_ACTIVE:
-		return _reject("La cocción solo puede iniciar desde ACTIVE.")
+	if phase != PHASE_POT_COOKING:
+		return _reject("GameState debe confirmar POT_COOKING antes de iniciar el objetivo.")
 	if not is_inside_pot:
 		return _reject("Papa debe estar dentro de la olla.")
 	if _capture_state == null or _capture_state.papa_state != GameEnums.PapaState.CAPTURED:
@@ -51,9 +51,8 @@ func start_cooking(is_inside_pot: bool) -> bool:
 	papa_id = _capture_state.papa_id
 	carrier_id = _capture_state.carrier_id
 	papa_state = GameEnums.PapaState.BEING_COOKED
-	cooking_remaining = COOKING_DURATION_SECONDS
+	escape_available = false
 	objective_text = "Protege la olla hasta completar la cocción."
-	_set_phase(PHASE_POT_COOKING)
 	if _beast_access != null and not _beast_access.set_pot_cooking(true):
 		return _reject("No se pudo actualizar el acceso de Bestia.")
 	cooking_started.emit(papa_id, carrier_id)
@@ -75,26 +74,50 @@ func rescue_by_beast() -> bool:
 	if _beast_access != null and not _beast_access.set_pot_cooking(false):
 		return _reject("No se pudo cerrar el acceso de Bestia.")
 	cooking_remaining = 0.0
+	escape_available = false
 	papa_state = GameEnums.PapaState.FREE
 	objective_text = "Papa fue rescatada: vuelve a capturarla."
-	_set_phase(PHASE_ACTIVE)
-	cooking_cancelled.emit(papa_id)
 	return true
 
-func advance_host_clock(delta: float) -> bool:
-	if not _host_only():
-		return _reject("Solo el host puede avanzar la cocción.")
-	if phase != PHASE_POT_COOKING or delta <= 0.0:
-		return true
-	cooking_remaining = maxf(0.0, cooking_remaining - delta)
-	if is_zero_approx(cooking_remaining):
-		_complete_cooking()
-	return true
+func apply_authoritative_state(snapshot: Dictionary) -> void:
+	var game_phase := int(snapshot.get("phase", GameEnums.GamePhase.LOBBY))
+	var previous_phase := phase
+	match game_phase:
+		GameEnums.GamePhase.POT_COOKING:
+			phase = PHASE_POT_COOKING
+		GameEnums.GamePhase.ESCAPE:
+			phase = PHASE_ESCAPE
+		_:
+			phase = PHASE_ACTIVE
+	var phase_did_change := phase != previous_phase
+	var next_papa_state := int(snapshot.get("papa_state", GameEnums.PapaState.FREE))
+	if GameEnums.PapaState.values().has(next_papa_state):
+		papa_state = next_papa_state
+	cooking_remaining = maxf(0.0, float(snapshot.get("phase_time_remaining", 0.0))) \
+		if phase == PHASE_POT_COOKING else 0.0
+	escape_available = bool(snapshot.get("escape_available", false))
+	if phase == PHASE_ESCAPE:
+		objective_text = "Papa cocida: regresa a la base atacante."
+		if previous_phase == PHASE_POT_COOKING:
+			if _beast_access != null:
+				_beast_access.set_pot_cooking(false)
+			cooking_completed.emit(papa_id)
+	elif phase == PHASE_POT_COOKING:
+		objective_text = "Protege la olla hasta completar la cocción."
+	elif previous_phase == PHASE_POT_COOKING and game_phase == GameEnums.GamePhase.ACTIVE:
+		cooking_remaining = 0.0
+		objective_text = "Papa fue rescatada: vuelve a capturarla."
+		cooking_cancelled.emit(papa_id)
+	elif previous_phase == PHASE_POT_COOKING:
+		cooking_remaining = 0.0
+		objective_text = "La ronda terminó."
+	if phase_did_change:
+		phase_changed.emit(previous_phase, phase)
 
 func reach_escape(position: Vector2, escape_zone: Rect2) -> bool:
 	if not _host_only():
 		return _reject("Solo el host puede validar el escape.")
-	if phase != PHASE_ESCAPE:
+	if phase != PHASE_ESCAPE or not escape_available:
 		return _reject("El escape solo está disponible tras completar la cocción.")
 	if not escape_zone.has_point(position):
 		return _reject("El atacante aún no está en la base atacante.")
@@ -109,24 +132,9 @@ func get_snapshot() -> Dictionary:
 		"papa_id": papa_id,
 		"carrier_id": carrier_id,
 		"papa_state": papa_state,
+		"escape_available": escape_available,
 		"objective_text": objective_text,
 	}
-
-func _complete_cooking() -> void:
-	if phase != PHASE_POT_COOKING:
-		return
-	if _beast_access != null:
-		_beast_access.set_pot_cooking(false)
-	cooking_remaining = 0.0
-	papa_state = GameEnums.PapaState.COOKED
-	objective_text = "Papa cocida: regresa a la base atacante."
-	_set_phase(PHASE_ESCAPE)
-	cooking_completed.emit(papa_id)
-
-func _set_phase(next_phase: int) -> void:
-	var previous := phase
-	phase = next_phase
-	phase_changed.emit(previous, next_phase)
 
 func _reject(reason: String) -> bool:
 	transition_rejected.emit(reason)

@@ -14,8 +14,8 @@ En una partida LAN 3v3, el equipo atacante debe poder capturar a Papa, depositar
 
 - `PapoiMap.POT_ZONE` es la zona de olla existente; `is_position_in_pot()` valida posiciones en coordenadas del mapa.
 - `PapoiMap.ESCAPE_ZONE` es la zona existente de la base/salida izquierda; `is_position_in_escape()` valida su geometría.
-- `PapoiCookingEscape` ya cubre transiciones de dominio para cocinar, rescatar y llegar a escape; hoy mantiene su propio reloj de 30 segundos.
-- `GameState` ya lleva `phase_time_remaining` y transiciona `POT_COOKING` a `ESCAPE`; hoy también configura 30 segundos.
+- `PapoiCookingEscape` cubre las operaciones de objetivo y refleja fase/tiempo/estado de salida desde snapshots autoritativos; no decrementa un reloj local.
+- `GameState` lleva `phase_time_remaining` y es el único responsable de transicionar `POT_COOKING` a `ESCAPE` tras 20 segundos.
 - `PapoiGameSession` ya recibe acciones, valida posiciones host-side, conecta Bestia, cocción y resultados; el escape actual valida únicamente al `carrier_id` y resuelve una ronda al llegar.
 - `PapoiHUD` lee snapshots y ya rotula fase/temporizador, pero esta tarea debe comprobar que el progreso visible de olla es una barra y no una cuenta paralela local.
 - El mapa y su geometría permanecen bajo K01/K02/K03/K06. No rehacer zonas ni mover coordenadas en este trabajo.
@@ -47,7 +47,7 @@ Edwar confirmó que el marcador es **un punto por ronda**. Basta que escape una 
 
 ### E05-A — Edwar: reloj y contrato autoritativo de objetivo
 
-- Estado: IN_PROGRESS — núcleo GameState/MatchState/HUD listo; cierre depende de que M06 retire el reloj paralelo de 30 s y conecte la sesión.
+- Estado: DONE — GameState/MatchState/HUD y espejo de objetivo usan el reloj/snapshot únicos; el módulo de objetivo no decrementa tiempo local.
 - Depende de: E01–E04. El componente debe entregar el contrato antes de M06.
 - Archivos permitidos: `scripts/shared/game_rules.gd` (nuevo), `scripts/game/game_state.gd`, `scripts/game/match_state.gd`, `scripts/ui/papoi_hud.gd`, `tests/game/`, `tests/ui/` y este contrato si hace falta aclararlo.
 - Crear: constante única compartida de 20 s; campo serializable `escape_available`; validación/round-trip; señal autoritativa de transición; barra de cocción read-only en HUD basada solo en snapshot.
