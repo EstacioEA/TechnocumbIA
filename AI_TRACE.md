@@ -128,3 +128,13 @@
 - Archivos: `scripts/map/papoi_map.gd`, `scripts/objectives/papoi_pot_zone.gd`, `scripts/objectives/papoi_objective_flow.gd`, `scenes/objectives/papoi_objective_flow.tscn`, `tests/qa/k02_pot_zone_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0055-K02-pot-zone.md`.
 - Resumen: se añadió `CaptureZone`, un validador separado de zona de olla y una detección host-autorizada que acepta únicamente Papa capturada dentro de la olla, sin iniciar cocción ni modificar victoria.
 - Limitaciones: la validación LAN completa no pertenece a K02; `AI_TRACE.md` se mantiene solo local y no se publica remotamente.
+
+## 2026-10-10 — bloqueo K03 por dependencia M02
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: DOCUMENTATION
+- Tarea: evaluar la siguiente tarea disponible de Krystal y documentar K03 como bloqueada.
+- Rama: `Krystal_Giraldo/k03-blocked`, basada en `develop` actualizado.
+- Archivos: `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0125-K03-blocked.md`, `AI_TRACE.md`.
+- Resumen: K02 y E02 están DONE, pero K03 depende de M02, que sigue TODO. No se implementó lógica duplicada de captura, cocción o escape.
+- Limitaciones: se requiere la entrega/integración de M02 antes de crear la rama de implementación de K03; no se creó commit ni se publicó AI_TRACE.md.
