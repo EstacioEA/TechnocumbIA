@@ -68,3 +68,36 @@
 - Archivos: `tests/qa/k01_map_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-09-2328-K01-map-spawns.md`.
 - Resumen: Godot 4.7.2 ejecutó la escena del mapa y la prueba headless `K01_MAP_TEST`, verificando instanciación, spawns, rutas, límite exterior y barrera cerrada. K01 pasó a `DONE`.
 - Limitaciones: el escaneo completo del editor aún reporta errores preexistentes en lobby y red, fuera del alcance de K01. Este registro permanece local y no se publicará remotamente.
+
+## 2026-10-10 — V01 validación de player base
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: cerrar V01 después de disponer de Godot 4.7.2 y validar la escena base.
+- Rama: `Valeria_Piza/player-base-validation`, basada en `develop`.
+- Archivos: `docs/specs/Valeria_Piza/TASKS.md`, `docs/handoffs/2026-10-10-0007-V01-player-base-validation.md`, `AI_TRACE.md`.
+- Resumen: `player_base_test.tscn` cargó en Godot 4.7.2 headless con dos instancias del jugador y sin dependencias de red; V01 pasó a `DONE`.
+- Limitaciones: la validación fue headless; la inspección visual queda para V04/V05.
+## 2026-10-10 — E02 bloqueada antes de implementar
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tipo: AI_ASSISTED / DOCUMENTATION
+- Solicitud: continuar con la siguiente tarea individual asignada.
+- Tarea candidata: E02 — Máquina de estados de ronda (E01 DONE y E02 READY según el archivo visto en `develop`).
+- Rama: `Edwar_Estacio/round-state-machine`, creada desde `main` después de confirmar `origin/main` como predeterminada y actualizarla con fast-forward.
+- Resultado: no se modificó código. En la rama se detectó `?? .godot/` y no existe `docs/specs/Edwar_Estacio/TASKS.md`; el archivo de asignación está en `develop`.
+- Limitaciones: no se borró ni ocultó `.godot/`; no se ejecutaron pruebas. `CLI_BRANCH_POLICY.md` indica `main`, mientras `SDD_CONTINUE_PROTOCOL.md` indica `develop`; se requiere resolver la discrepancia y mantener la asignación disponible en la base aprobada.
+- Siguiente paso: resolver el estado local y la política de base; continuar E02 en rama limpia con sus specs y asignación disponibles.
+
+## 2026-10-10 — E02 máquina de estados de ronda
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING
+- Solicitud: completar E02 y resolver los bloqueos de rama y estado local documentados anteriormente.
+- Rama: `Edwar_Estacio/round-state-machine-impl`, nueva desde `develop` actualizado; la rama `Edwar_Estacio/round-state-machine` anterior ya estaba integrada en `develop`.
+- Archivos: `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0105-E02-round-state-machine.md`.
+- Resumen: se centralizaron las transiciones válidas con autoridad del host y restricciones de progresión; se parametrizó el límite de 7 minutos; se añadieron pruebas de flujo válido, transiciones rechazadas sin mutación, timeout, eliminación durante cocción y desempate 2-2 que completa la quinta ronda sin permitir una sexta.
+- Pruebas: escaneo editor headless, test de estado, smoke de escena principal, test de combate y escena de jugador pasaron en Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
+- Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.

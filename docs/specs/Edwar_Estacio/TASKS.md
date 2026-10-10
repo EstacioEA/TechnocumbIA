@@ -11,7 +11,7 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: un test serializa/deserializa el estado; nombres y valores están documentados; no depende de nodos visuales.
 
 ## E02 — Máquina de estados de ronda
-- Estado: READY
+- Estado: DONE — transiciones válidas e inválidas cubiertas por Godot 4.7.2; rechazo sin mutación y límite de 420 segundos verificados.
 - Depende de: E01
 - Rama sugerida: `Edwar_Estacio/round-state-machine`
 - Archivos permitidos: `scripts/game/`, `tests/game/`
