@@ -152,6 +152,15 @@
 - Prueba: `tests/player/player_movement_test.tscn`.
 - Siguiente bloqueo externo: V03 requiere K01 de Krystal Giraldo.
 
+## 2026-10-10 — V03 colisiones y límites
+
+- Rama: `Valeria_Piza/player-collisions`, basada en `develop` actualizado.
+- Resultado: el jugador real no atraviesa el límite oeste ni la barrera de la
+  Bestia cerrada.
+- Prueba: `tests/qa/v03_player_collision_test.gd` ejecutada con Godot 4.7.2
+  headless.
+- Siguiente tarea: V04 — Cámara y visión.
+
 
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA
@@ -165,4 +174,3 @@
 - Pruebas: test de estado ejecutado con Godot 4.7.2 headless: PASS, exit code 0; `git diff --check` sin errores.
 - Limitaciones: no se ejecutó partida LAN multiinstancia. Godot muestra warnings esperados por transiciones inválidas que el test comprueba que sean rechazadas.
 - Siguiente paso: revisión e integración de esta rama en develop; no se creó commit automáticamente.
-

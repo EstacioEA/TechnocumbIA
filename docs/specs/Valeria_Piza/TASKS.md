@@ -16,11 +16,12 @@
   y prueba headless de desplazamiento ejecutada.
 
 ## V03 — Colisiones y límites
-- Estado: TODO
+- Estado: DONE
 - Depende de: V02, K01
 - Rama sugerida: `Valeria_Piza/player-collisions`
 - Aplicar paredes, límites y zonas bloqueadas.
-- Aceptación: el jugador no atraviesa obstáculos; caso reproducible de colisión documentado.
+- Aceptación: límites del mapa y barrera cerrada bloquean al jugador; caso
+  reproducible de colisión documentado.
 
 ## V04 — Cámara y visión
 - Estado: TODO
