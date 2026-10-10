@@ -49,3 +49,13 @@
 - Pruebas: análisis/editor headless, escena lobby, test de estado, test de combate y escena de jugador pasaron con Godot 4.7.2.
 - Trazabilidad: se restauraron entradas previas de `AI_TRACE.md` desde `fbc7a49` tras una actualización de `develop` que lo había eliminado; esta entrada se anexó al final.
 - Limitaciones: no se ejecutó prueba LAN multiinstancia ni una escena completa de partida integrada. El motor quedó en TEMP, fuera del repositorio.
+
+## 2026-10-10 — V01 validación de player base
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: cerrar V01 después de disponer de Godot 4.7.2 y validar la escena base.
+- Rama: `Valeria_Piza/player-base-validation`, basada en `develop`.
+- Archivos: `docs/specs/Valeria_Piza/TASKS.md`, `docs/handoffs/2026-10-10-0007-V01-player-base-validation.md`, `AI_TRACE.md`.
+- Resumen: `player_base_test.tscn` cargó en Godot 4.7.2 headless con dos instancias del jugador y sin dependencias de red; V01 pasó a `DONE`.
+- Limitaciones: la validación fue headless; la inspección visual queda para V04/V05.
