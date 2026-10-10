@@ -136,12 +136,13 @@ func resolve_round(winner_team: int, reason: int) -> bool:
 	_round_resolved = true
 	_state.round_winner = winner_team
 	_state.round_end_reason = reason
-	_state.scores[winner_team] = int(_state.scores[winner_team]) + 1
+	var score_key := MatchStateData.team_score_key(winner_team)
+	_state.scores[score_key] = int(_state.scores[score_key]) + 1
 	_state.phase_time_remaining = 0.0
 	_set_phase(GameEnums.GamePhase.ROUND_RESULT)
 	_emit_state()
 	round_finished.emit(winner_team, reason, get_snapshot())
-	if _state.scores[winner_team] >= POINTS_TO_WIN_MATCH:
+	if _state.scores[score_key] >= POINTS_TO_WIN_MATCH:
 		_state.match_winner = winner_team
 		_set_phase(GameEnums.GamePhase.MATCH_RESULT)
 		_emit_state()
