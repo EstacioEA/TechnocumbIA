@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="" />
+    <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/AI_TRACE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AI_TRACE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/specs/Krystal_Giraldo/TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/specs/Krystal_Giraldo/TASKS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/map/papoi_map.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/map/papoi_map.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/map/visuals/papoi_base_spawn_visuals.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/map/visuals/papoi_base_spawn_visuals.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/map/papoi_map.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/map/papoi_map.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/qa/k01_map_test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/qa/k01_map_test.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/qa/k02_pot_zone_test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/qa/k02_pot_zone_test.gd" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,7 +92,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "Krystal__Giraldo/official-map-remap",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Asus/Desktop/PERSONAL/GAME/TechnocumbIA",
