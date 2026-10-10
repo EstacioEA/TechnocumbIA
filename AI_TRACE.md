@@ -341,3 +341,14 @@
 - Pruebas: revisión documental y `git diff --check`; no se ejecutaron pruebas del juego porque no hubo cambios de código.
 - Limitaciones: menú/lobby de Juan usará estilos provisionales hasta que se aplique el Theme refinado en integración.
 - Siguiente paso: Juan comienza GJ01; Edwar puede iniciar GE01 en paralelo.
+
+## 2026-10-10 — GJ01 cascarón del menú
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: crear la escena inicial visual de Papoi con acciones Host, Unirse y Salir.
+- Rama: `Juan_Balanta/gj01-menu-shell`, basada en `develop` actualizado.
+- Archivos: `scenes/menu/main_menu.tscn`, `scripts/ui/menu/main_menu.gd`, `project.godot`, `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0315-GJ01-main-menu-shell.md`.
+- Resumen: se creó una pantalla centrada con paleta provisional G00, foco de teclado inicial, estilos visibles de botones; Host/Unirse emiten señales y muestran que sus paneles se conectarán en tareas siguientes; Salir solicita cerrar.
+- Pruebas: `git diff --check` PASS. No se ejecutó Godot ni se capturó la pantalla; por ello GJ01 queda BLOCKED hasta confirmar visualmente carga y foco.
+- Limitaciones: conexión y creación de host aún corresponden a GJ02/GJ03; no se necesita a Edwar para continuar.
+- Siguiente paso: abrir el proyecto y verificar la escena a 1280×720; luego implementar GJ02.

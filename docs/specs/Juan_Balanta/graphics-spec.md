@@ -5,9 +5,10 @@
 Juan puede completar GJ01–GJ05 sin esperar el Theme ni una revisión de Edwar. Usará directamente los tokens provisionales ya descritos en `docs/specs/graphics/VISUAL_DIRECTION.md`; la adopción posterior de `papoi_theme.tres` es una mejora de integración, no una dependencia. Las tareas de Juan no modifican archivos que GE01–GE05 poseen.
 
 ### GJ01 — Cascarón del menú
-- Estado: TODO; depende de: ninguna.
-- Archivos: nuevos `scenes/menu/main_menu.tscn`, `scripts/ui/menu/main_menu.gd`.
-- Aceptación: el proyecto puede mostrar título Papoi y acciones Host, Unirse y Salir; disposición y foco de teclado son visibles a 1280×720.
+- Estado: BLOCKED — implementación creada; falta abrir y verificar visualmente la escena.
+- Depende de: ninguna.
+- Archivos: nuevos `scenes/menu/main_menu.tscn`, `scripts/ui/menu/main_menu.gd`; `project.godot` solo para establecer esta escena como entrada.
+- Aceptación: ejecutar el proyecto abre el menú con título Papoi y acciones Host, Unirse y Salir; disposición y foco de teclado son visibles a 1280×720; las acciones Host/Unirse emiten señales de UI sin mutar la red.
 
 ### GJ02 — Panel de crear partida
 - Estado: TODO; depende de: GJ01.

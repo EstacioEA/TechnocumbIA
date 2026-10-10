@@ -39,8 +39,10 @@
 - Todas las tareas GJ usan el baseline provisional de `VISUAL_DIRECTION.md`; ninguna espera el Theme ni la aprobación de Edwar.
 
 ### GJ01 — Cascarón del menú
-- Estado: TODO; dependencia: ninguna.
-- Aceptación: título, Host, Unirse y Salir visibles y teclado enfocado.
+- Estado: BLOCKED — implementación creada; falta abrir y verificar visualmente la escena.
+- Dependencia: ninguna.
+- Archivos: nuevo menú/ script y `project.godot` para establecer escena inicial.
+- Aceptación: ejecutar el proyecto abre título, Host, Unirse y Salir; foco teclado visible; Host/Unirse emiten señales UI.
 
 ### GJ02 — Crear partida/host
 - Estado: TODO; dependencia: GJ01.
