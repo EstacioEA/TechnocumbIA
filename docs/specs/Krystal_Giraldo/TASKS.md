@@ -56,8 +56,9 @@
 - Evidencia: `tests/qa/gk03_pot_barrier_visuals_test.gd`, `docs/handoffs/captura vista fix krystal 4.png` y `docs/handoffs/captura pantalla krystal 5 - estado abierto.png`.
 
 ### GK04 — Contraste/evidencia
-- Estado: TODO; depende de GK01–GK03.
+- Estado: DONE; contraste, overlay y legibilidad del HUD validados en runtime a 1280×720.
 - Aceptación: overlay no esconde rutas/objetivos/HUD; pruebas mapa conservadas; captura y fuentes de assets documentadas.
+- Evidencia: `tests/qa/gk04_contrast_evidence_test.gd`, `scenes/map/papoi_map_gk04_contrast_preview.tscn`, `docs/handoffs/captura 7 vision normal.png` y `docs/handoffs/captura 7.1 vision activa.png`.
 
 ## K06 — Remapeo oficial del mapa
 - Estado: DONE; autorizado explícitamente para alinear lógica, colisiones y presentación con `assets/maps/Mapa Base.jpeg`.

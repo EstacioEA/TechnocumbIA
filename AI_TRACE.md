@@ -573,3 +573,15 @@
 - Evidencia runtime: `docs/handoffs/captura vista fix krystal 4.png` confirma el mapa completo a 1280×720 con olla en Torre y barrera cerrada.
 - Evidencia abierta: `docs/handoffs/captura pantalla krystal 5 - estado abierto.png` confirma `ESTADO: ABIERTA` en Torre.
 - Limitaciones: no se afirma licencia externa de la imagen; no se creó push automático.
+
+## 2026-10-10 — GK04 contraste y evidencia del mapa
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: preparar una evidencia reproducible de contraste del mapa con overlay de visión activo/inactivo y HUD legible.
+- Archivos: `scenes/map/papoi_map_gk04_contrast_preview.gd`, `scenes/map/papoi_map_gk04_contrast_preview.tscn`, `tests/qa/gk04_contrast_evidence_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0715-GK04-contrast-evidence.md`.
+- Resumen: se añadió un preview a 1280×720 con mapa oficial, HUD de demostración y tecla `V` para alternar el overlay. El HUD queda sobre el overlay mediante capas 30 y 20.
+- Pruebas: `GK04_CONTRAST_EVIDENCE_TEST` y escaneo/importación de Godot 4.7.2 pasan.
+- Evidencia runtime: `docs/handoffs/captura 7 vision normal.png` y `docs/handoffs/captura 7.1 vision activa.png` a 1280×720. La captura activa conserva el HUD legible sobre el overlay.
+- Limitaciones: el fondo `Mapa Base.jpeg` se documenta como recurso proporcionado por el equipo sin afirmar licencia externa.
