@@ -652,6 +652,7 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 		if actor != null and player.get("position") is Vector2:
 			actor.global_position = player["position"]
 		if actor != null:
+			_apply_player_life_state(actor, player)
 			var visual := actor.get_node_or_null("PlayerVisual") as Node2D
 			if visual != null:
 				visual.set("team", 0 if player.get("side", "") == "attacker" else 1)
@@ -668,6 +669,21 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 			_tower_key_marker.global_position = snapshot["tower_key_position"]
 		if bool(snapshot.get("tower_open", false)):
 			_map.apply_beast_gate_state(true)
+
+
+func _apply_player_life_state(actor: CharacterBody2D, player: Dictionary) -> void:
+	if not player.has("active") or not player.has("lives"):
+		return
+	var lives := int(player.get("lives", 0))
+	var active := bool(player.get("active", false))
+	var eliminated := lives <= 0
+	actor.visible = active and not eliminated
+	if not actor.visible:
+		actor.velocity = Vector2.ZERO
+		actor.set("local_control_enabled", false)
+	elif actor.has_method("set_local_control"):
+		var local_peer_id := multiplayer.get_unique_id() if _is_transport_connected() else -1
+		actor.call("set_local_control", int(player.get("peer_id", -1)) == local_peer_id)
 
 
 func _schedule_snapshot() -> void:
