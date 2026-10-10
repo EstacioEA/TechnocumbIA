@@ -11,6 +11,14 @@ const PLAYER_NAMES := [
 ]
 
 var _failures: Array[String] = []
+const EXPECTED_ROLES := {
+	&"AttackerOne": &"Tanque",
+	&"AttackerTwo": &"Cazador",
+	&"AttackerThree": &"Porta Papas",
+	&"DefenderOne": &"Papa",
+	&"DefenderTwo": &"Trolazzo",
+	&"DefenderThree": &"Bestia",
+}
 
 func _init() -> void:
 	var preview := PREVIEW_SCENE.instantiate()
@@ -42,6 +50,11 @@ func _init() -> void:
 			_fail("%s has an unknown team" % player_name)
 		if visual.get("show_local_marker") == true:
 			local_markers += 1
+		if visual.get("role") != EXPECTED_ROLES[player_name]:
+			_fail("%s has the wrong visual role" % player_name)
+		var avatar := visual.get_node_or_null("RoleAvatar") as Sprite2D
+		if avatar == null or not avatar.visible or avatar.texture == null:
+			_fail("%s is missing its role sprite" % player_name)
 		if player.get("local_control_enabled") and player_name != &"AttackerOne":
 			_fail("only AttackerOne may be local")
 

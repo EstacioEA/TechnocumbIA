@@ -435,6 +435,7 @@ func _add_player_visual(actor: Node2D, peer_id: int, side: String) -> void:
 	token.name = "PlayerToken"
 	token.polygon = _circle_polygon(17.0, 20)
 	token.color = Color("#41c9bd") if side == "attacker" else Color("#e89b61")
+	token.visible = false
 	actor.add_child(token)
 	var label := Label.new()
 	label.name = "PeerLabel"
@@ -457,6 +458,26 @@ func _create_papa_marker() -> void:
 	label.position = Vector2(-22.0, -38.0)
 	label.add_theme_font_size_override("font_size", 13)
 	_papa_marker.add_child(label)
+
+
+func _visual_role_for_player(player: Dictionary) -> StringName:
+	if player.get("side", "") == "attacker":
+		match int(player.get("passive", -1)):
+			GameEnums.AttackerPassive.TANQUE:
+				return &"Tanque"
+			GameEnums.AttackerPassive.CAZADOR:
+				return &"Cazador"
+			GameEnums.AttackerPassive.PORTA_PAPAS:
+				return &"Porta Papas"
+	else:
+		match int(player.get("role", -1)):
+			GameEnums.DefenderRole.PAPA:
+				return &"Papa"
+			GameEnums.DefenderRole.TROLAZZO:
+				return &"Trolazzo"
+			GameEnums.DefenderRole.BESTIA:
+				return &"Bestia"
+	return &""
 
 
 func _circle_polygon(radius: float, segments: int) -> PackedVector2Array:
@@ -488,7 +509,7 @@ func _reset_player_positions(snapshot: Dictionary) -> void:
 			actor.velocity = Vector2.ZERO
 		var token := actor.get_node_or_null("PlayerToken") as Polygon2D
 		if token != null:
-			token.color = Color("#41c9bd") if player.get("side", "") == "attacker" else Color("#e89b61")
+			token.visible = false
 	_papa_marker.position = spawn_points["papa"]
 
 
@@ -531,6 +552,11 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 		var actor := get_player_node(int(player.get("peer_id", -1)))
 		if actor != null and player.get("position") is Vector2:
 			actor.global_position = player["position"]
+		if actor != null:
+			var visual := actor.get_node_or_null("PlayerVisual") as Node2D
+			if visual != null:
+				visual.set("team", 0 if player.get("side", "") == "attacker" else 1)
+				visual.set("role", _visual_role_for_player(player))
 	if _papa_marker != null:
 		if snapshot.get("papa_position") is Vector2:
 			_papa_marker.global_position = snapshot["papa_position"]

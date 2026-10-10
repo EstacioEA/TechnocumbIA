@@ -673,3 +673,16 @@
 - Verificación: Godot 4.7.2 gráfico abrió la escena y escribió la captura; la imagen se revisó visualmente.
 - Limitaciones: ejemplos simulados, sin LAN ni snapshot de host en vivo. No se creó commit.
 - Handoff: `docs/handoffs/2026-10-10-0834-TC04-role-state-preview.md`.
+
+## 2026-10-10 — TC01 avatares con sprites
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: TC01 — integrar avatares reconocibles para los seis roles y pasivas.
+- Rama: `Valeria_Piza/avatar-sprites`, basada en `origin/develop` actualizado (`d0a0f34`).
+- Archivos: `scripts/player/player_visual.gd`, `scripts/player/gv03_preview.gd`, `scripts/game/papoi_game_session.gd`, `tests/ui/gv03_six_players_test.gd`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/specs/Valeria_Piza/graphics-spec.md`, `docs/handoffs/2026-10-10-0900-TC01-avatar-sprites.md`.
+- Resumen: `PlayerVisual` usa un atlas del primer cuadro de cada sheet, descarta el checkerboard horneado y conserva la silueta procedural como fallback. El preview cubre Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas; la sesión deriva el avatar desde `role`/`passive` del snapshot autoritativo y oculta el punto de color anterior.
+- Procedencia: sheets proporcionados por el equipo en `assets/characteres/`; no se añadieron assets externos.
+- Pruebas: `GV03_SIX_PLAYERS_TEST`, `GV01_CHARACTERS_TEST`, `GV02_ORIENTATION_TEST`, `V03_PLAYER_COLLISION_TEST` y `V05_PLAYER_SMOKE_TEST` pasaron con Godot 4.7.2 headless; diagnósticos de VS Code sin errores; `git diff --check` pasó.
+- Limitaciones: la validación headless confirma instanciación y referencias; la revisión visual final del atlas debe hacerse abriendo el preview con renderer gráfico.
+- Handoff: `docs/handoffs/2026-10-10-0900-TC01-avatar-sprites.md`.

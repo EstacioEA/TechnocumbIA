@@ -4,12 +4,12 @@ extends Node2D
 
 func _ready() -> void:
 	var players := [
-		{"name": "AttackerOne", "team": 0, "local": true},
-		{"name": "AttackerTwo", "team": 0, "local": false},
-		{"name": "AttackerThree", "team": 0, "local": false},
-		{"name": "DefenderOne", "team": 1, "local": false},
-		{"name": "DefenderTwo", "team": 1, "local": false},
-		{"name": "DefenderThree", "team": 1, "local": false},
+		{"name": "AttackerOne", "team": 0, "role": &"Tanque", "local": true},
+		{"name": "AttackerTwo", "team": 0, "role": &"Cazador", "local": false},
+		{"name": "AttackerThree", "team": 0, "role": &"Porta Papas", "local": false},
+		{"name": "DefenderOne", "team": 1, "role": &"Papa", "local": false},
+		{"name": "DefenderTwo", "team": 1, "role": &"Trolazzo", "local": false},
+		{"name": "DefenderThree", "team": 1, "role": &"Bestia", "local": false},
 	]
 	for player_data: Dictionary in players:
 		var player := get_node_or_null(player_data["name"]) as Node2D
@@ -19,6 +19,7 @@ func _ready() -> void:
 		var visual := player.get_node_or_null("PlayerVisual") as Node2D
 		if visual != null:
 			visual.set("team", player_data["team"])
+			visual.set("role", player_data["role"])
 			visual.queue_redraw()
 		var local_control: Variant = player.get("local_control_enabled")
 		if local_control != player_data["local"]:
