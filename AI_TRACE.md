@@ -290,3 +290,13 @@
 - Resumen: M05 pasó su prueba específica y la regresión de Bestia; K03 pasó después de relajar las referencias tipadas del coordinador a `RefCounted`, manteniendo la autoridad del host.
 - Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
 - Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
+## 2026-10-10 — J05 puente runtime LAN/GameState y J06 verificación física
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: integrar el inicio del lobby y las desconexiones con GameState autoritativo; dejar procedimiento verificable para la prueba LAN física pendiente.
+- Rama: `Juan_Balanta/runtime-disconnect-bridge`, basada en `origin/develop` actualizado.
+- Archivos: `scripts/network/network_game_bridge.gd`, `scripts/network/network_manager.gd`, `scripts/game/game_state.gd`, `scenes/lobby/lobby.tscn`, `tests/network/disconnect_match_test.gd`, `tests/network/run_disconnect_match_test.ps1`, `tests/network/run_lobby_slots_test.ps1`, `docs/specs/01-network-lan.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0226-J05-runtime-disconnect-bridge.md`, `docs/handoffs/2026-10-10-0226-J06-lan-physical-blocked.md`.
+- Resumen: el bridge inicializa GameState desde el lobby, replica snapshots autoritativos y convierte una salida en partida activa en resultado inválido sin ganador ni puntos. Se rechaza entrada tardía. J05 queda DONE; J06 queda BLOCKED hasta probar en un segundo equipo físico.
+- Pruebas: Godot 4.7.2 headless/editor PASS; runners J01-J04 PASS; runner de desconexión con bridge real, cinco clientes, entrada tardía y desconexión activa PASS; `tests/game/game_state_test.gd` PASS; `git diff --check` PASS.
+- Limitaciones: todas las pruebas de red ejecutadas usan procesos locales; no se ejecutó conexión física por IP ni comprobación de firewall. Handoff J06 contiene el procedimiento, y sus resultados siguen pendientes.
+- Siguiente paso: ejecutar el smoke test J06 con dos computadoras Windows en la misma LAN. No se creó commit ni se hizo push.

@@ -29,6 +29,13 @@ match_result(winner)
 4. Los clientes muestran error de conexión y desconexión.
 5. La ronda se puede ejecutar en dos clientes locales para prueba reducida, pero el objetivo de demo es 3v3.
 
+## Integración de desconexión con el estado de partida
+- El lobby conecta `NetworkManager.lobby_start` con el `GameState` autoritativo del host e inicia el estado con el roster de seis jugadores listos.
+- Una salida mientras `GameState` está en `COUNTDOWN`, `ACTIVE`, `POT_COOKING` o `ESCAPE` invalida la partida en el host con `RoundEndReason.DISCONNECT`, ganador `-1` y sin modificar el marcador.
+- La salida en `LOBBY` solo libera el slot; no produce un resultado de partida.
+- El host replica snapshots serializables mediante RPC fiable. Los clientes validan schema y revision antes de aplicar el snapshot; no pueden mutar el estado autoritativo.
+- Una desconexión del host se comunica al cliente como desconexión de sesión; el cliente no intenta resolver ni inventar un resultado.
+
 ## Pruebas
 - Servidor headless inicia sin errores.
 - Se conectan seis clientes locales.
