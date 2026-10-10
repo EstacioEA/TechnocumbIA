@@ -175,7 +175,7 @@ func _update_controls() -> void:
 	_start_button.visible = is_host
 	var all_ready: bool = network.players.size() == 6
 	for player_data: Dictionary in network.players.values():
-		all_ready = all_ready and player_data.get("ready", false)
+		all_ready = all_ready and bool(player_data.get("ready", false))
 	_start_button.disabled = not is_host or not all_ready
 	_host_button.disabled = connected
 	_join_button.disabled = connected
