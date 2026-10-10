@@ -70,15 +70,19 @@
 
 ## GINT — Integración visual por relevos (Juan + Edwar)
 - Spec: `docs/specs/graphics/GINT.md`.
-- Estado: IN_PROGRESS; checkpoint y matriz en `docs/specs/graphics/GINT.md`; handoff `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
+- Estado: IN_PROGRESS; resultados vigentes y defectos reproducibles en `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.
 - Dependencias: GJ01–GJ05, GE01–GE06, GV01–GV03, GK01–GK04 y GM01–GM04.
-- GINT01 ensambla/recorre; GINT02 completa matriz y resoluciones; GINT03 deja capturas y handoff.
-- Seguimiento: regresión automatizada de desconexión PASS (handoff `docs/handoffs/2026-10-10-0800-Juan-disconnect-runtime-fix.md`); GINT01 sigue IN_PROGRESS hasta completar el recorrido visual runtime; falta evidencia a 1920×1080 y la integración de TC01, TC02 y TC04 (TC03 DONE).
+- TC01 (Valeria), TC03 (Miguel) y TC04 (Edwar) están integradas; TC02 (Krystal) sigue pendiente de evidencia de colisiones/rutas.
+- GINT01: integración automatizada parcial; seis peers alcanzan GAME_SESSION_READY, pero el runner falló al validar la salida de client1 y el recorrido visual completo permanece pendiente.
+- GINT02: preview HUD de cinco estados PASS a 1920×1080; flujo real LAN a las tres resoluciones pendiente.
+- GINT03: handoff y AI_TRACE incrementales actualizados; cierre final depende de TC02 y del recorrido integrado.
 
 ## TC05 — Integración y QA final de remediaciones
-- Estado: TODO — bloqueada por TC01 (Valeria), TC02 (Krystal) y TC04 (Edwar), que siguen `TODO`; TC03 (Miguel) está `DONE`. No se modificaron las tareas ni los módulos de los demás integrantes.
-- Rama sugerida: `Juan_Balanta/turn-c-remediation-qa`.
-- Recorrer el flujo con seis jugadores y comprobar sprites, límites, pasillos, zonas, roles, pasivas, HUD y overlay en la integración real.
-- Aceptación: matriz `PASS/FAIL/BLOCKED` con evidencia a 1280×720, 1600×900 y 1920×1080; ningún recuadro/título de debug aparece en gameplay normal; los defectos tienen responsable y siguiente acción.
-- Evidencia requerida: handoff final y actualización de `docs/specs/graphics/GINT.md`.
-- Requiere reanudar cuando TC01, TC02 y TC04 tengan implementación y evidencia integradas; TC03 ya está DONE. Ver hallazgo P0-12 en el handoff GINT.
+- Estado: TODO / BLOCKED por evidencia técnica pendiente de TC02 y por inconsistencia reproducida en los runners de seis jugadores y desconexión. TC01 (Valeria), TC03 (Miguel) y TC04 (Edwar) están integradas; no se atribuye el bloqueo a esas tareas.
+- Rama actual: `Juan_Balanta/gint-turn-c-integration`.
+- Revalidación: `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.
+- Resultado parcial: integración de juego, GV03, contrato TC04, V04, GK04 y preview HUD 1920×1080 PASS. El preview a 1920×1080 es simulado; no equivale a sesión LAN real.
+- Bloqueo TC02 (owner: Krystal): falta demostrar límites y corredores mediante prueba de colisiones/rutas y captura de gameplay limpio. `tc02_clean_map_test.tscn` solo pasa el control de overlays de depuración ocultos.
+- Bloqueo de runner de inicio (owners propuestos: Juan/Edwar): los seis procesos reportan `GAME_SESSION_READY`, pero una reejecución falla al comprobar código de salida vacío de `client1`; el handoff de Edwar reporta tres PASS anteriores.
+- Bloqueo de runner de desconexión (owner propuesto: Juan): la fase de lobby expira esperando `seventh-rejected`, así que esta reejecución no alcanzó la desconexión durante partida.
+- Cierre requerido: evidencia de TC02 integrada; runners repetibles; recorrido visual de seis peers y matriz completa a 1280×720, 1600×900 y 1920×1080, separando previews de runtime.

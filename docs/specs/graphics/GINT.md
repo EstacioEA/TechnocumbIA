@@ -2,7 +2,7 @@
 
 - Responsables: Juan Diego Balanta y Edwar Estacio
 - Turno: C, después de GJ01, GE01, GV01, GK01 y GM01.
-- Estado: IN_PROGRESS; regresion automatizada de desconexion corregida y PASS; GINT01 aun requiere recorrido visual runtime completo; GINT02 pendiente de 1920x1080/TC01-TC04; GINT03 con handoff incremental. Seguimiento: `docs/handoffs/2026-10-10-0800-Juan-disconnect-runtime-fix.md`.
+- Estado: IN_PROGRESS; TC01/TC03/TC04 integradas; TC02 pendiente de colisiones/rutas. TC05 bloqueada por TC02 y resultados inconsistentes de runners; revalidación: `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.
 
 ## Objetivo
 
@@ -19,11 +19,11 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 ## Tareas atómicas
 
 ### GINT01 — Ensamblar y recorrer el flujo
-- Estado: IN_PROGRESS — la regresión automatizada de desconexión ya pasa tras corregir el teardown en `papoi_game_session.gd`; falta completar el recorrido visual runtime menú→lobby→juego→resultado con seis peers y revisar los handoffs de las cinco áreas.
+- Estado: IN_PROGRESS — tests automatizados de integración pasan; recorrido visual runtime completo con seis peers pendiente. La reejecución del runner de inicio alcanzó GAME_SESSION_READY en seis procesos y falló al validar el código de salida vacío de client1.
 - Aceptación: revisar diff/handoff de cada área; recorrer menú→lobby→juego→resultado; documentar referencias rotas con responsable.
 
 ### GINT02 — Matriz visual y resoluciones
-- Estado: IN_PROGRESS — precolección de evidencia; el cierre depende de GINT01 y aún faltan 1920×1080 y las integraciones pendientes TC01, TC02 y TC04 (TC03 está DONE).
+- Estado: IN_PROGRESS — preview HUD de cinco estados a 1920×1080 disponible; la matriz runtime sigue bloqueada por TC02 y por recorrido LAN visual pendiente.
 - Aceptación: completar la matriz para los escenarios descritos abajo; revisar 1280×720, 1600×900 y 1920×1080; cada fila tiene PASS/FAIL/BLOCKED y evidencia.
 
 ### GINT03 — Cierre y relevo
@@ -45,14 +45,14 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 |---|---|---|
 | Menú y navegación teclado | PASS | GJ05 `gj05_visual_capture_test.gd`; GJ05 `run_gj05_menu_lan_test.ps1` (host+cliente desde menú); evidencia `docs/handoffs/evidence/gj05/`. |
 | Errores/validación de red visibles | PASS | GJ05 captura de validación/rechazo; `run_lobby_slots_test.ps1` confirma rechazo del séptimo peer. |
-| Lobby 1/6, 6/6, ready/no-ready, host/cliente | PASS en pruebas automatizadas; falta recorrido visual runtime completo | `lobby_presentation_test.gd`, `run_lobby_slots_test.ps1` y `run_disconnect_match_test.ps1` PASS en la revalidacion de `2026-10-10-0800-Juan-disconnect-runtime-fix.md`. |
-| Personajes/equipos/roles distinguibles | BLOCKED | `GV01_CHARACTERS_TEST`, `GV02_ORIENTATION_TEST`, `GV03_SIX_PLAYERS_TEST`, `GM01_ROLE_ICONS_TEST`, `GM04_ROLE_FEEDBACK_TEST` y TC03 verificación funcional de roles PASS/DONE; los sprites integrados de TC01 siguen pendientes. |
-| Mapa, bases, rutas, olla y barrera legibles | BLOCKED | `GK01–GK04`, `K01–K04`, `V03` y capturas 1280×720 PASS; la revalidación TC02 de límites/rutas del Turn C sigue TODO. |
-| HUD y feedback de acciones sobre visión | BLOCKED | `GE03–GE06`, `GM02–GM04`, `K04` y `GAME_INTEGRATION_TEST` PASS en sus coberturas; TC04 snapshot/cooldown integrado sigue TODO. |
+| Lobby 1/6, 6/6, ready/no-ready, host/cliente | BLOCKED en reejecución actual | Los handoffs anteriores registran PASS; ahora el runner de inicio falla en el cierre de client1 y el de desconexión expira esperando `seventh-rejected`. Ver handoff 10:40. |
+| Personajes/equipos/roles distinguibles | BLOCKED para recorrido visual integrado; pruebas automatizadas PASS | TC01 integrado; `gv03_six_players_test.gd` PASS. Revisar los seis peers durante el flujo runtime. |
+| Mapa, bases, rutas, olla y barrera legibles | BLOCKED | TC02 aún requiere prueba de colisiones/rutas y captura runtime limpia; clean-map PASS solo confirma overlays ocultos. |
+| HUD y feedback de acciones sobre visión | BLOCKED para flujo runtime; pruebas de componentes PASS | TC04 snapshot/HUD integrado; `tc04_role_snapshot_hud_test.gd` y V04 PASS. Cooldowns de preview son fixtures, no productores runtime. |
 | Estados de resultado de ronda/partida | PASS | `GAME_INTEGRATION_TEST`, `K04_HUD_RESULTS_TEST`, `GE05_RESULT_HIERARCHY_TEST` PASS; GE06 previews distinguidas como simuladas. |
 | Layout 1280×720 | PASS | Capturas de GJ05, GK04, GE06 y GM01; automatización de GJ05/GE06 PASS. |
 | Layout 1600×900 | PASS | GJ05 y GE06 generan/verifican previews a 1600×900; son previews, no partida LAN real. |
-| Layout 1920×1080 | BLOCKED | No existe evidencia ni ejecución a esta resolución en este checkpoint. |
+| Layout 1920×1080 | PASS preview HUD; BLOCKED runtime | Cinco estados simulados en `evidence/gint/1920x1080/`; no hay captura de partida LAN real. |
 
 ## Revalidación GINT — 2026-10-10
 
@@ -73,3 +73,20 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 - [ ] Se revisan los diffs y se deja handoff de relevo con pruebas automatizadas y manuales separadas.
 - [ ] `AI_TRACE.md` recibe una entrada incremental; no hay commit automático.
 
+
+## Estado vigente — revalidación 2026-10-10 10:40 (Juan)
+
+Este bloque actualiza el checkpoint vigente; los resultados históricos anteriores se conservan como registro. TC01 sprites está integrado, TC03 está DONE y TC04 snapshot/HUD está integrado con preview. TC02 continúa TODO: su prueba `tc02_clean_map_test.tscn` solo confirma que los overlays de debug están ocultos, no demuestra colisiones ni conectividad de los pasillos. Por ello TC05 aún no puede cerrarse.
+
+| Caso | Resultado vigente | Evidencia/limitación |
+|---|---|---|
+| Menú, validación de red y lobby | PASS en pruebas anteriores; recorrido visual integrado pendiente | GJ05 handoff y runner; el runner de rechazo del séptimo tuvo timeout en esta reejecución. |
+| Seis sprites, equipos y roles | PASS automatizado | `gv03_six_players_test.gd`; TC01 integrado. Recorrido runtime completo pendiente. |
+| Límites, corredores y zonas del mapa | BLOCKED | TC02 de Krystal sigue pendiente de prueba de colisiones/rutas y captura limpia en runtime. Clean-map PASS solo valida overlays ocultos por defecto. |
+| HUD/snapshot y overlay de visión | PASS en cobertura automatizada | `tc04_role_snapshot_hud_test.gd`, `v04_camera_vision_test.gd`; cooldowns reales de todos los roles y sesión completa no demostrados. |
+| Estados ACTIVE, POT_COOKING, ESCAPE, ROUND_RESULT, MATCH_RESULT a 1920×1080 | PASS — preview simulada | `tests/qa/gint_hud_1920_preview_test.gd`, capturas en `docs/handoffs/evidence/gint/1920x1080/`. Inspección visual de ACTIVE y MATCH_RESULT sin recorte visible. |
+| Flujo real a 1920×1080 | BLOCKED | No hay captura runtime LAN a esa resolución. |
+| Lobby de seis / inicio y snapshot de ronda | FAIL en reejecución del runner | Seis procesos llegaron a `GAME_SESSION_READY`; el cierre falla al consultar código vacío de `client1`. Edwar registra tres PASS previos en su handoff 10:23; investigar discrepancia. |
+| Desconexión durante partida | BLOCKED en esta reejecución | La fase de lobby previa agotó el timeout esperando `seventh-rejected`; el escenario de partida no corrió. |
+
+Revalidación y pasos concretos: `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.

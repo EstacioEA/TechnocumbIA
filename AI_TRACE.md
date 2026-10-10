@@ -738,3 +738,16 @@
 - Pruebas: `run_ready_start_test.ps1 -Port 2456` pasó tres veces consecutivas con Godot 4.7.2; las seis instancias informaron `GAME_SESSION_READY` y no hubo errores Godot/ENet. `game_state_test.gd`: PASS. `run_gj05_menu_lan_test.ps1 -Port 2456`: PASS. `git diff --check`: PASS.
 - Limitaciones: integración automatizada en loopback; no reemplaza una prueba entre computadores físicos con firewall y red LAN reales. El cierre escalonado de clientes es limpieza del harness de prueba y no una acción del flujo normal del juego.
 - Handoff: `docs/handoffs/2026-10-10-1023-Edwar-lan-match-runner.md`.
+
+## 2026-10-10 — Revalidación GINT/TC05 y preview HUD 1920×1080
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: revalidar la integración visual Turn C, documentar el estado de TC05 y generar evidencia HUD para 1920×1080.
+- Rama: `Juan_Balanta/gint-turn-c-integration`, desde el develop actualizado localmente (`6d8f472`).
+- Archivos: `tests/qa/gint_hud_1920_preview_test.gd`, `docs/handoffs/evidence/gint/1920x1080/*.png`, `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`, `docs/specs/graphics/GINT.md`, `docs/specs/Juan_Balanta/TASKS.md`, `AI_TRACE.md`.
+- Resumen: añadida una captura gráfica de cinco estados del HUD con fixtures y etiqueta PREVIEW SIMULADO. Se refrescó el checkpoint documental: TC01/TC03/TC04 integradas; TC02 sigue pendiente de colisiones/rutas; TC05 continúa bloqueada por TC02 y por runners inconsistentes.
+- Pruebas: GAME_INTEGRATION_TEST, GV03, TC04 snapshot HUD, TC02 clean-map, V04, GK04 y preview GINT 1920×1080 PASS. `run_ready_start_test.ps1` FAIL en verificación de código de salida vacío de client1 tras GAME_SESSION_READY en los seis procesos; `run_disconnect_match_test.ps1` BLOCKED en timeout de `seventh-rejected` antes de empezar la partida. Detalles y alcance en el handoff.
+- Limitaciones: no se realizó recorrido manual LAN con seis equipos/procesos en las tres resoluciones; la preview no acredita gameplay en vivo. TC02 debe aportar evidencia de colisiones y rutas antes de cerrar TC05. No se creó commit ni se hizo push.
+- Handoff: `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.
