@@ -8,18 +8,20 @@
 - Aceptación: escena carga sin errores; se puede instanciar dos veces; no depende de red.
 
 ## V02 — Input y movimiento
-- Estado: TODO
+- Estado: DONE
 - Depende de: V01
 - Rama sugerida: `Valeria_Piza/player-movement`
 - Configurar WASD, velocidad parametrizada y movimiento local.
-- Aceptación: cuatro direcciones funcionan; velocidad no depende de FPS; input está documentado.
+- Aceptación: acciones WASD registradas, movimiento con velocidad parametrizada
+  y prueba headless de desplazamiento ejecutada.
 
 ## V03 — Colisiones y límites
-- Estado: TODO
+- Estado: DONE
 - Depende de: V02, K01
 - Rama sugerida: `Valeria_Piza/player-collisions`
 - Aplicar paredes, límites y zonas bloqueadas.
-- Aceptación: el jugador no atraviesa obstáculos; caso reproducible de colisión documentado.
+- Aceptación: límites del mapa y barrera cerrada bloquean al jugador; caso
+  reproducible de colisión documentado.
 
 ## V04 — Cámara y visión
 - Estado: TODO
