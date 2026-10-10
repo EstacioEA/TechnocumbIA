@@ -39,8 +39,9 @@
 - Spec: `docs/specs/Miguel_Pabon/graphics-spec.md`; turno B; puede usar iconos preview antes de integrar eventos.
 
 ### GM01 — Iconos roles/pasivas
-- Estado: TODO; dependencia: ninguna.
+- Estado: DONE; dependencia: ninguna.
 - Aceptación: seis roles con nombre/icono distinguibles a tamaño HUD y monocromo.
+- Evidencia: `tests/ui/gm01_role_icons_test.gd`; preview: `tests/ui/gm01_role_icons_preview.gd`.
 
 ### GM02 — Estado de cooldown
 - Estado: TODO; depende de: GM01.

@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/specs/Miguel_Pabon/TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/specs/Miguel_Pabon/TASKS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/game/match_state.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/game/match_state.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/game/game_state_test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/game/game_state_test.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +15,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pabox123&quot;
+  }
+}</component>
   <component name="GitToolBoxStore">
     <option name="recentBranches">
       <RecentBranches>
@@ -27,20 +30,24 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/role-contracts" />
-                    <option name="lastUsedInstant" value="1791608782" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/combat-integration" />
-                    <option name="lastUsedInstant" value="1791605481" />
-                  </RecentBranch>
-                  <RecentBranch>
                     <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1791604168" />
+                    <option name="lastUsedInstant" value="1791616793" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/combat-roles" />
-                    <option name="lastUsedInstant" value="1791604167" />
+                    <option name="branchName" value="Miguel_Pabon/abilities-enrage" />
+                    <option name="lastUsedInstant" value="1791616658" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/beast-access" />
+                    <option name="lastUsedInstant" value="1791615450" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/combat-lives" />
+                    <option name="lastUsedInstant" value="1791614894" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/papa-capture" />
+                    <option name="lastUsedInstant" value="1791614435" />
                   </RecentBranch>
                 </list>
               </option>
@@ -51,17 +58,66 @@
       </RecentBranches>
     </option>
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/EstacioEA/TechnocumbIA.git&quot;,
+    &quot;accountId&quot;: &quot;4c22c80a-be14-44ec-b0c5-67d3c7afb345&quot;
+  }
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "git-widget-placeholder": "Miguel__Pabon/role-contracts",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3KUgu5IgM5SNNzCy9IVq67qcr6C" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Asus/Desktop/PERSONAL/GAME/TechnocumbIA&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="" />
+      <created>1791617782114</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791617782114</updated>
+      <workItem from="1791617785462" duration="5000" />
+      <workItem from="1791627995631" duration="118000" />
+      <workItem from="1791628132439" duration="175000" />
+      <workItem from="1791628325004" duration="68000" />
+      <workItem from="1791628407885" duration="37000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
