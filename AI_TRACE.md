@@ -348,6 +348,16 @@
 - Resumen: se ejecutaron pruebas headless de mapa, colisiones, spawns, Papa/olla, cocción, rescate, escape, HUD, resultados, estados de combate, transporte LAN y ready/start. La matriz queda con P0-01 a P0-11 PASS y P0-12 BLOCKED.
 - Limitaciones: el runner de lobby detecta `SEVENTH_REJECTED`, pero falla porque el proceso rechazado no termina; por dependencia del pre-match, la prueba de desconexión durante partida no puede completarse. No se modificó la red ni el runner fuera del alcance de K05. Esta entrada se mantiene local y no se publica remotamente.
 
+## 2026-10-10 — GK01 suelo y rutas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: iniciar GK01 del turno B con una capa visual separada para suelo, rutas y paredes del mapa.
+- Rama: `Krystal_Giraldo/map-visuals`, basada en `develop` actualizado.
+- Archivos: `scenes/map/visuals/papoi_map_visuals.gd`, `scenes/map/visuals/papoi_map_visuals.tscn`, `scenes/map/papoi_map.tscn`, `tests/qa/gk01_map_visuals_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0545-GK01-map-visuals.md`.
+- Resumen: se añadió una capa visual original que contrasta rutas transitables, suelo y paredes, instanciada como hija del mapa sin modificar geometría, colisiones, spawns u objetivos. `GK01_MAP_VISUALS_TEST` y la regresión `K01_MAP_TEST` pasan con Godot 4.7.2 headless.
+- Limitaciones: GK01 queda `IN_PROGRESS` porque falta captura/revisión visual del mapa completo; no se afirma licencia legal de arte externo. Esta entrada se mantiene local y no se publica remotamente.
+
 ## 2026-10-10 — Planeación gráfica por relevos
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Juan Diego Balanta (solicitante); tareas asignadas a Juan, Edwar, Valeria, Krystal y Miguel.

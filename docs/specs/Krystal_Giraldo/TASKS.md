@@ -41,8 +41,9 @@
 - Spec: `docs/specs/Krystal_Giraldo/graphics-spec.md`; turno B; no depende del Theme de Edwar.
 
 ### GK01 — Suelo y rutas
-- Estado: TODO; dependencia: mapa actual.
+- Estado: IN_PROGRESS; dependencia: mapa actual.
 - Aceptación: ruta transitable contrasta con suelo/decoración; paredes no parecen camino.
+- Evidencia parcial: `tests/qa/gk01_map_visuals_test.gd` y regresión `tests/qa/k01_map_test.gd` pasan con Godot 4.7.2 headless; la captura del mapa completo queda pendiente de revisión visual.
 
 ### GK02 — Bases y spawns
 - Estado: TODO; puede hacerse en paralelo con GK01.
