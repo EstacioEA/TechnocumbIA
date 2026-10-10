@@ -39,19 +39,19 @@
 - Todas las tareas GJ usan el baseline provisional de `VISUAL_DIRECTION.md`; ninguna espera el Theme ni la aprobación de Edwar.
 
 ### GJ01 — Cascarón del menú
-- Estado: BLOCKED — implementación creada; falta abrir y verificar visualmente la escena.
+- Estado: DONE — verificado en runtime a 1280×720 y 1600×900; foco de teclado y capturas comprobados.
 - Dependencia: ninguna.
 - Archivos: nuevo menú/ script y `project.godot` para establecer escena inicial.
 - Aceptación: ejecutar el proyecto abre título, Host, Unirse y Salir; foco teclado visible; Host/Unirse emiten señales UI.
 
 ### GJ02 — Crear partida/host
-- Estado: BLOCKED — implementación creada; falta revisar el flujo visual.
+- Estado: DONE — panel verificado; crea host LAN desde el menú y mantiene inicio deshabilitado con menos de seis jugadores.
 - Requiere la escena GJ01 existente, no su validación visual; panel aislado mientras tanto.
 - Archivos: nuevos `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd` y glue visual en `scripts/ui/menu/main_menu.gd`.
 - Aceptación: Host abre panel; puerto inicial 2456; rango 1–65535 validado inline; puerto válido emite señal; Volver regresa al menú; no modificar ENet.
 
 ### GJ03 — Unirse por IP
-- Estado: BLOCKED — panel implementado; pendiente revisión visual en runtime.
+- Estado: DONE — validación inline y unión de cliente desde el menú verificadas; e2e host/cliente localhost con roster de dos.
 - Dependencia: artefacto GJ01 existente; su revisión visual sigue pendiente.
 - Archivos: `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd` y glue de vista en `scripts/ui/menu/main_menu.gd`.
 - Aceptación de este corte: IP/puerto editables y validados inline, emitir `join_requested(address, port)`, volver al menú, comunicar que falta integrar transporte. GJ05 conectará la intención con la sesión; esta tarea no cambia la red.
@@ -63,8 +63,10 @@
 - Evidencia: Godot 4.7.2 headless editor PASS; `lobby_presentation_test.gd` PASS; `run_lobby_slots_test.ps1` PASS con seis jugadores, rechazo del séptimo y desconexión. `run_ready_start_test.ps1` comprobó host/cliente e inicio y alcanzó los marcadores PASS, pero el runner termina FAIL por llamadas multiplayer durante cierre de clientes en `papoi_game_session.gd`; se registra para seguimiento, sin cambios a red/autoridad.
 
 ### GJ05 — Navegación, tamaños y handoff Turno A
-- Estado: TODO; depende de: GJ01–GJ04.
-- Aceptación: flujo menú→lobby usable con teclado y mouse; capturas 1280×720 y 1600×900; sin texto cortado; lista de estados cubiertos y pendientes.
+- Estado: DONE — verificado a 1280×720 y 1600×900; e2e menú-host-cliente aprobado. Handoff: `docs/handoffs/2026-10-10-0358-GJ05-menu-lobby-integration.md`.
+- Archivos: scripts UI de menú/lobby, `tests/ui/`, capturas en `docs/handoffs/evidence/`, handoff y `AI_TRACE.md`.
+- Aceptación: crear/unirse entra al lobby mediante la red existente; rechazo/error visible; recorrido enfocable por teclado y activable por mouse; capturas verificadas a 1280×720 y 1600×900 sin texto cortado; preview rotulado; handoff lista estados y defectos. No cambia protocolo ni autoridad.
+- Evidencia: `tests/ui/gj05_visual_capture_test.gd` PASS (12 capturas, estados de host/join/rechazo y controles, ambas resoluciones); `tests/ui/run_gj05_menu_lan_test.ps1` PASS con host y cliente conectados (roster=2); `tests/ui/lobby_presentation_test.gd` PASS; `tests/network/run_lan_transport_test.ps1` PASS; `tests/network/run_lobby_slots_test.ps1` PASS.
 
 ## GINT — Integración visual por relevos (Juan + Edwar)
 - Spec: `docs/specs/graphics/GINT.md`.

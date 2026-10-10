@@ -2,6 +2,8 @@ extends Control
 
 const GAME_SCENE := preload("res://scenes/game/papoi_game.tscn")
 
+signal menu_requested
+
 @onready var network: Node = $NetworkManager
 
 var _players_label: Label
@@ -156,7 +158,7 @@ func _build_ui() -> void:
 	_start_button.pressed.connect(_on_start_pressed)
 	actions.add_child(_start_button)
 	_leave_button = Button.new()
-	_leave_button.text = "DESCONECTAR"
+	_leave_button.text = "VOLVER AL MENÚ"
 	_leave_button.custom_minimum_size.y = 48
 	_apply_button_style(_leave_button, false)
 	_leave_button.pressed.connect(_on_leave_pressed)
@@ -221,15 +223,23 @@ func _on_host_pressed() -> void:
 	var port := _read_port()
 	if port < 0:
 		return
-	if network.host_game(port) == OK:
-		_update_controls()
+	start_host(port)
 
 
 func _on_join_pressed() -> void:
 	var port := _read_port()
 	if port < 0:
 		return
-	if network.join_game(_ip_input.text, port) == OK:
+	join_host(_ip_input.text, port)
+
+
+func start_host(port: int) -> void:
+	if network.host_game(port) == OK:
+		_update_controls()
+
+
+func join_host(address: String, port: int) -> void:
+	if network.join_game(address, port) == OK:
 		_update_controls()
 
 
@@ -257,8 +267,9 @@ func _on_start_pressed() -> void:
 
 
 func _on_leave_pressed() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
 	network.close_session()
-	_on_status_changed("Desconectado de la sala.")
+	menu_requested.emit()
 
 
 func _on_lobby_updated(snapshot: Array[Dictionary]) -> void:
@@ -284,8 +295,13 @@ func _on_lobby_updated(snapshot: Array[Dictionary]) -> void:
 	if lines.is_empty():
 		lines.append("Aún no hay jugadores conectados.")
 	_players_label.text = "\n".join(lines)
-	if not _has_active_lobby():
-		_roster_count_label.text = "SIN CONEXIÓN · %d / 6" % connected_count
+	var peer: MultiplayerPeer = network.multiplayer.multiplayer_peer
+	if peer is ENetMultiplayerPeer and peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTING:
+		_roster_count_label.text = "CONECTANDO AL HOST…"
+	elif peer is ENetMultiplayerPeer and peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED and snapshot.is_empty():
+		_roster_count_label.text = "CONECTADO · SINCRONIZANDO SALA…"
+	elif snapshot.is_empty():
+		_roster_count_label.text = "SIN CONEXIÓN · 0 / 6"
 	else:
 		_roster_count_label.text = "SALA LLENA · 6 / 6" if connected_count == 6 else "SALA PARCIAL · %d / 6" % connected_count
 	_update_controls()
@@ -315,17 +331,19 @@ func _on_lobby_start() -> void:
 
 func _update_controls() -> void:
 	var connected := _has_active_lobby()
+	var peer: MultiplayerPeer = network.multiplayer.multiplayer_peer
+	var connecting := peer != null and peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTING
 	_ready_button.disabled = not connected
 	var is_host := connected and network.multiplayer.is_server()
 	var all_ready: bool = network.players.size() == 6
 	for player_data: Dictionary in network.players.values():
 		all_ready = all_ready and bool(player_data.get("ready", false))
 	_start_button.disabled = not is_host or not all_ready
-	_host_button.disabled = connected
-	_join_button.disabled = connected
-	_leave_button.disabled = not connected
+	_host_button.disabled = connected or connecting
+	_join_button.disabled = connected or connecting
+	_leave_button.disabled = not peer is ENetMultiplayerPeer
 	if not connected:
-		_start_hint_label.text = "Conéctate a una sala para cambiar tu estado o iniciar."
+		_start_hint_label.text = "Conectando…" if connecting else "Conéctate a una sala para cambiar tu estado o iniciar."
 	elif not is_host:
 		_start_hint_label.text = "Solo el host puede iniciar la partida."
 	elif network.players.size() < 6:
@@ -338,4 +356,4 @@ func _update_controls() -> void:
 
 func _has_active_lobby() -> bool:
 	var peer: MultiplayerPeer = network.multiplayer.multiplayer_peer
-	return peer != null and peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED and not network.players.is_empty()
+	return peer is ENetMultiplayerPeer and peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED and not network.players.is_empty()
