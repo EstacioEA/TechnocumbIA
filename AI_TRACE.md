@@ -571,4 +571,5 @@
 - Resumen: se reemplazó el layout abstracto por la referencia oficial escalada a 1280×720; Hall de Auditorios funciona como base atacante/escape, Biblio como base defensora, Summan como captura, Piedritas como corredor y Torre como sala de olla. Se añadieron paredes de colisión aproximadas para la Torre y se conservó la autorización del host para la barrera.
 - Pruebas: `K01_MAP_TEST`, `K02_POT_ZONE_TEST`, `K03_COOKING_ESCAPE_TEST`, `GK01_MAP_VISUALS_TEST`, `GK02_BASE_SPAWN_VISUALS_TEST` y `GK03_POT_BARRIER_VISUALS_TEST` pasan con Godot 4.7.2; `git diff --check` pasa.
 - Evidencia runtime: `docs/handoffs/captura vista fix krystal 4.png` confirma el mapa completo a 1280×720 con olla en Torre y barrera cerrada.
-- Limitaciones: falta captura runtime con barrera abierta para cerrar GK03; no se afirma licencia externa de la imagen; no se creó commit ni se hizo push.
+- Evidencia abierta: `docs/handoffs/captura pantalla krystal 5 - estado abierto.png` confirma `ESTADO: ABIERTA` en Torre.
+- Limitaciones: no se afirma licencia externa de la imagen; no se creó push automático.

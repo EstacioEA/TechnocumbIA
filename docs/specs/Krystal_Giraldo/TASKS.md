@@ -51,15 +51,16 @@
 - Evidencia: `tests/qa/gk02_base_spawn_visuals_test.gd`, `tests/qa/gk01_map_visuals_test.gd`, `tests/qa/k01_map_test.gd` y `docs/handoffs/captura vista fix krystal 4.png`.
 
 ### GK03 — Olla y barrera
-- Estado: IN_PROGRESS; implementación preservada y reubicada a Torre; pendiente de captura runtime cerrada/abierta.
+- Estado: DONE; implementación reubicada a Torre y estados cerrado/abierto validados en runtime.
 - Aceptación: olla y barrera abierta/cerrada legibles; visual no cambia colisión/objetivo.
+- Evidencia: `tests/qa/gk03_pot_barrier_visuals_test.gd`, `docs/handoffs/captura vista fix krystal 4.png` y `docs/handoffs/captura pantalla krystal 5 - estado abierto.png`.
 
 ### GK04 — Contraste/evidencia
 - Estado: TODO; depende de GK01–GK03.
 - Aceptación: overlay no esconde rutas/objetivos/HUD; pruebas mapa conservadas; captura y fuentes de assets documentadas.
 
 ## K06 — Remapeo oficial del mapa
-- Estado: IN_PROGRESS; autorizado explícitamente para alinear lógica, colisiones y presentación con `assets/maps/Mapa Base.jpeg`.
+- Estado: DONE; autorizado explícitamente para alinear lógica, colisiones y presentación con `assets/maps/Mapa Base.jpeg`.
 - Decisión funcional: Hall de Auditorios = base atacante/escape; Biblio = base defensora; Summan = zona de captura; Piedritas = corredor central; Torre = sala de la olla y entrada de Bestia.
 - Evidencia técnica: `K01_MAP_TEST`, `K02_POT_ZONE_TEST`, `K03_COOKING_ESCAPE_TEST`, `GK01_MAP_VISUALS_TEST`, `GK02_BASE_SPAWN_VISUALS_TEST` y `GK03_POT_BARRIER_VISUALS_TEST` pasan con Godot 4.7.2 headless.
-- Pendiente de aceptación: captura runtime con barrera abierta y revisión visual de colisiones/rutas; no se afirma licencia externa del JPEG.
+- Evidencia final: capturas runtime a 1280×720 con barrera cerrada y abierta; no se afirma licencia externa del JPEG.

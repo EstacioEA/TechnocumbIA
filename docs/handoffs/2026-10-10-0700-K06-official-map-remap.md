@@ -37,6 +37,7 @@
 ## Limitaciones y siguiente evidencia
 
 - La captura cerrada valida visualmente GK01 y GK02: landmarks, rutas, bases, spawns y olla en Torre son legibles.
-- Falta una captura runtime con barrera abierta para cerrar GK03.
+- Captura runtime abierta: `docs/handoffs/captura pantalla krystal 5 - estado abierto.png`.
+- Con ambas capturas, GK01, GK02, GK03 y K06 quedan listas para revisión del equipo.
 - La imagen se usa como referencia visual proporcionada por el equipo; no se afirma licencia externa.
 - No se creó commit ni se hizo push automáticamente.
