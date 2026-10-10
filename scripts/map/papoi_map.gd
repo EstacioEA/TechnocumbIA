@@ -8,6 +8,9 @@ const MAP_BOUNDS := Rect2(0.0, 0.0, 1280.0, 720.0)
 const ATTACKER_BASE := Vector2(190.0, 400.0)
 const DEFENDER_BASE := Vector2(1140.0, 600.0)
 const POT_ROOM_CENTER := Vector2(1000.0, 112.0)
+const TOWER_KEY_SPAWN := Vector2(620.0, 330.0)
+const BEAST_GATE_POSITION := Vector2(920.0, 220.0)
+const BEAST_GATE_ACCESS_POSITION := Vector2(920.0, 270.0)
 const ATTACKER_SPAWNS := [
 	Vector2(160.0, 340.0),
 	Vector2(160.0, 400.0),
@@ -122,15 +125,24 @@ func is_position_in_escape(position: Vector2) -> bool:
 func set_beast_gate_open(open: bool, host_authorized: bool) -> bool:
 	if not host_authorized:
 		return false
+	apply_beast_gate_state(open)
+	return true
+
+func apply_beast_gate_state(open: bool) -> void:
 	_beast_gate_open = open
 	var gate := get_node_or_null("BeastGate/CollisionShape2D") as CollisionShape2D
 	if gate:
 		gate.disabled = open
 	queue_redraw()
-	return true
 
 func is_beast_gate_open() -> bool:
 	return _beast_gate_open
+
+func get_beast_gate_position() -> Vector2:
+	return to_global(BEAST_GATE_POSITION)
+
+func get_beast_gate_access_position() -> Vector2:
+	return to_global(BEAST_GATE_ACCESS_POSITION)
 
 func set_debug_overlay_visible(enabled: bool) -> void:
 	_show_debug_overlay = enabled
@@ -181,7 +193,7 @@ func _create_boundaries() -> void:
 	var gate_rectangle := RectangleShape2D.new()
 	gate_rectangle.size = Vector2(20.0, 80.0)
 	gate_shape.shape = gate_rectangle
-	gate_shape.position = Vector2(920.0, 220.0)
+	gate_shape.position = BEAST_GATE_POSITION
 	gate.add_child(gate_shape)
 	add_child(gate)
 

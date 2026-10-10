@@ -23,7 +23,7 @@ var _avatar_role: StringName = &""
 const ROLE_TEXTURES := {
 	&"Papa": "res://assets/characteres/papa/papa_sprites.png",
 	&"Trolazzo": "res://assets/characteres/trolazo/trolazo_sprites.png",
-	&"Bestia": "res://assets/characteres/bestia/bestia_sprites.png",
+	&"Bestia": "res://assets/characteres/Bestia/bestia_sprites.png",
 	&"Tanque": "res://assets/characteres/defensora/defensora_sprites.png",
 	&"Cazador": "res://assets/characteres/cazador/cazador_sprites.png",
 	&"Porta Papas": "res://assets/characteres/porta_papa/porta_papa_sprites.png",

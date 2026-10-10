@@ -19,8 +19,8 @@ void fragment() {
 	vec2 corrected_center = vision_center;
 	corrected_center.x *= SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x;
 	float distance_to_target = distance(corrected_uv, corrected_center);
-	float outside_visibility = smoothstep(vision_radius - 0.025, vision_radius, distance_to_target);
-	COLOR = vec4(COLOR.rgb, COLOR.a * outside_visibility);
+	float outside_field = smoothstep(vision_radius - 0.025, vision_radius, distance_to_target);
+	COLOR = vec4(COLOR.rgb, COLOR.a * outside_field);
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vision"]
