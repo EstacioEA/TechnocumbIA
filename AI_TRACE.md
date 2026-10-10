@@ -917,3 +917,14 @@
 - Resumen: se agregaron temporizadores autoritativos de cinco segundos, cuenta regresiva centrada para `COUNTDOWN`, `ROUND_RESULT` y `MATCH_RESULT`, reinicio automático de rondas y retorno al lobby existente sin pasar por el menú.
 - Pruebas: `game_state_test`, `GAME_INTEGRATION_TEST`, carga headless del proyecto y `git diff --check` pasaron. El preview gráfico del HUD requiere renderer.
 - Limitaciones: falta validación manual con seis procesos LAN; no se creó commit automático.
+
+## 2026-10-10 — Edwar Estacio: HUD visible sobre el campo de visión
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / BUGFIX / TESTING
+- Tarea: mantener visibles durante la partida las estadísticas y controles del HUD aunque esté activo el campo de visión.
+- Rama: `develop`.
+- Archivos: `scenes/ui/papoi_hud.tscn`, `tests/game/integrated_game_visual_test.gd`, `AI_TRACE.md`.
+- Resumen: se asignó la capa 30 al HUD para que se dibuje sobre el overlay de visión de capa 20; la prueba visual integrada ahora verifica esa prioridad.
+- Limitaciones: prueba modificada, pero no ejecutada en esta tarea.

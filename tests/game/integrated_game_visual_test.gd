@@ -25,6 +25,8 @@ func run() -> void:
 		_fail("integrated game scene must contain the gameplay map")
 	if hud == null:
 		_fail("integrated game scene must contain the gameplay HUD")
+	elif hud.layer <= 20:
+		_fail("gameplay HUD must render above the vision overlay")
 	if visuals == null:
 		_fail("integrated game scene must contain map visuals")
 	if background == null:
