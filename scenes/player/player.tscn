@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/camera/local_camera.gd" id="2_camera"]
 [ext_resource type="Script" path="res://scripts/camera/vision_overlay.gd" id="3_vision"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_visual.tscn" id="4_visual"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 18.0
@@ -30,6 +31,8 @@ script = ExtResource("1_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_player")
+
+[node name="PlayerVisual" parent="." instance=ExtResource("4_visual")]
 
 [node name="LocalCamera" type="Camera2D" parent="."]
 script = ExtResource("2_camera")

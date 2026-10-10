@@ -37,7 +37,7 @@ func _on_create_pressed() -> void:
 		_show_error("El puerto debe estar entre 1 y 65535.")
 		return
 
-	status_label.text = "Puerto válido. El servidor se conectará en el siguiente paso."
+	status_label.text = "Puerto válido. Creando la sala…"
 	status_label.add_theme_color_override("font_color", Color("#68d391"))
 	create_requested.emit(port)
 

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/map/papoi_map.tscn" id="1_map"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/player/gv01_preview.gd" id="3_preview"]
+
+[node name="GV01CharactersPreview" type="Node2D"]
+script = ExtResource("3_preview")
+
+[node name="PapoiMap" parent="." instance=ExtResource("1_map")]
+
+[node name="Attacker" parent="." instance=ExtResource("2_player")]
+position = Vector2(320, 384)
+local_control_enabled = false
+
+[node name="Defender" parent="." instance=ExtResource("2_player")]
+position = Vector2(960, 384)
+local_control_enabled = false

@@ -50,7 +50,7 @@ func _on_join_pressed() -> void:
 		_show_error("El puerto debe estar entre 1 y 65535.", port_input)
 		return
 
-	status_label.text = "Dirección válida. La conexión se integrará en la siguiente tarea."
+	status_label.text = "Destino válido. Conectando con el host…"
 	status_label.add_theme_color_override("font_color", Color("#68d391"))
 	join_requested.emit(address, port)
 

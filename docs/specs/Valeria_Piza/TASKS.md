@@ -44,7 +44,7 @@
 - Spec: `docs/specs/Valeria_Piza/graphics-spec.md`; turno B; baseline G00 disponible sin esperar Theme.
 
 ### GV01 — Siluetas y equipo
-- Estado: TODO; dependencia: escena jugador.
+- Estado: DONE; dependencia: escena jugador.
 - Aceptación: dos equipos legibles por color y forma; captura sobre mapa; collider intacto.
 
 ### GV02 — Orientación y jugador local

@@ -209,6 +209,15 @@
   headless.
 - Resultado del bloque de tareas Valeria: V01 a V05 completadas.
 
+## 2026-10-10 — GV01 siluetas y equipos
+
+- Rama: `Valeria_Piza/graphics-characters`, basada en `develop` actualizado.
+- Resultado: siluetas procedurales originales para atacantes y defensores,
+  distinguibles por color y forma, visibles sobre un preview del mapa.
+- Prueba: `tests/ui/gv01_characters_test.gd` ejecutada con Godot 4.7.2
+  headless; collider del jugador conservado.
+- Siguiente tarea: GV02 — Orientación y jugador local.
+
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -407,3 +416,15 @@
 - Pruebas: Godot 4.7.2 `--headless --editor --path . --quit` PASS; `tests/ui/lobby_presentation_test.gd` PASS; `tests/network/run_lobby_slots_test.ps1` PASS. `tests/network/run_ready_start_test.ps1` alcanzó marcadores de host/client/start, pero finalizó FAIL al apagar clientes: errores multiplayer provienen de `scripts/game/papoi_game_session.gd` en cierre/desconexión posterior al inicio; GJ04 no modifica ese archivo.
 - Limitaciones: no se integró navegación con menú ni se capturaron resoluciones; corresponde a GJ05. Pendiente revisar el cierre de sesión reportado por la regresión ready/start.
 - Siguiente tarea: GJ05, si se resuelve o se acepta el seguimiento del cierre postpartida y siguen disponibles sus dependencias visuales.
+
+## 2026-10-10 — GJ05 integración menú, LAN y lobby
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: completar la última tarea gráfica del Turno A: navegar del menú a host/unirse, integrar conexión LAN existente y verificar interfaz y estados en dos resoluciones.
+- Rama: `Juan_Balanta/gj05-menu-lobby-integration`, basada en `origin/develop` (`d20c174`).
+- Archivos: `scripts/ui/menu/main_menu.gd`, `scripts/ui/menu/host_panel.gd`, `scripts/ui/menu/join_panel.gd`, `scripts/ui/lobby/lobby.gd`, `tests/ui/gj05_visual_capture_test.gd`, `tests/ui/gj05_menu_lan_test.gd`, `tests/ui/run_gj05_menu_lan_test.ps1`, `docs/handoffs/evidence/gj05/`, specs de Juan, handoff GJ05.
+- Resumen: el menú inicia sesión host/client por NetworkManager y abre el lobby; el lobby muestra progreso/errores de conexión y permite volver cerrando la sesión. No se cambió autoridad ni protocolo. GJ01–GJ05 quedan DONE en los specs gráficos.
+- Pruebas: Godot 4.7.2 `gj05_visual_capture_test.gd` PASS con 12 capturas a 1280×720/1600×900; `run_gj05_menu_lan_test.ps1` PASS con host y cliente y roster=2; `lobby_presentation_test.gd`, `run_lan_transport_test.ps1` y `run_lobby_slots_test.ps1` PASS; `git diff --check` PASS antes de esta entrada.
+- Limitaciones: el rechazo en la captura visual es preview de UI (rechazo real del séptimo cliente probado por slots); e2e en localhost, no dos máquinas. Persiste el fallo al cerrar clientes reportado por ready/start en `papoi_game_session.gd`; fuera del alcance GJ05.
+- Handoff: `docs/handoffs/2026-10-10-0358-GJ05-menu-lobby-integration.md`.
+- Siguiente paso: revisar diff/capturas y crear commit según flujo del equipo; GJ01–GJ05 completos, GINT espera dependencias del resto del equipo.
