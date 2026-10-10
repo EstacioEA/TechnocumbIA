@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/map/papoi_map.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/map/papoi_map.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AI_TRACE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AI_TRACE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/player/player.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/player/player.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/qa/v04_camera_vision_test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/qa/v04_camera_vision_test.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +33,10 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/fix-vision-mask" />
+                    <option name="lastUsedInstant" value="1791644599" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="develop" />
                     <option name="lastUsedInstant" value="1791630361" />
                   </RecentBranch>
@@ -46,10 +51,6 @@
                   <RecentBranch>
                     <option name="branchName" value="Miguel_Pabon/graphics-role-icons" />
                     <option name="lastUsedInstant" value="1791628910" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/abilities-enrage" />
-                    <option name="lastUsedInstant" value="1791616658" />
                   </RecentBranch>
                 </list>
               </option>
@@ -87,7 +88,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "Krystal__Giraldo/map-playable-boundaries",
+    "git-widget-placeholder": "Miguel__Pabon/fix-vision-mask",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Asus/Desktop/PERSONAL/GAME/TechnocumbIA",

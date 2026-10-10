@@ -52,6 +52,11 @@ func _assert_local_overlay(overlay: CanvasLayer) -> void:
 	var radius: float = material.get_shader_parameter("vision_radius")
 	if not is_equal_approx(radius, 0.4):
 		_fail("vision radius must represent 80 percent of the viewport")
+	var shader_code := material.shader.code
+	if not shader_code.contains("outside_visibility"):
+		_fail("vision shader must darken the area outside the visible circle")
+	if shader_code.contains("COLOR.a * edge"):
+		_fail("vision shader must not darken the visible circle")
 
 func _assert_remote_overlay(overlay: CanvasLayer) -> void:
 	if overlay.layer != -1:

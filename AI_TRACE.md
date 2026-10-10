@@ -668,6 +668,17 @@
 - Pruebas: `ROLE_DIFFERENCES_PREVIEW_TEST: PASS — 6 interactive tabs`; `git diff --check` pasó.
 - Limitaciones: es una simulación local para revisión manual, no una partida LAN de seis clientes.
 
+## 2026-10-10 — Corrección de máscara de campo de visión
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: DEBUGGING / TESTING / DOCUMENTATION
+- Tarea: corregir el overlay de visión para que el círculo alrededor del jugador sea visible y el exterior del mapa quede oscurecido.
+- Rama: `Miguel_Pabon/fix-vision-mask`, basada en `Miguel_Pabon/role-differences-preview`.
+- Archivos: `scenes/player/player.tscn`, `tests/qa/v04_camera_vision_test.gd`, `docs/handoffs/2026-10-10-1002-Miguel-vision-mask-fix.md`.
+- Resumen: se invirtió la máscara alpha del shader, usando `outside_visibility` para aplicar oscuridad fuera del radio visible. Se añadió una aserción para evitar que el shader vuelva a oscurecer el círculo.
+- Pruebas: `V04_CAMERA_VISION_TEST`, `GK04_CONTRAST_EVIDENCE_TEST` y `git diff --check` pasaron.
+- Limitaciones: la comprobación visual final debe hacerse ejecutando la preview gráfica con la tecla `V`.
+
 ## 2026-10-10 - Edwar Estacio: preview interactiva TC04
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
