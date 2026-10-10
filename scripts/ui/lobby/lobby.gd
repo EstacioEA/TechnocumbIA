@@ -1,5 +1,7 @@
 extends Control
 
+const GAME_SCENE := preload("res://scenes/game/papoi_game.tscn")
+
 @onready var network: Node = $NetworkManager
 
 var _players_label: Label
@@ -164,7 +166,13 @@ func _on_lobby_rejected(reason: String) -> void:
 
 
 func _on_lobby_start() -> void:
-	_status_label.text = "Lobby iniciado. Conecta aquí la transición a la escena de partida."
+	if get_tree().root.has_node("PapoiGameSession"):
+		return
+	var game_session: Node = GAME_SCENE.instantiate()
+	game_session.name = "PapoiGameSession"
+	game_session.configure_network_manager(network)
+	get_tree().root.add_child(game_session)
+	visible = false
 
 
 func _update_controls() -> void:

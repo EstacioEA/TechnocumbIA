@@ -26,7 +26,7 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: el marcador incrementa una sola vez; no hay sexta ronda; todas las razones producen resultado visible para el host.
 
 ## E04 — Integración y smoke test
-- Estado: TODO
+- Estado: DONE — la prueba headless de integración verificó roster de 6 jugadores, captura, cocción, escape, resultado y rescate; editor scan Godot 4.7.2 y `git diff --check` pasaron.
 - Depende de: E03, J03, M02, K03, V02
 - Rama sugerida: `Edwar_Estacio/game-integration`
 - Integrar contratos sin asumir estados locales y ejecutar smoke test de una ronda.

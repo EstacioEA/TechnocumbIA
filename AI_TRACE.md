@@ -269,3 +269,13 @@
 - Resumen: M05 pasó su prueba específica y la regresión de Bestia; K03 pasó después de relajar las referencias tipadas del coordinador a `RefCounted`, manteniendo la autoridad del host.
 - Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
 - Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
+
+## 2026-10-10 — E04 integración y smoke test
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tarea: conectar inicio de lobby, estado autoritativo de partida, módulos de combate/cocción/escape y HUD para la partida LAN 3v3.
+- Rama: `Edwar_Estacio/game-integration`, basada en `develop`.
+- Archivos: `scripts/game/game_state.gd`, `scripts/game/papoi_game_session.gd`, `scripts/network/network_manager.gd`, `scripts/ui/lobby/lobby.gd`, `scenes/game/papoi_game.tscn`, `tests/game/game_integration_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0236-E04-game-integration.md`, `AI_TRACE.md`.
+- Resumen: se agregó el coordinador de partida host-autoritativo, transmisión/validación de snapshots y acciones, movimiento LAN, roster de seis jugadores, integración de captura/cocción/rescate/escape y salida de rondas al HUD; el lobby abre la escena de juego. Se corrigió la firma del callback de movimiento y se aplazaron broadcasts durante desconexiones.
+- Pruebas: editor scan, `game_integration_test.gd`, `game_state_test.gd`, K01/K02/K03/K04, V03/V04, contratos de roles, combate, vidas, captura Papa, acceso Bestia, M05, arnés ready/start con seis peers y transporte ENet host-cliente pasaron con Godot 4.7.2; `git diff --check` pasó. `run_lobby_slots_test.ps1` registró el rechazo esperado del séptimo jugador, pero falló al comprobar inmediatamente que el proceso hubiera salido.
+- Limitaciones: no se probó una sesión interactiva en seis equipos; lobby y transporte se probaron con procesos Godot locales headless. El mapa sigue usando la escena procedural, no el arte de referencia. Sin commit ni push.

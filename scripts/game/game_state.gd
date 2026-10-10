@@ -127,6 +127,21 @@ func begin_pot_cooking() -> bool:
 	return true
 
 
+func cancel_pot_cooking() -> bool:
+	if not _require_host("cancel_pot_cooking"):
+		return false
+	if _state.phase != GameEnums.GamePhase.POT_COOKING:
+		return _reject("cancel_pot_cooking", "solo se puede cancelar una cocción activa")
+	if not _is_phase_transition_allowed(_state.phase, GameEnums.GamePhase.ACTIVE):
+		return _reject("cancel_pot_cooking", "transición de rescate no permitida")
+	_state.papa_state = GameEnums.PapaState.FREE
+	_state.phase_time_remaining = 0.0
+	_set_phase(GameEnums.GamePhase.ACTIVE)
+	papa_state_changed.emit(_state.papa_state)
+	_emit_state()
+	return true
+
+
 func resolve_round(winner_team: int, reason: int) -> bool:
 	if not _require_host("resolve_round"):
 		return false
@@ -298,7 +313,7 @@ func _is_phase_transition_allowed(previous_phase: int, next_phase: int) -> bool:
 		GameEnums.GamePhase.ACTIVE:
 			return next_phase in [GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ROUND_RESULT]
 		GameEnums.GamePhase.POT_COOKING:
-			return next_phase in [GameEnums.GamePhase.ESCAPE, GameEnums.GamePhase.ROUND_RESULT]
+			return next_phase in [GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.ESCAPE, GameEnums.GamePhase.ROUND_RESULT]
 		GameEnums.GamePhase.ESCAPE:
 			return next_phase == GameEnums.GamePhase.ROUND_RESULT
 		GameEnums.GamePhase.ROUND_RESULT:

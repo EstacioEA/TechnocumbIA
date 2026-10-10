@@ -142,7 +142,7 @@ func _on_peer_disconnected(peer_id: int) -> void:
 	peer_left.emit(peer_id)
 	status_changed.emit("Jugador %d se desconectó." % peer_id)
 	if multiplayer.is_server():
-		_broadcast_lobby()
+		_broadcast_lobby_after_disconnect.call_deferred()
 	else:
 		_emit_lobby_updated()
 
@@ -207,7 +207,15 @@ func _rpc_ready_changed(peer_id: int, ready: bool) -> void:
 func _broadcast_lobby() -> void:
 	var snapshot: Array[Dictionary] = get_lobby_snapshot()
 	_apply_lobby_snapshot(snapshot)
+	if multiplayer.get_peers().is_empty():
+		return
 	_rpc_lobby_snapshot.rpc(snapshot)
+
+
+func _broadcast_lobby_after_disconnect() -> void:
+	await get_tree().create_timer(0.1).timeout
+	if multiplayer.is_server() and multiplayer.multiplayer_peer != null:
+		_broadcast_lobby()
 
 
 func get_lobby_snapshot() -> Array[Dictionary]:
