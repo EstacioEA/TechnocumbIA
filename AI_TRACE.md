@@ -166,3 +166,11 @@
 - Limitaciones: no se ejecutó partida LAN multiinstancia. Godot muestra warnings esperados por transiciones inválidas que el test comprueba que sean rechazadas.
 - Siguiente paso: revisión e integración de esta rama en develop; no se creó commit automáticamente.
 
+## 2026-10-10 — M02 captura y transporte de Papa
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar captura, inmovilización, sprint, soltar y golpe al portador.
+- Rama: `Miguel_Pabon/papa-capture`, basada en `develop`.
+- Archivos: `scripts/combat/papa_capture_state.gd`, `tests/combat/test_papa_capture_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0145-M02-papa-capture.md`.
+- Resumen: se agregó una máquina de estado host-authoritativa para el transporte de Papa con inmovilización de 20 segundos, reducción temporal de 2 segundos por sprint del Porta Papas y aturdimiento de 3 segundos al soltar o recibir un golpe.
+- Limitaciones: la validación espacial y la conexión con GameState/red quedan para integración; M03 conserva la responsabilidad de vidas y daño.
