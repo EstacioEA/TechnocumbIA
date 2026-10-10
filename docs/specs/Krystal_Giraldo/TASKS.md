@@ -46,8 +46,9 @@
 - Evidencia parcial: `tests/qa/gk01_map_visuals_test.gd` y regresión `tests/qa/k01_map_test.gd` pasan con Godot 4.7.2 headless; la captura del mapa completo queda pendiente de revisión visual.
 
 ### GK02 — Bases y spawns
-- Estado: TODO; puede hacerse en paralelo con GK01.
+- Estado: IN_PROGRESS; puede hacerse en paralelo con GK01.
 - Aceptación: bases y spawns visibles mediante forma/icono/etiqueta, sin mover coordenadas lógicas.
+- Evidencia parcial: `tests/qa/gk02_base_spawn_visuals_test.gd`, `tests/qa/gk01_map_visuals_test.gd` y `tests/qa/k01_map_test.gd` pasan con Godot 4.7.2 headless; la captura/revisión visual queda pendiente.
 
 ### GK03 — Olla y barrera
 - Estado: TODO; sin dependencia técnica de GK01/GK02.

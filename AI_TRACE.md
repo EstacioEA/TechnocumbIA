@@ -369,6 +369,16 @@
 - Resumen: se añadió una capa visual original que contrasta rutas transitables, suelo y paredes, instanciada como hija del mapa sin modificar geometría, colisiones, spawns u objetivos. `GK01_MAP_VISUALS_TEST` y la regresión `K01_MAP_TEST` pasan con Godot 4.7.2 headless.
 - Limitaciones: GK01 queda `IN_PROGRESS` porque falta captura/revisión visual del mapa completo; no se afirma licencia legal de arte externo. Esta entrada se mantiene local y no se publica remotamente.
 
+## 2026-10-10 — GK02 bases y spawns
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: iniciar GK02 del turno B con visuales identificables para bases y puntos de spawn.
+- Rama: `Krystal_Giraldo/base-spawn-visuals`, basada en `develop` actualizado.
+- Archivos: `scenes/map/visuals/papoi_base_spawn_visuals.gd`, `scenes/map/visuals/papoi_base_spawn_visuals.tscn`, `scenes/map/papoi_map.tscn`, `tests/qa/gk02_base_spawn_visuals_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0600-GK02-base-spawn-visuals.md`.
+- Resumen: se añadieron etiquetas, formas y marcadores visuales para bases, atacantes, defensores, Papa y Bestia; la prueba confirma que no se alteran las coordenadas lógicas. GK02 y regresiones K01/GK01 pasan con Godot 4.7.2 headless.
+- Limitaciones: GK02 queda `IN_PROGRESS` porque falta captura/revisión visual; no se afirma licencia legal de arte externo. Esta entrada se mantiene local y no se publica remotamente.
+
 ## 2026-10-10 — Planeación gráfica por relevos
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Juan Diego Balanta (solicitante); tareas asignadas a Juan, Edwar, Valeria, Krystal y Miguel.
