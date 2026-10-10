@@ -8,11 +8,15 @@ const PapaCaptureStateData = preload("res://scripts/combat/papa_capture_state.gd
 const CombatLivesStateData = preload("res://scripts/combat/combat_lives_state.gd")
 const BeastAccessStateData = preload("res://scripts/combat/beast_access_state.gd")
 const CookingEscapeData = preload("res://scripts/objectives/papoi_cooking_escape.gd")
+const TowerKeyStateData = preload("res://scripts/objectives/tower_key_state.gd")
+const TOWER_KEY_TEXTURE = preload("res://assets/objects/tower_key.png")
 
 const PAPA_OBJECT_ID := 10001
 const PLAYER_MOVE_SPEED := 180.0
 const CAPTURE_DISTANCE := 52.0
 const HIT_DISTANCE := 48.0
+const KEY_INTERACTION_DISTANCE := 52.0
+const TOWER_GATE_INTERACTION_DISTANCE := 96.0
 const SNAPSHOT_INTERVAL_SECONDS := 0.1
 
 @onready var _game_state: Node = $GameState
@@ -26,17 +30,24 @@ var _capture_state: Variant
 var _lives_state: Variant
 var _beast_state: Variant
 var _cooking_flow: Variant
+var _tower_key_state: Variant
 var _papa_marker: Polygon2D
+var _tower_key_marker: Sprite2D
 var _snapshot_dirty := false
 var _snapshot_elapsed := 0.0
 var _last_remote_revision := -1
 var _round_models_ready := false
 var _suppress_snapshot_rpc := false
 var _network_session_ended := false
+var _local_preview_mode := false
 
 
 func configure_network_manager(manager: Node) -> void:
 	_network_manager = manager
+
+
+func enable_local_preview_mode() -> void:
+	_local_preview_mode = true
 
 
 func _ready() -> void:
@@ -46,6 +57,7 @@ func _ready() -> void:
 	_game_state.match_finished.connect(_on_match_finished)
 	_register_game_input()
 	_create_papa_marker()
+	_create_tower_key_marker()
 	if _network_manager != null:
 		_network_manager.peer_left.connect(_on_peer_left)
 		_network_manager.status_changed.connect(_on_network_status_changed)
@@ -58,6 +70,10 @@ func start_from_lobby_roster(roster: Array[Dictionary]) -> bool:
 		return false
 	if not _game_state.configure_lobby(roster):
 		return false
+	if _local_preview_mode:
+		var preview_state: Variant = _game_state.get("_state")
+		if preview_state != null:
+			preview_state.attacking_team = GameEnums.TeamSide.TEAM_A
 	return _game_state.start_match()
 
 
@@ -117,7 +133,11 @@ func _physics_process(delta: float) -> void:
 		if player == null:
 			continue
 		player.velocity = _movement_directions[peer_id] * PLAYER_MOVE_SPEED
+		var previous_position := player.global_position
 		player.move_and_slide()
+		if not _map.is_position_in_playable_route(player.global_position):
+			player.global_position = previous_position
+			player.velocity = Vector2.ZERO
 	if _capture_state != null and _capture_state.carrier_id > 0:
 		var carrier := get_player_node(int(_capture_state.carrier_id))
 		if carrier != null and _capture_state.papa_state == GameEnums.PapaState.CAPTURED:
@@ -200,6 +220,24 @@ func _perform_validated_action(peer_id: int, action: StringName) -> bool:
 	match action:
 		&"interact":
 			if phase == GameEnums.GamePhase.ACTIVE:
+				if _tower_key_state != null and _tower_key_state.request_collect(
+					peer_id,
+					_player_position(peer_id),
+					int(_capture_state.carrier_id) if _capture_state != null else -1,
+					KEY_INTERACTION_DISTANCE
+				):
+					_schedule_snapshot()
+					return true
+				if _tower_key_state != null and _tower_key_state.request_open_tower(
+					peer_id,
+					_player_position(peer_id),
+					_map.get_beast_gate_access_position(),
+					TOWER_GATE_INTERACTION_DISTANCE
+				):
+					if _map.set_beast_gate_open(true, true):
+						_schedule_snapshot()
+						return true
+					return false
 				if _capture_state == null:
 					return false
 				if int(_capture_state.carrier_id) == peer_id:
@@ -227,6 +265,8 @@ func _capture_papa_if_near(peer_id: int) -> bool:
 	if int(snapshot.phase) != GameEnums.GamePhase.ACTIVE or int(snapshot.papa_state) != GameEnums.PapaState.FREE:
 		return false
 	if not _is_attacker(peer_id) or _player_position(peer_id).distance_to(_papa_marker.global_position) > CAPTURE_DISTANCE:
+		return false
+	if _tower_key_state != null and int(_tower_key_state.key_holder_id) == peer_id:
 		return false
 	if _capture_state == null or not _capture_state.request_capture(peer_id):
 		return false
@@ -308,6 +348,8 @@ func _attack_nearby_attacker(defender_id: int) -> bool:
 		if not _lives_state.request_hit_without_papa(target_id, false):
 			return false
 		_game_state.register_attacker_hit(target_id, false)
+		if _tower_key_state != null:
+			_tower_key_state.drop_at(_player_position(target_id), target_id)
 	_schedule_snapshot()
 	return true
 
@@ -325,6 +367,8 @@ func _rescue_papa(peer_id: int) -> bool:
 		return false
 	if not _game_state.cancel_pot_cooking():
 		return false
+	if _tower_key_state != null:
+		_tower_key_state.spawn_at(_map.to_global(_map.TOWER_KEY_SPAWN))
 	_papa_marker.global_position = _map.to_global(_map.POT_ROOM_CENTER)
 	_schedule_snapshot()
 	return true
@@ -381,6 +425,8 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 	_capture_state = PapaCaptureStateData.new(true)
 	_lives_state = CombatLivesStateData.new(true)
 	_beast_state = BeastAccessStateData.new(true)
+	_tower_key_state = TowerKeyStateData.new(true)
+	_map.set_beast_gate_open(false, true)
 	if not _capture_state.configure_round(PAPA_OBJECT_ID, attacker_ids, porta_papas_ids):
 		_push_integration_error("PapaCaptureState rechazó la configuración de ronda.")
 		return
@@ -389,6 +435,9 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 		return
 	if not _beast_state.configure_round(defender_ids, attacker_ids):
 		_push_integration_error("BeastAccessState rechazó la configuración de ronda.")
+		return
+	if not _tower_key_state.configure_round(attacker_ids):
+		_push_integration_error("TowerKeyState rechazó la configuración de ronda.")
 		return
 	_cooking_flow = CookingEscapeData.new(true, _capture_state, _beast_state)
 	_cooking_flow.cooking_completed.connect(_on_cooking_completed)
@@ -414,6 +463,8 @@ func _ensure_player_nodes(snapshot: Dictionary) -> void:
 		actor.set_multiplayer_authority(1)
 		actor.set("local_control_enabled", peer_id == local_peer_id)
 		actor.set("allow_local_prediction", true)
+		actor.set("enforce_playable_routes", true)
+		actor.set("playable_routes_provider", _map)
 		var side := str(player.get("side", "defender"))
 		if side == "attacker":
 			actor.position = attackers[attacker_index % attackers.size()]
@@ -427,7 +478,24 @@ func _ensure_player_nodes(snapshot: Dictionary) -> void:
 		_add_player_visual(actor, peer_id, side)
 		var camera := actor.get_node_or_null("LocalCamera") as Camera2D
 		if camera != null:
-			camera.set("map_bounds", _map.get_map_bounds())
+			var is_local_player := peer_id == local_peer_id
+			if camera.has_method("set_local_active"):
+				camera.set_local_active(is_local_player)
+			else:
+				camera.enabled = is_local_player
+			if camera.has_method("set_map_bounds"):
+				camera.set_map_bounds(_map.get_map_bounds())
+			else:
+				camera.set("map_bounds", _map.get_map_bounds())
+			if is_local_player:
+				camera.set("camera_zoom", Vector2(1.5, 1.5))
+				camera.set("zoom", Vector2(1.5, 1.5))
+		var vision := actor.get_node_or_null("VisionOverlay") as CanvasLayer
+		if vision != null:
+			var is_local_player := peer_id == local_peer_id
+			vision.set("layer", 20 if is_local_player else -1)
+			if vision.has_method("set_target"):
+				vision.call("set_target", actor)
 
 
 func _add_player_visual(actor: Node2D, peer_id: int, side: String) -> void:
@@ -458,6 +526,17 @@ func _create_papa_marker() -> void:
 	label.position = Vector2(-22.0, -38.0)
 	label.add_theme_font_size_override("font_size", 13)
 	_papa_marker.add_child(label)
+
+
+func _create_tower_key_marker() -> void:
+	_tower_key_marker = Sprite2D.new()
+	_tower_key_marker.name = "TowerKeyToken"
+	_tower_key_marker.texture = TOWER_KEY_TEXTURE
+	_tower_key_marker.scale = Vector2(0.12, 0.12)
+	_tower_key_marker.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_tower_key_marker.z_index = 3
+	_tower_key_marker.visible = false
+	_map.add_child(_tower_key_marker)
 
 
 func _visual_role_for_player(player: Dictionary) -> StringName:
@@ -540,6 +619,12 @@ func _compose_snapshot(source: Dictionary) -> Dictionary:
 		snapshot["papa_carrier_id"] = int(_capture_state.carrier_id)
 		snapshot["papa_immobilized_remaining"] = float(_capture_state.immobilized_remaining)
 		snapshot["papa_position"] = _papa_marker.global_position
+	if _tower_key_state != null:
+		var key_snapshot: Dictionary = _tower_key_state.get_snapshot()
+		snapshot["tower_key_visible"] = bool(key_snapshot.key_visible)
+		snapshot["tower_key_holder_id"] = int(key_snapshot.key_holder_id)
+		snapshot["tower_key_position"] = key_snapshot.key_position
+		snapshot["tower_open"] = bool(key_snapshot.tower_open)
 	return snapshot
 
 
@@ -562,6 +647,13 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 			_papa_marker.global_position = snapshot["papa_position"]
 		elif int(snapshot.get("papa_state", GameEnums.PapaState.FREE)) == GameEnums.PapaState.FREE:
 			_papa_marker.position = _map.get_spawn_points()["papa"]
+	if _tower_key_marker != null:
+		var key_visible := bool(snapshot.get("tower_key_visible", false))
+		_tower_key_marker.visible = key_visible
+		if key_visible and snapshot.get("tower_key_position") is Vector2:
+			_tower_key_marker.global_position = snapshot["tower_key_position"]
+		if bool(snapshot.get("tower_open", false)):
+			_map.apply_beast_gate_state(true)
 
 
 func _schedule_snapshot() -> void:
@@ -617,12 +709,16 @@ func _on_network_status_changed(message: String) -> void:
 
 
 func _is_transport_connected() -> bool:
+	if _local_preview_mode:
+		return true
 	if _network_session_ended or multiplayer.multiplayer_peer == null:
 		return false
 	return multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED
 
 
 func _is_active_server() -> bool:
+	if _local_preview_mode:
+		return true
 	return _is_transport_connected() and multiplayer.is_server()
 
 

@@ -3,7 +3,7 @@ extends CanvasLayer
 
 @export_category("Vision")
 @export_range(0.1, 1.0, 0.05) var visible_field_ratio: float = 0.8
-@export var overlay_color: Color = Color(0.015, 0.02, 0.03, 0.88)
+@export var overlay_color: Color = Color(0.0, 0.0, 0.0, 1.0)
 @export var target: Node2D
 @export var only_for_local_player: bool = true
 
@@ -12,8 +12,10 @@ extends CanvasLayer
 func _ready() -> void:
 	if only_for_local_player and not _parent_has_local_control():
 		layer = -1
+		visible = false
 		return
 	layer = 20
+	visible = true
 	if not is_instance_valid(target):
 		var parent_node := get_parent()
 		if parent_node is Node2D:
@@ -23,6 +25,8 @@ func _ready() -> void:
 	_update_shader_parameters()
 
 func _process(_delta: float) -> void:
+	if layer < 0:
+		return
 	_update_shader_parameters()
 
 func set_target(new_target: Node2D) -> void:
@@ -50,6 +54,7 @@ func _update_shader_parameters() -> void:
 		target_position.x / viewport_size.x,
 		target_position.y / viewport_size.y
 	)
+	normalized_position = normalized_position.clamp(Vector2.ZERO, Vector2.ONE)
 	var radius := visible_field_ratio * 0.5
 	var shader_material := overlay_rect.material as ShaderMaterial
 	shader_material.set_shader_parameter("vision_center", normalized_position)

@@ -43,4 +43,13 @@ func _apply_map_limits() -> void:
 	limit_top = int(map_bounds.position.y)
 	limit_right = int(map_bounds.end.x)
 	limit_bottom = int(map_bounds.end.y)
-	limit_smoothed = true
+	limit_smoothed = false
+
+func set_map_bounds(new_bounds: Rect2) -> void:
+	map_bounds = new_bounds
+	_apply_map_limits()
+
+func set_local_active(active: bool) -> void:
+	enabled = active
+	if active:
+		make_current()
