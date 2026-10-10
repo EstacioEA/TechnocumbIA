@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://scripts/ui/papoi_hud.gd" id="1_hud"]
 
 [node name="PapoiHUD" type="CanvasLayer"]
+layer = 30
 script = ExtResource("1_hud")

@@ -19,7 +19,7 @@ func run() -> void:
 	assert(not state.can_enter_pot_room())
 	assert(state.request_basic_attack(1))
 	assert(not state.request_basic_attack(1))
-	state.tick(3.0)
+	state.tick(5.0)
 	assert(state.request_basic_attack(1))
 	assert(state.request_special_attack(2))
 	assert(not state.request_special_attack(2))

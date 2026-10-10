@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6y06vi5u5jrs"
-path="res://.godot/imported/bestia_sprites.png-8286a62c8740cbeafaa8e70b1baec362.ctex"
+path="res://.godot/imported/bestia_sprites.png-e3fb28167ee90ab29f443e8812968a0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characteres/bestia/bestia_sprites.png"
-dest_files=["res://.godot/imported/bestia_sprites.png-8286a62c8740cbeafaa8e70b1baec362.ctex"]
+source_file="res://assets/characteres/Bestia/bestia_sprites.png"
+dest_files=["res://.godot/imported/bestia_sprites.png-e3fb28167ee90ab29f443e8812968a0f.ctex"]
 
 [params]
 
