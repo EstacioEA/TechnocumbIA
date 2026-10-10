@@ -69,7 +69,7 @@ func start_round(player_ids: Array[int], attacker_ids: Array[int], defender_ids:
 
 	for index in defender_ids.size():
 		var player_id: int = defender_ids[index]
-		var role := [ROLE_PAPA, ROLE_TROLLAZZO, ROLE_BEAST][index]
+		var role: StringName = [ROLE_PAPA, ROLE_TROLLAZZO, ROLE_BEAST][index]
 		players[player_id]["role"] = role
 		if role == ROLE_PAPA:
 			papa_player_id = player_id
