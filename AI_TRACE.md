@@ -120,6 +120,27 @@
 - Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
 - Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.
 
+## 2026-10-10 — J01 transporte LAN host/cliente
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar el transporte ENet host/cliente integrado y anadir cobertura multi-proceso reproducible.
+- Rama: `Juan_Balanta/lan-transport`, basada en `develop` actualizado a `96ba1c209662e4930657817646589e4ed7be4ab3`.
+- Archivos: `tests/network/lan_transport_test.gd`, `tests/network/run_lan_transport_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`.
+- Resumen: el harness valida IP/puerto y error visible de IP invalida, inicia dos procesos Godot, confirma host ENet, evento peer_joined, conexion loopback y roster cliente de dos jugadores. J01 queda DONE segun evidencia registrada.
+- Pruebas: escaneo headless del editor exit 0; runner PowerShell `LAN_TRANSPORT_TEST: PASS` en Godot 4.7.2.
+- Limitaciones: prueba loopback solamente. Sexto/septimo jugador, desconexion, ready, inicio de host y LAN fisica quedan pendientes para J02-J04. Sin commit ni push.
+
+## 2026-10-10 — auditoria de tareas de Juan Balanta
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: TESTING / DOCUMENTATION
+- Tarea: contrastar tareas J01-J04 y criterios del spec individual con codigo y evidencia ejecutada.
+- Rama: `Juan_Balanta/lan-transport`.
+- Archivos: `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0128-juan-task-audit.md`, `AI_TRACE.md`.
+- Resumen: J01 continua DONE y se marcaron como verificados solo host con puerto, cliente IP y procedimiento local. J02-J04 quedan TODO: el codigo de lobby/ready existe, pero no hay evidencia ejecutada de seis/siete jugadores, ready/inicio host ni desconexiones antes/durante partida.
+- Pruebas de esta auditoria: no se ejecutaron pruebas nuevas; se consulto la salida PASS del runner J01 previo y se inspecciono el codigo.
+- Limitaciones: loopback solamente; falta validar LAN fisica y todos los criterios J02-J04. Sin commit ni push.
 ## 2026-10-10 — E03 marcador y condiciones de resultado
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -192,3 +213,25 @@
 - Archivos: `scripts/combat/combat_lives_state.gd`, `tests/combat/test_combat_lives_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0155-M03-combat-lives.md`.
 - Resumen: se agregó estado host-authoritativo con tres vidas por ronda, respawn único de tres segundos, rechazo de golpes al portador y señal consultable de eliminación total.
 - Limitaciones: la transición final de GameState y la posición física de respawn quedan para integración.
+## 2026-10-10 — J02 lobby y limite de jugadores
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: completar y verificar el lobby de seis slots, rechazo del septimo y limpieza de peers desconectados.
+- Rama: `Juan_Balanta/lan-transport`, conservando el trabajo local previo de J01/auditoria.
+- Archivos: `scripts/network/network_manager.gd`, `tests/network/lobby_slots_test.gd`, `tests/network/lobby_slots_test.gd.uid`, `tests/network/run_lobby_slots_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`.
+- Resumen: se evito llamar `disconnect_peer` dos veces o sobre una sesion reemplazada comprobando peer y sesion antes de la expulsion demorada. J02 pasa a DONE con verificacion multiproceso de seis filas, rechazo visible del septimo, desconexion y roster de cinco en host/observador.
+- Pruebas: Godot 4.7.2 editor headless exit 0; J01 runner PASS; J02 runner PASS con host y seis procesos cliente; `git diff --check` PASS.
+- Limitaciones: solo loopback; ready/inicio y desconexion durante partida siguen pendientes en J03/J04. Sin commit ni push.
+
+## 2026-10-10 — J03 ready e inicio de partida
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar inicio exclusivo del host con seis jugadores listos y propagación de `lobby_start`.
+- Rama: `Juan_Balanta/lobby-ready-start`, basada en J02.
+- Archivos: `tests/network/ready_start_test.gd`, `tests/network/run_ready_start_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`.
+- Resumen: se añadió una prueba con host + cinco clientes que cubre bloqueo con cinco jugadores, bloqueo mientras falte ready, rechazo del inicio solicitado por clientes, UI restringida a host y recepción de `lobby_start` por los seis peers.
+- Pruebas: escaneo de proyecto Godot 4.7.2 PASS; runners J01, J02 y J03 PASS; `git diff --check` PASS en revisión final.
+- Limitaciones: procesos locales en loopback, sin prueba de LAN física ni firewall; desconexiones durante partida pendientes de J04. Sin commit ni push.
