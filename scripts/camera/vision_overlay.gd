@@ -3,7 +3,7 @@ extends CanvasLayer
 
 @export_category("Vision")
 @export_range(0.1, 1.0, 0.05) var visible_field_ratio: float = 0.8
-@export var overlay_color: Color = Color(0.015, 0.02, 0.03, 0.88)
+@export var overlay_color: Color = Color(0.0, 0.0, 0.0, 1.0)
 @export var target: Node2D
 @export var only_for_local_player: bool = true
 

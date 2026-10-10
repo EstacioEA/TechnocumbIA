@@ -19,6 +19,9 @@ En `scenes/player/player.tscn`, la máscara ahora usa `outside_visibility`:
 - Fuera del radio: alpha del overlay cercano a `overlay_color.a`, mapa oscurecido.
 - Se conserva un borde suave de `0.025`.
 
+En `scripts/camera/vision_overlay.gd`, el color del overlay ahora es negro completamente opaco
+(`Color(0, 0, 0, 1)`), por lo que el área fuera del círculo no deja ver el mapa.
+
 ## Pruebas
 
 | Verificación | Resultado |

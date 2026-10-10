@@ -704,3 +704,13 @@
 - Pruebas: `GV03_SIX_PLAYERS_TEST`, `GV01_CHARACTERS_TEST`, `GV02_ORIENTATION_TEST`, `V03_PLAYER_COLLISION_TEST` y `V05_PLAYER_SMOKE_TEST` pasaron con Godot 4.7.2 headless; diagnósticos de VS Code sin errores; `git diff --check` pasó.
 - Limitaciones: la validación headless confirma instanciación y referencias; la revisión visual final del atlas debe hacerse abriendo el preview con renderer gráfico.
 - Handoff: `docs/handoffs/2026-10-10-0900-TC01-avatar-sprites.md`.
+
+## 2026-10-10 - Miguel Pabon: exterior de visión completamente negro
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: DEBUGGING / TESTING / DOCUMENTATION
+- Tarea: hacer completamente opaca la zona del mapa fuera del campo de visión.
+- Rama: `Miguel_Pabon/fix-vision-mask`.
+- Archivos: `scripts/camera/vision_overlay.gd`, `tests/qa/v04_camera_vision_test.gd`, `docs/handoffs/2026-10-10-1002-Miguel-vision-mask-fix.md`, `AI_TRACE.md`.
+- Resumen: el overlay local ahora usa negro con alfa 1.0; el círculo visible se conserva y el exterior no permite ver el mapa.
+- Limitaciones: la confirmación visual final debe ejecutarse en la preview gráfica con la tecla `V`; el HUD permanece visible porque usa una capa superior.

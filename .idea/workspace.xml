@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AI_TRACE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AI_TRACE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scenes/player/player.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/player/player.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/handoffs/2026-10-10-1002-Miguel-vision-mask-fix.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/2026-10-10-1002-Miguel-vision-mask-fix.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/camera/vision_overlay.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/camera/vision_overlay.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/qa/v04_camera_vision_test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/qa/v04_camera_vision_test.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,11 +35,11 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="Miguel_Pabon/fix-vision-mask" />
-                    <option name="lastUsedInstant" value="1791644599" />
+                    <option name="lastUsedInstant" value="1791645148" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1791630361" />
+                    <option name="lastUsedInstant" value="1791644898" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="Miguel_Pabon/graphics-papa-feedback" />
