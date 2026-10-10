@@ -75,6 +75,28 @@ func request_drop(actor_id: int) -> bool:
 	carrier_stun_remaining = DROP_STUN_SECONDS
 	return true
 
+func mark_deposited(actor_id: int) -> bool:
+	if not _host_only() or actor_id != carrier_id or papa_state != GameEnums.PapaState.CAPTURED:
+		return false
+	carrier_id = -1
+	papa_state = GameEnums.PapaState.BEING_COOKED
+	immobilized_remaining = 0.0
+	return true
+
+func mark_rescued() -> bool:
+	if not _host_only() or papa_state != GameEnums.PapaState.BEING_COOKED:
+		return false
+	_release_papa()
+	return true
+
+func mark_cooked() -> bool:
+	if not _host_only() or papa_state != GameEnums.PapaState.BEING_COOKED:
+		return false
+	carrier_id = -1
+	papa_state = GameEnums.PapaState.COOKED
+	immobilized_remaining = 0.0
+	return true
+
 func request_hit_carrier(actor_id: int) -> bool:
 	if not _host_only() or actor_id != carrier_id:
 		return false

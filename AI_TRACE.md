@@ -829,3 +829,16 @@
 - Pruebas: no se ejecutaron pruebas J05 porque faltan los prerequisitos; no se afirma PASS. `git diff --check` PASS.
 - Limitaciones: el runner multiinstancia, tres corridas loopback y prueba LAN física quedan pendientes hasta integrar E05-A, M06 y E05-B.
 - Handoff: `docs/handoffs/2026-10-10-1231-J05-prerequisite-blocker.md`.
+
+## 2026-10-10 — Miguel Pabon: M06 depósito, rescate y escape runtime
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: M06 — integrar depósito de Papa, rescate de Bestia y cruce de salida en la sesión runtime.
+- Rama: `Miguel_Pabon/pot-rescue-runtime`.
+- Archivos: `scripts/combat/papa_capture_state.gd`, `scripts/objectives/papoi_cooking_escape.gd`, `scripts/game/papoi_game_session.gd`, `scenes/map/papoi_map.tscn`, `tests/game/m06_pot_rescue_runtime_test.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1248-Miguel-M06-pot-rescue-runtime.md`.
+- Resumen: el portador se libera al depositar Papa, Bestia puede rescatar con `papoi_interact` durante `POT_COOKING`, `GameState` conserva el único reloj de 20 s, y cualquier atacante válido puede registrar el primer escape desde `ESCAPE_ZONE`.
+- Pruebas: M06, K03, GameState, integración de partida, indicador de salida y carga del editor Godot 4.7.2 pasaron; `git diff --check` pasó.
+- Limitaciones: falta validar el flujo completo con seis peers en LAN mediante J05; no se creó commit automático.
+- Handoff: `docs/handoffs/2026-10-10-1248-Miguel-M06-pot-rescue-runtime.md`.

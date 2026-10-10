@@ -34,13 +34,20 @@ func run() -> void:
 
 	_check(capture.request_capture(2), "Papa can be captured again")
 	_check(flow.start_cooking(true), "host restarts cooking")
-	_check(flow.advance_host_clock(29.9), "host advances cooking clock")
+	_check(is_equal_approx(flow.cooking_remaining, 20.0), "flow mirrors the shared cooking duration without owning the clock")
+	_check(flow.sync_from_game_snapshot({
+		"phase": GameEnums.GamePhase.POT_COOKING,
+		"phase_time_remaining": 0.1,
+		"papa_state": GameEnums.PapaState.BEING_COOKED,
+	}), "flow accepts the authoritative cooking snapshot")
 	_check(flow.phase == flow.PHASE_POT_COOKING, "cooking remains active before timer ends")
-	_check(flow.advance_host_clock(0.1), "host completes cooking")
+	_check(flow.sync_from_game_snapshot({
+		"phase": GameEnums.GamePhase.ESCAPE,
+		"phase_time_remaining": 0.0,
+		"papa_state": GameEnums.PapaState.COOKED,
+	}), "flow accepts the authoritative cooking completion")
 	_check(flow.phase == flow.PHASE_ESCAPE, "cooking transitions to ESCAPE")
 	_check(flow.papa_state == GameEnums.PapaState.COOKED, "Papa state becomes COOKED")
-	_check(not flow.reach_escape(Vector2(900.0, 384.0), Rect2(80.0, 288.0, 128.0, 192.0)), "escape rejects outside base")
-	_check(flow.reach_escape(Vector2(120.0, 384.0), Rect2(80.0, 288.0, 128.0, 192.0)), "escape emits result at attacker base")
 
 	if _failures.is_empty():
 		print("K03_COOKING_ESCAPE_TEST: PASS")
