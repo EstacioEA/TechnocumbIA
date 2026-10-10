@@ -35,7 +35,7 @@ func _parent_has_local_control() -> bool:
 	var parent_node := get_parent()
 	if parent_node == null:
 		return false
-	var local_control := parent_node.get("local_control_enabled")
+	var local_control: Variant = parent_node.get("local_control_enabled")
 	return local_control == null or bool(local_control)
 
 func _apply_map_limits() -> void:
