@@ -8,11 +8,11 @@
 - Aceptación: seis jugadores reciben datos serializables; repetición de roles permitida; test de asignación. Evidencia: `tests/combat/test_role_contracts.gd`.
 
 ## M02 — Captura y transporte de Papa
-- Estado: TODO
+- Estado: DONE
 - Depende de: M01, V02
 - Rama sugerida: `Miguel_Pabon/papa-capture`
 - Implementar captura, inmovilidad 20 s, reducción por sprint, soltar y stun de 3 s.
-- Aceptación: estados y transiciones se validan en host; golpe al portador suelta sin quitar vida.
+- Aceptación: estados y transiciones se validan en host; golpe al portador suelta sin quitar vida. Evidencia: `tests/combat/test_papa_capture_state.gd`.
 
 ## M03 — Impactos, vidas y respawn
 - Estado: TODO
