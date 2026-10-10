@@ -2,6 +2,7 @@ extends Control
 
 const HOST_PANEL_SCENE := preload("res://scenes/menu/host_panel.tscn")
 const JOIN_PANEL_SCENE := preload("res://scenes/menu/join_panel.tscn")
+const LOBBY_SCENE := preload("res://scenes/lobby/lobby.tscn")
 
 signal host_requested
 signal join_requested
@@ -14,6 +15,7 @@ signal join_requested
 
 var _host_panel: Control
 var _join_panel: Control
+var _lobby: Control
 
 
 func _ready() -> void:
@@ -86,7 +88,8 @@ func _on_host_cancelled() -> void:
 
 
 func _on_host_create_requested(port: int) -> void:
-	status_label.text = "Puerto %d validado; el transporte se conectará en otra tarea." % port
+	_open_lobby()
+	_lobby.call_deferred("start_host", port)
 
 
 func _on_join_pressed() -> void:
@@ -107,7 +110,32 @@ func _on_join_cancelled() -> void:
 
 
 func _on_join_requested(address: String, port: int) -> void:
-	status_label.text = "Destino validado: %s:%d. El transporte se integrará en otra tarea." % [address, port]
+	_open_lobby()
+	_lobby.call_deferred("join_host", address, port)
+
+
+func _open_lobby() -> void:
+	if _host_panel != null:
+		_host_panel.queue_free()
+		_host_panel = null
+	if _join_panel != null:
+		_join_panel.queue_free()
+		_join_panel = null
+	menu_panel.visible = false
+	_lobby = LOBBY_SCENE.instantiate()
+	_lobby.name = "Lobby"
+	_lobby.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_lobby.connect("menu_requested", _on_lobby_menu_requested)
+	add_child(_lobby)
+
+
+func _on_lobby_menu_requested() -> void:
+	if _lobby != null:
+		_lobby.queue_free()
+		_lobby = null
+	menu_panel.visible = true
+	status_label.text = "Desconectado de la sala. Puedes crear o unirte a otra."
+	host_button.grab_focus()
 
 
 func _on_exit_pressed() -> void:
