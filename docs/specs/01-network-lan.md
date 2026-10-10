@@ -15,10 +15,12 @@ Sincronizar una partida 3v3 de forma determinista usando host autoritativo y cli
 join(ip, port) -> accepted | rejected(reason)
 player_ready(peer_id, ready)
 request_action(action_name, payload)
-state_snapshot(tick, phase, players, papa, pot, scores, timer)
+state_snapshot(tick, phase, players, papa, pot, scores, timer, round_number, round_winner, round_end_reason, match_winner)
 round_result(winner, reason)
 match_result(winner)
 ```
+
+`round_result` y `match_result` son emitidos únicamente por el host. `winner` es un `TeamSide` para resultados normales. Para una desconexión no recuperable durante una ronda, el host invalida la partida sin adjudicar puntos: emite `round_result(-1, DISCONNECT)`, registra `round_winner = -1` y `round_end_reason = DISCONNECT` en el snapshot, pasa por `ROUND_RESULT` a `MATCH_RESULT` y emite `match_result(-1)`. `-1` en estos campos significa partida invalidada/sin ganador, no un equipo.
 
 ## Requisitos
 1. El host valida que no haya más de seis jugadores.

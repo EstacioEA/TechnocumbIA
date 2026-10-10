@@ -21,6 +21,7 @@ const DEFENDER_SPAWNS := [
 const PAPA_SPAWN := Vector2(1010.0, 384.0)
 const BEAST_SPAWN := Vector2(1040.0, 512.0)
 const POT_ZONE := Rect2(544.0, 304.0, 112.0, 160.0)
+const CAPTURE_ZONE := Rect2(944.0, 288.0, 176.0, 192.0)
 const ESCAPE_ZONE := Rect2(80.0, 288.0, 128.0, 192.0)
 const ROUTES := [
 	Rect2(208.0, 288.0, 272.0, 192.0),
@@ -57,6 +58,9 @@ func is_position_inside_map(position: Vector2) -> bool:
 
 func is_position_in_pot(position: Vector2) -> bool:
 	return POT_ZONE.has_point(position)
+
+func is_position_in_capture_zone(position: Vector2) -> bool:
+	return CAPTURE_ZONE.has_point(position)
 
 func is_position_in_escape(position: Vector2) -> bool:
 	return ESCAPE_ZONE.has_point(position)
@@ -132,6 +136,7 @@ func _create_spawn_markers() -> void:
 		special_spawns.add_child(marker)
 
 func _create_zones() -> void:
+	_create_zone("CaptureZone", CAPTURE_ZONE)
 	_create_zone("PotZone", POT_ZONE)
 	_create_zone("EscapeZone", ESCAPE_ZONE)
 
@@ -157,11 +162,13 @@ func _draw() -> void:
 	draw_rect(Rect2(80.0, 288.0, 128.0, 192.0), Color("#244e5a"), true)
 	draw_rect(Rect2(992.0, 288.0, 128.0, 192.0), Color("#563c50"), true)
 	draw_rect(Rect2(480.0, 240.0, 240.0, 288.0), Color("#394456"), true)
+	draw_rect(CAPTURE_ZONE, Color("#813f58", 0.35), true)
 	draw_rect(POT_ZONE, Color("#8e5e38"), true)
 	draw_rect(ESCAPE_ZONE, Color("#2a8c76", 0.55), true)
 	draw_line(Vector2(688.0, 320.0), Vector2(688.0, 448.0), Color("#f0c674"), 6.0)
 	draw_string(ThemeDB.fallback_font, Vector2(92.0, 270.0), "BASE ATACANTE", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color.WHITE)
 	draw_string(ThemeDB.fallback_font, Vector2(990.0, 270.0), "BASE DEFENSORA", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color.WHITE)
+	draw_string(ThemeDB.fallback_font, Vector2(950.0, 500.0), "ZONA CAPTURA", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#f3b4c7"))
 	draw_string(ThemeDB.fallback_font, Vector2(530.0, 292.0), "SALA DE LA OLLA", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color.WHITE)
 	draw_string(ThemeDB.fallback_font, Vector2(540.0, 392.0), "OLLA", HORIZONTAL_ALIGNMENT_LEFT, -1, 26, Color("#ffe6a7"))
 	draw_string(ThemeDB.fallback_font, Vector2(702.0, 310.0), "ENTRADA BESTIA", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#f0c674"))

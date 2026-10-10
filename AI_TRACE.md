@@ -140,3 +140,25 @@
 - Resumen: J01 continua DONE y se marcaron como verificados solo host con puerto, cliente IP y procedimiento local. J02-J04 quedan TODO: el codigo de lobby/ready existe, pero no hay evidencia ejecutada de seis/siete jugadores, ready/inicio host ni desconexiones antes/durante partida.
 - Pruebas de esta auditoria: no se ejecutaron pruebas nuevas; se consulto la salida PASS del runner J01 previo y se inspecciono el codigo.
 - Limitaciones: loopback solamente; falta validar LAN fisica y todos los criterios J02-J04. Sin commit ni push.
+## 2026-10-10 — E03 marcador y condiciones de resultado
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Solicitud: continuar con la siguiente tarea individual asignada y resolver cualquier conflicto de implementación.
+- Tarea: E03 — Marcador y condiciones de resultado.
+- Rama: `Edwar_Estacio/match-results`, creada desde `develop` actualizado por fast-forward.
+- Archivos: `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/specs/01-network-lan.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0120-E03-match-results.md`.
+- Resumen: se valida que la eliminación ocurra con todas las vidas de atacantes agotadas; escape exige Papa cocinada; resultados duplicados no incrementan dos veces el marcador. Se completó la comunicación de resultados por señales al host. Una desconexión no recuperable invalida la partida sin puntos ni ganador, conforme al contrato LAN actualizado.
+- Pruebas: test de estado, análisis de proyecto headless, smoke de escena principal, tests de contratos y combate de roles y escena base de jugador pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: no se ejecutó partida LAN con seis instancias ni integración de señales con HUD/red (parte del trabajo de integración). Balance de cuenta regresiva, cocción y vidas iniciales queda parametrizado como pendiente.
+- Siguiente paso: E04 integración y smoke test cuando estén completadas sus dependencias J03, M02, K03 y V02.
+## 2026-10-10 — K02 zonas de objetivo y olla
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: implementar zonas de captura y olla, y validar Papa capturada dentro de la olla con autorización del host.
+- Rama: `Krystal_Giraldo/pot-zone`, basada en `develop` actualizado.
+- Archivos: `scripts/map/papoi_map.gd`, `scripts/objectives/papoi_pot_zone.gd`, `scripts/objectives/papoi_objective_flow.gd`, `scenes/objectives/papoi_objective_flow.tscn`, `tests/qa/k02_pot_zone_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0055-K02-pot-zone.md`.
+- Resumen: se añadió `CaptureZone`, un validador separado de zona de olla y una detección host-autorizada que acepta únicamente Papa capturada dentro de la olla, sin iniciar cocción ni modificar victoria.
+- Limitaciones: la validación LAN completa no pertenece a K02; `AI_TRACE.md` se mantiene solo local y no se publica remotamente.

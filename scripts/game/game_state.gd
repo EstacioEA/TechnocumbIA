@@ -134,16 +134,29 @@ func resolve_round(winner_team: int, reason: int) -> bool:
 		return _reject("resolve_round", "esta ronda ya fue resuelta")
 	if not _is_phase_transition_allowed(_state.phase, GameEnums.GamePhase.ROUND_RESULT):
 		return _reject("resolve_round", "la fase actual no permite resolver la ronda")
-	if not _is_team(winner_team) or not _is_round_reason(reason):
+	if not _is_round_reason(reason):
 		return _reject("resolve_round", "equipo ganador o motivo inválido")
+	var is_disconnect_invalidation := reason == GameEnums.RoundEndReason.DISCONNECT
+	if (is_disconnect_invalidation and winner_team != -1) or (not is_disconnect_invalidation and not _is_team(winner_team)):
+		return _reject("resolve_round", "equipo ganador no coincide con el motivo")
 	if not _is_resolution_valid(winner_team, reason):
 		return _reject("resolve_round", "el resultado no corresponde a la fase o condición actual")
 	_round_resolved = true
 	_state.round_winner = winner_team
 	_state.round_end_reason = reason
+	_state.phase_time_remaining = 0.0
+	_state.round_time_remaining = 0.0
+	if is_disconnect_invalidation:
+		_state.match_winner = -1
+		_set_phase(GameEnums.GamePhase.ROUND_RESULT)
+		_emit_state()
+		round_finished.emit(-1, reason, get_snapshot())
+		_set_phase(GameEnums.GamePhase.MATCH_RESULT)
+		_emit_state()
+		match_finished.emit(-1, get_snapshot())
+		return true
 	var score_key := MatchStateData.team_score_key(winner_team)
 	_state.scores[score_key] = int(_state.scores[score_key]) + 1
-	_state.phase_time_remaining = 0.0
 	_set_phase(GameEnums.GamePhase.ROUND_RESULT)
 	_emit_state()
 	round_finished.emit(winner_team, reason, get_snapshot())
@@ -239,14 +252,13 @@ func _is_resolution_valid(winner_team: int, reason: int) -> bool:
 	var defending_team := _other_team(_state.attacking_team)
 	match reason:
 		GameEnums.RoundEndReason.ESCAPE_SUCCESS:
-			return _state.phase == GameEnums.GamePhase.ESCAPE and winner_team == _state.attacking_team
+			return _state.phase == GameEnums.GamePhase.ESCAPE and _state.papa_state == GameEnums.PapaState.COOKED and winner_team == _state.attacking_team
 		GameEnums.RoundEndReason.ATTACKERS_ELIMINATED:
-			return _state.phase in [GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ESCAPE] and winner_team == defending_team
+			return _state.phase in [GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ESCAPE] and winner_team == defending_team and _all_attackers_eliminated()
 		GameEnums.RoundEndReason.TIME_EXPIRED:
 			return _state.phase == GameEnums.GamePhase.ACTIVE and winner_team == defending_team and _state.round_time_remaining <= 0.0
 		GameEnums.RoundEndReason.DISCONNECT:
-			# El spec no define qué equipo gana según quién se desconectó; no adjudicar por suposición.
-			return false
+			return winner_team == -1 and _state.phase in [GameEnums.GamePhase.COUNTDOWN, GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ESCAPE]
 	return false
 
 
@@ -262,11 +274,15 @@ func _set_phase(next_phase: int) -> bool:
 		if _state.match_winner != -1 or (_state.round_number >= BEST_OF_ROUNDS and _round_resolved):
 			return _reject("set_phase", "la partida ya terminó o alcanzó el máximo de rondas")
 	if next_phase == GameEnums.GamePhase.MATCH_RESULT:
-		if not _is_team(_state.match_winner):
-			return _reject("set_phase", "MATCH_RESULT requiere un ganador autoritativo")
-		var score_key := MatchStateData.team_score_key(_state.match_winner)
-		if int(_state.scores.get(score_key, 0)) < POINTS_TO_WIN_MATCH:
-			return _reject("set_phase", "el ganador todavía no alcanza tres puntos")
+		if _state.round_end_reason == GameEnums.RoundEndReason.DISCONNECT:
+			if _state.match_winner != -1 or not _round_resolved:
+				return _reject("set_phase", "la invalidación requiere una desconexión no recuperable")
+		else:
+			if not _is_team(_state.match_winner):
+				return _reject("set_phase", "MATCH_RESULT requiere un ganador autoritativo")
+			var score_key := MatchStateData.team_score_key(_state.match_winner)
+			if int(_state.scores.get(score_key, 0)) < POINTS_TO_WIN_MATCH:
+				return _reject("set_phase", "el ganador todavía no alcanza tres puntos")
 	_state.phase = next_phase
 	_state.revision += 1
 	phase_changed.emit(previous, next_phase)
@@ -278,7 +294,7 @@ func _is_phase_transition_allowed(previous_phase: int, next_phase: int) -> bool:
 		GameEnums.GamePhase.LOBBY:
 			return next_phase == GameEnums.GamePhase.COUNTDOWN
 		GameEnums.GamePhase.COUNTDOWN:
-			return next_phase == GameEnums.GamePhase.ACTIVE
+			return next_phase in [GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.ROUND_RESULT]
 		GameEnums.GamePhase.ACTIVE:
 			return next_phase in [GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ROUND_RESULT]
 		GameEnums.GamePhase.POT_COOKING:
