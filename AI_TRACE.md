@@ -235,3 +235,15 @@
 - Resumen: se añadió una prueba con host + cinco clientes que cubre bloqueo con cinco jugadores, bloqueo mientras falte ready, rechazo del inicio solicitado por clientes, UI restringida a host y recepción de `lobby_start` por los seis peers.
 - Pruebas: escaneo de proyecto Godot 4.7.2 PASS; runners J01, J02 y J03 PASS; `git diff --check` PASS en revisión final.
 - Limitaciones: procesos locales en loopback, sin prueba de LAN física ni firewall; desconexiones durante partida pendientes de J04. Sin commit ni push.
+
+## 2026-10-10 — J04 arnés de desconexiones multiproceso
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: crear un procedimiento reproducible para desconexiones antes y durante partida con host y clientes separados.
+- Rama: `Juan_Balanta/lan-test-harness`, basada en `develop` con J03 integrado.
+- Archivos: `tests/network/disconnect_match_test.gd`, `tests/network/disconnect_test_actor.gd`, `tests/network/run_disconnect_match_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0204-J04-disconnect-harness.md`.
+- Resumen: el runner cubre salida de lobby antes del inicio, inicio con seis peers, desconexión durante ACTIVE, invalidación host-authoritative sin puntos/ganador y réplica del snapshot a los cuatro peers que permanecen conectados.
+- Pruebas: runner J04 PASS; `game_state_test.gd` PASS; runner J03 PASS; `git diff --check` PASS.
+- Limitaciones: loopback; el puente `peer_left` a `GameState` es explícito en el fixture y aún no está conectado en runtime; sin commit ni push.

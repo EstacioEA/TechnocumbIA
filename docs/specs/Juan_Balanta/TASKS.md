@@ -26,9 +26,10 @@
 - Evidencia: `tests/network/run_ready_start_test.ps1` PASS en Godot 4.7.2 con host + cinco clientes. El host bloquea el inicio con cinco jugadores y con jugadores no listos; clientes no pueden iniciar ni ven disponible el botón; los seis marcan ready y cada proceso recibe `lobby_start` con seis jugadores listos. Handoff: `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`.
 
 ## J04 — Pruebas multiinstancia y desconexiones
-- Estado: TODO
+- Estado: DONE
 - Depende de: J03
 - Rama sugerida: `Juan_Balanta/lan-test-harness`
 - Documentar y ejecutar host + clientes; cubrir desconexiones antes y durante partida.
 - Aceptación: procedimiento reproducible; resultados PASS/FAIL/BLOCKED en handoff.
-- Verificación 2026-10-10: el runner actual solo cubre host y un cliente de transporte; faltan lobby completo y desconexiones antes/durante partida; queda TODO.
+- Evidencia: `tests/network/run_disconnect_match_test.ps1` PASS en Godot 4.7.2. Ejecuta primero el lobby de seis slots y desconexión prepartida de J02; luego host + cinco clientes, ready, inicio, desconexión durante ACTIVE, invalidación sin ganador ni puntos y recepción del snapshot en los cuatro clientes conectados. `tests/game/game_state_test.gd` y regresión J03 PASS. Handoff: `docs/handoffs/2026-10-10-0204-J04-disconnect-harness.md`.
+- Limitación: la invalidación al recibir `peer_left` se conecta mediante un adaptador del test; el runtime todavía no integra automáticamente `NetworkManager` con `GameState`. Probar en LAN física y completar esa integración son pendientes de integración del juego.
