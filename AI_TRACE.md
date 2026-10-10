@@ -894,3 +894,26 @@
 - Pruebas: `tower_key_state_test`, `TOWER_KEY_RUNTIME_TEST`, `GAME_INTEGRATION_TEST` y `git diff --check` pasaron.
 - Limitaciones: falta validar manualmente la interacción en una sesión LAN de seis procesos; no se creó commit automático.
 - Handoff: `docs/handoffs/2026-10-10-1343-Miguel-tower-key-runtime.md`.
+
+## 2026-10-10 — Miguel Pabon: transiciones automáticas de ronda y retorno al lobby
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING
+- Tarea: iniciar automáticamente la siguiente ronda cinco segundos después de terminar una ronda y volver al lobby cinco segundos después de terminar la partida.
+- Rama: `develop`.
+- Archivos: `scripts/game/game_state.gd`, `scripts/game/papoi_game_session.gd`, `scripts/ui/lobby/lobby.gd`, `scripts/ui/papoi_hud.gd`, `AI_TRACE.md`.
+- Resumen: `GameState` usa una espera autoritativa de cinco segundos para la transición de `ROUND_RESULT`; al terminar `MATCH_RESULT`, la sesión emite retorno al lobby y conserva la conexión LAN. El HUD muestra la cuenta regresiva centrada.
+- Limitaciones: pendiente validar manualmente con seis procesos LAN; no se creó commit automático.
+
+## 2026-10-10 — Miguel Pabon: flujo automático de ronda y retorno al lobby
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: reiniciar rondas automáticamente cinco segundos después del resultado y regresar al lobby cinco segundos después del resultado final.
+- Rama: `develop`.
+- Archivos: `scripts/game/game_state.gd`, `scripts/game/papoi_game_session.gd`, `scripts/ui/lobby/lobby.gd`, `scripts/ui/papoi_hud.gd`, `docs/handoffs/2026-10-10-1418-Miguel-auto-round-lobby-flow.md`, `AI_TRACE.md`.
+- Resumen: se agregaron temporizadores autoritativos de cinco segundos, cuenta regresiva centrada para `COUNTDOWN`, `ROUND_RESULT` y `MATCH_RESULT`, reinicio automático de rondas y retorno al lobby existente sin pasar por el menú.
+- Pruebas: `game_state_test`, `GAME_INTEGRATION_TEST`, carga headless del proyecto y `git diff --check` pasaron. El preview gráfico del HUD requiere renderer.
+- Limitaciones: falta validación manual con seis procesos LAN; no se creó commit automático.
