@@ -30,8 +30,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/role-differences-verification" />
+                    <option name="lastUsedInstant" value="1791637531" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1791631178" />
+                    <option name="lastUsedInstant" value="1791636137" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="Miguel_Pabon/graphics-role-feedback" />
@@ -44,10 +48,6 @@
                   <RecentBranch>
                     <option name="branchName" value="Miguel_Pabon/graphics-cooldown-feedback" />
                     <option name="lastUsedInstant" value="1791629410" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/graphics-role-icons" />
-                    <option name="lastUsedInstant" value="1791628910" />
                   </RecentBranch>
                 </list>
               </option>
@@ -85,7 +85,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "Miguel__Pabon/role-differences-verification",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Asus/Desktop/PERSONAL/GAME/TechnocumbIA",
@@ -117,7 +117,7 @@
       <workItem from="1791628132439" duration="175000" />
       <workItem from="1791628325004" duration="68000" />
       <workItem from="1791628407885" duration="37000" />
-      <workItem from="1791628459002" duration="4834000" />
+      <workItem from="1791628459002" duration="7952000" />
     </task>
     <servers />
   </component>
