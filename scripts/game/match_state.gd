@@ -9,8 +9,8 @@ var revision: int = 0
 var phase: int = GameEnums.GamePhase.LOBBY
 var players: Array[Dictionary] = []
 var scores: Dictionary = {
-	GameEnums.TeamSide.TEAM_A: 0,
-	GameEnums.TeamSide.TEAM_B: 0,
+	"TEAM_A": 0,
+	"TEAM_B": 0,
 }
 var round_number: int = 0
 var attacking_team: int = GameEnums.TeamSide.TEAM_A
@@ -40,6 +40,10 @@ func to_dictionary() -> Dictionary:
 	}
 
 
+func to_json() -> String:
+	return JSON.stringify(to_dictionary())
+
+
 static func from_dictionary(data: Dictionary) -> MatchState:
 	if not _has_valid_schema(data):
 		return null
@@ -58,6 +62,13 @@ static func from_dictionary(data: Dictionary) -> MatchState:
 	result.round_end_reason = data.round_end_reason
 	result.match_winner = data.match_winner
 	return result
+
+
+static func from_json(json_text: String) -> MatchState:
+	var parsed: Variant = JSON.parse_string(json_text)
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return null
+	return from_dictionary(parsed)
 
 
 static func _has_valid_schema(data: Dictionary) -> bool:
@@ -95,12 +106,33 @@ static func _has_valid_schema(data: Dictionary) -> bool:
 		return false
 	if typeof(data.match_winner) != TYPE_INT or (data.match_winner != -1 and not _is_team(data.match_winner)):
 		return false
-	if not data.scores.has(GameEnums.TeamSide.TEAM_A) or not data.scores.has(GameEnums.TeamSide.TEAM_B):
+	if data.scores.size() != 2 or not data.scores.has("TEAM_A") or not data.scores.has("TEAM_B"):
 		return false
 	for score in data.scores.values():
 		if typeof(score) != TYPE_INT or score < 0 or score > 3:
 			return false
+	for player in data.players:
+		if typeof(player) != TYPE_DICTIONARY or not player.has("peer_id"):
+			return false
+		if typeof(player.peer_id) != TYPE_INT or player.peer_id <= 0:
+			return false
+		if player.has("team") and (typeof(player.team) != TYPE_INT or not _is_team(player.team)):
+			return false
+		if player.has("role") and typeof(player.role) != TYPE_INT:
+			return false
+		if player.has("passive") and typeof(player.passive) != TYPE_INT:
+			return false
+		if player.has("lives") and (typeof(player.lives) != TYPE_INT or player.lives < 0):
+			return false
 	return true
+
+
+static func team_score_key(team: int) -> String:
+	if team == GameEnums.TeamSide.TEAM_A:
+		return "TEAM_A"
+	if team == GameEnums.TeamSide.TEAM_B:
+		return "TEAM_B"
+	return ""
 
 
 static func _is_team(team: int) -> bool:
