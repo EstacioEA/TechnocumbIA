@@ -66,3 +66,10 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Estado: DONE — cinco estados etiquetados capturados en 1280×720 y 1600×900; verificación geométrica de labels y revisión visual PASS; handoff separa preview simulada de pruebas runtime.
 - Depende de: GE01–GE05.
 - Aceptación: previews rotulados; capturas a 1280×720/1600×900; handoff separa comprobaciones reales y simuladas.
+
+## TC04 — Contrato visible de rol, pasiva y cooldown
+- Estado: TODO; depende de: E01–E04, M05, K04.
+- Rama sugerida: `Edwar_Estacio/role-state-hud-contract`.
+- Verificar que el snapshot autoritativo entregue al HUD el rol, la pasiva y los cooldowns recibidos para los seis roles, sin que la UI recalcule reglas.
+- Aceptación: cada jugador muestra contexto coherente con su rol; cooldown listo/bloqueado y tiempo recibido son distinguibles; una ausencia o dato inválido se muestra explícitamente sin fallback engañoso.
+- Evidencia requerida: prueba de snapshot/HUD, preview rotulado y handoff de interfaces revisadas.

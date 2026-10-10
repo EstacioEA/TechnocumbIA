@@ -9,6 +9,7 @@ var _overlay: CanvasLayer
 func _ready() -> void:
 	var map := MAP_SCENE.instantiate()
 	add_child(map)
+	map.set_debug_overlay_visible(true)
 
 	var player := PLAYER_SCENE.instantiate() as CharacterBody2D
 	player.name = "LocalPreviewPlayer"

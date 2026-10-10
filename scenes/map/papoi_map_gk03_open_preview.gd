@@ -8,4 +8,5 @@ func _ready() -> void:
 		push_error("GK03 preview could not instantiate PapoiMap")
 		return
 	add_child(map)
+	map.set_debug_overlay_visible(true)
 	map.set_beast_gate_open(true, true)

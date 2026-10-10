@@ -57,3 +57,10 @@
 - Estado: DONE; depende de: GM02/GM03.
 - Aceptación: señales no confunden desconexión con victoria; hoja distingue eventos reales de simulados; HUD y jugadores no se tapan.
 - Evidencia: `scenes/ui/role_feedback.tscn`; `tests/ui/gm04_role_feedback_test.gd`; preview: `tests/ui/gm04_role_feedback_preview.gd`.
+
+## TC03 — Verificación de diferencias de roles y pasivas
+- Estado: TODO; depende de: M01–M05.
+- Rama sugerida: `Miguel_Pabon/role-differences-verification`.
+- Verificar mediante pruebas y una matriz que cada rol conserve su diferencia funcional: Papa como objetivo, Trolazzo como transporte, Bestia como acceso/ataque, Tanque, Cazador y Porta Papas con sus pasivas documentadas.
+- Aceptación: cada rol tiene al menos un caso positivo y uno de rechazo/limitación; los cooldowns, vidas, captura, rescate y enfurecimiento no se confunden entre roles; el host valida las acciones.
+- Evidencia requerida: matriz de roles, pruebas automatizadas y handoff con diferencias observadas y bloqueos.

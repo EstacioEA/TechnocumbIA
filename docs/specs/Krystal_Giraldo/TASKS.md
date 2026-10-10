@@ -65,3 +65,12 @@
 - Decisión funcional: Hall de Auditorios = base atacante/escape; Biblio = base defensora; Summan = zona de captura; Piedritas = corredor central; Torre = sala de la olla y entrada de Bestia.
 - Evidencia técnica: `K01_MAP_TEST`, `K02_POT_ZONE_TEST`, `K03_COOKING_ESCAPE_TEST`, `GK01_MAP_VISUALS_TEST`, `GK02_BASE_SPAWN_VISUALS_TEST` y `GK03_POT_BARRIER_VISUALS_TEST` pasan con Godot 4.7.2 headless.
 - Evidencia final: capturas runtime a 1280×720 con barrera cerrada y abierta; no se afirma licencia externa del JPEG.
+
+## TC02 — Límites y zonas jugables
+- Estado: TODO; depende de: K01–K06, V03.
+- Rama sugerida: `Krystal_Giraldo/map-playable-boundaries`.
+- Delimitar bordes, pasillos transitables, edificios bloqueados y zonas de objetivo con colisiones coherentes con el mapa oficial.
+- Aceptación: el jugador no atraviesa edificios ni abandona el área jugable; los pasillos conectan Hall, Piedritas, Summan, Torre y Biblio; captura, olla, escape y barrera conservan sus zonas lógicas.
+- Regla visual: `papoi_map.tscn` se muestra limpio durante gameplay; recuadros, títulos y estados solo se habilitan en previews.
+- Evidencia técnica inicial: `tests/qa/tc02_clean_map_test.gd` pasa y confirma que overlays de debug están ocultos por defecto y solo se activan explícitamente en previews.
+- Evidencia requerida: prueba de colisión/rutas, preview de debug separado y captura runtime limpia.

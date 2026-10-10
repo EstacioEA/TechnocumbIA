@@ -73,3 +73,10 @@
 - Estado: TODO; subtareas GINT01–GINT03.
 - Dependencias: GJ01–GJ05, GE01–GE06, GV01–GV03, GK01–GK04 y GM01–GM04.
 - GINT01 ensambla/recorre; GINT02 completa matriz y resoluciones; GINT03 deja capturas y handoff.
+
+## TC05 — Integración y QA final de remediaciones
+- Estado: TODO; depende de: TC01–TC04.
+- Rama sugerida: `Juan_Balanta/turn-c-remediation-qa`.
+- Recorrer el flujo con seis jugadores y comprobar sprites, límites, pasillos, zonas, roles, pasivas, HUD y overlay en la integración real.
+- Aceptación: matriz `PASS/FAIL/BLOCKED` con evidencia a 1280×720, 1600×900 y 1920×1080; ningún recuadro/título de debug aparece en gameplay normal; los defectos tienen responsable y siguiente acción.
+- Evidencia requerida: handoff final y actualización de `docs/specs/graphics/GINT.md`.

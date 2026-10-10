@@ -585,3 +585,14 @@
 - Pruebas: `GK04_CONTRAST_EVIDENCE_TEST` y escaneo/importación de Godot 4.7.2 pasan.
 - Evidencia runtime: `docs/handoffs/captura 7 vision normal.png` y `docs/handoffs/captura 7.1 vision activa.png` a 1280×720. La captura activa conserva el HUD legible sobre el overlay.
 - Limitaciones: el fondo `Mapa Base.jpeg` se documenta como recurso proporcionado por el equipo sin afirmar licencia externa.
+
+## 2026-10-10 — TC turno C de remediaciones
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- EVENT_ID: GameJam
+- Tipo: DESIGN / DOCUMENTATION / DEBUGGING
+- Tarea: repartir equitativamente las observaciones pendientes de integración entre los cinco integrantes.
+- Archivos: `docs/specs/TURN-C-REMEDIATION.md`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Juan_Balanta/TASKS.md`, `scripts/map/papoi_map.gd`, `scenes/map/papoi_map_gk03_open_preview.gd`, `scenes/map/papoi_map_gk04_contrast_preview.gd`.
+- Resumen: Valeria recibe avatares con sprites; Krystal, límites, pasillos y zonas; Miguel, verificación funcional de roles/pasivas; Edwar, contrato visible de snapshots/HUD; Juan, integración y QA final. Los recuadros, títulos y estados quedan restringidos a previews, mientras el gameplay normal usa el mapa limpio.
+- Pruebas: `GK04_CONTRAST_EVIDENCE_TEST`, `K01_MAP_TEST`, `GK03_POT_BARRIER_VISUALS_TEST` y `TC02_CLEAN_MAP_TEST` pasan; los overlays debug quedan ocultos por defecto y solo se activan explícitamente en previews.
+- Limitaciones: TC01–TC05 aún no están implementadas; no se creó commit ni push.

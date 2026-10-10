@@ -39,11 +39,13 @@ const TORRE_WALLS := [
 
 var _beast_gate_open := false
 var _zones: Dictionary = {}
+var _show_debug_overlay := false
 
 func _ready() -> void:
 	_create_boundaries()
 	_create_spawn_markers()
 	_create_zones()
+	set_debug_overlay_visible(false)
 	queue_redraw()
 
 func get_spawn_points() -> Dictionary:
@@ -84,6 +86,16 @@ func set_beast_gate_open(open: bool, host_authorized: bool) -> bool:
 
 func is_beast_gate_open() -> bool:
 	return _beast_gate_open
+
+func set_debug_overlay_visible(enabled: bool) -> void:
+	_show_debug_overlay = enabled
+	var base_visuals := get_node_or_null("BaseSpawnVisuals") as Node2D
+	var pot_visuals := get_node_or_null("PotBarrierVisuals") as Node2D
+	if base_visuals:
+		base_visuals.visible = enabled
+	if pot_visuals:
+		pot_visuals.visible = enabled
+	queue_redraw()
 
 func _create_boundaries() -> void:
 	var boundaries := [
@@ -173,6 +185,8 @@ func _create_zone(zone_name: String, rectangle: Rect2) -> void:
 	_zones[zone_name] = area
 
 func _draw() -> void:
+	if not _show_debug_overlay:
+		return
 	draw_rect(CAPTURE_ZONE, Color("#813f58", 0.25), true)
 	draw_rect(POT_ZONE, Color("#8e5e38", 0.22), true)
 	draw_rect(ESCAPE_ZONE, Color("#2a8c76", 0.22), true)
