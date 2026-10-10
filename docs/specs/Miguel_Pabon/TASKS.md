@@ -1,11 +1,11 @@
 # Tareas atómicas — Miguel Pabon
 
 ## M01 — Contratos de roles y pasivas
-- Estado: TODO
+- Estado: DONE
 - Depende de: E01
 - Rama sugerida: `Miguel_Pabon/role-contracts`
 - Definir asignación y datos de Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas.
-- Aceptación: seis jugadores reciben datos serializables; repetición de roles permitida; test de asignación.
+- Aceptación: seis jugadores reciben datos serializables; repetición de roles permitida; test de asignación. Evidencia: `tests/combat/test_role_contracts.gd`.
 
 ## M02 — Captura y transporte de Papa
 - Estado: TODO

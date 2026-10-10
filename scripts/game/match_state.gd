@@ -44,10 +44,10 @@ func to_json() -> String:
 	return JSON.stringify(to_dictionary())
 
 
-static func from_dictionary(data: Dictionary) -> MatchState:
+static func from_dictionary(data: Dictionary) -> RefCounted:
 	if not _has_valid_schema(data):
 		return null
-	var result := MatchState.new()
+	var result: RefCounted = load("res://scripts/game/match_state.gd").new()
 	result.schema_version = data.schema_version
 	result.revision = data.revision
 	result.phase = data.phase
@@ -64,11 +64,29 @@ static func from_dictionary(data: Dictionary) -> MatchState:
 	return result
 
 
-static func from_json(json_text: String) -> MatchState:
+static func from_json(json_text: String) -> RefCounted:
 	var parsed: Variant = JSON.parse_string(json_text)
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return null
-	return from_dictionary(parsed)
+	return from_dictionary(_normalize_json_data(parsed))
+
+
+static func _normalize_json_data(data: Dictionary) -> Dictionary:
+	var normalized := data.duplicate(true)
+	for key in [
+		"schema_version", "revision", "phase", "round_number", "attacking_team",
+		"papa_state", "round_winner", "round_end_reason", "match_winner",
+	]:
+		if normalized.has(key):
+			normalized[key] = int(normalized[key])
+	for team in ["TEAM_A", "TEAM_B"]:
+		if normalized.scores.has(team):
+			normalized.scores[team] = int(normalized.scores[team])
+	for player in normalized.players:
+		for key in ["peer_id", "team", "role", "passive", "lives"]:
+			if player.has(key):
+				player[key] = int(player[key])
+	return normalized
 
 
 static func _has_valid_schema(data: Dictionary) -> bool:

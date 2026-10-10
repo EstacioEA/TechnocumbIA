@@ -3,7 +3,7 @@
 Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera tarea `READY` según `docs/SDD_CONTINUE_PROTOCOL.md`.
 
 ## E01 — Contrato de estado compartido
-- Estado: BLOCKED — implementación y prueba JSON añadidas; falta ejecutar el test con Godot 4.
+- Estado: DONE — test JSON ejecutado con Godot 4.7.2 y resultado PASS.
 - Depende de: ninguno
 - Rama sugerida: `Edwar_Estacio/game-state-contract`
 - Archivos permitidos: `scripts/shared/`, `scripts/game/`, `tests/game/`

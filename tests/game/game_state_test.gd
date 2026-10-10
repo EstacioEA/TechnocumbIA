@@ -20,7 +20,7 @@ func run() -> void:
 	assert(game.start_match())
 	game._process(4.0)
 	assert(game.get_snapshot().phase == GameEnums.GamePhase.ACTIVE)
-	var first_attack := game.get_snapshot().attacking_team
+	var first_attack: int = game.get_snapshot().attacking_team
 	assert(not game.resolve_round(first_attack, GameEnums.RoundEndReason.ESCAPE_SUCCESS))
 	var first_attack_score_key := MatchStateData.team_score_key(first_attack)
 	assert(game.get_snapshot().scores[first_attack_score_key] == 0)
@@ -35,7 +35,7 @@ func run() -> void:
 		game._process(4.0)
 		var snapshot := game.get_snapshot()
 		assert(snapshot.round_number == expected_round)
-		var expected_attack := 1 - first_attack if expected_round % 2 == 0 else first_attack
+		var expected_attack: int = 1 - first_attack if expected_round % 2 == 0 else first_attack
 		assert(snapshot.attacking_team == expected_attack)
 		assert(game.resolve_round(1 - snapshot.attacking_team, GameEnums.RoundEndReason.ATTACKERS_ELIMINATED))
 	assert(game.get_snapshot().phase == GameEnums.GamePhase.MATCH_RESULT)
