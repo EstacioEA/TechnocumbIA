@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bntttgyhd81hl"]
+
+[ext_resource type="Texture2D" uid="uid://b54s58642aiqp" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_01.png" id="1_vqfa8"]
+[ext_resource type="Texture2D" uid="uid://bje15ih781t1p" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_02.png" id="2_kc0m0"]
+[ext_resource type="Texture2D" uid="uid://c8a4rf0cxgqf8" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_03.png" id="3_3wg0l"]
+[ext_resource type="Texture2D" uid="uid://bsbhnn70e0bc0" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_04.png" id="4_8v2eo"]
+[ext_resource type="Texture2D" uid="uid://d12l3b0upnysf" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_05.png" id="5_plpvy"]
+[ext_resource type="Texture2D" uid="uid://bvjspxpoi3kek" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_06.png" id="6_fcx1h"]
+[ext_resource type="Texture2D" uid="uid://bmkqi8k1cgfrr" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_07.png" id="7_i22wl"]
+[ext_resource type="Texture2D" uid="uid://uf38lp3g7t2r" path="res://assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_08.png" id="8_dy44r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_onxh1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_onxh1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vqfa8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kc0m0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3wg0l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8v2eo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_plpvy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_fcx1h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_i22wl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dy44r")
+}],
+"loop": 1,
+"name": &"Caminar_Abajo",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=637598664]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1202321988]
+shape = SubResource("CircleShape2D_onxh1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1716306672]
+position = Vector2(0, -1)
+scale = Vector2(0.8382353, 0.558011)
+sprite_frames = SubResource("SpriteFrames_onxh1")
+animation = &"Caminar_Abajo"
+speed_scale = 1.5
