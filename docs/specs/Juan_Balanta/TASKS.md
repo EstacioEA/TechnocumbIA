@@ -18,12 +18,12 @@
 - Evidencia: `tests/network/run_lobby_slots_test.ps1` PASS en Godot 4.7.2; probó seis filas visibles, rechazo legible del séptimo, salida de un cliente y roster reducido a cinco en host y observador. Handoff: `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`.
 
 ## J03 — Ready e inicio de partida
-- Estado: TODO
+- Estado: DONE
 - Depende de: J02, E01
 - Rama sugerida: `Juan_Balanta/lobby-ready-start`
 - Implementar ready y botón de inicio exclusivo del host.
 - Aceptación: solo inicia con seis listos; cliente no puede iniciar; evento de inicio llega a todos.
-- Verificación 2026-10-10: hay lógica de ready e inicio host en `NetworkManager` y control visual en la UI; no se ejecutó escenario con seis peers ni se probó intento desde cliente/replicación del inicio; queda TODO.
+- Evidencia: `tests/network/run_ready_start_test.ps1` PASS en Godot 4.7.2 con host + cinco clientes. El host bloquea el inicio con cinco jugadores y con jugadores no listos; clientes no pueden iniciar ni ven disponible el botón; los seis marcan ready y cada proceso recibe `lobby_start` con seis jugadores listos. Handoff: `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`.
 
 ## J04 — Pruebas multiinstancia y desconexiones
 - Estado: TODO

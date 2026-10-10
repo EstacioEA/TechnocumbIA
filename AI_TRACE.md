@@ -173,3 +173,15 @@
 - Resumen: se evito llamar `disconnect_peer` dos veces o sobre una sesion reemplazada comprobando peer y sesion antes de la expulsion demorada. J02 pasa a DONE con verificacion multiproceso de seis filas, rechazo visible del septimo, desconexion y roster de cinco en host/observador.
 - Pruebas: Godot 4.7.2 editor headless exit 0; J01 runner PASS; J02 runner PASS con host y seis procesos cliente; `git diff --check` PASS.
 - Limitaciones: solo loopback; ready/inicio y desconexion durante partida siguen pendientes en J03/J04. Sin commit ni push.
+
+## 2026-10-10 — J03 ready e inicio de partida
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar inicio exclusivo del host con seis jugadores listos y propagación de `lobby_start`.
+- Rama: `Juan_Balanta/lobby-ready-start`, basada en J02.
+- Archivos: `tests/network/ready_start_test.gd`, `tests/network/run_ready_start_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`.
+- Resumen: se añadió una prueba con host + cinco clientes que cubre bloqueo con cinco jugadores, bloqueo mientras falte ready, rechazo del inicio solicitado por clientes, UI restringida a host y recepción de `lobby_start` por los seis peers.
+- Pruebas: escaneo de proyecto Godot 4.7.2 PASS; runners J01, J02 y J03 PASS; `git diff --check` PASS en revisión final.
+- Limitaciones: procesos locales en loopback, sin prueba de LAN física ni firewall; desconexiones durante partida pendientes de J04. Sin commit ni push.
