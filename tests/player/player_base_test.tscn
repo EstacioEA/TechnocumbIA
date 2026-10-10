@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player_base.tscn" id="1_base"]
+
+[node name="PlayerBaseTest" type="Node2D"]
+
+[node name="PlayerOne" parent="." instance=ExtResource("1_base")]
+position = Vector2(320.0, 240.0)
+
+[node name="PlayerTwo" parent="." instance=ExtResource("1_base")]
+position = Vector2(640.0, 240.0)

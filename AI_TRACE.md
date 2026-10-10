@@ -55,3 +55,47 @@
 - Resumen: se corrigió la validación de IP para la API de Godot 4, tipos inferidos que impedían parsear scripts y la normalización de números de JSON para conservar validación entera en el esquema. Se añadió una comprobación de fallo al test round-trip. Se mantuvieron las reglas previas de `.gitignore` y se ignoró `.godot/`.
 - Verificación: Godot `4.7.2.stable.official.ed1daf0bf`; importación headless, ejecución headless de escena principal, `tests/game/game_state_test.gd` y `tests/combat/test_role_combat_system.gd` completados con código 0. El test de estado registra warnings esperados al probar rechazos inválidos.
 - Limitaciones: no se ejecutaron pruebas de red LAN con procesos separados (host, conexión por IP, seis/septimo jugador ni desconexión); los archivos `.uid` creados por Godot quedan como metadatos generados sin seguimiento. Sin commit.
+## 2026-10-09 — ejecución headless y correcciones para Godot 4
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tarea: instalar Godot 4 de forma temporal, ejecutar pruebas existentes y corregir errores que impedían cargarlas.
+- Rama: `Edwar_Estacio/godot-test-fixes`, basada en `develop` actualizado.
+- Archivos: `.gitignore`, `scripts/camera/local_camera.gd`, `scripts/camera/vision_overlay.gd`, `scripts/game/match_state.gd`, `scripts/network/network_manager.gd`, `scripts/roles/role_combat_system.gd`, `scripts/ui/lobby/lobby.gd`, `tests/game/game_state_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-09-2339-godot-headless-tests.md`.
+- Resumen: se corrigieron inferencias Variant, validación IP y normalización de números JSON; los tests ahora fallan con exit code distinto de cero ante un fallo. E01 pasó y E02 quedó READY.
+- Pruebas: análisis/editor headless, escena lobby, test de estado, test de combate y escena de jugador pasaron con Godot 4.7.2.
+- Trazabilidad: se restauraron entradas previas de `AI_TRACE.md` desde `fbc7a49` tras una actualización de `develop` que lo había eliminado; esta entrada se anexó al final.
+- Limitaciones: no se ejecutó prueba LAN multiinstancia ni una escena completa de partida integrada. El motor quedó en TEMP, fuera del repositorio.
+
+## 2026-10-10 — V01 validación de player base
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: cerrar V01 después de disponer de Godot 4.7.2 y validar la escena base.
+- Rama: `Valeria_Piza/player-base-validation`, basada en `develop`.
+- Archivos: `docs/specs/Valeria_Piza/TASKS.md`, `docs/handoffs/2026-10-10-0007-V01-player-base-validation.md`, `AI_TRACE.md`.
+- Resumen: `player_base_test.tscn` cargó en Godot 4.7.2 headless con dos instancias del jugador y sin dependencias de red; V01 pasó a `DONE`.
+- Limitaciones: la validación fue headless; la inspección visual queda para V04/V05.
+## 2026-10-10 — E02 bloqueada antes de implementar
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tipo: AI_ASSISTED / DOCUMENTATION
+- Solicitud: continuar con la siguiente tarea individual asignada.
+- Tarea candidata: E02 — Máquina de estados de ronda (E01 DONE y E02 READY según el archivo visto en `develop`).
+- Rama: `Edwar_Estacio/round-state-machine`, creada desde `main` después de confirmar `origin/main` como predeterminada y actualizarla con fast-forward.
+- Resultado: no se modificó código. En la rama se detectó `?? .godot/` y no existe `docs/specs/Edwar_Estacio/TASKS.md`; el archivo de asignación está en `develop`.
+- Limitaciones: no se borró ni ocultó `.godot/`; no se ejecutaron pruebas. `CLI_BRANCH_POLICY.md` indica `main`, mientras `SDD_CONTINUE_PROTOCOL.md` indica `develop`; se requiere resolver la discrepancia y mantener la asignación disponible en la base aprobada.
+- Siguiente paso: resolver el estado local y la política de base; continuar E02 en rama limpia con sus specs y asignación disponibles.
+
+## 2026-10-10 — E02 máquina de estados de ronda
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING
+- Solicitud: completar E02 y resolver los bloqueos de rama y estado local documentados anteriormente.
+- Rama: `Edwar_Estacio/round-state-machine-impl`, nueva desde `develop` actualizado; la rama `Edwar_Estacio/round-state-machine` anterior ya estaba integrada en `develop`.
+- Archivos: `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0105-E02-round-state-machine.md`.
+- Resumen: se centralizaron las transiciones válidas con autoridad del host y restricciones de progresión; se parametrizó el límite de 7 minutos; se añadieron pruebas de flujo válido, transiciones rechazadas sin mutación, timeout, eliminación durante cocción y desempate 2-2 que completa la quinta ronda sin permitir una sexta.
+- Pruebas: escaneo editor headless, test de estado, smoke de escena principal, test de combate y escena de jugador pasaron en Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
+- Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.

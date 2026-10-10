@@ -1,7 +1,7 @@
 # Tareas atómicas — Valeria Piza
 
 ## V01 — Player base y escena de prueba
-- Estado: TODO
+- Estado: DONE
 - Depende de: ninguno
 - Rama sugerida: `Valeria_Piza/player-base`
 - Crear CharacterBody2D reutilizable, collider y escena mínima.

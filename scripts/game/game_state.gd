@@ -7,7 +7,8 @@ const MatchStateData = preload("res://scripts/game/match_state.gd")
 const REQUIRED_PLAYER_COUNT := 6
 const BEST_OF_ROUNDS := 5
 const POINTS_TO_WIN_MATCH := 3
-const ROUND_DURATION_SECONDS := 420.0
+const MAX_ROUND_DURATION_SECONDS := 7.0 * 60.0
+const ROUND_DURATION_SECONDS := MAX_ROUND_DURATION_SECONDS
 const COUNTDOWN_DURATION_SECONDS := 3.0 # Pendiente: confirmar duración de cuenta regresiva.
 const POT_COOKING_DURATION_SECONDS := 30.0 # Pendiente: confirmar balance de cocción.
 const STARTING_LIVES_PER_ATTACKER := 3 # Pendiente: persistir y consumir vidas al integrar combate.
@@ -67,6 +68,8 @@ func start_match() -> bool:
 		return false
 	if _state.phase != GameEnums.GamePhase.LOBBY or _state.players.size() != REQUIRED_PLAYER_COUNT:
 		return _reject("start_match", "se requiere lobby válido con seis jugadores listos")
+	if not _is_phase_transition_allowed(_state.phase, GameEnums.GamePhase.COUNTDOWN):
+		return _reject("start_match", "transición de fase no permitida")
 	_state.round_number = 1
 	_assign_round_roles()
 	_round_resolved = false
@@ -129,6 +132,8 @@ func resolve_round(winner_team: int, reason: int) -> bool:
 		return false
 	if _round_resolved:
 		return _reject("resolve_round", "esta ronda ya fue resuelta")
+	if not _is_phase_transition_allowed(_state.phase, GameEnums.GamePhase.ROUND_RESULT):
+		return _reject("resolve_round", "la fase actual no permite resolver la ronda")
 	if not _is_team(winner_team) or not _is_round_reason(reason):
 		return _reject("resolve_round", "equipo ganador o motivo inválido")
 	if not _is_resolution_valid(winner_team, reason):
@@ -155,6 +160,8 @@ func start_next_round() -> bool:
 		return false
 	if _state.phase != GameEnums.GamePhase.ROUND_RESULT:
 		return _reject("start_next_round", "solo se puede continuar desde ROUND_RESULT")
+	if not _is_phase_transition_allowed(_state.phase, GameEnums.GamePhase.COUNTDOWN):
+		return _reject("start_next_round", "transición de fase no permitida")
 	if _state.round_number >= BEST_OF_ROUNDS:
 		return _reject("start_next_round", "se alcanzó el máximo de cinco rondas")
 	_state.round_number += 1
@@ -243,13 +250,46 @@ func _is_resolution_valid(winner_team: int, reason: int) -> bool:
 	return false
 
 
-func _set_phase(next_phase: int) -> void:
+func _set_phase(next_phase: int) -> bool:
+	if not _require_host("set_phase"):
+		return false
 	var previous := _state.phase
-	if previous == next_phase:
-		return
+	if not _is_phase_transition_allowed(previous, next_phase):
+		return _reject("set_phase", "transición inválida: %s -> %s" % [previous, next_phase])
+	if next_phase == GameEnums.GamePhase.ACTIVE and _state.phase_time_remaining > 0.0:
+		return _reject("set_phase", "la cuenta regresiva aún no termina")
+	if next_phase == GameEnums.GamePhase.COUNTDOWN and previous == GameEnums.GamePhase.ROUND_RESULT:
+		if _state.match_winner != -1 or (_state.round_number >= BEST_OF_ROUNDS and _round_resolved):
+			return _reject("set_phase", "la partida ya terminó o alcanzó el máximo de rondas")
+	if next_phase == GameEnums.GamePhase.MATCH_RESULT:
+		if not _is_team(_state.match_winner):
+			return _reject("set_phase", "MATCH_RESULT requiere un ganador autoritativo")
+		var score_key := MatchStateData.team_score_key(_state.match_winner)
+		if int(_state.scores.get(score_key, 0)) < POINTS_TO_WIN_MATCH:
+			return _reject("set_phase", "el ganador todavía no alcanza tres puntos")
 	_state.phase = next_phase
 	_state.revision += 1
 	phase_changed.emit(previous, next_phase)
+	return true
+
+
+func _is_phase_transition_allowed(previous_phase: int, next_phase: int) -> bool:
+	match previous_phase:
+		GameEnums.GamePhase.LOBBY:
+			return next_phase == GameEnums.GamePhase.COUNTDOWN
+		GameEnums.GamePhase.COUNTDOWN:
+			return next_phase == GameEnums.GamePhase.ACTIVE
+		GameEnums.GamePhase.ACTIVE:
+			return next_phase in [GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ROUND_RESULT]
+		GameEnums.GamePhase.POT_COOKING:
+			return next_phase in [GameEnums.GamePhase.ESCAPE, GameEnums.GamePhase.ROUND_RESULT]
+		GameEnums.GamePhase.ESCAPE:
+			return next_phase == GameEnums.GamePhase.ROUND_RESULT
+		GameEnums.GamePhase.ROUND_RESULT:
+			return next_phase in [GameEnums.GamePhase.COUNTDOWN, GameEnums.GamePhase.MATCH_RESULT]
+		GameEnums.GamePhase.MATCH_RESULT:
+			return false
+	return false
 
 
 func _emit_state() -> void:
