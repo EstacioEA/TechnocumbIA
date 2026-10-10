@@ -38,6 +38,23 @@
 - Resumen: valores de enums explícitos; `MatchState` serializa y valida JSON con claves de equipo compatibles; se añadió test de round-trip y rechazo de esquema inválido.
 - Limitaciones: test no ejecutado (comando Godot terminó con código 127 porque no está instalado); E01 queda `BLOCKED` hasta ejecutar la prueba en Godot 4.
 
+## 2026-10-09 — configuración inicial Godot
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: crear la configuración inicial del proyecto Godot 4.
+- Archivos: `project.godot`, `docs/handoffs/2026-10-09-2326-project-config.md`, `AI_TRACE.md`.
+- Resumen: añadí la configuración Papoi con la escena de lobby existente como escena principal, viewport 1280×720, stretch `canvas_items` y renderizador `gl_compatibility`.
+- Limitaciones: `git diff --check` pasó. No se pudo abrir el proyecto ni ejecutar pruebas porque Godot no está disponible en PATH. No se creó commit.
+
+## 2026-10-10 — reparación de compatibilidad y validación en Godot 4.7.2
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: habilitar la apertura y ejecución del proyecto Godot, corregir errores de parseo y validar serialización del estado.
+- Rama: `Juan_Balanta/godot-compatibility-fixes`.
+- Archivos: `.gitignore`, `scripts/game/match_state.gd`, `scripts/network/network_manager.gd`, `scripts/roles/role_combat_system.gd`, `scripts/ui/lobby/lobby.gd`, `tests/game/game_state_test.gd`.
+- Resumen: se corrigió la validación de IP para la API de Godot 4, tipos inferidos que impedían parsear scripts y la normalización de números de JSON para conservar validación entera en el esquema. Se añadió una comprobación de fallo al test round-trip. Se mantuvieron las reglas previas de `.gitignore` y se ignoró `.godot/`.
+- Verificación: Godot `4.7.2.stable.official.ed1daf0bf`; importación headless, ejecución headless de escena principal, `tests/game/game_state_test.gd` y `tests/combat/test_role_combat_system.gd` completados con código 0. El test de estado registra warnings esperados al probar rechazos inválidos.
+- Limitaciones: no se ejecutaron pruebas de red LAN con procesos separados (host, conexión por IP, seis/septimo jugador ni desconexión); los archivos `.uid` creados por Godot quedan como metadatos generados sin seguimiento. Sin commit.
 ## 2026-10-09 — ejecución headless y correcciones para Godot 4
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
