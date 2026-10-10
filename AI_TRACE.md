@@ -120,27 +120,6 @@
 - Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
 - Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.
 
-## 2026-10-10 — J01 transporte LAN host/cliente
-- TEAM_ID: TechnocumbIA
-- PARTICIPANT_ID: Juan Diego Balanta
-- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
-- Tarea: verificar el transporte ENet host/cliente integrado y anadir cobertura multi-proceso reproducible.
-- Rama: `Juan_Balanta/lan-transport`, basada en `develop` actualizado a `96ba1c209662e4930657817646589e4ed7be4ab3`.
-- Archivos: `tests/network/lan_transport_test.gd`, `tests/network/run_lan_transport_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`.
-- Resumen: el harness valida IP/puerto y error visible de IP invalida, inicia dos procesos Godot, confirma host ENet, evento peer_joined, conexion loopback y roster cliente de dos jugadores. J01 queda DONE segun evidencia registrada.
-- Pruebas: escaneo headless del editor exit 0; runner PowerShell `LAN_TRANSPORT_TEST: PASS` en Godot 4.7.2.
-- Limitaciones: prueba loopback solamente. Sexto/septimo jugador, desconexion, ready, inicio de host y LAN fisica quedan pendientes para J02-J04. Sin commit ni push.
-
-## 2026-10-10 — auditoria de tareas de Juan Balanta
-- TEAM_ID: TechnocumbIA
-- PARTICIPANT_ID: Juan Diego Balanta
-- Tipo: TESTING / DOCUMENTATION
-- Tarea: contrastar tareas J01-J04 y criterios del spec individual con codigo y evidencia ejecutada.
-- Rama: `Juan_Balanta/lan-transport`.
-- Archivos: `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0128-juan-task-audit.md`, `AI_TRACE.md`.
-- Resumen: J01 continua DONE y se marcaron como verificados solo host con puerto, cliente IP y procedimiento local. J02-J04 quedan TODO: el codigo de lobby/ready existe, pero no hay evidencia ejecutada de seis/siete jugadores, ready/inicio host ni desconexiones antes/durante partida.
-- Pruebas de esta auditoria: no se ejecutaron pruebas nuevas; se consulto la salida PASS del runner J01 previo y se inspecciono el codigo.
-- Limitaciones: loopback solamente; falta validar LAN fisica y todos los criterios J02-J04. Sin commit ni push.
 ## 2026-10-10 — E03 marcador y condiciones de resultado
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -165,6 +144,45 @@
 - Resumen: se añadió `CaptureZone`, un validador separado de zona de olla y una detección host-autorizada que acepta únicamente Papa capturada dentro de la olla, sin iniciar cocción ni modificar victoria.
 - Limitaciones: la validación LAN completa no pertenece a K02; `AI_TRACE.md` se mantiene solo local y no se publica remotamente.
 
+## 2026-10-10 — bloqueo K03 por dependencia M02
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: DOCUMENTATION
+- Tarea: evaluar la siguiente tarea disponible de Krystal y documentar K03 como bloqueada.
+- Rama: `Krystal_Giraldo/k03-blocked`, basada en `develop` actualizado.
+- Archivos: `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0125-K03-blocked.md`, `AI_TRACE.md`.
+- Resumen: K02 y E02 están DONE, pero K03 depende de M02, que sigue TODO. No se implementó lógica duplicada de captura, cocción o escape.
+- Limitaciones: se requiere la entrega/integración de M02 antes de crear la rama de implementación de K03; no se creó commit ni se publicó AI_TRACE.md.
+
+## 2026-10-10 — K03 cocción, rescate y escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: implementar cocción host-autoritativa, rescate de Bestia, transición a escape y detección de base atacante.
+- Rama: `Krystal_Giraldo/cooking-rescue-escape`, basada en `develop` actualizado.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0210-K03-cooking-rescue-escape.md`.
+- Resumen: se reutilizaron `PapaCaptureState` y `BeastAccessState`; el coordinador exige Papa capturada y host, abre acceso de Bestia durante cocción, cancela por rescate, cambia a escape al completar y emite `escape_reached` solo dentro de la base atacante.
+- Limitaciones: `escape_reached` debe conectarse al GameState del host para resolver la ronda; este módulo no adjudica puntos ni victoria. AI_TRACE.md permanece local y no se publica remotamente.
+
+## 2026-10-10 — validación K03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: TESTING / DEBUGGING
+- Tarea: validar la secuencia de cocción, rescate de Bestia y escape de K03.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/handoffs/2026-10-10-0210-K03-cooking-rescue-escape.md`.
+- Resumen: se corrigió la guarda que impedía rescates antes de la aparición de Bestia. `K03_COOKING_ESCAPE_TEST`, `K01_MAP_TEST` y `K02_POT_ZONE_TEST` pasaron con Godot 4.7.2.
+- Limitaciones: la señal `escape_reached` aún debe conectarse al GameState autoritativo para resolver la ronda; no se creó commit ni se publicó AI_TRACE.md.
+
+## 2026-10-10 — K04 HUD y pantallas de resultado
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: implementar HUD autoritativo de fase, ronda, temporizadores, marcador, vidas, rol, pasiva, cooldowns, desconexión y resultados.
+- Rama: `Krystal_Giraldo/hud-results`, basada en `develop` actualizado.
+- Archivos: `scripts/ui/papoi_hud.gd`, `tests/qa/k04_hud_results_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0220-K04-hud-results.md`.
+- Resumen: el HUD consume snapshots de GameState sin modificar autoridad, distingue tiempo de ronda y fase/cocción, muestra contexto del jugador, resultados derivados del host y errores de desconexión en pantalla.
+- Limitaciones: la integración LAN debe alimentar snapshots y desconexiones; K05 queda pendiente de J03, V05 y M05. AI_TRACE.md permanece local y no se publica remotamente.
+
 ## 2026-10-10 — V02 input y movimiento
 
 - Rama: `Valeria_Piza/player-movement`, basada en `main` actualizado.
@@ -181,6 +199,15 @@
 - Prueba: `tests/qa/v04_camera_vision_test.gd` ejecutada con Godot 4.7.2
   headless.
 - Siguiente tarea: V05 — Prueba de instancias.
+
+## 2026-10-10 — V05 prueba de instancias
+
+- Rama: `Valeria_Piza/player-smoke-test`, basada en `develop` actualizado.
+- Resultado: dos jugadores instancian correctamente; solo el jugador local
+  procesa WASD y el remoto acepta únicamente velocidad aplicada por el host.
+- Prueba: `tests/player/player_smoke_test.gd` ejecutada con Godot 4.7.2
+  headless.
+- Resultado del bloque de tareas Valeria: V01 a V05 completadas.
 
 
 ## 2026-10-10 — Corrección de test de estado en develop
@@ -213,18 +240,8 @@
 - Archivos: `scripts/combat/combat_lives_state.gd`, `tests/combat/test_combat_lives_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0155-M03-combat-lives.md`.
 - Resumen: se agregó estado host-authoritativo con tres vidas por ronda, respawn único de tres segundos, rechazo de golpes al portador y señal consultable de eliminación total.
 - Limitaciones: la transición final de GameState y la posición física de respawn quedan para integración.
-## 2026-10-10 — J02 lobby y limite de jugadores
-- TEAM_ID: TechnocumbIA
-- PARTICIPANT_ID: Juan Diego Balanta
-- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
-- Tarea: completar y verificar el lobby de seis slots, rechazo del septimo y limpieza de peers desconectados.
-- Rama: `Juan_Balanta/lan-transport`, conservando el trabajo local previo de J01/auditoria.
-- Archivos: `scripts/network/network_manager.gd`, `tests/network/lobby_slots_test.gd`, `tests/network/lobby_slots_test.gd.uid`, `tests/network/run_lobby_slots_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`.
-- Resumen: se evito llamar `disconnect_peer` dos veces o sobre una sesion reemplazada comprobando peer y sesion antes de la expulsion demorada. J02 pasa a DONE con verificacion multiproceso de seis filas, rechazo visible del septimo, desconexion y roster de cinco en host/observador.
-- Pruebas: Godot 4.7.2 editor headless exit 0; J01 runner PASS; J02 runner PASS con host y seis procesos cliente; `git diff --check` PASS.
-- Limitaciones: solo loopback; ready/inicio y desconexion durante partida siguen pendientes en J03/J04. Sin commit ni push.
 
-## 2026-10-10 — J03 ready e inicio de partida
+## 2026-10-10 — M04 Bestia y acceso a olla
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Juan Diego Balanta
 - EVENT_ID: GameJam
@@ -247,3 +264,29 @@
 - Resumen: el runner cubre salida de lobby antes del inicio, inicio con seis peers, desconexión durante ACTIVE, invalidación host-authoritative sin puntos/ganador y réplica del snapshot a los cuatro peers que permanecen conectados.
 - Pruebas: runner J04 PASS; `game_state_test.gd` PASS; runner J03 PASS; `git diff --check` PASS.
 - Limitaciones: loopback; el puente `peer_left` a `GameState` es explícito en el fixture y aún no está conectado en runtime; sin commit ni push.
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar aparición, ataques, cooldowns y bloqueo de acceso de Bestia a la olla.
+- Rama: `Miguel_Pabon/beast-access`, basada en `develop`.
+- Archivos: `scripts/combat/beast_access_state.gd`, `tests/combat/test_beast_access_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0205-M04-beast-access.md`.
+- Resumen: se agregó control host-authoritativo de aparición a 30 segundos, ataque básico/especial con cooldowns y acceso a sala condicionado a cocción.
+- Limitaciones: el daño final lo resolverá GameState/M03; el enfurecimiento queda para M05 y la identificación final debe conectarse al rol Bestia explícito.
+
+## 2026-10-10 — M05 trampa, pasivas y enfurecimiento
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar trampa MVP, efectos de Tanque/Cazador/Porta Papas y enfurecimiento de Bestia.
+- Rama: `Miguel_Pabon/abilities-enrage`, basada en `develop`.
+- Archivos: `scripts/abilities/abilities_enrage_state.gd`, `tests/combat/test_abilities_enrage_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0225-M05-abilities-enrage.md`.
+- Resumen: se agregó control host-authoritativo de trampa con cooldown, efectos observables de las tres pasivas y enfurecimiento tras cocción con boost de velocidad y cooldowns reducidos.
+- Limitaciones: la señal de cocción y los multiplicadores deben conectarse al host/GameState durante la integración; los valores de balance son temporales.
+
+## 2026-10-10 — validación final M05 y compatibilidad K03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: TESTING / DEBUGGING / DOCUMENTATION
+- Tarea: validar M05 y corregir la carga headless de K03.
+- Rama: `Miguel_Pabon/abilities-enrage`, basada en `develop`.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `docs/handoffs/2026-10-10-0225-M05-abilities-enrage.md`, `AI_TRACE.md`.
+- Resumen: M05 pasó su prueba específica y la regresión de Bestia; K03 pasó después de relajar las referencias tipadas del coordinador a `RefCounted`, manteniendo la autoridad del host.
+- Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
+- Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
