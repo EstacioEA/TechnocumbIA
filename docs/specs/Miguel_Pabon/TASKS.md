@@ -22,11 +22,11 @@
 - Aceptación: pierde exactamente una vida; respawn ocurre una vez; cero vidas activa resultado defensor. Evidencia: `tests/combat/test_combat_lives_state.gd`.
 
 ## M04 — Bestia y acceso a olla
-- Estado: TODO
+- Estado: DONE
 - Depende de: M01, K02
 - Rama sugerida: `Miguel_Pabon/beast-access`
 - Aparición a 30 s, ataque básico/especial y bloqueo fuera de cocción.
-- Aceptación: no ataca antes de aparecer; no entra fuera de cocción; cooldowns validan host.
+- Aceptación: no ataca antes de aparecer; no entra fuera de cocción; cooldowns validan host. Evidencia: `tests/combat/test_beast_access_state.gd`.
 
 ## M05 — Trampa, pasivas y enfurecimiento
 - Estado: TODO

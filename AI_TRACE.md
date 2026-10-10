@@ -192,3 +192,12 @@
 - Archivos: `scripts/combat/combat_lives_state.gd`, `tests/combat/test_combat_lives_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0155-M03-combat-lives.md`.
 - Resumen: se agregó estado host-authoritativo con tres vidas por ronda, respawn único de tres segundos, rechazo de golpes al portador y señal consultable de eliminación total.
 - Limitaciones: la transición final de GameState y la posición física de respawn quedan para integración.
+
+## 2026-10-10 — M04 Bestia y acceso a olla
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar aparición, ataques, cooldowns y bloqueo de acceso de Bestia a la olla.
+- Rama: `Miguel_Pabon/beast-access`, basada en `develop`.
+- Archivos: `scripts/combat/beast_access_state.gd`, `tests/combat/test_beast_access_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0205-M04-beast-access.md`.
+- Resumen: se agregó control host-authoritativo de aparición a 30 segundos, ataque básico/especial con cooldowns y acceso a sala condicionado a cocción.
+- Limitaciones: el daño final lo resolverá GameState/M03; el enfurecimiento queda para M05 y la identificación final debe conectarse al rol Bestia explícito.
