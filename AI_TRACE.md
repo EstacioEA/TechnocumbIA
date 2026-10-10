@@ -152,6 +152,15 @@
 - Prueba: `tests/player/player_movement_test.tscn`.
 - Siguiente bloqueo externo: V03 requiere K01 de Krystal Giraldo.
 
+## 2026-10-10 — V04 cámara y visión
+
+- Rama: `Valeria_Piza/player-camera-vision`, basada en `develop` actualizado.
+- Resultado: cámara local, overlay de visión al 80% y prioridad del HUD
+  validados; las instancias remotas no activan cámara ni overlay.
+- Prueba: `tests/qa/v04_camera_vision_test.gd` ejecutada con Godot 4.7.2
+  headless.
+- Siguiente tarea: V05 — Prueba de instancias.
+
 
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA

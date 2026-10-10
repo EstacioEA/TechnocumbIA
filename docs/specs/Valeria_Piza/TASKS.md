@@ -24,11 +24,12 @@
   reproducible de colisión documentado.
 
 ## V04 — Cámara y visión
-- Estado: TODO
+- Estado: DONE
 - Depende de: V02
 - Rama sugerida: `Valeria_Piza/player-camera-vision`
 - Cámara local centrada y overlay con aura; HUD fuera del overlay.
-- Aceptación: cámara sigue al jugador; visión limitada visible; HUD legible.
+- Aceptación: cámara local sigue al jugador con límites; visión limitada usa
+  aura del 80%; HUD puede ubicarse sobre la capa del overlay.
 
 ## V05 — Prueba de instancias
 - Estado: TODO
