@@ -626,3 +626,14 @@
 - Resumen: se agregaron guardas de transporte activo alrededor de autoridad, procesamiento, intents, snapshots y callbacks; la UI conserva el estado desconectado. No cambian reglas, combate ni el protocolo LAN.
 - Pruebas: `tests/network/run_disconnect_match_test.ps1`, `tests/game/game_integration_test.gd` y `tests/game/game_state_test.gd` PASS; se documentan warnings esperados del ultimo.
 - Limitaciones: pruebas locales multiproceso, sin validacion LAN fisica; TC05 continua bloqueada por TC01-TC04 y GINT mantiene evidencia 1920x1080 pendiente.
+
+
+## 2026-10-10 - Juan Diego Balanta: correccion de estados GINT y TC05
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: AI_ASSISTED / DOCUMENTATION
+- Tarea: alinear los estados de GINT01 y TC05 con la regresion de desconexion aprobada y las tareas Turn C integradas.
+- Rama: `Juan_Balanta/runtime-disconnect-guards`.
+- Archivos: `docs/specs/graphics/GINT.md`, `docs/specs/Juan_Balanta/TASKS.md`, `AI_TRACE.md`.
+- Resumen: GINT01 pasa de BLOCKED a IN_PROGRESS porque la regresion automatizada ya pasa, aunque el recorrido visual de seis peers sigue pendiente. TC05 sigue TODO y bloqueada por TC01, TC02 y TC04; TC03 figura DONE.
+- Limitaciones: no se cambio el estado de tareas de otros integrantes ni se ejecuto una nueva prueba; el recorrido visual y evidencia 1920x1080 siguen pendientes.
