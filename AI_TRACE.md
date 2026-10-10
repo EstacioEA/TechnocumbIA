@@ -49,3 +49,13 @@
 - Pruebas: análisis/editor headless, escena lobby, test de estado, test de combate y escena de jugador pasaron con Godot 4.7.2.
 - Trazabilidad: se restauraron entradas previas de `AI_TRACE.md` desde `fbc7a49` tras una actualización de `develop` que lo había eliminado; esta entrada se anexó al final.
 - Limitaciones: no se ejecutó prueba LAN multiinstancia ni una escena completa de partida integrada. El motor quedó en TEMP, fuera del repositorio.
+## 2026-10-10 — E02 bloqueada antes de implementar
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tipo: AI_ASSISTED / DOCUMENTATION
+- Solicitud: continuar con la siguiente tarea individual asignada.
+- Tarea candidata: E02 — Máquina de estados de ronda (E01 DONE y E02 READY según el archivo visto en `develop`).
+- Rama: `Edwar_Estacio/round-state-machine`, creada desde `main` después de confirmar `origin/main` como predeterminada y actualizarla con fast-forward.
+- Resultado: no se modificó código. En la rama se detectó `?? .godot/` y no existe `docs/specs/Edwar_Estacio/TASKS.md`; el archivo de asignación está en `develop`.
+- Limitaciones: no se borró ni ocultó `.godot/`; no se ejecutaron pruebas. `CLI_BRANCH_POLICY.md` indica `main`, mientras `SDD_CONTINUE_PROTOCOL.md` indica `develop`; se requiere resolver la discrepancia y mantener la asignación disponible en la base aprobada.
+- Siguiente paso: resolver el estado local y la política de base; continuar E02 en rama limpia con sus specs y asignación disponibles.
