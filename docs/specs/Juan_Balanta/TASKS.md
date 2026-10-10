@@ -73,7 +73,7 @@
 - Estado: IN_PROGRESS; checkpoint y matriz en `docs/specs/graphics/GINT.md`; handoff `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
 - Dependencias: GJ01–GJ05, GE01–GE06, GV01–GV03, GK01–GK04 y GM01–GM04.
 - GINT01 ensambla/recorre; GINT02 completa matriz y resoluciones; GINT03 deja capturas y handoff.
-- Bloqueo actual: flujo runtime de desconexión deja errores multiplayer en clientes; falta evidencia 1920×1080 y las integraciones TC01–TC04.
+- Seguimiento: regresion automatizada de desconexion ahora PASS (handoff docs/handoffs/2026-10-10-0800-Juan-disconnect-runtime-fix.md); falta evidencia a 1920x1080 y las integraciones TC01-TC04.
 
 ## TC05 — Integración y QA final de remediaciones
 - Estado: TODO — bloqueada por TC01–TC04, que aún aparecen TODO en los specs de Valeria, Krystal, Miguel y Edwar. No se modificaron sus tareas ni sus módulos.

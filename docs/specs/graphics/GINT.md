@@ -2,7 +2,7 @@
 
 - Responsables: Juan Diego Balanta y Edwar Estacio
 - Turno: C, después de GJ01, GE01, GV01, GK01 y GM01.
-- Estado: IN_PROGRESS; GINT01 recorrido completo bloqueado por errores tras desconexión; GINT02 matriz actualizada; GINT03 handoff registrado. Seguimiento: `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
+- Estado: IN_PROGRESS; regresion automatizada de desconexion corregida y PASS; GINT01 aun requiere recorrido visual runtime completo; GINT02 pendiente de 1920x1080/TC01-TC04; GINT03 con handoff incremental. Seguimiento: `docs/handoffs/2026-10-10-0800-Juan-disconnect-runtime-fix.md`.
 
 ## Objetivo
 
@@ -45,7 +45,7 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 |---|---|---|
 | Menú y navegación teclado | PASS | GJ05 `gj05_visual_capture_test.gd`; GJ05 `run_gj05_menu_lan_test.ps1` (host+cliente desde menú); evidencia `docs/handoffs/evidence/gj05/`. |
 | Errores/validación de red visibles | PASS | GJ05 captura de validación/rechazo; `run_lobby_slots_test.ps1` confirma rechazo del séptimo peer. |
-| Lobby 1/6, 6/6, ready/no-ready, host/cliente | FAIL | `lobby_presentation_test.gd` y `run_lobby_slots_test.ps1` PASS; al iniciar seis peers, el runner de desconexión genera errores multiplayer después de cortar peers. Ver handoff GINT. |
+| Lobby 1/6, 6/6, ready/no-ready, host/cliente | PASS en pruebas automatizadas; falta recorrido visual runtime completo | `lobby_presentation_test.gd`, `run_lobby_slots_test.ps1` y `run_disconnect_match_test.ps1` PASS en la revalidacion de `2026-10-10-0800-Juan-disconnect-runtime-fix.md`. |
 | Personajes/equipos/roles distinguibles | BLOCKED | `GV01_CHARACTERS_TEST`, `GV02_ORIENTATION_TEST`, `GV03_SIX_PLAYERS_TEST`, `GM01_ROLE_ICONS_TEST`, `GM04_ROLE_FEEDBACK_TEST` PASS; TC01 sprite replacement y TC03 roles aún TODO. |
 | Mapa, bases, rutas, olla y barrera legibles | BLOCKED | `GK01–GK04`, `K01–K04`, `V03` y capturas 1280×720 PASS; la revalidación TC02 de límites/rutas del Turn C sigue TODO. |
 | HUD y feedback de acciones sobre visión | BLOCKED | `GE03–GE06`, `GM02–GM04`, `K04` y `GAME_INTEGRATION_TEST` PASS en sus coberturas; TC04 snapshot/cooldown integrado sigue TODO. |
@@ -61,7 +61,7 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 - `run_gj05_menu_lan_test.ps1`: PASS, host y cliente recorren el menú y observan roster=2.
 - `lobby_presentation_test.gd`: PASS.
 - `run_lobby_slots_test.ps1`: PASS; host + cinco clientes, séptimo rechazado, desconexión y roster actualizado.
-- `run_disconnect_match_test.ps1`: FAIL después de confirmar `DISCONNECT_HOST_MATCH_INVALIDATED` y `DISCONNECT_CLIENT_RESULT_RECEIVED`; los clientes que siguen activos llaman `get_unique_id()` y RPC tras perder peer. Errores en `scripts/game/papoi_game_session.gd` líneas 92, 109, 184–187 y 555. No se cambió este archivo; asignación pendiente.
+- `run_disconnect_match_test.ps1`: PASS tras la correccion de cierre de sesion de `2026-10-10-0800-Juan-disconnect-runtime-fix.md`; el handoff historico del fallo anterior se conserva.
 - Dependencias Turn C: TC01, TC02, TC03 y TC04 continúan `TODO` en los specs de sus responsables; TC05 por ello no puede cerrarse.
 
 ## Aceptación observable

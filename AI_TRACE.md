@@ -616,3 +616,13 @@
 - Archivos: `tests/combat/test_role_differences_verification.gd`, `docs/handoffs/2026-10-10-0733-TC03-role-differences-verification.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `AI_TRACE.md`.
 - Resumen: se añadió una matriz con casos positivos y rechazos para cada rol/pasiva, además de comprobaciones de host, vidas, cooldowns, captura, acceso de Bestia y enfurecimiento.
 - Limitaciones: la identificación final de Bestia y la aplicación física de multiplicadores aún requieren integración con GameState y el sistema de impactos; no se ejecutó LAN de seis clientes.
+
+## 2026-10-10 - Juan Diego Balanta: cierre seguro de sesion multiplayer
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: AI_ASSISTED / DEBUGGING / TESTING / DOCUMENTATION
+- Tarea: corregir errores runtime de clientes despues de desconexion del host durante partida.
+- Archivos: `scripts/game/papoi_game_session.gd`, `tests/qa/p0_lan_3v3_matrix.md`, `docs/specs/graphics/GINT.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0800-Juan-disconnect-runtime-fix.md`, `AI_TRACE.md`.
+- Resumen: se agregaron guardas de transporte activo alrededor de autoridad, procesamiento, intents, snapshots y callbacks; la UI conserva el estado desconectado. No cambian reglas, combate ni el protocolo LAN.
+- Pruebas: `tests/network/run_disconnect_match_test.ps1`, `tests/game/game_integration_test.gd` y `tests/game/game_state_test.gd` PASS; se documentan warnings esperados del ultimo.
+- Limitaciones: pruebas locales multiproceso, sin validacion LAN fisica; TC05 continua bloqueada por TC01-TC04 y GINT mantiene evidencia 1920x1080 pendiente.
