@@ -2,6 +2,7 @@ class_name PapoiHUD
 extends CanvasLayer
 
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
+const GameRules = preload("res://scripts/shared/game_rules.gd")
 const RESULT_CARD_SCENE := preload("res://scenes/ui/papoi_result_card.tscn")
 
 var phase_label: Label
@@ -16,6 +17,7 @@ var cooldown_label: Label
 var cooldown_status_label: Label
 var objective_label: Label
 var status_label: Label
+var cooking_progress_bar: ProgressBar
 var result_panel: PanelContainer
 var result_label: Label
 var result_header_label: Label
@@ -85,10 +87,19 @@ func apply_match_snapshot(snapshot: Dictionary) -> void:
 	]
 	var papa_state := int(snapshot.get("papa_state", GameEnums.PapaState.FREE))
 	status_label.text = "PAPA: %s" % _papa_state_text(papa_state)
+	cooking_progress_bar.visible = phase == GameEnums.GamePhase.POT_COOKING
+	var cooking_remaining := clampf(
+		float(snapshot.get("phase_time_remaining", 0.0)),
+		0.0,
+		GameRules.POT_COOKING_DURATION_SECONDS
+	)
+	cooking_progress_bar.value = (
+		1.0 - cooking_remaining / GameRules.POT_COOKING_DURATION_SECONDS
+	) * 100.0
 	if phase == GameEnums.GamePhase.POT_COOKING:
 		status_label.text = "COCCIÓN: %s" % _format_seconds(float(snapshot.get("phase_time_remaining", 0.0)))
 	elif phase == GameEnums.GamePhase.ESCAPE:
-		status_label.text = "OBJETIVO: ESCAPA EN LA BASE ATACANTE"
+		status_label.text = "SALIDA ACTIVA · ESCAPA EN LA BASE" if bool(snapshot.get("escape_available", false)) else "SALIDA CERRADA"
 	elif phase == GameEnums.GamePhase.ROUND_RESULT:
 		show_round_result_from_snapshot(snapshot)
 	elif phase == GameEnums.GamePhase.MATCH_RESULT:
@@ -260,8 +271,18 @@ func _build_view() -> void:
 	status_panel.size_flags_vertical = Control.SIZE_SHRINK_END
 	_apply_compact_panel_margins(status_panel, 16.0, 12.0)
 	bottom_row.add_child(status_panel)
-	status_label = _add_label(status_panel)
+	var status_content := VBoxContainer.new()
+	status_content.add_theme_constant_override("separation", 6)
+	status_panel.add_child(status_content)
+	status_label = _add_label(status_content)
 	status_label.add_theme_font_size_override("font_size", 16)
+	cooking_progress_bar = ProgressBar.new()
+	cooking_progress_bar.min_value = 0.0
+	cooking_progress_bar.max_value = 100.0
+	cooking_progress_bar.show_percentage = true
+	cooking_progress_bar.custom_minimum_size.x = 220.0
+	cooking_progress_bar.visible = false
+	status_content.add_child(cooking_progress_bar)
 
 	set_player_context(0, "sin asignar", "sin asignar", {})
 

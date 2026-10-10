@@ -38,22 +38,22 @@ Edwar confirmó que el marcador es **un punto por ronda**. Basta que escape una 
 ## Contratos congelados para las tareas
 
 - Señal/estado de dominio de olla: `cooking_started`, `cooking_cancelled`, `cooking_completed` (o equivalente ya existente), emitido solo como consecuencia de la transición host.
-- Snapshot de partida: conservar los campos existentes (`phase`, `phase_time_remaining`, `papa_state`, `players`, `scores`, `round_number`) y agregar campos serializables para `papa_position` y `escape_available` si faltan. El resultado/motivo de ronda debe identificar la victoria por escape usando el contrato existente; no se requiere lista ni contador de escapados. Aumentar/validar schema si el contrato de `MatchState` lo requiere.
+- Snapshot de partida: conservar los campos existentes (`phase`, `phase_time_remaining`, `papa_state`, `players`, `scores`, `round_number`) y serializar `escape_available`. El resultado/motivo de ronda identifica la victoria por escape usando el contrato existente; no se requiere lista ni contador de escapados. `MatchState` v2 valida el booleano y rechaza snapshots v1.
 - Salida visual: componente de presentación con API `set_escape_available(enabled: bool)`; el host/session le pasa el valor de estado y cada cliente usa el valor replicado.
-- Acción cliente: reutilizar intención `interact`; no crear RPC que reciba fases, resultados, conteo, timer o posición autoritativos.
+- Acción cliente: reutilizar intención `interact`; el host comprueba equipo/rol y posición real antes de llamar `GameState.register_escape(peer_id)`. No crear RPC que reciba fases, resultados, conteo, timer o posición autoritativos.
 - Parámetros: `POT_COOKING_DURATION_SECONDS = 20.0`; proximidad de rescate reutiliza `CAPTURE_DISTANCE` existente; no inventar una distancia distinta.
 
 ## Reparto atómico de tareas
 
 ### E05-A — Edwar: reloj y contrato autoritativo de objetivo
 
-- Estado: READY.
+- Estado: IN_PROGRESS — núcleo GameState/MatchState/HUD listo; cierre depende de que M06 retire el reloj paralelo de 30 s y conecte la sesión.
 - Depende de: E01–E04. El componente debe entregar el contrato antes de M06.
 - Archivos permitidos: `scripts/shared/game_rules.gd` (nuevo), `scripts/game/game_state.gd`, `scripts/game/match_state.gd`, `scripts/ui/papoi_hud.gd`, `tests/game/`, `tests/ui/` y este contrato si hace falta aclararlo.
 - Crear: constante única compartida de 20 s; campo serializable `escape_available`; validación/round-trip; señal autoritativa de transición; barra de cocción read-only en HUD basada solo en snapshot.
 - No crear: una segunda cuenta regresiva en HUD o `PapoiCookingEscape`; acciones de red o posiciones.
 - Aceptación: el host mantiene POT_COOKING en 19.99 s, cambia exactamente a ESCAPE en cero, serializa progreso/estado de salida, cliente no puede aplicar estado de host y HUD muestra 0–100%/segundos del snapshot; todos los cambios de fase son validables.
-- E05-B: el primer atacante que cruza en `ESCAPE` resuelve la ronda y suma exactamente un punto; validar rechazo de fase/rol, duplicados, alternancia y cierre al llegar a 3 puntos.
+- E05-B: API autoritativa y pruebas listas. M06 debe llamar `register_escape(peer_id)` tras validar en el host la posición de quien cruza para cerrar la integración runtime. El primer atacante en `ESCAPE` suma exactamente un punto; pruebas cubren rechazo de fase/rol, duplicados, alternancia y cierre a 3 puntos.
 
 ### V06 — Valeria: indicador visual de salida y recorrido jugable
 
@@ -68,7 +68,7 @@ Edwar confirmó que el marcador es **un punto por ronda**. Basta que escape una 
 
 - Estado: READY tras congelar E05-A; K02/K03/M02/M04 son dependencias DONE como lógica aislada.
 - Archivos permitidos: `scripts/objectives/papoi_cooking_escape.gd`, `scripts/game/papoi_game_session.gd`, `scripts/combat/beast_access_state.gd` solo si la integración requiere un ajuste documentado, y pruebas de integración en `tests/game/` o `tests/combat/`.
-- Crear/integrar: depósito con E en olla; quitar la relación de portador después del depósito; Papa queda en POT_ZONE; habilitar acceso de Bestia según M04; rescate contextual con E, proximidad y rol validados por host; cancelar y resetear sin progreso residual; completar desde la transición única del GameState; activar componente de salida de Valeria únicamente al recibir ESCAPE; aceptar cruces de atacantes solo tras esa transición y resolver con el primero.
+- Crear/integrar: depósito con E en olla; quitar la relación de portador después del depósito; Papa queda en POT_ZONE; habilitar acceso de Bestia según M04; rescate contextual con E, proximidad y rol validados por host; cancelar y resetear sin progreso residual; completar desde la transición única del GameState; activar componente de salida de Valeria únicamente al recibir ESCAPE; comprobar la posición host-side de cualquier atacante y llamar `GameState.register_escape(peer_id)` para que el primer cruce resuelva la ronda.
 - No crear: contador paralelo; puntos/ganador provisional; acceso de cliente a `GameState`; geometría/mapa nuevo.
 - Aceptación: casos positivos/negativos para portador, persona no portadora, atacante ajeno, Bestia válida/inválida, fuera de rango y acciones en fases incorrectas; completar en 20 s exactos; rescate antes del cero vuelve a ACTIVE; estado replicado coincide con GameState.
 

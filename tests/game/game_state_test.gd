@@ -7,6 +7,7 @@ const MatchStateData = preload("res://scripts/game/match_state.gd")
 var failures: Array[String] = []
 var observed_round_results: Array[Dictionary] = []
 var observed_match_results: Array[Dictionary] = []
+var observed_escape_availability: Array[bool] = []
 
 
 func _initialize() -> void:
@@ -25,6 +26,7 @@ func run() -> void:
 	root.add_child(game)
 	game.round_finished.connect(_record_round_result)
 	game.match_finished.connect(_record_match_result)
+	game.escape_availability_changed.connect(_record_escape_availability)
 	var roster: Array[Dictionary] = []
 	for peer_id in range(1, 7):
 		roster.append({"peer_id": peer_id, "ready": true})
@@ -36,18 +38,32 @@ func run() -> void:
 	_check(countdown_snapshot.phase == GameEnums.GamePhase.ACTIVE, "COUNTDOWN transiciona a ACTIVE")
 	_check(countdown_snapshot.round_time_remaining == GameStateNode.MAX_ROUND_DURATION_SECONDS, "ACTIVE inicia con el máximo de siete minutos")
 	var first_attack: int = int(game.get_snapshot()["attacking_team"])
+	var first_attacker_peer := _first_attacker_peer_id(game)
 	_check(not game.resolve_round(first_attack, GameEnums.RoundEndReason.ESCAPE_SUCCESS), "se rechaza escape antes de ESCAPE")
+	_check(not game.register_escape(first_attacker_peer), "un atacante no puede escapar antes de cocinar")
 	var first_attack_score_key := MatchStateData.team_score_key(first_attack)
 	_check(game.get_snapshot().scores[first_attack_score_key] == 0, "resultado inválido no altera marcador")
 	_check(game.capture_papa(), "el host captura Papa")
 	_check(game.begin_pot_cooking(), "el host inicia cocción")
-	game._process(GameStateNode.POT_COOKING_DURATION_SECONDS + 1.0)
+	_check(is_equal_approx(game.get_snapshot().phase_time_remaining, 20.0), "la cocción inicia con la duración confirmada de veinte segundos")
+	_check(not game.get_snapshot().escape_available, "la salida permanece desactivada mientras cocina")
+	game._process(0.01)
+	_check(is_equal_approx(game.get_snapshot().phase_time_remaining, 19.99), "el host decrementa el reloj único de cocción")
+	game._process(GameStateNode.POT_COOKING_DURATION_SECONDS)
 	_check(game.get_snapshot().phase == GameEnums.GamePhase.ESCAPE, "cocción completada habilita ESCAPE")
-	_check(game.resolve_round(first_attack, GameEnums.RoundEndReason.ESCAPE_SUCCESS), "escape válido resuelve la ronda")
+	_check(game.get_snapshot().escape_available, "la salida se habilita en el snapshot autoritativo al completar la cocción")
+	_check(observed_escape_availability == [true], "el cambio de disponibilidad de salida se comunica al habilitarla")
+	var defender_peer := _first_defender_peer_id(game)
+	var second_attacker_peer := _second_attacker_peer_id(game)
+	var before_invalid_escape: Dictionary = game.get_snapshot()
+	_check(not game.register_escape(defender_peer), "se rechaza que un defensor registre un escape")
+	_check(game.get_snapshot() == before_invalid_escape, "rechazar al defensor no muta estado ni marcador")
+	_check(game.register_escape(first_attacker_peer), "el primer atacante válido resuelve el escape")
 	_check(game.get_snapshot().scores[first_attack_score_key] == 1, "ronda incrementa marcador una vez")
 	_check(observed_round_results.size() == 1 and observed_round_results[0].winner == first_attack and observed_round_results[0].reason == GameEnums.RoundEndReason.ESCAPE_SUCCESS, "el resultado de escape se comunica una vez al host con ganador y razón")
 	var score_after_escape: int = int(game.get_snapshot().scores[first_attack_score_key])
-	_check(not game.resolve_round(first_attack, GameEnums.RoundEndReason.ESCAPE_SUCCESS), "se rechaza resolver la misma ronda dos veces")
+	_check(not game.register_escape(first_attacker_peer), "un cruce posterior a ROUND_RESULT se rechaza")
+	_check(not game.register_escape(second_attacker_peer), "un segundo atacante no necesita escapar ni suma otro punto")
 	_check(int(game.get_snapshot().scores[first_attack_score_key]) == score_after_escape and observed_round_results.size() == 1, "resolver dos veces no duplica puntos ni eventos")
 	var round_result_snapshot: Dictionary = game.get_snapshot()
 	_check(not game._set_phase(GameEnums.GamePhase.MATCH_RESULT), "se rechaza MATCH_RESULT antes de tres puntos")
@@ -192,12 +208,11 @@ func _test_fifth_round_transition() -> bool:
 	if game == null:
 		return false
 	for round_index in range(GameStateNode.BEST_OF_ROUNDS - 1):
-		var attacking_team: int = int(game.get_snapshot().attacking_team)
 		_check(game.capture_papa(), "la ronda activa permite capturar Papa")
 		_check(game.begin_pot_cooking(), "la ronda avanza a POT_COOKING")
 		game._process(GameStateNode.POT_COOKING_DURATION_SECONDS + 0.1)
 		_check(game.get_snapshot().phase == GameEnums.GamePhase.ESCAPE, "POT_COOKING avanza a ESCAPE")
-		_check(game.resolve_round(attacking_team, GameEnums.RoundEndReason.ESCAPE_SUCCESS), "el atacante gana la ronda de prueba")
+		_check(game.register_escape(_first_attacker_peer_id(game)), "el primer atacante gana la ronda de prueba")
 		if round_index < GameStateNode.BEST_OF_ROUNDS - 2:
 			_check(game.start_next_round(), "ROUND_RESULT permite iniciar la ronda siguiente antes de la quinta")
 			game._process(GameStateNode.COUNTDOWN_DURATION_SECONDS + 0.1)
@@ -206,11 +221,10 @@ func _test_fifth_round_transition() -> bool:
 	_check(game.start_next_round(), "se permite iniciar la quinta ronda")
 	_check(game.get_snapshot().round_number == GameStateNode.BEST_OF_ROUNDS, "el número de ronda llega al máximo de cinco")
 	game._process(GameStateNode.COUNTDOWN_DURATION_SECONDS + 0.1)
-	var fifth_round_attacker: int = int(game.get_snapshot().attacking_team)
 	_check(game.capture_papa(), "la quinta ronda permite capturar Papa")
 	_check(game.begin_pot_cooking(), "la quinta ronda permite cocinar Papa")
 	game._process(GameStateNode.POT_COOKING_DURATION_SECONDS + 0.1)
-	_check(game.resolve_round(fifth_round_attacker, GameEnums.RoundEndReason.ESCAPE_SUCCESS), "se resuelve la quinta ronda")
+	_check(game.register_escape(_first_attacker_peer_id(game)), "se resuelve la quinta ronda por escape")
 	_check(game.get_snapshot().phase == GameEnums.GamePhase.MATCH_RESULT, "tres puntos finalizan la partida al terminar la quinta ronda")
 	_check(not game.start_next_round(), "no se permite una sexta ronda")
 	game.queue_free()
@@ -259,6 +273,7 @@ func _test_json_round_trip() -> bool:
 	original.attacking_team = GameEnums.TeamSide.TEAM_B
 	original.round_time_remaining = 96.5
 	original.papa_state = GameEnums.PapaState.COOKED
+	original.escape_available = true
 	var restored: Variant = MatchStateData.from_json(original.to_json())
 	if restored == null:
 		push_error("FAIL: JSON state round-trip returned null; payload=%s" % original.to_json())
@@ -271,7 +286,42 @@ func _test_json_round_trip() -> bool:
 	if MatchStateData.from_dictionary(invalid_snapshot) != null:
 		push_error("FAIL: invalid schema must be rejected")
 		return false
+	invalid_snapshot = original.to_dictionary()
+	invalid_snapshot.escape_available = "yes"
+	if MatchStateData.from_dictionary(invalid_snapshot) != null:
+		push_error("FAIL: non-boolean escape availability must be rejected")
+		return false
+	invalid_snapshot = original.to_dictionary()
+	invalid_snapshot.schema_version = 1
+	if MatchStateData.from_dictionary(invalid_snapshot) != null:
+		push_error("FAIL: previous MatchState schema must be rejected")
+		return false
 	return true
+
+
+func _first_attacker_peer_id(game: Node) -> int:
+	for player: Dictionary in game.get_snapshot().players:
+		if player.get("side", "") == "attacker":
+			return int(player.peer_id)
+	return -1
+
+
+func _first_defender_peer_id(game: Node) -> int:
+	for player: Dictionary in game.get_snapshot().players:
+		if player.get("side", "") == "defender":
+			return int(player.peer_id)
+	return -1
+
+
+func _second_attacker_peer_id(game: Node) -> int:
+	var found_first := false
+	for player: Dictionary in game.get_snapshot().players:
+		if player.get("side", "") != "attacker":
+			continue
+		if found_first:
+			return int(player.peer_id)
+		found_first = true
+	return -1
 
 
 func _check(condition: bool, label: String) -> void:
@@ -290,3 +340,7 @@ func _record_round_result(winner_team: int, reason: int, snapshot: Dictionary) -
 
 func _record_match_result(winner_team: int, snapshot: Dictionary) -> void:
 	observed_match_results.append({"winner": winner_team, "snapshot": snapshot.duplicate(true)})
+
+
+func _record_escape_availability(available: bool) -> void:
+	observed_escape_availability.append(available)

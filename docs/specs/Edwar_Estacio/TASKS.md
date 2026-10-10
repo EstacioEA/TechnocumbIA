@@ -77,7 +77,7 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Evidencia: `tests/ui/tc04_role_snapshot_hud_test.gd`; preview interactiva rotulada `scenes/ui/tc04_role_state_preview.tscn` y captura `docs/handoffs/evidence/tc04/tc04-role-state-1280x720.png`; handoff de interfaces en `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`.
 
 ## E05-A — Reloj y contrato autoritativo de olla/escape
-- Estado: READY.
+- Estado: IN_PROGRESS — duración compartida 20 s, estado de salida serializable, validación/round-trip, señal y barra HUD read-only implementados. M06 debe retirar el reloj paralelo de 30 s e integrar la sesión contra este contrato.
 - Depende de: E01–E04.
 - Rama sugerida: `Edwar_Estacio/pot-escape-state`.
 - Archivos: `scripts/shared/game_rules.gd` (nuevo), `scripts/game/game_state.gd`, `scripts/game/match_state.gd`, `scripts/ui/papoi_hud.gd`, `tests/game/`, `tests/ui/`.
@@ -85,7 +85,7 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: estado host pasa POT_COOKING→ESCAPE al llegar el reloj a cero; rescate cancela antes de cero; snapshot round-trip/validación cubre campos nuevos; clientes no cambian autoridad; HUD refleja tiempo y salida sin calcular reglas.
 
 ## E05-B — Marcador y resultado según escape confirmado
-- Estado: READY; decisión confirmada el 2026-10-10 en `docs/specs/POT_ESCAPE_RUNTIME.md`.
+- Estado: API DONE; decisión confirmada el 2026-10-10 en `docs/specs/POT_ESCAPE_RUNTIME.md`. M06 debe llamar `register_escape(peer_id)` tras validar el cruce autoritativo para completar la ruta runtime.
 - Regla: el primer atacante que cruza la salida activa resuelve la ronda y otorga exactamente un punto al equipo; no es necesario que escape todo el equipo. La partida al mejor de cinco termina al alcanzar 3 puntos.
 - Depende de: E05-A.
 - Rama sugerida: `Edwar_Estacio/escape-scoring`.
