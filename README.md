@@ -170,4 +170,9 @@ Criterio de éxito: los seis jugadores aparecen en el lobby, todos pueden marcar
 
 El uso de IA, los cambios explicados y las limitaciones se registran en AI_TRACE.md (AI_TRACE.md). Las especificaciones y handoffs del equipo están en docs/ (docs/).
 
+## Demo y Documentos
+Demo: https://drive.google.com/drive/folders/17YGgv_qj3ztIaVTcmwnp6jyymumLt5X7?usp=sharing
+Documento de Paopoi: https://docs.google.com/document/d/1kCeZnhlyPSqn7IzHFxMXO63XI9d-aBG5UWqkE4wHmvE/edit?usp=sharing
+
+
 ———
