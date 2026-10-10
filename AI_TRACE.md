@@ -764,3 +764,55 @@
 - Pruebas: no se ejecutaron pruebas de juego; `git diff --check` PASS. Se verificó lectura del runtime de sesión/lobby como fuente documental.
 - Limitaciones: TC02 sigue pendiente de evidencia de colisiones y rutas; TC05 no se cierra hasta resolverlo, repetir los runners y completar el recorrido visual runtime. Cambios locales de imports/cachés observados durante la tarea quedaron intactos. Sin commit ni push.
 - Handoff: `docs/handoffs/2026-10-10-1050-Juan-doc-consistency.md`.
+
+## 2026-10-10 — Descomposición runtime de olla y escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: DESIGN / DOCUMENTATION
+- Tarea: revisar las specs/código de olla, rescate y escape y repartir el cierre de integración runtime entre Juan, Valeria, Miguel y Edwar.
+- Rama: `develop`, actualizada fast-forward a `23fd0a7` antes de editar.
+- Archivos: `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/TASK_BOARD.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1202-Edwar-pot-escape-task-breakdown.md`, `AI_TRACE.md`.
+- Resumen: se asignaron E05-A/B (estado/timer/HUD y marcador), V06 (indicador de salida/recorrido), M06 (depósito/rescate/integración) y J05 (test LAN vertical). Se conservaron K02/K03/M02/M04 como componentes previos DONE, aclarando que no equivalen a aceptación del flujo LAN integrado.
+- Hallazgos: el repo tiene reloj de olla a 30s en GameState y PapoiCookingEscape; hay doble contador; el escape actual valida solo al portador y concede resolución de ronda desde un único cruce. La petición nueva requiere 20s, escape por atacante e indicador de activación.
+- Decisión pendiente: “un punto por atacante escapado” puede contradecir el mejor-de-cinco, primero a tres puntos. E05-B/J05 score quedaron bloqueadas hasta que el equipo defina escapes parciales y cierre de ronda.
+- Pruebas: no se ejecutaron pruebas porque el cambio es solo documental. `git diff --check` PASS; `develop` estaba limpio antes de editar y quedó al día con `origin/develop`. Capturas previas de `error/` se preservaron y no se tocaron.
+- Limitaciones: no se implementó gameplay ni se afirma que el flujo haya sido validado en runtime; la integración y prueba multiinstancia siguen pendientes.
+- Handoff: `docs/handoffs/2026-10-10-1202-Edwar-pot-escape-task-breakdown.md`.
+
+## 2026-10-10 — decisión de puntuación olla/escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: DESIGN / DOCUMENTATION
+- Tarea: actualizar la spec de integración tras la confirmación de que un escape basta para ganar la ronda y el equipo recibe un solo punto.
+- Rama: `develop`.
+- Archivos: `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/TASK_BOARD.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`, `AI_TRACE.md`.
+- Resumen: el primer atacante que cruza la salida activa resuelve la ronda; se suma exactamente un punto al equipo atacante, sin requerir que escape todo el equipo. La partida sigue al mejor de cinco y termina a 3 puntos. E05-B y J05 se marcan READY; se elimina la necesidad de serializar una lista de atacantes escapados.
+- Pruebas: `git diff --check` ejecutado tras la edición; resultados registrados en el handoff.
+- Limitaciones: actualización documental solamente; no se modificó gameplay ni se ejecutaron pruebas de Godot.
+- Handoff: `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`.
+
+## 2026-10-10 — E05 estado de olla y scoring por primer escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DEBUGGING / TESTING
+- Tarea: implementar el núcleo autoritativo E05-A/B y exponer el contrato que M06 integrará en la sesión.
+- Rama: `Edwar_Estacio/pot-escape-state` en `fd50357` (`develop`). `main` fue actualizado a `3fff61b` y es ancestro de ese checkpoint; la rama activa quedó basada directamente en `develop`. No se modificó `main`.
+- Archivos: `scripts/shared/game_rules.gd`, `scripts/game/game_state.gd`, `scripts/game/match_state.gd`, `scripts/ui/papoi_hud.gd`, `tests/game/game_state_test.gd`, `tests/ui/ge03_phase_timers_test.gd`, `docs/specs/00-game-general.md`, `docs/specs/01-network-lan.md`, `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1222-Edwar-E05-pot-escape-state-score.md`, `AI_TRACE.md`.
+- Resumen: GameState usa la constante compartida de 20 s, serializa `escape_available` con MatchState schema v2, emite su señal al habilitar la salida y valida `register_escape(peer_id)` en host, fase y equipo. Un atacante resuelve una ronda con un solo punto; el siguiente cruce no puntúa. El HUD presenta progreso derivado solo del snapshot. La spec LAN refleja el nuevo campo.
+- Pruebas: Godot 4.7.2 headless — `game_state_test.gd` PASS (incluye un atacante suficiente, rechazo de defensor/fase/duplicados, alternancia, máximo de cinco rondas y cierre a tres); `ge03_phase_timers_test.gd` PASS; `tc04_role_snapshot_hud_test.gd` PASS; `ge05_result_hierarchy_test.gd` PASS; `game_integration_test.gd` PASS; `run_ready_start_test.ps1` PASS con host + cinco clientes; editor scan headless PASS; `git diff --check` PASS. Las pruebas de integración y red presentan un warning existente de sensibilidad a mayúsculas en el import del sprite de Bestia.
+- Limitaciones: M06 aún debe retirar el contador paralelo de 30 s en `PapoiCookingEscape`, permitir cruce de cualquier atacante con posición host-side e invocar `GameState.register_escape(peer_id)`. La integración de esos cambios y la prueba visual/manual de partida no se afirman como realizadas. Los metadatos/cachés regenerados por Godot se restauraron porque el árbol estaba limpio antes de las pruebas. Sin commit ni push.
+- Handoff: `docs/handoffs/2026-10-10-1222-Edwar-E05-pot-escape-state-score.md`.
+## 2026-10-10 — V06 indicador de salida y recorrido atacante
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: V06 — indicador visual de salida y recorrido de atacante.
+- Rama: `Valeria_Piza/escape-exit-indicator`, basada en `origin/develop` actualizado (`fd50357`).
+- Archivos: `scripts/map/escape_exit_indicator.gd`, `scenes/map/escape_exit_indicator.tscn`, `tests/map/escape_exit_indicator_test.gd`, `tests/player/v06_escape_route_test.gd`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/handoffs/2026-10-10-1215-V06-escape-exit-indicator.md`.
+- Resumen: se añadió un indicador visual cerrado/activo con etiqueta e icono y API `set_escape_available(bool)`. La actualización es idempotente y no agrega colisiones, timers ni autoridad. La prueba conserva intactas las zonas existentes y verifica checkpoints de recorrido WASD hacia la olla y la salida.
+- Pruebas: `V06_ESCAPE_EXIT_INDICATOR_TEST`, `V06_ESCAPE_ROUTE_TEST` y carga del editor Godot 4.7.2 pasaron; `git diff --check` pendiente antes del commit.
+- Limitaciones: el recorrido automatizado valida acciones y conectividad geométrica por checkpoints; la prueba manual interactiva con WASD sigue siendo necesaria para validar sensación visual.
+- Handoff: `docs/handoffs/2026-10-10-1215-V06-escape-exit-indicator.md`.
