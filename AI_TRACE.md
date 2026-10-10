@@ -693,3 +693,15 @@
 - Pruebas: `GV03_SIX_PLAYERS_TEST`, `GV01_CHARACTERS_TEST`, `GV02_ORIENTATION_TEST`, `V03_PLAYER_COLLISION_TEST` y `V05_PLAYER_SMOKE_TEST` pasaron con Godot 4.7.2 headless; diagnósticos de VS Code sin errores; `git diff --check` pasó.
 - Limitaciones: la validación headless confirma instanciación y referencias; la revisión visual final del atlas debe hacerse abriendo el preview con renderer gráfico.
 - Handoff: `docs/handoffs/2026-10-10-0900-TC01-avatar-sprites.md`.
+## 2026-10-10 — Flujo LAN de lobby a partida
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DEBUGGING / TESTING / DOCUMENTATION
+- Tarea: revisar y validar el recorrido para abrir Papoi, crear/unirse a lobby y comenzar una partida LAN usando el puerto predeterminado.
+- Rama: `Edwar_Estacio/lan-match-flow`, creada desde el `develop` integrado actualizado.
+- Archivos: `scripts/player/player_visual.gd`, `docs/handoffs/2026-10-10-1013-Edwar-lan-match-flow.md`, `AI_TRACE.md`.
+- Resumen: se corrigieron las rutas de los sprites de Papa y Cazador a PNG, pues los JPEG ya no existen. El puerto predeterminado ya estaba configurado como 2456 en los controles del menú/lobby y en el gestor de red; el lobby ya conecta `lobby_start` con la creación de `PapoiGameSession`.
+- Pruebas: `GAME_INTEGRATION_TEST: PASS` con Godot 4.7.2; runner `run_ready_start_test.ps1 -Port 2456` confirmó seis jugadores listos y `lobby_start` en host y cinco clientes, pero terminó fallando porque el host reportó `Unable to send packet on channel 0` durante el cierre simultáneo de los procesos. El test del menú LAN a lobby había pasado anteriormente en este mismo turno.
+- Limitaciones: no se verificó conectividad entre computadores físicos; el error de cierre del runner deja incompleta la verificación automatizada del ciclo completo aunque la transición lobby_start se observó en los seis procesos. La importación de PNG debe regenerarse localmente por Godot; cachés/imports de editor generados durante la prueba se restauraron.
+- Handoff: `docs/handoffs/2026-10-10-1013-Edwar-lan-match-flow.md`.
