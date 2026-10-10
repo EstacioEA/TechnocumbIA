@@ -17,7 +17,8 @@ Edwar mantiene sus archivos de Theme/HUD separados de los archivos de menú/lobb
 - Aceptación: fase/objetivo, timers, marcador, vidas y contexto de jugador agrupados en orden legible; overlay no tapa el HUD; captura en 1280×720.
 
 ### GE03 — Presentación de fase y temporizadores
-- Estado: TODO; depende de: GE02.
+- Estado: DONE — ACTIVE, POT_COOKING y ESCAPE diferenciados visualmente; timer de ronda separado del de cocción; prueba GE03 y regresión K04 PASS; previews capturadas a 1280×720.
+- Depende de: GE02.
 - Archivos: HUD UI y pruebas/preview UI.
 - Aceptación: ACTIVE, POT_COOKING y ESCAPE se distinguen; timer de cocción no se confunde con timer de ronda; runtime usa señales/datos ya existentes.
 

@@ -4,6 +4,7 @@ extends CanvasLayer
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
 
 var phase_label: Label
+var phase_tag_label: Label
 var round_label: Label
 var timer_label: Label
 var score_label: Label
@@ -43,6 +44,7 @@ func apply_snapshot(snapshot: Dictionary) -> void:
 	_last_snapshot = snapshot.duplicate(true)
 	var phase := str(snapshot.get("phase", "UNKNOWN"))
 	phase_label.text = "FASE: %s" % phase
+	phase_tag_label.text = _phase_tag_name(phase)
 	round_label.text = "RONDA: %s" % str(snapshot.get("round", "-"))
 	timer_label.text = "TIEMPO: %s" % _format_seconds(float(snapshot.get("round_time_remaining", 0.0)))
 	var score: Dictionary = snapshot.get("score", {})
@@ -64,6 +66,7 @@ func apply_match_snapshot(snapshot: Dictionary) -> void:
 	var phase := int(snapshot.get("phase", GameEnums.GamePhase.LOBBY))
 	status_panel.visible = phase != GameEnums.GamePhase.ROUND_RESULT and phase != GameEnums.GamePhase.MATCH_RESULT
 	phase_label.text = "FASE: %s" % _phase_text(phase)
+	phase_tag_label.text = _phase_tag(phase)
 	round_label.text = "RONDA: %s" % str(snapshot.get("round_number", "-"))
 	timer_label.text = "RONDA: %s | FASE: %s" % [
 		_format_seconds(float(snapshot.get("round_time_remaining", 0.0))),
@@ -160,8 +163,13 @@ func _build_view() -> void:
 	phase_group.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	phase_group.add_theme_constant_override("separation", 2)
 	top_row.add_child(phase_group)
-	phase_label = _add_label(phase_group)
+	var phase_heading := HBoxContainer.new()
+	phase_heading.add_theme_constant_override("separation", 12)
+	phase_group.add_child(phase_heading)
+	phase_label = _add_label(phase_heading)
 	phase_label.add_theme_font_size_override("font_size", 20)
+	phase_tag_label = _add_label(phase_heading)
+	phase_tag_label.add_theme_font_size_override("font_size", 14)
 	objective_label = _add_label(phase_group)
 	objective_label.add_theme_font_size_override("font_size", 14)
 
@@ -268,6 +276,28 @@ func _phase_text(phase: int) -> String:
 	if phase < 0 or phase >= GameEnums.GamePhase.size():
 		return "DESCONOCIDA"
 	return GameEnums.GamePhase.keys()[phase]
+
+func _phase_tag(phase: int) -> String:
+	match phase:
+		GameEnums.GamePhase.ACTIVE:
+			return "▶ PARTIDA EN CURSO"
+		GameEnums.GamePhase.POT_COOKING:
+			return "♨ PAPA EN COCCIÓN"
+		GameEnums.GamePhase.ESCAPE:
+			return "➜ ESCAPE"
+		_:
+			return ""
+
+func _phase_tag_name(phase: String) -> String:
+	match phase:
+		"ACTIVE":
+			return "▶ PARTIDA EN CURSO"
+		"POT_COOKING":
+			return "♨ PAPA EN COCCIÓN"
+		"ESCAPE":
+			return "➜ ESCAPE"
+		_:
+			return ""
 
 func _papa_state_text(state: int) -> String:
 	if state < 0 or state >= GameEnums.PapaState.size():
