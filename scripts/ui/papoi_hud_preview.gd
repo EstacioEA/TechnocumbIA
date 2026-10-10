@@ -5,6 +5,7 @@ const GameEnums = preload("res://scripts/shared/game_enums.gd")
 const ACTIVE_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-active-1280x720.png"
 const COOKING_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-cooking-1280x720.png"
 const ESCAPE_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-escape-1280x720.png"
+const COOLDOWN_CAPTURE_PATH := "res://docs/handoffs/GE04-hud-cooldowns-1280x720.png"
 const RESULT_CAPTURE_PATH := "res://docs/handoffs/GE02-hud-result-1280x720.png"
 
 func _ready() -> void:
@@ -30,6 +31,8 @@ func _capture_graphical_previews(hud: PapoiHUD) -> void:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	if not _save_capture(COOKING_CAPTURE_PATH):
+		return
+	if not _save_capture(COOLDOWN_CAPTURE_PATH):
 		return
 	hud.apply_match_snapshot(_phase_snapshot(GameEnums.GamePhase.ACTIVE))
 	await get_tree().process_frame
@@ -74,7 +77,7 @@ func _phase_snapshot(phase: int) -> Dictionary:
 			"role": -1,
 			"passive": GameEnums.AttackerPassive.PORTA_PAPAS,
 			"lives": 2,
-			"cooldowns": {},
+			"cooldowns": {"sprint": 1.5, "dash": 0.0},
 		}],
 		"local_peer_id": 1,
 	}

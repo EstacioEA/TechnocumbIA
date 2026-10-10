@@ -12,6 +12,7 @@ var lives_label: Label
 var role_label: Label
 var passive_label: Label
 var cooldown_label: Label
+var cooldown_status_label: Label
 var objective_label: Label
 var status_label: Label
 var result_panel: PanelContainer
@@ -94,12 +95,32 @@ func set_player_context(lives: int, role: String, passive: String, cooldowns: Di
 	lives_label.text = "VIDAS: %d" % lives
 	role_label.text = "ROL: %s" % role
 	passive_label.text = "PASIVA: %s" % passive
-	var cooldown_text := []
+	var cooldown_text: Array[String] = []
+	var cooldown_status: Array[String] = []
 	# TODO(GM01): confirmar fuente y unidades del cooldown; el HUD solo presenta datos recibidos.
-	for ability in cooldowns:
-		cooldown_text.append("%s %.1fs" % [ability, float(cooldowns[ability])])
+	var abilities: Array = cooldowns.keys()
+	abilities.sort()
+	for ability in abilities:
+		var remaining: Variant = cooldowns[ability]
+		if typeof(remaining) != TYPE_FLOAT and typeof(remaining) != TYPE_INT:
+			cooldown_text.append("%s sin datos" % ability)
+			cooldown_status.append("%s [? SIN DATOS]" % ability)
+			continue
+		var seconds := float(remaining)
+		if not is_finite(seconds) or seconds < 0.0:
+			cooldown_text.append("%s sin datos" % ability)
+			cooldown_status.append("%s [? SIN DATOS]" % ability)
+		elif seconds > 0.0:
+			cooldown_text.append("%s %.1fs" % [ability, seconds])
+			cooldown_status.append("%s [! BLOQUEADO · %.1fs]" % [ability, seconds])
+		else:
+			cooldown_text.append("%s 0.0s" % ability)
+			cooldown_status.append("%s [✓ LISTO]" % ability)
 	cooldown_label.text = "COOLDOWNS: %s" % (
 		", ".join(cooldown_text) if not cooldown_text.is_empty() else "sin datos"
+	)
+	cooldown_status_label.text = "ESTADO: %s" % (
+		"; ".join(cooldown_status) if not cooldown_status.is_empty() else "sin datos"
 	)
 
 func show_round_result(text: String) -> void:
@@ -199,6 +220,9 @@ func _build_view() -> void:
 	role_label = _add_label(player_context)
 	passive_label = _add_label(player_context)
 	cooldown_label = _add_label(player_context)
+	cooldown_status_label = _add_label(player_context)
+	cooldown_status_label.add_theme_font_size_override("font_size", 12)
+	cooldown_status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
 	var bottom_spacer := Control.new()
 	bottom_spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL

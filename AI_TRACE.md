@@ -450,3 +450,15 @@
 - Limitaciones: previews no representan una partida real ni prueban actualización en red; no se probó 1600×900. Los cooldowns continúan como `sin datos` cuando no son proporcionados; `TODO(GM01)` queda pendiente de contrato/unidades.
 - Handoff: `docs/handoffs/2026-10-10-0418-GE03-phase-timers.md`.
 - Siguiente paso: GE04 — presentar rol, pasiva y cooldown recibido, sin modificar roles ni combate.
+
+## 2026-10-10 — GE04 contexto de rol y estado de cooldown
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tarea: mejorar la presentación de rol/pasiva y distinguir habilidades listas de bloqueadas cuando se recibe su cooldown.
+- Rama: `Edwar_Estacio/role-cooldown-hud`, creada desde `develop` actualizado; sin commit automático.
+- Archivos: `scripts/ui/papoi_hud.gd`, `scripts/ui/papoi_hud_preview.gd`, `tests/ui/ge04_role_cooldown_hud_test.gd`, specs de Edwar, este registro, `docs/handoffs/2026-10-10-0423-GE04-role-cooldown-hud.md` y `docs/handoffs/GE04-hud-cooldowns-1280x720.png`.
+- Resumen: el HUD conserva rol/pasiva, presenta cada cooldown positivo como `BLOQUEADO` con tiempo recibido y el cero como `LISTO`; estados incluyen texto y símbolos. Sin cooldowns mantiene `sin datos`. La preview usa valores simulados etiquetados.
+- Pruebas: Godot 4.7.2 `tests/ui/ge04_role_cooldown_hud_test.gd` PASS; regresión K04 PASS; regresión GE03 PASS; preview headless PASS; captura gráfica 1280×720 generada e inspeccionada; `git diff --check` PASS al cierre.
+- Limitaciones: GameState no publica actualmente `cooldowns` en el snapshot de jugadores y BeastAccessState no está conectado al HUD/red. La presentación funciona cuando recibe un diccionario numérico; el cero se interpreta como listo y valores positivos como segundos restantes, pendiente de confirmación de Miguel/GM01. No se modificaron combate, roles, snapshot ni contrato de red.
+- Handoff: `docs/handoffs/2026-10-10-0423-GE04-role-cooldown-hud.md`.
+- Siguiente paso: GE05 — distinguir visual y jerárquicamente ROUND_RESULT de MATCH_RESULT con datos recibidos de GameState.

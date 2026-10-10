@@ -23,7 +23,8 @@ Edwar mantiene sus archivos de Theme/HUD separados de los archivos de menú/lobb
 - Aceptación: ACTIVE, POT_COOKING y ESCAPE se distinguen; timer de cocción no se confunde con timer de ronda; runtime usa señales/datos ya existentes.
 
 ### GE04 — Contexto de rol y cooldowns
-- Estado: TODO; depende de: GE02.
+- Estado: DONE — rol/pasiva del snapshot y estados LISTO/BLOQUEADO diferenciados con texto e icono cuando llegan cooldowns numéricos; sin datos muestra `sin datos`; GE04/K04/GE03 PASS.
+- Depende de: GE02.
 - Archivos: HUD UI; no editar `scripts/roles/` ni `scripts/combat/`.
 - Aceptación: rol/pasiva y cooldown recibido visibles; disponible/bloqueado se distingue con icono/etiqueta y no solo color.
 

@@ -53,7 +53,8 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: ACTIVE/POT_COOKING/ESCAPE distinguibles; timers no se confunden; runtime toma datos existentes.
 
 ### GE04 — Rol, pasiva y cooldown
-- Estado: TODO; depende de: GE02.
+- Estado: DONE — el HUD presenta rol/pasiva existentes y distingue cooldown recibido como LISTO o BLOQUEADO con etiqueta/símbolo; `sin datos` si no llega. GE04/K04/GE03 PASS.
+- Depende de: GE02.
 - Aceptación: rol/pasiva y cooldown recibido visibles; listo/bloqueado se distingue sin depender solo del color.
 
 ### GE05 — Resultados
