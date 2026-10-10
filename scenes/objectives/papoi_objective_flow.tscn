@@ -1,6 +1,10 @@
 [gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://scripts/objectives/papoi_objective_flow.gd" id="1_objective"]
+[ext_resource type="Script" path="res://scripts/objectives/papoi_pot_zone.gd" id="2_pot_zone"]
 
 [node name="PapoiObjectiveFlow" type="Node"]
 script = ExtResource("1_objective")
+
+[node name="PotZoneValidator" type="Node" parent="."]
+script = ExtResource("2_pot_zone")

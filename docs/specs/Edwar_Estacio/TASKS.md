@@ -19,7 +19,7 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: cada transición válida tiene test; transición inválida no cambia estado; temporizador máximo de 7 minutos está parametrizado.
 
 ## E03 — Marcador y condiciones de resultado
-- Estado: TODO
+- Estado: DONE — marcador, alternancia, resultados por escape/tiempo/eliminación, invalidación por desconexión y señales del host verificados con Godot 4.7.2.
 - Depende de: E02
 - Rama sugerida: `Edwar_Estacio/match-results`
 - Implementar puntos, alternancia de lados, victoria por escape, derrota por tiempo/eliminación y final al llegar a 3.

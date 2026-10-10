@@ -1,18 +1,20 @@
 # Tareas atómicas — Krystal Giraldo
 
 ## K01 — Mapa y puntos de spawn
-- Estado: TODO
+- Estado: DONE
 - Depende de: ninguno
 - Rama sugerida: `Krystal_Giraldo/map-spawns`
 - Montar mapa, colisiones, bases, sala de olla, barrera y spawns.
 - Aceptación: mapa carga; límites funcionan; spawns identificables; rutas transitables.
+- Evidencia: `tests/qa/k01_map_test.gd` pasó con Godot 4.7.2 headless; verificó carga, límites, barrera cerrada, spawns y rutas.
 
 ## K02 — Zonas de objetivo y olla
-- Estado: TODO
+- Estado: DONE
 - Depende de: K01, E01
 - Rama sugerida: `Krystal_Giraldo/pot-zone`
 - Crear zonas de captura, olla y detección de Papa autorizada por host.
 - Aceptación: solo Papa válida inicia la interacción; estado de zona se comunica sin inventar victoria.
+- Evidencia: `tests/qa/k02_pot_zone_test.gd` pasó con Godot 4.7.2 headless; validó zona de captura, Papa capturada dentro de olla y rechazo de detecciones inválidas/no autorizadas.
 
 ## K03 — Cocción, rescate y escape
 - Estado: TODO
