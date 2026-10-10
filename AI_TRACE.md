@@ -868,3 +868,16 @@
 - Pruebas: `RUNTIME_MAP_VISIBILITY_TEST`, `GK01_MAP_VISUALS_TEST`, `GAME_INTEGRATION_TEST` y `git diff --check` pasaron.
 - Limitaciones: la inspección visual final debe hacerse con una partida gráfica iniciada por `F5`; la prueba LAN física de seis procesos continúa pendiente.
 - Handoff: `docs/handoffs/2026-10-10-1319-Miguel-runtime-map-visibility.md`.
+
+## 2026-10-10 — Miguel Pabon: menú raíz oculto al iniciar F5
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: DEBUGGING / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: corregir el mapa invisible durante el inicio real desde `F5`.
+- Rama: `develop`.
+- Archivos: `scripts/ui/lobby/lobby.gd`, `scripts/ui/menu/main_menu.gd`, `tests/game/f5_game_start_visibility_test.gd`, `docs/handoffs/2026-10-10-1332-Miguel-f5-menu-overlay-fix.md`, `AI_TRACE.md`.
+- Resumen: el lobby ahora notifica el inicio de partida y el menú raíz se oculta por completo, evitando que su fondo cubra la escena del mapa.
+- Pruebas: `F5_GAME_START_VISIBILITY_TEST`, `RUNTIME_MAP_VISIBILITY_TEST`, `GAME_INTEGRATION_TEST` y `git diff --check` pasaron.
+- Limitaciones: queda pendiente la comprobación manual gráfica con seis procesos LAN; la causa del mapa tapado quedó cubierta por una prueba automatizada del flujo F5.
+- Handoff: `docs/handoffs/2026-10-10-1332-Miguel-f5-menu-overlay-fix.md`.

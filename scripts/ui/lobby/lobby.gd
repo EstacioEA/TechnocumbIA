@@ -3,6 +3,7 @@ extends Control
 const GAME_SCENE := preload("res://scenes/game/papoi_game.tscn")
 
 signal menu_requested
+signal game_started
 
 @onready var network: Node = $NetworkManager
 
@@ -327,6 +328,7 @@ func _on_lobby_start() -> void:
 	game_session.configure_network_manager(network)
 	get_tree().root.add_child(game_session)
 	visible = false
+	game_started.emit()
 
 
 func _update_controls() -> void:
