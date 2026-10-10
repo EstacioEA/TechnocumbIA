@@ -162,3 +162,14 @@
 - Archivos: `scripts/map/papoi_map.gd`, `scripts/objectives/papoi_pot_zone.gd`, `scripts/objectives/papoi_objective_flow.gd`, `scenes/objectives/papoi_objective_flow.tscn`, `tests/qa/k02_pot_zone_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0055-K02-pot-zone.md`.
 - Resumen: se añadió `CaptureZone`, un validador separado de zona de olla y una detección host-autorizada que acepta únicamente Papa capturada dentro de la olla, sin iniciar cocción ni modificar victoria.
 - Limitaciones: la validación LAN completa no pertenece a K02; `AI_TRACE.md` se mantiene solo local y no se publica remotamente.
+
+## 2026-10-10 — J02 lobby y limite de jugadores
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: completar y verificar el lobby de seis slots, rechazo del septimo y limpieza de peers desconectados.
+- Rama: `Juan_Balanta/lan-transport`, conservando el trabajo local previo de J01/auditoria.
+- Archivos: `scripts/network/network_manager.gd`, `tests/network/lobby_slots_test.gd`, `tests/network/lobby_slots_test.gd.uid`, `tests/network/run_lobby_slots_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`.
+- Resumen: se evito llamar `disconnect_peer` dos veces o sobre una sesion reemplazada comprobando peer y sesion antes de la expulsion demorada. J02 pasa a DONE con verificacion multiproceso de seis filas, rechazo visible del septimo, desconexion y roster de cinco en host/observador.
+- Pruebas: Godot 4.7.2 editor headless exit 0; J01 runner PASS; J02 runner PASS con host y seis procesos cliente; `git diff --check` PASS.
+- Limitaciones: solo loopback; ready/inicio y desconexion durante partida siguen pendientes en J03/J04. Sin commit ni push.

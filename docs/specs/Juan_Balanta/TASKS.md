@@ -10,12 +10,12 @@
 - Evidencia: `tests/network/run_lan_transport_test.ps1` PASS en localhost con Godot 4.7.2; valida errores/rangos de IP y puerto, arranque ENet, evento `peer_joined`, conexión del cliente y roster recibido. Handoff: `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`.
 
 ## J02 — Lobby y límite de jugadores
-- Estado: TODO
+- Estado: DONE
 - Depende de: J01
 - Rama sugerida: `Juan_Balanta/lobby-slots`
 - Mantener lista de peers y rechazar el séptimo jugador.
 - Aceptación: seis slots visibles; séptimo rechazo legible; peer desconectado se elimina.
-- Verificación 2026-10-10: la lógica aparece en `scripts/network/network_manager.gd` y la lista en `scripts/ui/lobby/lobby.gd`, pero no hay prueba ejecutada con seis/siete clientes ni desconexión; queda TODO.
+- Evidencia: `tests/network/run_lobby_slots_test.ps1` PASS en Godot 4.7.2; probó seis filas visibles, rechazo legible del séptimo, salida de un cliente y roster reducido a cinco en host y observador. Handoff: `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`.
 
 ## J03 — Ready e inicio de partida
 - Estado: TODO
