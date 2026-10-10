@@ -44,8 +44,9 @@
 - Evidencia: `tests/ui/gm01_role_icons_test.gd`; preview: `tests/ui/gm01_role_icons_preview.gd`.
 
 ### GM02 — Estado de cooldown
-- Estado: TODO; depende de: GM01.
+- Estado: DONE; depende de: GM01.
 - Aceptación: disponible/bloqueado/tiempo recibido se distinguen; sin implementar cálculo.
+- Evidencia: `scenes/ui/cooldown_feedback.tscn`; `tests/ui/gm02_cooldown_feedback_test.gd`.
 
 ### GM03 — Estados de Papa/objetivo
 - Estado: TODO; puede avanzar en paralelo con GM01.
