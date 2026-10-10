@@ -144,6 +144,45 @@
 - Resumen: se añadió `CaptureZone`, un validador separado de zona de olla y una detección host-autorizada que acepta únicamente Papa capturada dentro de la olla, sin iniciar cocción ni modificar victoria.
 - Limitaciones: la validación LAN completa no pertenece a K02; `AI_TRACE.md` se mantiene solo local y no se publica remotamente.
 
+## 2026-10-10 — bloqueo K03 por dependencia M02
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: DOCUMENTATION
+- Tarea: evaluar la siguiente tarea disponible de Krystal y documentar K03 como bloqueada.
+- Rama: `Krystal_Giraldo/k03-blocked`, basada en `develop` actualizado.
+- Archivos: `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0125-K03-blocked.md`, `AI_TRACE.md`.
+- Resumen: K02 y E02 están DONE, pero K03 depende de M02, que sigue TODO. No se implementó lógica duplicada de captura, cocción o escape.
+- Limitaciones: se requiere la entrega/integración de M02 antes de crear la rama de implementación de K03; no se creó commit ni se publicó AI_TRACE.md.
+
+## 2026-10-10 — K03 cocción, rescate y escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: implementar cocción host-autoritativa, rescate de Bestia, transición a escape y detección de base atacante.
+- Rama: `Krystal_Giraldo/cooking-rescue-escape`, basada en `develop` actualizado.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0210-K03-cooking-rescue-escape.md`.
+- Resumen: se reutilizaron `PapaCaptureState` y `BeastAccessState`; el coordinador exige Papa capturada y host, abre acceso de Bestia durante cocción, cancela por rescate, cambia a escape al completar y emite `escape_reached` solo dentro de la base atacante.
+- Limitaciones: `escape_reached` debe conectarse al GameState del host para resolver la ronda; este módulo no adjudica puntos ni victoria. AI_TRACE.md permanece local y no se publica remotamente.
+
+## 2026-10-10 — validación K03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: TESTING / DEBUGGING
+- Tarea: validar la secuencia de cocción, rescate de Bestia y escape de K03.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/handoffs/2026-10-10-0210-K03-cooking-rescue-escape.md`.
+- Resumen: se corrigió la guarda que impedía rescates antes de la aparición de Bestia. `K03_COOKING_ESCAPE_TEST`, `K01_MAP_TEST` y `K02_POT_ZONE_TEST` pasaron con Godot 4.7.2.
+- Limitaciones: la señal `escape_reached` aún debe conectarse al GameState autoritativo para resolver la ronda; no se creó commit ni se publicó AI_TRACE.md.
+
+## 2026-10-10 — K04 HUD y pantallas de resultado
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: implementar HUD autoritativo de fase, ronda, temporizadores, marcador, vidas, rol, pasiva, cooldowns, desconexión y resultados.
+- Rama: `Krystal_Giraldo/hud-results`, basada en `develop` actualizado.
+- Archivos: `scripts/ui/papoi_hud.gd`, `tests/qa/k04_hud_results_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0220-K04-hud-results.md`.
+- Resumen: el HUD consume snapshots de GameState sin modificar autoridad, distingue tiempo de ronda y fase/cocción, muestra contexto del jugador, resultados derivados del host y errores de desconexión en pantalla.
+- Limitaciones: la integración LAN debe alimentar snapshots y desconexiones; K05 queda pendiente de J03, V05 y M05. AI_TRACE.md permanece local y no se publica remotamente.
+
 ## 2026-10-10 — V02 input y movimiento
 
 - Rama: `Valeria_Piza/player-movement`, basada en `main` actualizado.
@@ -210,3 +249,23 @@
 - Archivos: `scripts/combat/beast_access_state.gd`, `tests/combat/test_beast_access_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0205-M04-beast-access.md`.
 - Resumen: se agregó control host-authoritativo de aparición a 30 segundos, ataque básico/especial con cooldowns y acceso a sala condicionado a cocción.
 - Limitaciones: el daño final lo resolverá GameState/M03; el enfurecimiento queda para M05 y la identificación final debe conectarse al rol Bestia explícito.
+
+## 2026-10-10 — M05 trampa, pasivas y enfurecimiento
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar trampa MVP, efectos de Tanque/Cazador/Porta Papas y enfurecimiento de Bestia.
+- Rama: `Miguel_Pabon/abilities-enrage`, basada en `develop`.
+- Archivos: `scripts/abilities/abilities_enrage_state.gd`, `tests/combat/test_abilities_enrage_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0225-M05-abilities-enrage.md`.
+- Resumen: se agregó control host-authoritativo de trampa con cooldown, efectos observables de las tres pasivas y enfurecimiento tras cocción con boost de velocidad y cooldowns reducidos.
+- Limitaciones: la señal de cocción y los multiplicadores deben conectarse al host/GameState durante la integración; los valores de balance son temporales.
+
+## 2026-10-10 — validación final M05 y compatibilidad K03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: TESTING / DEBUGGING / DOCUMENTATION
+- Tarea: validar M05 y corregir la carga headless de K03.
+- Rama: `Miguel_Pabon/abilities-enrage`, basada en `develop`.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `docs/handoffs/2026-10-10-0225-M05-abilities-enrage.md`, `AI_TRACE.md`.
+- Resumen: M05 pasó su prueba específica y la regresión de Bestia; K03 pasó después de relajar las referencias tipadas del coordinador a `RefCounted`, manteniendo la autoridad del host.
+- Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
+- Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
