@@ -17,3 +17,13 @@
 - Archivo creado: `docs/CLI_BRANCH_POLICY.md`.
 - Convención establecida: `Integrante/Funcionalidad`, usando nombres normalizados como `Edwar_Estacio/game-state`.
 - Reglas añadidas: partir desde `main`, no implementar directamente en `main`, detenerse si existen cambios locales o la rama ya existe, y registrar rama, base, commits y pruebas en el handoff.
+
+## 2026-10-09 — núcleo autoritativo de estado de partida
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tarea: implementar enums compartidos, estado serializable, ciclo de partida, marcador al mejor de cinco y validación autoritativa.
+- Rama: `Edwar_Estacio/game-state`.
+- Archivos: `scripts/shared/game_enums.gd`, `scripts/game/match_state.gd`, `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/handoffs/2026-10-09-2229-game-state.md`.
+- Resumen: se añadió estado versionado y señales para fase, roster, Papa, ronda y partida; el host inicia, controla timers, valida resultados, alterna el ataque y finaliza al tercer punto. El arnés cubre transiciones válidas e inválidas.
+- Limitaciones: no hay `project.godot` ni ejecutable Godot en este checkout, por lo que el arnés no fue ejecutado; falta confirmar countdown/cocción, definir resultado por desconexión e integrar con red/HUD/mapa/combate.
