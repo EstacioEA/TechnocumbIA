@@ -49,8 +49,9 @@
 - Evidencia: `scenes/ui/cooldown_feedback.tscn`; `tests/ui/gm02_cooldown_feedback_test.gd`.
 
 ### GM03 — Estados de Papa/objetivo
-- Estado: TODO; puede avanzar en paralelo con GM01.
+- Estado: DONE; puede avanzar en paralelo con GM01.
 - Aceptación: capturada, transportada, cocinando, rescatada y escapada tienen indicadores distintos.
+- Evidencia: `scenes/ui/papa_objective_feedback.tscn`; `tests/ui/gm03_papa_feedback_test.gd`.
 
 ### GM04 — Impacto/desconexión y preview
 - Estado: TODO; depende de: GM02/GM03.
