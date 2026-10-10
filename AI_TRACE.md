@@ -228,6 +228,15 @@
   headless.
 - Siguiente tarea: GV03 — Variantes y preview de seis jugadores.
 
+## 2026-10-10 — GV03 seis jugadores y contraste
+
+- Rama: `Valeria_Piza/graphics-six-players`, basada en `develop` actualizado.
+- Resultado: preview con tres atacantes y tres defensores en los spawns del
+  mapa; solo un jugador local y overlay de visión configurable.
+- Prueba: `tests/ui/gv03_six_players_test.gd` ejecutada con Godot 4.7.2
+  headless; colliders e input permanecen intactos.
+- Resultado del bloque gráfico de Valeria: GV01 a GV03 completadas.
+
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio

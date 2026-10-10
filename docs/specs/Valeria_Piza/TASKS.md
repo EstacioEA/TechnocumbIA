@@ -52,5 +52,5 @@
 - Aceptación: orientación y marcador local/remoto visibles sin tapar personaje.
 
 ### GV03 — Seis instancias y contraste
-- Estado: TODO; depende de: GV01/GV02.
+- Estado: DONE; depende de: GV01/GV02.
 - Aceptación: seis jugadores distinguibles con visión activa/inactiva; sin cambios de spawn/input; captura y procedencia en handoff.
