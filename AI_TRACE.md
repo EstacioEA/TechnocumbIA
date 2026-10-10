@@ -318,6 +318,17 @@
 - Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
 - Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
 
+## 2026-10-10 — GM01 iconos de roles y pasivas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear iconos HUD monocromos y una preview para los seis roles/pasivas de Miguel.
+- Rama: `Miguel_Pabon/graphics-role-icons`, basada en `develop`.
+- Archivos: `assets/ui/roles/papa.svg`, `assets/ui/roles/trolazzo.svg`, `assets/ui/roles/bestia.svg`, `assets/ui/roles/tanque.svg`, `assets/ui/roles/cazador.svg`, `assets/ui/roles/porta_papas.svg`, `tests/ui/gm01_role_icons_preview.gd`, `tests/ui/gm01_role_icons_test.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0540-GM01-role-icons.md`.
+- Resumen: se añadieron seis símbolos SVG de 64×64 con nombres visibles en una cuadrícula de preview; la prueba confirma que todos cargan como texturas y conservan el tamaño HUD.
+- Pruebas: `gm01_role_icons_test.gd` y `git diff --check` pasaron con Godot 4.7.2.
+- Limitaciones: son recursos provisionales G00; no están conectados todavía a eventos de roles o HUD runtime.
+
 ## 2026-10-10 — E04 integración y smoke test
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
