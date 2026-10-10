@@ -174,3 +174,12 @@
 - Archivos: `scripts/combat/papa_capture_state.gd`, `tests/combat/test_papa_capture_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0145-M02-papa-capture.md`.
 - Resumen: se agregó una máquina de estado host-authoritativa para el transporte de Papa con inmovilización de 20 segundos, reducción temporal de 2 segundos por sprint del Porta Papas y aturdimiento de 3 segundos al soltar o recibir un golpe.
 - Limitaciones: la validación espacial y la conexión con GameState/red quedan para integración; M03 conserva la responsabilidad de vidas y daño.
+
+## 2026-10-10 — M03 impactos, vidas y respawn
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar impactos sin Papa, vidas, respawn y eliminación de atacantes.
+- Rama: `Miguel_Pabon/combat-lives`, basada en `develop`.
+- Archivos: `scripts/combat/combat_lives_state.gd`, `tests/combat/test_combat_lives_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0155-M03-combat-lives.md`.
+- Resumen: se agregó estado host-authoritativo con tres vidas por ronda, respawn único de tres segundos, rechazo de golpes al portador y señal consultable de eliminación total.
+- Limitaciones: la transición final de GameState y la posición física de respawn quedan para integración.
