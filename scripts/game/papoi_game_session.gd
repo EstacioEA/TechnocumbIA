@@ -1,6 +1,8 @@
 extends Node2D
 class_name PapoiGameSession
 
+signal return_to_lobby_requested
+
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
 const MatchStateData = preload("res://scripts/game/match_state.gd")
 const PlayerScene = preload("res://scenes/player/player.tscn")
@@ -40,6 +42,7 @@ var _suppress_snapshot_rpc := false
 var _suppress_flow_sync := false
 var _network_session_ended := false
 var _local_preview_mode := false
+var _match_return_started := false
 
 
 func configure_network_manager(manager: Node) -> void:
@@ -647,6 +650,9 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 	var local_snapshot := snapshot.duplicate(true)
 	local_snapshot["local_peer_id"] = multiplayer.get_unique_id() if _is_transport_connected() else -1
 	_hud.apply_match_snapshot(local_snapshot)
+	if int(snapshot.get("phase", GameEnums.GamePhase.LOBBY)) == GameEnums.GamePhase.MATCH_RESULT and not _match_return_started:
+		_match_return_started = true
+		_return_to_lobby_after_delay.call_deferred()
 	for player: Dictionary in snapshot.get("players", []):
 		var actor := get_player_node(int(player.get("peer_id", -1)))
 		if actor != null and player.get("position") is Vector2:
@@ -710,6 +716,12 @@ func _on_round_finished(_winner: int, _reason: int, _snapshot: Dictionary) -> vo
 
 func _on_match_finished(_winner: int, _snapshot: Dictionary) -> void:
 	_publish_snapshot()
+
+
+func _return_to_lobby_after_delay() -> void:
+	await get_tree().create_timer(5.0).timeout
+	if is_inside_tree():
+		return_to_lobby_requested.emit()
 
 
 func _on_peer_left(peer_id: int) -> void:

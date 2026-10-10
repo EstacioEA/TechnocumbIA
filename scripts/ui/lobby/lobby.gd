@@ -326,9 +326,20 @@ func _on_lobby_start() -> void:
 	var game_session: Node = GAME_SCENE.instantiate()
 	game_session.name = "PapoiGameSession"
 	game_session.configure_network_manager(network)
+	game_session.return_to_lobby_requested.connect(_on_game_returned_to_lobby)
 	get_tree().root.add_child(game_session)
 	visible = false
 	game_started.emit()
+
+
+func _on_game_returned_to_lobby() -> void:
+	var game_session := get_tree().root.get_node_or_null("PapoiGameSession")
+	if game_session != null:
+		game_session.queue_free()
+	visible = true
+	process_mode = Node.PROCESS_MODE_INHERIT
+	_status_label.text = "La partida terminó. La sala está lista para una nueva partida."
+	_update_controls()
 
 
 func _update_controls() -> void:
