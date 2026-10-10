@@ -39,3 +39,9 @@
 - Aceptación: dos jugadores instancian sin errores; solo el jugador local
   procesa WASD; el remoto se mueve únicamente con velocidad aplicada por el
   host.
+
+## Tarea gráfica — GV01
+- Spec: `docs/specs/Valeria_Piza/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
+- Estado: TODO
+- Turno: B, después del handoff G00.
+- Aceptación: seis jugadores distinguibles por equipo/forma; jugador local identificado; orientación legible; colisiones/input intactos; captura sobre mapa con overlay.

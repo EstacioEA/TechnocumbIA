@@ -33,3 +33,17 @@
 - Aceptación: procedimiento reproducible; resultados PASS/FAIL/BLOCKED en handoff.
 - Evidencia: `tests/network/run_disconnect_match_test.ps1` PASS en Godot 4.7.2. Ejecuta primero el lobby de seis slots y desconexión prepartida de J02; luego host + cinco clientes, ready, inicio, desconexión durante ACTIVE, invalidación sin ganador ni puntos y recepción del snapshot en los cuatro clientes conectados. `tests/game/game_state_test.gd` y regresión J03 PASS. Handoff: `docs/handoffs/2026-10-10-0204-J04-disconnect-harness.md`.
 - Limitación: la invalidación al recibir `peer_left` se conecta mediante un adaptador del test; el runtime todavía no integra automáticamente `NetworkManager` con `GameState`. Probar en LAN física y completar esa integración son pendientes de integración del juego.
+
+## Tareas gráficas — GJ01
+- Spec: `docs/specs/Juan_Balanta/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
+- Estado: TODO
+- Turno: A con Edwar; integración en Turno C.
+- Dependencia: G00 — contrato visual compartido.
+- Entrega: menú inicial y presentación del lobby LAN; no cambiar autoridad ni protocolo.
+- Aceptación: Host/Unirse/Salir; errores IP/conexión visibles; seis slots y estados reales; host/cliente distinguidos; foco de teclado; capturas en dos resoluciones y handoff.
+
+## GINT — Integración visual por relevos (Juan + Edwar)
+- Spec: `docs/specs/graphics/GINT.md`.
+- Estado: TODO
+- Dependencias: GJ01, GE01, GV01, GK01, GM01.
+- Aceptación: recorrer el flujo visual integrado; completar matriz con PASS/FAIL/BLOCKED y capturas en 1280×720, 1600×900 y 1920×1080; separar preview de runtime y registrar handoff.

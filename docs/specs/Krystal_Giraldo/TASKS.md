@@ -36,3 +36,9 @@
 - Ejecutar casos P0 de lobby, movimiento, captura, cocción, escape, derrota y desconexión.
 - Aceptación: cada caso tiene PASS/FAIL/BLOCKED, evidencia y prioridad; defectos críticos tienen siguiente acción.
 - Evidencia: `tests/qa/p0_lan_3v3_matrix.md` actualizada con 11 casos PASS y P0-12 BLOCKED por defecto reproducible en el runner de lobby/desconexión; handoff `docs/handoffs/2026-10-10-0235-K05-qa-matrix.md`.
+
+## Tarea gráfica — GK01
+- Spec: `docs/specs/Krystal_Giraldo/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
+- Estado: TODO
+- Turno: B, después del handoff G00.
+- Aceptación: bases, rutas, olla, barrera y spawns identificables; decoración no confunde colisiones; overlay preserva objetivos; pruebas del mapa conservadas; procedencia de assets documentada.

@@ -319,3 +319,14 @@
 - Archivos: `tests/qa/p0_lan_3v3_matrix.md`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0235-K05-qa-matrix.md`, `AI_TRACE.md`.
 - Resumen: se ejecutaron pruebas headless de mapa, colisiones, spawns, Papa/olla, cocción, rescate, escape, HUD, resultados, estados de combate, transporte LAN y ready/start. La matriz queda con P0-01 a P0-11 PASS y P0-12 BLOCKED.
 - Limitaciones: el runner de lobby detecta `SEVENTH_REJECTED`, pero falla porque el proceso rechazado no termina; por dependencia del pre-match, la prueba de desconexión durante partida no puede completarse. No se modificó la red ni el runner fuera del alcance de K05. Esta entrada se mantiene local y no se publica remotamente.
+
+## 2026-10-10 — Planeación gráfica por relevos
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta (solicitante); tareas asignadas a Juan, Edwar, Valeria, Krystal y Miguel.
+- Tarea: planificar la capa gráfica completa con entregas observables y relevo entre el turno activo de Juan/Edwar y el siguiente turno de Valeria/Krystal/Miguel.
+- Rama: `Juan_Balanta/graphics-roadmap`, basada en `develop` actualizado.
+- Archivos: `docs/specs/graphics/README.md`, `docs/specs/graphics/VISUAL_DIRECTION.md`, cinco `graphics-spec.md`, cinco `TASKS.md`, `docs/specs/INDIVIDUAL_SPECS_README.md`, `docs/handoffs/2026-10-10-graphics-plan.md`.
+- Resumen: Edwar lidera contrato visual/Theme/HUD/resultados; Juan menú/lobby; Valeria personajes; Krystal mapa; Miguel roles/feedback; Juan y Edwar integran al regresar. Criterios, dependencias, límites de archivos y evidencia visual definidos para cada spec.
+- Pruebas: revisión documental, rama y estado Git; no se ejecutaron pruebas del juego porque no hubo cambios de código.
+- Limitaciones: no se especificaron horas de sueño/retorno, así que el relevo se activa por disponibilidad. La licencia del arte pendiente se cubre con placeholders propios.
+- Siguiente paso: completar y revisar G00; después iniciar GJ01/GE01 y entregar handoff al Turno B.
