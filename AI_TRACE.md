@@ -72,3 +72,17 @@
 - Pruebas: escaneo editor headless, test de estado, smoke de escena principal, test de combate y escena de jugador pasaron en Godot 4.7.2; `git diff --check` pasó.
 - Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
 - Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.
+
+## 2026-10-10 — E03 marcador y condiciones de resultado
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Solicitud: continuar con la siguiente tarea individual asignada y resolver cualquier conflicto de implementación.
+- Tarea: E03 — Marcador y condiciones de resultado.
+- Rama: `Edwar_Estacio/match-results`, creada desde `develop` actualizado por fast-forward.
+- Archivos: `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/specs/01-network-lan.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0120-E03-match-results.md`.
+- Resumen: se valida que la eliminación ocurra con todas las vidas de atacantes agotadas; escape exige Papa cocinada; resultados duplicados no incrementan dos veces el marcador. Se completó la comunicación de resultados por señales al host. Una desconexión no recuperable invalida la partida sin puntos ni ganador, conforme al contrato LAN actualizado.
+- Pruebas: test de estado, análisis de proyecto headless, smoke de escena principal, tests de contratos y combate de roles y escena base de jugador pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: no se ejecutó partida LAN con seis instancias ni integración de señales con HUD/red (parte del trabajo de integración). Balance de cuenta regresiva, cocción y vidas iniciales queda parametrizado como pendiente.
+- Siguiente paso: E04 integración y smoke test cuando estén completadas sus dependencias J03, M02, K03 y V02.
