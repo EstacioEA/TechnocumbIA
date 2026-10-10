@@ -39,16 +39,22 @@
 - Todas las tareas GJ usan el baseline provisional de `VISUAL_DIRECTION.md`; ninguna espera el Theme ni la aprobación de Edwar.
 
 ### GJ01 — Cascarón del menú
-- Estado: TODO; dependencia: ninguna.
-- Aceptación: título, Host, Unirse y Salir visibles y teclado enfocado.
+- Estado: BLOCKED — implementación creada; falta abrir y verificar visualmente la escena.
+- Dependencia: ninguna.
+- Archivos: nuevo menú/ script y `project.godot` para establecer escena inicial.
+- Aceptación: ejecutar el proyecto abre título, Host, Unirse y Salir; foco teclado visible; Host/Unirse emiten señales UI.
 
 ### GJ02 — Crear partida/host
-- Estado: TODO; dependencia: GJ01.
-- Aceptación: puerto visible, botón Crear y estados disponibles/error presentados sin consola; no modificar ENet.
+- Estado: BLOCKED — implementación creada; falta revisar el flujo visual.
+- Requiere la escena GJ01 existente, no su validación visual; panel aislado mientras tanto.
+- Archivos: nuevos `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd` y glue visual en `scripts/ui/menu/main_menu.gd`.
+- Aceptación: Host abre panel; puerto inicial 2456; rango 1–65535 validado inline; puerto válido emite señal; Volver regresa al menú; no modificar ENet.
 
 ### GJ03 — Unirse por IP
-- Estado: TODO; dependencia: GJ01.
-- Aceptación: IP/puerto editables, validación inline y estados conectando/rechazo/desconexión con mensaje; usar red existente.
+- Estado: BLOCKED — panel implementado; pendiente revisión visual en runtime.
+- Dependencia: artefacto GJ01 existente; su revisión visual sigue pendiente.
+- Archivos: `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd` y glue de vista en `scripts/ui/menu/main_menu.gd`.
+- Aceptación de este corte: IP/puerto editables y validados inline, emitir `join_requested(address, port)`, volver al menú, comunicar que falta integrar transporte. GJ05 conectará la intención con la sesión; esta tarea no cambia la red.
 
 ### GJ04 — Lobby
 - Estado: TODO; dependencia de navegación: GJ02/GJ03; el preview puede avanzar en escena propia.

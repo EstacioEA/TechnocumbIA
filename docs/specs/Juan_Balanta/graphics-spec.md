@@ -5,19 +5,22 @@
 Juan puede completar GJ01–GJ05 sin esperar el Theme ni una revisión de Edwar. Usará directamente los tokens provisionales ya descritos en `docs/specs/graphics/VISUAL_DIRECTION.md`; la adopción posterior de `papoi_theme.tres` es una mejora de integración, no una dependencia. Las tareas de Juan no modifican archivos que GE01–GE05 poseen.
 
 ### GJ01 — Cascarón del menú
-- Estado: TODO; depende de: ninguna.
-- Archivos: nuevos `scenes/menu/main_menu.tscn`, `scripts/ui/menu/main_menu.gd`.
-- Aceptación: el proyecto puede mostrar título Papoi y acciones Host, Unirse y Salir; disposición y foco de teclado son visibles a 1280×720.
+- Estado: BLOCKED — implementación creada; falta abrir y verificar visualmente la escena.
+- Depende de: ninguna.
+- Archivos: nuevos `scenes/menu/main_menu.tscn`, `scripts/ui/menu/main_menu.gd`; `project.godot` solo para establecer esta escena como entrada.
+- Aceptación: ejecutar el proyecto abre el menú con título Papoi y acciones Host, Unirse y Salir; disposición y foco de teclado son visibles a 1280×720; las acciones Host/Unirse emiten señales de UI sin mutar la red.
 
 ### GJ02 — Panel de crear partida
-- Estado: TODO; depende de: GJ01.
-- Archivos: nuevos `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd`.
-- Aceptación: presenta puerto editable con valor inicial visible, botón Crear y estados disponible/validación/error; muestra errores en pantalla. No cambia ENet ni protocolo.
+- Estado: BLOCKED — implementación creada; falta revisar el flujo visual.
+- Depende del artefacto de escena GJ01 (su revisión visual queda pendiente, pero GJ02 es un panel aislado).
+- Archivos: nuevos `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd`; conexión de vista en `scripts/ui/menu/main_menu.gd`.
+- Aceptación: Host abre el panel; puerto inicial 2456 editable; Crear valida rango 1–65535 y da error inline; puerto válido emite `create_requested(port)` y comunica claramente que esta subtarea aún no inicia ENet; Volver regresa al menú. No cambia ENet ni protocolo.
 
 ### GJ03 — Panel de conexión por IP
-- Estado: TODO; depende de: GJ01.
-- Archivos: nuevos `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd`.
-- Aceptación: IP y puerto editables; IP/puerto inválidos se señalan antes de conectar; estados conectando/rechazo/desconexión tienen texto legible. Usa las APIs existentes de red.
+- Estado: BLOCKED — panel implementado; falta abrir y revisar el flujo visual. La integración con el transporte no forma parte de este corte.
+- Depende de: artefacto de escena GJ01 (su revisión visual queda pendiente; GJ03 es un panel aislado).
+- Archivos: nuevos `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd`; conexión de vista en `scripts/ui/menu/main_menu.gd`.
+- Aceptación: IP y puerto editables; IP/puerto inválidos se señalan antes de emitir; entrada válida emite `join_requested(address, port)`; volver regresa al menú. El panel comunica que transporte/estados de conexión aún no están integrados. No llama ni modifica ENet/NetworkManager; GJ05 conectará la intención a la sesión cuando integre navegación.
 
 ### GJ04 — Presentación de lobby
 - Estado: TODO; depende de: GJ02 y GJ03 por navegación; puede construirse en archivo/escena propia antes de integrar.

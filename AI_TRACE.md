@@ -341,3 +341,36 @@
 - Pruebas: revisión documental y `git diff --check`; no se ejecutaron pruebas del juego porque no hubo cambios de código.
 - Limitaciones: menú/lobby de Juan usará estilos provisionales hasta que se aplique el Theme refinado en integración.
 - Siguiente paso: Juan comienza GJ01; Edwar puede iniciar GE01 en paralelo.
+
+## 2026-10-10 — GJ01 cascarón del menú
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: crear la escena inicial visual de Papoi con acciones Host, Unirse y Salir.
+- Rama: `Juan_Balanta/gj01-menu-shell`, basada en `develop` actualizado.
+- Archivos: `scenes/menu/main_menu.tscn`, `scripts/ui/menu/main_menu.gd`, `project.godot`, `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0315-GJ01-main-menu-shell.md`.
+- Resumen: se creó una pantalla centrada con paleta provisional G00, foco de teclado inicial, estilos visibles de botones; Host/Unirse emiten señales y muestran que sus paneles se conectarán en tareas siguientes; Salir solicita cerrar.
+- Pruebas: `git diff --check` PASS. No se ejecutó Godot ni se capturó la pantalla; por ello GJ01 queda BLOCKED hasta confirmar visualmente carga y foco.
+- Limitaciones: conexión y creación de host aún corresponden a GJ02/GJ03; no se necesita a Edwar para continuar.
+- Siguiente paso: abrir el proyecto y verificar la escena a 1280×720; luego implementar GJ02.
+
+## 2026-10-10 — GJ02 panel de crear partida
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: construir el panel visual de host y validación de puerto para GJ02.
+- Rama: `Juan_Balanta/gj02-host-panel`, basada en `develop` actualizado.
+- Archivos: `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd`, `scripts/ui/menu/main_menu.gd`, `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0322-GJ02-host-panel.md`.
+- Resumen: Host abre un panel con puerto por defecto 2456; valida rango 1–65535, muestra errores/confirmación, emite intención de crear y permite volver. El panel no abre ENet; no depende del trabajo de Edwar.
+- Pruebas: `git diff --check` PASS. No se ejecutó Godot ni revisión visual, así que GJ02 queda BLOCKED hasta validar en runtime.
+- Limitaciones: transporte de servidor se conecta en tarea posterior; GJ01 aún tiene su revisión visual pendiente.
+- Siguiente paso: implementar GJ03 (panel join por IP); luego volver a verificar los paneles y el menú.
+
+## 2026-10-10 — GJ03 panel para unirse por IP
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: crear el panel UI de conexión por IP y enlazarlo al menú.
+- Rama: `Juan_Balanta/gj03-join-panel`, basada en `develop`.
+- Archivos: `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd`, `scripts/ui/menu/main_menu.gd`, `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0327-GJ03-join-panel.md`.
+- Resumen: panel con campos IP/puerto, validación local IPv4/IPv6 y rango 1–65535, mensajes inline, señal `join_requested(address, port)` y navegación de regreso. No inicia ni modifica transporte de red.
+- Pruebas: `git diff --check` PASS. No se ejecutó Godot ni revisión visual/runtime; GJ03 queda BLOCKED hasta revisar la escena.
+- Limitaciones: estados reales de conexión, rechazo y desconexión aparecen al integrar la intención con NetworkManager en GJ05; aquí solo se informa que el transporte está pendiente.
+- Siguiente paso: implementar GJ04 (preview/presentación independiente del lobby) y después GJ05 (integración y revisión visual).

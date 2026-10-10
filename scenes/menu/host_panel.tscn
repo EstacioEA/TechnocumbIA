@@ -1,0 +1,119 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/menu/host_panel.gd" id="1_host_panel"]
+
+[node name="HostPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_host_panel")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0627451, 0.0980392, 0.137255, 1)
+
+[node name="TopAccent" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.012
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.94902, 0.756863, 0.305882, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(520, 380)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 42
+theme_override_constants/margin_bottom = 30
+
+[node name="Column" type="VBoxContainer" parent="CenterContainer/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Badge" type="Label" parent="CenterContainer/Panel/Margin/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.407843, 0.827451, 0.576471, 1)
+theme_override_font_sizes/font_size = 14
+text = "PAPOI  /  LAN 3v3"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/Margin/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.956863, 0.945098, 0.870588, 1)
+theme_override_font_sizes/font_size = 32
+text = "Crear partida"
+horizontal_alignment = 1
+
+[node name="Help" type="Label" parent="CenterContainer/Panel/Margin/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.713726, 0.772549, 0.796078, 1)
+theme_override_font_sizes/font_size = 16
+text = "Elige el puerto UDP para que tus amigos se conecten."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PortLabel" type="Label" parent="CenterContainer/Panel/Margin/Column"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.956863, 0.945098, 0.870588, 1)
+theme_override_font_sizes/font_size = 14
+text = "PUERTO UDP  ·  1–65535"
+
+[node name="PortInput" type="LineEdit" parent="CenterContainer/Panel/Margin/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "2456"
+placeholder_text = "2456"
+max_length = 5
+alignment = 1
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/Panel/Margin/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.713726, 0.772549, 0.796078, 1)
+theme_override_font_sizes/font_size = 14
+text = "Usa un puerto entre 1 y 65535."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Actions" type="HBoxContainer" parent="CenterContainer/Panel/Margin/Column"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="CenterContainer/Panel/Margin/Column/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(170, 52)
+layout_mode = 2
+text = "VOLVER"
+focus_mode = 2
+
+[node name="CreateButton" type="Button" parent="CenterContainer/Panel/Margin/Column/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 52)
+layout_mode = 2
+text = "CREAR HOST"
+focus_mode = 2
