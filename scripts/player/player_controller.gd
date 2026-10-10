@@ -7,6 +7,9 @@ signal movement_intent(direction: Vector2)
 @export var move_speed: float = 180.0
 @export var local_control_enabled: bool = true
 @export var allow_local_prediction: bool = true
+@export var enforce_playable_routes: bool = false
+
+var playable_routes_provider: Node
 
 @export_category("Input")
 @export var move_up_action: StringName = &"move_up"
@@ -32,8 +35,14 @@ func _physics_process(_delta: float) -> void:
 	# The client only produces intent. Prediction is optional and never changes
 	# the authoritative state received from the host.
 	if allow_local_prediction or is_multiplayer_authority():
+		var previous_position := global_position
 		velocity = input_direction * move_speed
 		move_and_slide()
+		if enforce_playable_routes and is_instance_valid(playable_routes_provider):
+			var is_playable := bool(playable_routes_provider.call("is_position_in_playable_route", global_position))
+			if not is_playable:
+				global_position = previous_position
+				velocity = Vector2.ZERO
 
 func apply_authoritative_velocity(authoritative_velocity: Vector2) -> void:
 	velocity = authoritative_velocity

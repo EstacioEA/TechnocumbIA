@@ -24,10 +24,46 @@ const POT_ZONE := Rect2(944.0, 72.0, 112.0, 96.0)
 const CAPTURE_ZONE := Rect2(856.0, 240.0, 208.0, 152.0)
 const ESCAPE_ZONE := Rect2(32.0, 280.0, 320.0, 240.0)
 const ROUTES := [
-	Rect2(280.0, 280.0, 360.0, 160.0),
+	Rect2(208.0, 280.0, 432.0, 160.0),
 	Rect2(640.0, 260.0, 320.0, 160.0),
 	Rect2(920.0, 120.0, 160.0, 200.0),
-	Rect2(960.0, 400.0, 240.0, 240.0),
+	Rect2(730.0, 398.0, 470.0, 240.0),
+]
+const PLAYABLE_CORRIDORS := [
+	Rect2(48.0, 302.0, 210.0, 190.0),
+	Rect2(208.0, 292.0, 144.0, 92.0),
+	Rect2(48.0, 120.0, 224.0, 80.0),
+	Rect2(96.0, 194.0, 150.0, 82.0),
+	Rect2(214.0, 164.0, 116.0, 92.0),
+	Rect2(96.0, 260.0, 256.0, 50.0),
+	Rect2(272.0, 120.0, 150.0, 470.0),
+	Rect2(360.0, 292.0, 300.0, 86.0),
+	Rect2(372.0, 194.0, 282.0, 88.0),
+	Rect2(488.0, 224.0, 82.0, 150.0),
+	Rect2(570.0, 210.0, 170.0, 300.0),
+	Rect2(690.0, 292.0, 290.0, 86.0),
+	Rect2(858.0, 258.0, 122.0, 82.0),
+	Rect2(920.0, 110.0, 120.0, 230.0),
+	Rect2(1000.0, 178.0, 84.0, 90.0),
+	Rect2(1060.0, 286.0, 130.0, 100.0),
+	Rect2(970.0, 342.0, 140.0, 100.0),
+	Rect2(1030.0, 350.0, 115.0, 190.0),
+	Rect2(730.0, 398.0, 300.0, 98.0),
+	Rect2(940.0, 382.0, 142.0, 154.0),
+	Rect2(1050.0, 310.0, 140.0, 125.0),
+	Rect2(820.0, 490.0, 300.0, 130.0),
+	Rect2(1100.0, 540.0, 180.0, 130.0),
+	Rect2(1100.0, 380.0, 120.0, 240.0),
+	Rect2(1130.0, 550.0, 124.0, 162.0),
+]
+const PLAYABLE_BLOCKERS := [
+	Rect2(300.0, 310.0, 78.0, 56.0),
+	Rect2(300.0, 410.0, 78.0, 72.0),
+	Rect2(520.0, 294.0, 42.0, 62.0),
+	Rect2(614.0, 286.0, 52.0, 74.0),
+	Rect2(688.0, 316.0, 54.0, 44.0),
+	Rect2(800.0, 306.0, 70.0, 56.0),
+	Rect2(900.0, 306.0, 58.0, 54.0),
 ]
 const TORRE_WALLS := [
 	Rect2(880.0, 16.0, 288.0, 12.0),
@@ -62,6 +98,15 @@ func get_map_bounds() -> Rect2:
 func get_route_rects() -> Array[Rect2]:
 	return ROUTES.duplicate()
 
+func is_position_in_playable_route(position: Vector2) -> bool:
+	for blocker in PLAYABLE_BLOCKERS:
+		if blocker.has_point(position):
+			return false
+	for corridor in PLAYABLE_CORRIDORS:
+		if corridor.has_point(position):
+			return true
+	return false
+
 func is_position_inside_map(position: Vector2) -> bool:
 	return MAP_BOUNDS.has_point(position)
 
@@ -89,6 +134,9 @@ func is_beast_gate_open() -> bool:
 
 func set_debug_overlay_visible(enabled: bool) -> void:
 	_show_debug_overlay = enabled
+	var map_visuals := get_node_or_null("Visuals") as Node2D
+	if map_visuals and map_visuals.has_method("set_route_debug_visible"):
+		map_visuals.call("set_route_debug_visible", enabled)
 	var base_visuals := get_node_or_null("BaseSpawnVisuals") as Node2D
 	var pot_visuals := get_node_or_null("PotBarrierVisuals") as Node2D
 	if base_visuals:
@@ -191,3 +239,7 @@ func _draw() -> void:
 	draw_rect(POT_ZONE, Color("#8e5e38", 0.22), true)
 	draw_rect(ESCAPE_ZONE, Color("#2a8c76", 0.22), true)
 	draw_line(Vector2(920.0, 180.0), Vector2(920.0, 260.0), Color("#f0c674"), 6.0)
+	for corridor in PLAYABLE_CORRIDORS:
+		draw_rect(corridor, Color("#f0c674", 0.12), false, 2.0)
+	for blocker in PLAYABLE_BLOCKERS:
+		draw_rect(blocker, Color("#d9534f", 0.20), true)

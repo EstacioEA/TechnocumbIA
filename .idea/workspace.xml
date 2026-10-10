@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/AI_TRACE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AI_TRACE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/map/papoi_map.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/map/papoi_map.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,24 +32,24 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/role-differences-preview" />
-                    <option name="lastUsedInstant" value="1791638619" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/role-differences-verification" />
-                    <option name="lastUsedInstant" value="1791637531" />
-                  </RecentBranch>
-                  <RecentBranch>
                     <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1791636137" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="Miguel_Pabon/graphics-role-feedback" />
-                    <option name="lastUsedInstant" value="1791630779" />
+                    <option name="lastUsedInstant" value="1791630361" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="Miguel_Pabon/graphics-papa-feedback" />
                     <option name="lastUsedInstant" value="1791629985" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/graphics-cooldown-feedback" />
+                    <option name="lastUsedInstant" value="1791629410" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/graphics-role-icons" />
+                    <option name="lastUsedInstant" value="1791628910" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="Miguel_Pabon/abilities-enrage" />
+                    <option name="lastUsedInstant" value="1791616658" />
                   </RecentBranch>
                 </list>
               </option>
@@ -85,7 +87,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "Miguel__Pabon/role-differences-preview",
+    "git-widget-placeholder": "Krystal__Giraldo/map-playable-boundaries",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Asus/Desktop/PERSONAL/GAME/TechnocumbIA",
@@ -117,7 +119,7 @@
       <workItem from="1791628132439" duration="175000" />
       <workItem from="1791628325004" duration="68000" />
       <workItem from="1791628407885" duration="37000" />
-      <workItem from="1791628459002" duration="8583000" />
+      <workItem from="1791628459002" duration="1950000" />
     </task>
     <servers />
   </component>

@@ -72,5 +72,7 @@
 - Delimitar bordes, pasillos transitables, edificios bloqueados y zonas de objetivo con colisiones coherentes con el mapa oficial.
 - Aceptación: el jugador no atraviesa edificios ni abandona el área jugable; los pasillos conectan Hall, Piedritas, Summan, Torre y Biblio; captura, olla, escape y barrera conservan sus zonas lógicas.
 - Regla visual: `papoi_map.tscn` se muestra limpio durante gameplay; recuadros, títulos y estados solo se habilitan en previews.
-- Evidencia técnica inicial: `tests/qa/tc02_clean_map_test.gd` pasa y confirma que overlays de debug están ocultos por defecto y solo se activan explícitamente en previews.
+- Evidencia técnica inicial: `tests/qa/tc02_clean_map_test.tscn` ejecuta `tests/qa/tc02_clean_map_test.gd` y pasa; confirma que overlays de debug están ocultos por defecto y solo se activan explícitamente en previews.
+- Comando reproducible: `Godot_console.exe --headless --path . --scene res://tests/qa/tc02_clean_map_test.tscn --quit-after 60`.
+- Preview jugable: `scenes/map/papoi_map_tc02_playable_preview.tscn`; usa WASD con un jugador local, mapa fijo completo y restricción a la red de corredores de `PapoiMap.PLAYABLE_CORRIDORS`, con bloqueadores para jardines/islas.
 - Evidencia requerida: prueba de colisión/rutas, preview de debug separado y captura runtime limpia.
