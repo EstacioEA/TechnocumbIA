@@ -607,3 +607,12 @@
 - Limitaciones: GINT queda IN_PROGRESS por el fallo de teardown y falta de evidencia 1920×1080/recorrido runtime completo. TC01–TC04 están todavía TODO en los specs responsables, por lo que TC05 queda bloqueada. No se sobrescribieron capturas ni se modificaron sus módulos.
 - Handoff: `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
 - Siguiente paso: asignar/corregir el teardown de desconexión; esperar TC01–TC04; completar 1920×1080 y retomar GINT/TC05.
+## 2026-10-10 — TC03 verificación de diferencias de roles y pasivas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar diferencias funcionales entre Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas.
+- Rama: `Miguel_Pabon/role-differences-verification`, basada en `develop`.
+- Archivos: `tests/combat/test_role_differences_verification.gd`, `docs/handoffs/2026-10-10-0733-TC03-role-differences-verification.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `AI_TRACE.md`.
+- Resumen: se añadió una matriz con casos positivos y rechazos para cada rol/pasiva, además de comprobaciones de host, vidas, cooldowns, captura, acceso de Bestia y enfurecimiento.
+- Limitaciones: la identificación final de Bestia y la aplicación física de multiplicadores aún requieren integración con GameState y el sistema de impactos; no se ejecutó LAN de seis clientes.
