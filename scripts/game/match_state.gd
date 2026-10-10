@@ -68,7 +68,58 @@ static func from_json(json_text: String) -> MatchState:
 	var parsed: Variant = JSON.parse_string(json_text)
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return null
-	return from_dictionary(parsed)
+	var normalized: Variant = _normalize_json_numbers(parsed)
+	if normalized == null:
+		return null
+	return from_dictionary(normalized)
+
+
+static func _normalize_json_numbers(data: Dictionary) -> Variant:
+	var normalized: Dictionary = data.duplicate(true)
+	var integer_fields := [
+		"schema_version", "revision", "phase", "round_number", "attacking_team",
+		"papa_state", "round_winner", "round_end_reason", "match_winner",
+	]
+	for field: String in integer_fields:
+		if not normalized.has(field):
+			continue
+		var integer_value: Variant = _as_json_integer(normalized[field])
+		if integer_value == null:
+			return null
+		normalized[field] = integer_value
+
+	if normalized.get("scores") is Dictionary:
+		var normalized_scores: Dictionary = normalized["scores"]
+		for team_key: Variant in normalized_scores.keys():
+			var score_value: Variant = _as_json_integer(normalized_scores[team_key])
+			if score_value == null:
+				return null
+			normalized_scores[team_key] = score_value
+
+	if normalized.get("players") is Array:
+		var normalized_players: Array = []
+		for player: Variant in normalized["players"]:
+			if not player is Dictionary:
+				return null
+			var normalized_player: Dictionary = player.duplicate(true)
+			for field: String in ["peer_id", "team", "role", "passive", "lives"]:
+				if not normalized_player.has(field):
+					continue
+				var integer_value: Variant = _as_json_integer(normalized_player[field])
+				if integer_value == null:
+					return null
+				normalized_player[field] = integer_value
+			normalized_players.append(normalized_player)
+		normalized["players"] = normalized_players
+	return normalized
+
+
+static func _as_json_integer(value: Variant) -> Variant:
+	if typeof(value) == TYPE_INT:
+		return value
+	if typeof(value) != TYPE_FLOAT or not is_equal_approx(value, round(value)):
+		return null
+	return int(value)
 
 
 static func _has_valid_schema(data: Dictionary) -> bool:

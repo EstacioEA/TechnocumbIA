@@ -26,7 +26,7 @@ func _ready() -> void:
 
 
 func validate_ip(address: String) -> bool:
-	return IP.is_valid_ip_address(address.strip_edges())
+	return address.strip_edges().is_valid_ip_address()
 
 
 func validate_port(port: int) -> bool:
