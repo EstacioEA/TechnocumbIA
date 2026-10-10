@@ -940,3 +940,15 @@
 - Archivos: `scenes/ui/papoi_hud.tscn`, `tests/game/integrated_game_visual_test.gd`, `AI_TRACE.md`.
 - Resumen: se asignó la capa 30 al HUD para que se dibuje sobre el overlay de visión de capa 20; la prueba visual integrada ahora verifica esa prioridad.
 - Limitaciones: prueba modificada, pero no ejecutada en esta tarea.
+
+## 2026-10-10 — Valeria Piza: Trolazzo comparte las capacidades de Bestia
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: adaptar Trolazzo para usar las capacidades de Bestia mientras se mantiene su identidad visual y la lógica histórica de trampas.
+- Rama: `Valeria_Piza/trolazzo-beast-role`, basada en `origin/develop` en `36b87fe`.
+- Archivos: `scripts/combat/beast_access_state.gd`, `scripts/game/papoi_game_session.gd`, `tests/game/beast_attack_runtime_test.gd`, `tests/combat/test_role_differences_verification.gd`, `docs/handoffs/2026-10-10-1530-trolazzo-beast-role.md`, `AI_TRACE.md`.
+- Resumen: Trolazzo puede usar `beast_attack`, entrar a la sala de la olla y rescatar a Papa con las mismas validaciones autoritativas de Bestia; los cooldowns se separan por propietario y el HUD conserva sus claves públicas.
+- Pruebas: ataque runtime de Bestia/Trolazzo, diferencias de roles, flujo de cocción, snapshot/HUD, integración de partida, estado de juego, combate legacy y `git diff --check` pasaron.
+- Limitaciones: la ejecución headless mantiene un warning preexistente por la diferencia de mayúsculas en el path del sprite de Bestia; no se corrigió por estar fuera del alcance.

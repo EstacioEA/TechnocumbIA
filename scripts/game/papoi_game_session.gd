@@ -337,7 +337,7 @@ func _attack_nearby_attacker(defender_id: int, beast_attack: bool = false) -> bo
 	if _is_attacker(defender_id):
 		return false
 	var defender_role := _role_for_peer(defender_id)
-	if beast_attack and defender_role != GameEnums.DefenderRole.BESTIA:
+	if beast_attack and defender_role not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 		return false
 	if not beast_attack and defender_role not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 		return false
@@ -354,9 +354,9 @@ func _attack_nearby_attacker(defender_id: int, beast_attack: bool = false) -> bo
 	if target_id < 0:
 		return false
 	if beast_attack:
-		if _beast_state == null or defender_id != int(_beast_state.beast_id):
+		if _beast_state == null or not _beast_state.is_beast_compatible(defender_id):
 			return false
-		if not _beast_state.request_basic_attack(target_id):
+		if not _beast_state.request_basic_attack(target_id, defender_id):
 			return false
 	if int(_capture_state.carrier_id) == target_id:
 		if not _capture_state.request_hit_carrier(target_id):
@@ -376,9 +376,9 @@ func _attack_nearby_attacker(defender_id: int, beast_attack: bool = false) -> bo
 func _rescue_papa(peer_id: int) -> bool:
 	if _game_state.get_snapshot().phase != GameEnums.GamePhase.POT_COOKING:
 		return false
-	if _beast_state == null or peer_id != int(_beast_state.beast_id):
+	if _beast_state == null or not _beast_state.is_beast_compatible(peer_id):
 		return false
-	if _role_for_peer(peer_id) != GameEnums.DefenderRole.BESTIA:
+	if _role_for_peer(peer_id) not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 		return false
 	if _player_position(peer_id).distance_to(_map.to_global(_map.POT_ROOM_CENTER)) > CAPTURE_DISTANCE:
 		return false
@@ -438,12 +438,14 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 				porta_papas_ids.append(peer_id)
 		else:
 			defender_ids.append(peer_id)
+	var compatible_beast_ids: Array[int] = []
 	for player: Dictionary in snapshot.players:
 		if int(player.get("role", -1)) == GameEnums.DefenderRole.BESTIA:
 			var beast_id := int(player.peer_id)
 			defender_ids.erase(beast_id)
 			defender_ids.push_front(beast_id)
-			break
+		if int(player.get("role", -1)) in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
+			compatible_beast_ids.append(int(player.peer_id))
 	_capture_state = PapaCaptureStateData.new(true)
 	_lives_state = CombatLivesStateData.new(true)
 	_beast_state = BeastAccessStateData.new(true)
@@ -455,7 +457,7 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 	if not _lives_state.start_round(player_ids, attacker_ids):
 		_push_integration_error("CombatLivesState rechazó la configuración de ronda.")
 		return
-	if not _beast_state.configure_round(defender_ids, attacker_ids):
+	if not _beast_state.configure_round(defender_ids, attacker_ids, compatible_beast_ids):
 		_push_integration_error("BeastAccessState rechazó la configuración de ronda.")
 		return
 	if not _tower_key_state.configure_round(attacker_ids):
@@ -624,12 +626,18 @@ func _compose_snapshot(source: Dictionary) -> Dictionary:
 		# Role/passive come from GameState. Cooldowns are copied only from the
 		# host-side combat model that owns them; unsupported roles stay unavailable.
 		var player_cooldowns: Dictionary = {}
-		if _beast_state != null and peer_id == int(_beast_state.beast_id) \
-			and int(player.get("role", -1)) == GameEnums.DefenderRole.BESTIA:
+		if _beast_state != null and _beast_state.is_beast_compatible(peer_id) \
+			and int(player.get("role", -1)) in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 			var beast_snapshot: Dictionary = _beast_state.get_snapshot()
 			var beast_cooldowns: Variant = beast_snapshot.get("cooldowns", {})
 			if beast_cooldowns is Dictionary:
-				player_cooldowns = beast_cooldowns.duplicate(true)
+				for action in [&"beast_basic", &"beast_special"]:
+					var owner_key := StringName("%d_%s" % [peer_id, action])
+					if beast_cooldowns.has(owner_key):
+						player_cooldowns[action] = beast_cooldowns[owner_key]
+					elif peer_id == int(_beast_state.beast_id) and beast_cooldowns.has(action):
+						# Preserve snapshots produced by the previous single-owner model.
+						player_cooldowns[action] = beast_cooldowns[action]
 		player["cooldowns"] = player_cooldowns
 		var actor := get_player_node(peer_id)
 		if actor != null:

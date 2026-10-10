@@ -40,9 +40,11 @@ func run() -> void:
 
 	var beast_state: Variant = session.get("_beast_state")
 	var beast_id := int(beast_state.beast_id) if beast_state != null else -1
+	var trollazzo_id := _find_role(snapshot, GameEnums.DefenderRole.TROLAZZO)
 	var attacker_id := _find_attacker(snapshot)
-	if beast_id < 0 or attacker_id < 0:
-		_fail("runtime roster did not create Bestia and attacker")
+	var second_attacker_id := _find_attacker(snapshot, attacker_id)
+	if beast_id < 0 or trollazzo_id < 0 or attacker_id < 0 or second_attacker_id < 0:
+		_fail("runtime roster did not create both beast-compatible roles and attacker")
 		_finish()
 		return
 
@@ -68,6 +70,16 @@ func run() -> void:
 	session._process(5.0)
 	_assert_true(session.request_host_action(beast_id, &"beast_attack"), "Q attack succeeds after five seconds")
 
+	var trollazzo := session.get_player_node(trollazzo_id)
+	var second_attacker := session.get_player_node(second_attacker_id)
+	trollazzo.global_position = Vector2(500.0, 300.0)
+	second_attacker.global_position = Vector2(520.0, 300.0)
+	initial_lives = int(lives_state.get_player_state(second_attacker_id).get("lives", -1))
+	_assert_true(session.request_host_action(trollazzo_id, &"beast_attack"), "Trolazzo uses Bestia Q attack")
+	after_hit_lives = int(lives_state.get_player_state(second_attacker_id).get("lives", -1))
+	_assert_equal(after_hit_lives, initial_lives - 1, "Trolazzo Q attack removes one attacker life")
+	_assert_false(session.request_host_action(trollazzo_id, &"beast_attack"), "Trolazzo Q attack is blocked during cooldown")
+
 	_finish()
 
 func _find_role(snapshot: Dictionary, role: int) -> int:
@@ -76,9 +88,9 @@ func _find_role(snapshot: Dictionary, role: int) -> int:
 			return int(player.get("peer_id", -1))
 	return -1
 
-func _find_attacker(snapshot: Dictionary) -> int:
+func _find_attacker(snapshot: Dictionary, excluded_id: int = -1) -> int:
 	for player: Dictionary in snapshot.get("players", []):
-		if player.get("side", "") == "attacker":
+		if player.get("side", "") == "attacker" and int(player.get("peer_id", -1)) != excluded_id:
 			return int(player.get("peer_id", -1))
 	return -1
 
