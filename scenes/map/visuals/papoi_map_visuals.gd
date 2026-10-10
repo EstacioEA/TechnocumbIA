@@ -41,7 +41,7 @@ const COLOR_WALL_HIGHLIGHT := Color("#E38452")
 var show_route_debug := false
 
 func _ready() -> void:
-	z_index = -1
+	z_index = -10
 	queue_redraw()
 
 func _draw() -> void:

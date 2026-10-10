@@ -10,4 +10,4 @@ script = ExtResource("1_visuals")
 texture = ExtResource("2_map_texture")
 position = Vector2(640, 360)
 scale = Vector2(0.8, 0.8)
-z_index = -1
+z_index = 0

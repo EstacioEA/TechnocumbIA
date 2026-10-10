@@ -48,6 +48,8 @@ func _assert_visual_contract(visuals: Node2D) -> void:
 		_fail("map background must be centered in the 1280x720 gameplay area")
 	if background.scale != Vector2(0.8, 0.8):
 		_fail("map background must scale the 1600x900 reference to 1280x720")
+	if background.z_index < 0:
+		_fail("map background must remain in the explicit world render layer")
 
 func _fail(message: String) -> void:
 	_failures.append(message)

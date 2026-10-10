@@ -855,3 +855,16 @@
 - Pruebas: `INTEGRATED_GAME_VISUAL_TEST`, `GK01_MAP_VISUALS_TEST`, `GAME_INTEGRATION_TEST`, carga de Godot 4.7.2 y `git diff --check` pasaron.
 - Limitaciones: falta la validación LAN completa de seis peers; Godot dejó cambios locales de caché/importación y existe un warning preexistente de mayúsculas en el recurso de Bestia.
 - Handoff: `docs/handoffs/2026-10-10-1305-Miguel-integrated-game-map-fix.md`.
+
+## 2026-10-10 — Miguel Pabon: mapa visible en arranque real de partida
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: DEBUGGING / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: corregir la ausencia visual del mapa al iniciar mediante `F5` con seis jugadores.
+- Rama: `develop`.
+- Archivos: `scenes/map/visuals/papoi_map_visuals.gd`, `scenes/map/visuals/papoi_map_visuals.tscn`, `tests/qa/gk01_map_visuals_test.gd`, `tests/game/runtime_map_visibility_test.gd`, `docs/handoffs/2026-10-10-1319-Miguel-runtime-map-visibility.md`.
+- Resumen: el fondo del mapa quedó en una capa de mundo explícita y se verificó después de instanciar seis jugadores, cámaras y overlays de visión como ocurre en la partida real.
+- Pruebas: `RUNTIME_MAP_VISIBILITY_TEST`, `GK01_MAP_VISUALS_TEST`, `GAME_INTEGRATION_TEST` y `git diff --check` pasaron.
+- Limitaciones: la inspección visual final debe hacerse con una partida gráfica iniciada por `F5`; la prueba LAN física de seis procesos continúa pendiente.
+- Handoff: `docs/handoffs/2026-10-10-1319-Miguel-runtime-map-visibility.md`.
