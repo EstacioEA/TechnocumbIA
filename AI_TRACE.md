@@ -329,6 +329,17 @@
 - Pruebas: `gm01_role_icons_test.gd` y `git diff --check` pasaron con Godot 4.7.2.
 - Limitaciones: son recursos provisionales G00; no están conectados todavía a eventos de roles o HUD runtime.
 
+## 2026-10-10 — GM02 indicadores de cooldown y acción
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear feedback visual para estados disponible, bloqueado y cuenta regresiva recibida.
+- Rama: `Miguel_Pabon/graphics-cooldown-feedback`, basada en `Miguel_Pabon/graphics-role-icons`.
+- Archivos: `assets/ui/feedback/cooldown_ready.svg`, `assets/ui/feedback/cooldown_blocked.svg`, `assets/ui/feedback/cooldown_countdown.svg`, `scripts/ui/cooldown_feedback.gd`, `scenes/ui/cooldown_feedback.tscn`, `tests/ui/gm02_cooldown_feedback_test.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0549-GM02-cooldown-feedback.md`.
+- Resumen: se creó un componente aislado que presenta el estado y el texto recibido sin calcular cooldowns ni modificar gameplay.
+- Pruebas: GM02 y regresión GM01 pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: falta conectar el componente a los datos reales del host durante la integración de HUD.
+
 ## 2026-10-10 — E04 integración y smoke test
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
