@@ -118,3 +118,25 @@
 - Pruebas: escaneo editor headless, test de estado, smoke de escena principal, test de combate y escena de jugador pasaron en Godot 4.7.2; `git diff --check` pasó.
 - Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
 - Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.
+
+## 2026-10-10 — J01 transporte LAN host/cliente
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar el transporte ENet host/cliente integrado y anadir cobertura multi-proceso reproducible.
+- Rama: `Juan_Balanta/lan-transport`, basada en `develop` actualizado a `96ba1c209662e4930657817646589e4ed7be4ab3`.
+- Archivos: `tests/network/lan_transport_test.gd`, `tests/network/run_lan_transport_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`.
+- Resumen: el harness valida IP/puerto y error visible de IP invalida, inicia dos procesos Godot, confirma host ENet, evento peer_joined, conexion loopback y roster cliente de dos jugadores. J01 queda DONE segun evidencia registrada.
+- Pruebas: escaneo headless del editor exit 0; runner PowerShell `LAN_TRANSPORT_TEST: PASS` en Godot 4.7.2.
+- Limitaciones: prueba loopback solamente. Sexto/septimo jugador, desconexion, ready, inicio de host y LAN fisica quedan pendientes para J02-J04. Sin commit ni push.
+
+## 2026-10-10 — auditoria de tareas de Juan Balanta
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: TESTING / DOCUMENTATION
+- Tarea: contrastar tareas J01-J04 y criterios del spec individual con codigo y evidencia ejecutada.
+- Rama: `Juan_Balanta/lan-transport`.
+- Archivos: `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0128-juan-task-audit.md`, `AI_TRACE.md`.
+- Resumen: J01 continua DONE y se marcaron como verificados solo host con puerto, cliente IP y procedimiento local. J02-J04 quedan TODO: el codigo de lobby/ready existe, pero no hay evidencia ejecutada de seis/siete jugadores, ready/inicio host ni desconexiones antes/durante partida.
+- Pruebas de esta auditoria: no se ejecutaron pruebas nuevas; se consulto la salida PASS del runner J01 previo y se inspecciono el codigo.
+- Limitaciones: loopback solamente; falta validar LAN fisica y todos los criterios J02-J04. Sin commit ni push.

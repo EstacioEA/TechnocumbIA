@@ -38,13 +38,15 @@ Permitir que un host cree la partida y que hasta cinco clientes se conecten por 
 6. El sistema debe limpiar peers desconectados.
 
 ## Criterios de aceptación
-- [ ] Un host puede crear una partida LAN con puerto configurable.
-- [ ] Un cliente puede conectarse introduciendo la IP del host.
+- [x] Un host puede crear una partida LAN con puerto configurable.
+- [x] Un cliente puede conectarse introduciendo la IP del host.
 - [ ] El lobby muestra correctamente hasta seis jugadores.
 - [ ] El séptimo intento de conexión es rechazado con mensaje visible.
 - [ ] El botón de inicio no está disponible para clientes no host.
 - [ ] Una desconexión elimina al jugador de la lista y actualiza el estado.
-- [ ] Existe un comando o procedimiento documentado para ejecutar host y clientes localmente.
+- [x] Existe un comando o procedimiento documentado para ejecutar host y clientes localmente.
+
+Evidencia de los criterios marcados: `tests/network/run_lan_transport_test.ps1` ejecutado en Godot 4.7.2 con host y cliente en procesos separados sobre `127.0.0.1`; el puerto de host se pasa como argumento. El procedimiento de ejecución está en `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`. La sesión loopback no valida dos equipos físicos ni firewall LAN.
 
 ## Entregable de sesión
 Crear un handoff con evidencias de conexión, desconexión, límite de jugadores y cualquier limitación de prueba.
