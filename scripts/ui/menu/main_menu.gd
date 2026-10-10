@@ -126,6 +126,7 @@ func _open_lobby() -> void:
 	_lobby.name = "Lobby"
 	_lobby.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_lobby.connect("menu_requested", _on_lobby_menu_requested)
+	_lobby.connect("game_started", _on_lobby_game_started)
 	add_child(_lobby)
 
 
@@ -136,6 +137,10 @@ func _on_lobby_menu_requested() -> void:
 	menu_panel.visible = true
 	status_label.text = "Desconectado de la sala. Puedes crear o unirte a otra."
 	host_button.grab_focus()
+
+
+func _on_lobby_game_started() -> void:
+	visible = false
 
 
 func _on_exit_pressed() -> void:
