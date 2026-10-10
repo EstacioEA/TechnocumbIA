@@ -209,7 +209,6 @@
   headless.
 - Resultado del bloque de tareas Valeria: V01 a V05 completadas.
 
-
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -243,6 +242,27 @@
 
 ## 2026-10-10 — M04 Bestia y acceso a olla
 - TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar inicio exclusivo del host con seis jugadores listos y propagación de `lobby_start`.
+- Rama: `Juan_Balanta/lobby-ready-start`, basada en J02.
+- Archivos: `tests/network/ready_start_test.gd`, `tests/network/run_ready_start_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`.
+- Resumen: se añadió una prueba con host + cinco clientes que cubre bloqueo con cinco jugadores, bloqueo mientras falte ready, rechazo del inicio solicitado por clientes, UI restringida a host y recepción de `lobby_start` por los seis peers.
+- Pruebas: escaneo de proyecto Godot 4.7.2 PASS; runners J01, J02 y J03 PASS; `git diff --check` PASS en revisión final.
+- Limitaciones: procesos locales en loopback, sin prueba de LAN física ni firewall; desconexiones durante partida pendientes de J04. Sin commit ni push.
+
+## 2026-10-10 — J04 arnés de desconexiones multiproceso
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: crear un procedimiento reproducible para desconexiones antes y durante partida con host y clientes separados.
+- Rama: `Juan_Balanta/lan-test-harness`, basada en `develop` con J03 integrado.
+- Archivos: `tests/network/disconnect_match_test.gd`, `tests/network/disconnect_test_actor.gd`, `tests/network/run_disconnect_match_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0204-J04-disconnect-harness.md`.
+- Resumen: el runner cubre salida de lobby antes del inicio, inicio con seis peers, desconexión durante ACTIVE, invalidación host-authoritative sin puntos/ganador y réplica del snapshot a los cuatro peers que permanecen conectados.
+- Pruebas: runner J04 PASS; `game_state_test.gd` PASS; runner J03 PASS; `git diff --check` PASS.
+- Limitaciones: loopback; el puente `peer_left` a `GameState` es explícito en el fixture y aún no está conectado en runtime; sin commit ni push.
 - PARTICIPANT_ID: Miguel Pabon
 - Tarea: implementar aparición, ataques, cooldowns y bloqueo de acceso de Bestia a la olla.
 - Rama: `Miguel_Pabon/beast-access`, basada en `develop`.
@@ -279,3 +299,23 @@
 - Resumen: se agregó el coordinador de partida host-autoritativo, transmisión/validación de snapshots y acciones, movimiento LAN, roster de seis jugadores, integración de captura/cocción/rescate/escape y salida de rondas al HUD; el lobby abre la escena de juego. Se corrigió la firma del callback de movimiento y se aplazaron broadcasts durante desconexiones.
 - Pruebas: editor scan, `game_integration_test.gd`, `game_state_test.gd`, K01/K02/K03/K04, V03/V04, contratos de roles, combate, vidas, captura Papa, acceso Bestia, M05, arnés ready/start con seis peers y transporte ENet host-cliente pasaron con Godot 4.7.2; `git diff --check` pasó. `run_lobby_slots_test.ps1` registró el rechazo esperado del séptimo jugador, pero falló al comprobar inmediatamente que el proceso hubiera salido.
 - Limitaciones: no se probó una sesión interactiva en seis equipos; lobby y transporte se probaron con procesos Godot locales headless. El mapa sigue usando la escena procedural, no el arte de referencia. Sin commit ni push.
+## 2026-10-10 — J05 puente runtime LAN/GameState y J06 verificación física
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: integrar el inicio del lobby y las desconexiones con GameState autoritativo; dejar procedimiento verificable para la prueba LAN física pendiente.
+- Rama: `Juan_Balanta/runtime-disconnect-bridge`, basada en `origin/develop` actualizado.
+- Archivos: `scripts/network/network_game_bridge.gd`, `scripts/network/network_manager.gd`, `scripts/game/game_state.gd`, `scenes/lobby/lobby.tscn`, `tests/network/disconnect_match_test.gd`, `tests/network/run_disconnect_match_test.ps1`, `tests/network/run_lobby_slots_test.ps1`, `docs/specs/01-network-lan.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0226-J05-runtime-disconnect-bridge.md`, `docs/handoffs/2026-10-10-0226-J06-lan-physical-blocked.md`.
+- Resumen: el bridge inicializa GameState desde el lobby, replica snapshots autoritativos y convierte una salida en partida activa en resultado inválido sin ganador ni puntos. Se rechaza entrada tardía. J05 queda DONE; J06 queda BLOCKED hasta probar en un segundo equipo físico.
+- Pruebas: Godot 4.7.2 headless/editor PASS; runners J01-J04 PASS; runner de desconexión con bridge real, cinco clientes, entrada tardía y desconexión activa PASS; `tests/game/game_state_test.gd` PASS; `git diff --check` PASS.
+- Limitaciones: todas las pruebas de red ejecutadas usan procesos locales; no se ejecutó conexión física por IP ni comprobación de firewall. Handoff J06 contiene el procedimiento, y sus resultados siguen pendientes.
+- Siguiente paso: ejecutar el smoke test J06 con dos computadoras Windows en la misma LAN. No se creó commit ni se hizo push.
+
+## 2026-10-10 — K05 matriz QA de integración
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: ejecutar y documentar la matriz P0 de integración LAN 3v3.
+- Rama: `Krystal_Giraldo/qa-matrix`, basada en `develop` actualizado.
+- Archivos: `tests/qa/p0_lan_3v3_matrix.md`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0235-K05-qa-matrix.md`, `AI_TRACE.md`.
+- Resumen: se ejecutaron pruebas headless de mapa, colisiones, spawns, Papa/olla, cocción, rescate, escape, HUD, resultados, estados de combate, transporte LAN y ready/start. La matriz queda con P0-01 a P0-11 PASS y P0-12 BLOCKED.
+- Limitaciones: el runner de lobby detecta `SEVENTH_REJECTED`, pero falla porque el proceso rechazado no termina; por dependencia del pre-match, la prueba de desconexión durante partida no puede completarse. No se modificó la red ni el runner fuera del alcance de K05. Esta entrada se mantiene local y no se publica remotamente.

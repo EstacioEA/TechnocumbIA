@@ -15,6 +15,7 @@ const DEFAULT_PORT := 2456
 
 var players: Dictionary = {}
 var _last_lobby_error := ""
+var _match_started := false
 
 
 func _ready() -> void:
@@ -72,6 +73,7 @@ func close_session() -> void:
 		multiplayer.multiplayer_peer.close()
 		multiplayer.multiplayer_peer = null
 	players.clear()
+	_match_started = false
 	_emit_lobby_updated()
 
 
@@ -101,6 +103,7 @@ func request_start_match() -> bool:
 		if not player_data.get("ready", false):
 			_fail("Todos los jugadores deben estar listos.")
 			return false
+	_match_started = true
 	_rpc_lobby_start.rpc()
 	lobby_start.emit()
 	status_changed.emit("El host inició la partida.")
@@ -116,23 +119,29 @@ func _fail(message: String) -> Error:
 func _on_peer_connected(peer_id: int) -> void:
 	if not multiplayer.is_server():
 		return
+	if _match_started:
+		_reject_peer(peer_id, "La partida ya inició; no se aceptan nuevos jugadores.")
+		return
 	if players.size() >= MAX_PLAYERS:
-		var reason := "Lobby lleno: el máximo es de seis jugadores."
-		_rpc_lobby_rejected.rpc_id(peer_id, reason)
-		var rejecting_peer: MultiplayerPeer = multiplayer.multiplayer_peer
-		get_tree().create_timer(0.25).timeout.connect(func() -> void:
-			if multiplayer.multiplayer_peer != rejecting_peer:
-				return
-			if rejecting_peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
-				return
-			if multiplayer.get_peers().has(peer_id):
-				rejecting_peer.disconnect_peer(peer_id)
-		)
+		_reject_peer(peer_id, "Lobby lleno: el máximo es de seis jugadores.")
 		return
 	players[peer_id] = {"name": "Jugador %d" % peer_id, "ready": false}
 	peer_joined.emit(peer_id, players[peer_id]["name"], false)
 	status_changed.emit("Jugador %d se conectó." % peer_id)
 	_broadcast_lobby()
+
+
+func _reject_peer(peer_id: int, reason: String) -> void:
+	_rpc_lobby_rejected.rpc_id(peer_id, reason)
+	var rejecting_peer: MultiplayerPeer = multiplayer.multiplayer_peer
+	get_tree().create_timer(0.25).timeout.connect(func() -> void:
+		if multiplayer.multiplayer_peer != rejecting_peer:
+			return
+		if rejecting_peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
+			return
+		if multiplayer.get_peers().has(peer_id):
+			rejecting_peer.disconnect_peer(peer_id)
+	)
 
 
 func _on_peer_disconnected(peer_id: int) -> void:
@@ -143,6 +152,8 @@ func _on_peer_disconnected(peer_id: int) -> void:
 	status_changed.emit("Jugador %d se desconectó." % peer_id)
 	if multiplayer.is_server():
 		_broadcast_lobby_after_disconnect.call_deferred()
+		if not _match_started:
+			_broadcast_lobby()
 	else:
 		_emit_lobby_updated()
 
@@ -272,6 +283,7 @@ func _rpc_lobby_rejected(reason: String) -> void:
 func _rpc_lobby_start() -> void:
 	if multiplayer.is_server() or players.size() != MAX_PLAYERS:
 		return
+	_match_started = true
 	lobby_start.emit()
 	status_changed.emit("El host inició la partida.")
 
