@@ -374,3 +374,14 @@
 - Pruebas: `git diff --check` PASS. No se ejecutó Godot ni revisión visual/runtime; GJ03 queda BLOCKED hasta revisar la escena.
 - Limitaciones: estados reales de conexión, rechazo y desconexión aparecen al integrar la intención con NetworkManager en GJ05; aquí solo se informa que el transporte está pendiente.
 - Siguiente paso: implementar GJ04 (preview/presentación independiente del lobby) y después GJ05 (integración y revisión visual).
+
+## 2026-10-10 — GJ04 presentación del lobby
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: presentar el roster LAN en seis puestos fijos con roles/ready, estados de sala y condiciones de inicio.
+- Rama: `Juan_Balanta/gj04-lobby-preview`, basada en `develop` actualizado desde `origin/develop`.
+- Archivos: `scripts/ui/lobby/lobby.gd`, `tests/ui/lobby_presentation_test.gd`, `tests/network/ready_start_test.gd`, `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0342-GJ04-lobby-preview.md`.
+- Resumen: lobby con seis slots que reflejan el snapshot existente, identidad host/cliente, estado ready con texto y forma/color, contador vacío/parcial/lleno/desconectado, estado de inicio deshabilitado con causa, y acción para desconectar. Se adaptó una aserción del test para cumplir el criterio de que el cliente ve el botón deshabilitado. NetworkManager y protocolo no se tocaron.
+- Pruebas: Godot 4.7.2 `--headless --editor --path . --quit` PASS; `tests/ui/lobby_presentation_test.gd` PASS; `tests/network/run_lobby_slots_test.ps1` PASS. `tests/network/run_ready_start_test.ps1` alcanzó marcadores de host/client/start, pero finalizó FAIL al apagar clientes: errores multiplayer provienen de `scripts/game/papoi_game_session.gd` en cierre/desconexión posterior al inicio; GJ04 no modifica ese archivo.
+- Limitaciones: no se integró navegación con menú ni se capturaron resoluciones; corresponde a GJ05. Pendiente revisar el cierre de sesión reportado por la regresión ready/start.
+- Siguiente tarea: GJ05, si se resuelve o se acepta el seguimiento del cierre postpartida y siguen disponibles sus dependencias visuales.

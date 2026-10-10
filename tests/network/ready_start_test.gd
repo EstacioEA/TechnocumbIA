@@ -110,7 +110,7 @@ func _on_lobby_updated(snapshot: Array[Dictionary]) -> void:
 	if _client_start_attempted or snapshot.size() != 6 or not _snapshot_has_local_player(snapshot):
 		return
 	_client_start_attempted = true
-	if not _check_client_start_button_hidden():
+	if not _check_client_start_button_disabled():
 		return
 	if not _manager.request_start_match():
 		var status_label: Label = _lobby.get("_status_label")
@@ -156,7 +156,7 @@ func _on_lobby_start() -> void:
 		print("HOST_LOBBY_START")
 		_finish_after_start()
 	else:
-		if not _check_client_start_button_hidden():
+		if not _check_client_start_button_disabled():
 			return
 		var players_label: Label = _lobby.get("_players_label")
 		if players_label.text.split("LISTO").size() - 1 != 6:
@@ -180,10 +180,10 @@ func _check_host_start_button(expected_disabled: bool) -> bool:
 	return true
 
 
-func _check_client_start_button_hidden() -> bool:
+func _check_client_start_button_disabled() -> bool:
 	var start_button: Button = _lobby.get("_start_button")
-	if start_button.visible or not start_button.disabled:
-		_fail("El botón iniciar quedó disponible para un cliente.")
+	if not start_button.visible or not start_button.disabled:
+		_fail("El botón iniciar debe mostrarse deshabilitado para un cliente.")
 		return false
 	return true
 

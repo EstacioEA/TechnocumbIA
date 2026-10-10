@@ -23,9 +23,11 @@ Juan puede completar GJ01–GJ05 sin esperar el Theme ni una revisión de Edwar.
 - Aceptación: IP y puerto editables; IP/puerto inválidos se señalan antes de emitir; entrada válida emite `join_requested(address, port)`; volver regresa al menú. El panel comunica que transporte/estados de conexión aún no están integrados. No llama ni modifica ENet/NetworkManager; GJ05 conectará la intención a la sesión cuando integre navegación.
 
 ### GJ04 — Presentación de lobby
-- Estado: TODO; depende de: GJ02 y GJ03 por navegación; puede construirse en archivo/escena propia antes de integrar.
-- Archivos: `scenes/lobby/`, `scripts/ui/lobby/`, `tests/ui/`.
-- Aceptación: seis slots visibles; nombre/ID, host y ready diferenciados; estado vacío, parcial, lleno y desconectado reconocibles; cliente ve inicio deshabilitado y host ve el motivo si no puede iniciar. No altera `NetworkManager`.
+- Estado: DONE — preview aislado implementado y comprobado; su integración de navegación queda para GJ05.
+- Dependencias: GJ02/GJ03 para navegar desde el menú, no para construir/probar esta escena independiente.
+- Archivos: `scripts/ui/lobby/`, `tests/ui/`; ajuste del test de interfaz en `tests/network/ready_start_test.gd` para reflejar que cliente ve inicio deshabilitado.
+- Aceptación: seis slots fijos; nombre/ID, host/cliente y ready/no-ready diferenciados; estado vacío, parcial, lleno y desconectado reconocibles; cliente ve inicio deshabilitado y host el motivo cuando no puede iniciar. NetworkManager/protocolo no se modifica.
+- Evidencia: prueba UI y pruebas LAN de slots PASS. Ready/start llega a sus marcadores de aceptación, pero el runner termina FAIL por errores de multiplayer al apagar clientes después del inicio, localizados en `scripts/game/papoi_game_session.gd` (fuera de alcance y sin cambios en esta tarea); queda para integración/QA.
 
 ### GJ05 — Navegación y revisión visual de Turno A
 - Estado: TODO; depende de: GJ01–GJ04.

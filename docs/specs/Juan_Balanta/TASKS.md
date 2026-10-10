@@ -57,8 +57,10 @@
 - Aceptación de este corte: IP/puerto editables y validados inline, emitir `join_requested(address, port)`, volver al menú, comunicar que falta integrar transporte. GJ05 conectará la intención con la sesión; esta tarea no cambia la red.
 
 ### GJ04 — Lobby
-- Estado: TODO; dependencia de navegación: GJ02/GJ03; el preview puede avanzar en escena propia.
-- Aceptación: seis slots; host/cliente y ready/no-ready distinguidos; inicio host habilitado según datos existentes; salida/error visible.
+- Estado: DONE — preview aislado comprobado; la navegación desde menú es GJ05.
+- Dependencia: GJ02/GJ03 solo para navegación, no para construir/probar escena propia.
+- Archivos: `scripts/ui/lobby/lobby.gd`, `tests/ui/lobby_presentation_test.gd`, `tests/network/ready_start_test.gd` (expectativa de cliente actualizada a botón visible deshabilitado), handoff y `AI_TRACE.md`.
+- Evidencia: Godot 4.7.2 headless editor PASS; `lobby_presentation_test.gd` PASS; `run_lobby_slots_test.ps1` PASS con seis jugadores, rechazo del séptimo y desconexión. `run_ready_start_test.ps1` comprobó host/cliente e inicio y alcanzó los marcadores PASS, pero el runner termina FAIL por llamadas multiplayer durante cierre de clientes en `papoi_game_session.gd`; se registra para seguimiento, sin cambios a red/autoridad.
 
 ### GJ05 — Navegación, tamaños y handoff Turno A
 - Estado: TODO; depende de: GJ01–GJ04.
