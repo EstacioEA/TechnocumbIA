@@ -606,3 +606,14 @@
 - Archivos: `tests/combat/test_role_differences_verification.gd`, `docs/handoffs/2026-10-10-0733-TC03-role-differences-verification.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `AI_TRACE.md`.
 - Resumen: se añadió una matriz con casos positivos y rechazos para cada rol/pasiva, además de comprobaciones de host, vidas, cooldowns, captura, acceso de Bestia y enfurecimiento.
 - Limitaciones: la identificación final de Bestia y la aplicación física de multiplicadores aún requieren integración con GameState y el sistema de impactos; no se ejecutó LAN de seis clientes.
+
+## 2026-10-10 — Preview interactivo de TC03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear un preview manual para probar las diferencias de roles, pasivas, Papa, vidas, Bestia, cooldowns y autoridad host.
+- Rama: `Miguel_Pabon/role-differences-preview`, basada en `Miguel_Pabon/role-differences-verification`.
+- Archivos: `scripts/ui/role_differences_preview.gd`, `scenes/ui/role_differences_preview.tscn`, `tests/ui/role_differences_preview_test.gd`, `docs/handoffs/2026-10-10-0822-TC03-role-differences-preview.md`.
+- Resumen: se añadió una escena interactiva con seis pestañas y botones para ejecutar acciones positivas y rechazos usando los módulos reales, sin modificar la partida principal ni la red.
+- Pruebas: `ROLE_DIFFERENCES_PREVIEW_TEST: PASS — 6 interactive tabs`; `git diff --check` pasó.
+- Limitaciones: es una simulación local para revisión manual, no una partida LAN de seis clientes.
