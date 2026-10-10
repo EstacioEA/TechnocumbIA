@@ -4,39 +4,48 @@ extends Node2D
 signal zone_entered(zone_name: String, body: Node2D)
 signal zone_exited(zone_name: String, body: Node2D)
 
-const MAP_BOUNDS := Rect2(64.0, 64.0, 1152.0, 640.0)
-const ATTACKER_BASE := Vector2(144.0, 384.0)
-const DEFENDER_BASE := Vector2(1136.0, 384.0)
-const POT_ROOM_CENTER := Vector2(600.0, 384.0)
+const MAP_BOUNDS := Rect2(0.0, 0.0, 1280.0, 720.0)
+const ATTACKER_BASE := Vector2(190.0, 400.0)
+const DEFENDER_BASE := Vector2(1140.0, 600.0)
+const POT_ROOM_CENTER := Vector2(1000.0, 112.0)
 const ATTACKER_SPAWNS := [
-	Vector2(120.0, 320.0),
-	Vector2(120.0, 384.0),
-	Vector2(120.0, 448.0),
+	Vector2(160.0, 340.0),
+	Vector2(160.0, 400.0),
+	Vector2(160.0, 460.0),
 ]
 const DEFENDER_SPAWNS := [
-	Vector2(1080.0, 320.0),
-	Vector2(1080.0, 384.0),
-	Vector2(1080.0, 448.0),
+	Vector2(1140.0, 540.0),
+	Vector2(1140.0, 600.0),
+	Vector2(1140.0, 660.0),
 ]
-const PAPA_SPAWN := Vector2(1010.0, 384.0)
-const BEAST_SPAWN := Vector2(1040.0, 512.0)
-const POT_ZONE := Rect2(544.0, 304.0, 112.0, 160.0)
-const CAPTURE_ZONE := Rect2(944.0, 288.0, 176.0, 192.0)
-const ESCAPE_ZONE := Rect2(80.0, 288.0, 128.0, 192.0)
+const PAPA_SPAWN := Vector2(960.0, 310.0)
+const BEAST_SPAWN := Vector2(1080.0, 350.0)
+const POT_ZONE := Rect2(944.0, 72.0, 112.0, 96.0)
+const CAPTURE_ZONE := Rect2(856.0, 240.0, 208.0, 152.0)
+const ESCAPE_ZONE := Rect2(32.0, 280.0, 320.0, 240.0)
 const ROUTES := [
-	Rect2(208.0, 288.0, 272.0, 192.0),
-	Rect2(720.0, 288.0, 272.0, 192.0),
-	Rect2(480.0, 176.0, 240.0, 64.0),
-	Rect2(480.0, 528.0, 240.0, 64.0),
+	Rect2(280.0, 280.0, 360.0, 160.0),
+	Rect2(640.0, 260.0, 320.0, 160.0),
+	Rect2(920.0, 120.0, 160.0, 200.0),
+	Rect2(960.0, 400.0, 240.0, 240.0),
+]
+const TORRE_WALLS := [
+	Rect2(880.0, 16.0, 288.0, 12.0),
+	Rect2(880.0, 16.0, 12.0, 224.0),
+	Rect2(1156.0, 16.0, 12.0, 224.0),
+	Rect2(880.0, 228.0, 30.0, 12.0),
+	Rect2(930.0, 228.0, 238.0, 12.0),
 ]
 
 var _beast_gate_open := false
 var _zones: Dictionary = {}
+var _show_debug_overlay := false
 
 func _ready() -> void:
 	_create_boundaries()
 	_create_spawn_markers()
 	_create_zones()
+	set_debug_overlay_visible(false)
 	queue_redraw()
 
 func get_spawn_points() -> Dictionary:
@@ -78,12 +87,22 @@ func set_beast_gate_open(open: bool, host_authorized: bool) -> bool:
 func is_beast_gate_open() -> bool:
 	return _beast_gate_open
 
+func set_debug_overlay_visible(enabled: bool) -> void:
+	_show_debug_overlay = enabled
+	var base_visuals := get_node_or_null("BaseSpawnVisuals") as Node2D
+	var pot_visuals := get_node_or_null("PotBarrierVisuals") as Node2D
+	if base_visuals:
+		base_visuals.visible = enabled
+	if pot_visuals:
+		pot_visuals.visible = enabled
+	queue_redraw()
+
 func _create_boundaries() -> void:
 	var boundaries := [
-		Rect2(MAP_BOUNDS.position.x, MAP_BOUNDS.position.y, MAP_BOUNDS.size.x, 16.0),
-		Rect2(MAP_BOUNDS.position.x, MAP_BOUNDS.end.y - 16.0, MAP_BOUNDS.size.x, 16.0),
-		Rect2(MAP_BOUNDS.position.x, MAP_BOUNDS.position.y, 16.0, MAP_BOUNDS.size.y),
-		Rect2(MAP_BOUNDS.end.x - 16.0, MAP_BOUNDS.position.y, 16.0, MAP_BOUNDS.size.y),
+		Rect2(MAP_BOUNDS.position.x, MAP_BOUNDS.position.y, MAP_BOUNDS.size.x, 8.0),
+		Rect2(MAP_BOUNDS.position.x, MAP_BOUNDS.end.y - 8.0, MAP_BOUNDS.size.x, 8.0),
+		Rect2(MAP_BOUNDS.position.x, MAP_BOUNDS.position.y, 8.0, MAP_BOUNDS.size.y),
+		Rect2(MAP_BOUNDS.end.x - 8.0, MAP_BOUNDS.position.y, 8.0, MAP_BOUNDS.size.y),
 	]
 	for index in boundaries.size():
 		var body := StaticBody2D.new()
@@ -96,14 +115,25 @@ func _create_boundaries() -> void:
 		body.add_child(shape)
 		add_child(body)
 
+	for index in TORRE_WALLS.size():
+		var torre_body := StaticBody2D.new()
+		torre_body.name = "TorreWall%d" % index
+		var torre_shape := CollisionShape2D.new()
+		var torre_rectangle := RectangleShape2D.new()
+		torre_rectangle.size = TORRE_WALLS[index].size
+		torre_shape.shape = torre_rectangle
+		torre_shape.position = TORRE_WALLS[index].get_center()
+		torre_body.add_child(torre_shape)
+		add_child(torre_body)
+
 	var gate := StaticBody2D.new()
 	gate.name = "BeastGate"
 	var gate_shape := CollisionShape2D.new()
 	gate_shape.name = "CollisionShape2D"
 	var gate_rectangle := RectangleShape2D.new()
-	gate_rectangle.size = Vector2(20.0, 128.0)
+	gate_rectangle.size = Vector2(20.0, 80.0)
 	gate_shape.shape = gate_rectangle
-	gate_shape.position = Vector2(688.0, 384.0)
+	gate_shape.position = Vector2(920.0, 220.0)
 	gate.add_child(gate_shape)
 	add_child(gate)
 
@@ -155,22 +185,9 @@ func _create_zone(zone_name: String, rectangle: Rect2) -> void:
 	_zones[zone_name] = area
 
 func _draw() -> void:
-	draw_rect(MAP_BOUNDS, Color("#1c2638"), true)
-	draw_rect(Rect2(80.0, 160.0, 1040.0, 448.0), Color("#273b4f"), true)
-	for route in ROUTES:
-		draw_rect(route, Color("#3e5e70"), true)
-	draw_rect(Rect2(80.0, 288.0, 128.0, 192.0), Color("#244e5a"), true)
-	draw_rect(Rect2(992.0, 288.0, 128.0, 192.0), Color("#563c50"), true)
-	draw_rect(Rect2(480.0, 240.0, 240.0, 288.0), Color("#394456"), true)
-	draw_rect(CAPTURE_ZONE, Color("#813f58", 0.35), true)
-	draw_rect(POT_ZONE, Color("#8e5e38"), true)
-	draw_rect(ESCAPE_ZONE, Color("#2a8c76", 0.55), true)
-	draw_line(Vector2(688.0, 320.0), Vector2(688.0, 448.0), Color("#f0c674"), 6.0)
-	draw_string(ThemeDB.fallback_font, Vector2(92.0, 270.0), "BASE ATACANTE", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color.WHITE)
-	draw_string(ThemeDB.fallback_font, Vector2(990.0, 270.0), "BASE DEFENSORA", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color.WHITE)
-	draw_string(ThemeDB.fallback_font, Vector2(950.0, 500.0), "ZONA CAPTURA", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#f3b4c7"))
-	draw_string(ThemeDB.fallback_font, Vector2(530.0, 292.0), "SALA DE LA OLLA", HORIZONTAL_ALIGNMENT_LEFT, -1, 20, Color.WHITE)
-	draw_string(ThemeDB.fallback_font, Vector2(540.0, 392.0), "OLLA", HORIZONTAL_ALIGNMENT_LEFT, -1, 26, Color("#ffe6a7"))
-	draw_string(ThemeDB.fallback_font, Vector2(702.0, 310.0), "ENTRADA BESTIA", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#f0c674"))
-	draw_string(ThemeDB.fallback_font, Vector2(470.0, 150.0), "RUTA NORTE", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#b8d8e8"))
-	draw_string(ThemeDB.fallback_font, Vector2(470.0, 620.0), "RUTA SUR", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#b8d8e8"))
+	if not _show_debug_overlay:
+		return
+	draw_rect(CAPTURE_ZONE, Color("#813f58", 0.25), true)
+	draw_rect(POT_ZONE, Color("#8e5e38", 0.22), true)
+	draw_rect(ESCAPE_ZONE, Color("#2a8c76", 0.22), true)
+	draw_line(Vector2(920.0, 180.0), Vector2(920.0, 260.0), Color("#f0c674"), 6.0)

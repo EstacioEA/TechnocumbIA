@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/map/papoi_map.gd" id="1_map"]
+[ext_resource type="PackedScene" path="res://scenes/map/visuals/papoi_map_visuals.tscn" id="2_visuals"]
+[ext_resource type="PackedScene" path="res://scenes/map/visuals/papoi_base_spawn_visuals.tscn" id="3_base_spawn"]
+[ext_resource type="PackedScene" path="res://scenes/map/visuals/papoi_pot_barrier_visuals.tscn" id="4_pot_barrier"]
 
 [node name="PapoiMap" type="Node2D"]
 script = ExtResource("1_map")
+
+[node name="Visuals" parent="." instance=ExtResource("2_visuals")]
+
+[node name="BaseSpawnVisuals" parent="." instance=ExtResource("3_base_spawn")]
+
+[node name="PotBarrierVisuals" parent="." instance=ExtResource("4_pot_barrier")]

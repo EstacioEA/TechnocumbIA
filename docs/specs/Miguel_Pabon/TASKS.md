@@ -39,17 +39,29 @@
 - Spec: `docs/specs/Miguel_Pabon/graphics-spec.md`; turno B; puede usar iconos preview antes de integrar eventos.
 
 ### GM01 — Iconos roles/pasivas
-- Estado: TODO; dependencia: ninguna.
+- Estado: DONE; dependencia: ninguna.
 - Aceptación: seis roles con nombre/icono distinguibles a tamaño HUD y monocromo.
+- Evidencia: `tests/ui/gm01_role_icons_test.gd`; preview: `tests/ui/gm01_role_icons_preview.gd`.
 
 ### GM02 — Estado de cooldown
-- Estado: TODO; depende de: GM01.
+- Estado: DONE; depende de: GM01.
 - Aceptación: disponible/bloqueado/tiempo recibido se distinguen; sin implementar cálculo.
+- Evidencia: `scenes/ui/cooldown_feedback.tscn`; `tests/ui/gm02_cooldown_feedback_test.gd`.
 
 ### GM03 — Estados de Papa/objetivo
-- Estado: TODO; puede avanzar en paralelo con GM01.
+- Estado: DONE; puede avanzar en paralelo con GM01.
 - Aceptación: capturada, transportada, cocinando, rescatada y escapada tienen indicadores distintos.
+- Evidencia: `scenes/ui/papa_objective_feedback.tscn`; `tests/ui/gm03_papa_feedback_test.gd`.
 
 ### GM04 — Impacto/desconexión y preview
-- Estado: TODO; depende de: GM02/GM03.
+- Estado: DONE; depende de: GM02/GM03.
 - Aceptación: señales no confunden desconexión con victoria; hoja distingue eventos reales de simulados; HUD y jugadores no se tapan.
+- Evidencia: `scenes/ui/role_feedback.tscn`; `tests/ui/gm04_role_feedback_test.gd`; preview: `tests/ui/gm04_role_feedback_preview.gd`.
+
+## TC03 — Verificación de diferencias de roles y pasivas
+- Estado: DONE; depende de: M01–M05.
+- Rama sugerida: `Miguel_Pabon/role-differences-verification`.
+- Verificar mediante pruebas y una matriz que cada rol conserve su diferencia funcional: Papa como objetivo, Trolazzo como transporte, Bestia como acceso/ataque, Tanque, Cazador y Porta Papas con sus pasivas documentadas.
+- Aceptación: cada rol tiene al menos un caso positivo y uno de rechazo/limitación; los cooldowns, vidas, captura, rescate y enfurecimiento no se confunden entre roles; el host valida las acciones.
+- Evidencia requerida: matriz de roles, pruebas automatizadas y handoff con diferencias observadas y bloqueos.
+- Evidencia: `tests/combat/test_role_differences_verification.gd`; `docs/handoffs/2026-10-10-0733-TC03-role-differences-verification.md`.

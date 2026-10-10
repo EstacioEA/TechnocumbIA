@@ -2,7 +2,7 @@
 
 - Responsables: Juan Diego Balanta y Edwar Estacio
 - Turno: C, después de GJ01, GE01, GV01, GK01 y GM01.
-- Estado: TODO; dividido en GINT01–GINT03.
+- Estado: IN_PROGRESS; regresion automatizada de desconexion corregida y PASS; GINT01 aun requiere recorrido visual runtime completo; GINT02 pendiente de 1920x1080/TC01-TC04; GINT03 con handoff incremental. Seguimiento: `docs/handoffs/2026-10-10-0800-Juan-disconnect-runtime-fix.md`.
 
 ## Objetivo
 
@@ -19,15 +19,15 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 ## Tareas atómicas
 
 ### GINT01 — Ensamblar y recorrer el flujo
-- Estado: TODO; depende de que estén listos los cinco specs individuales.
+- Estado: BLOCKED — revisión de las cinco áreas y suites automatizadas hecha; el recorrido de seis peers alcanza invalidación/resultado pero falla durante el teardown de clientes desconectados en `papoi_game_session.gd`.
 - Aceptación: revisar diff/handoff de cada área; recorrer menú→lobby→juego→resultado; documentar referencias rotas con responsable.
 
 ### GINT02 — Matriz visual y resoluciones
-- Estado: TODO; depende de: GINT01.
+- Estado: IN_PROGRESS — precolección de evidencia; el cierre depende de GINT01 y aún faltan 1920×1080 y las integraciones TC01–TC04.
 - Aceptación: completar la matriz para los escenarios descritos abajo; revisar 1280×720, 1600×900 y 1920×1080; cada fila tiene PASS/FAIL/BLOCKED y evidencia.
 
 ### GINT03 — Cierre y relevo
-- Estado: TODO; depende de: GINT02.
+- Estado: IN_PROGRESS — handoff de checkpoint y entrada incremental creados; cierre final depende de GINT02.
 - Aceptación: capturas identifican versión/resolución; handoff distingue pruebas manuales/automatizadas y previews/runtime; AI_TRACE incremental y defects priorizados.
 
 ## Secuencia de verificación
@@ -43,16 +43,26 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 
 | Caso | Resultado inicial | Evidencia |
 |---|---|---|
-| Menú y navegación teclado | BLOCKED | pendiente |
-| Errores/validación de red visibles | BLOCKED | pendiente |
-| Lobby 1/6, 6/6, ready/no-ready, host/cliente | BLOCKED | pendiente |
-| Personajes/equipos/roles distinguibles | BLOCKED | pendiente |
-| Mapa, bases, rutas, olla y barrera legibles | BLOCKED | pendiente |
-| HUD y feedback de acciones sobre visión | BLOCKED | pendiente |
-| Estados de resultado de ronda/partida | BLOCKED | pendiente |
-| Layout 1280×720 | BLOCKED | pendiente |
-| Layout 1600×900 | BLOCKED | pendiente |
-| Layout 1920×1080 | BLOCKED | pendiente |
+| Menú y navegación teclado | PASS | GJ05 `gj05_visual_capture_test.gd`; GJ05 `run_gj05_menu_lan_test.ps1` (host+cliente desde menú); evidencia `docs/handoffs/evidence/gj05/`. |
+| Errores/validación de red visibles | PASS | GJ05 captura de validación/rechazo; `run_lobby_slots_test.ps1` confirma rechazo del séptimo peer. |
+| Lobby 1/6, 6/6, ready/no-ready, host/cliente | PASS en pruebas automatizadas; falta recorrido visual runtime completo | `lobby_presentation_test.gd`, `run_lobby_slots_test.ps1` y `run_disconnect_match_test.ps1` PASS en la revalidacion de `2026-10-10-0800-Juan-disconnect-runtime-fix.md`. |
+| Personajes/equipos/roles distinguibles | BLOCKED | `GV01_CHARACTERS_TEST`, `GV02_ORIENTATION_TEST`, `GV03_SIX_PLAYERS_TEST`, `GM01_ROLE_ICONS_TEST`, `GM04_ROLE_FEEDBACK_TEST` PASS; TC01 sprite replacement y TC03 roles aún TODO. |
+| Mapa, bases, rutas, olla y barrera legibles | BLOCKED | `GK01–GK04`, `K01–K04`, `V03` y capturas 1280×720 PASS; la revalidación TC02 de límites/rutas del Turn C sigue TODO. |
+| HUD y feedback de acciones sobre visión | BLOCKED | `GE03–GE06`, `GM02–GM04`, `K04` y `GAME_INTEGRATION_TEST` PASS en sus coberturas; TC04 snapshot/cooldown integrado sigue TODO. |
+| Estados de resultado de ronda/partida | PASS | `GAME_INTEGRATION_TEST`, `K04_HUD_RESULTS_TEST`, `GE05_RESULT_HIERARCHY_TEST` PASS; GE06 previews distinguidas como simuladas. |
+| Layout 1280×720 | PASS | Capturas de GJ05, GK04, GE06 y GM01; automatización de GJ05/GE06 PASS. |
+| Layout 1600×900 | PASS | GJ05 y GE06 generan/verifican previews a 1600×900; son previews, no partida LAN real. |
+| Layout 1920×1080 | BLOCKED | No existe evidencia ni ejecución a esta resolución en este checkpoint. |
+
+## Revalidación GINT — 2026-10-10
+
+- Godot 4.7.2 editor import/scan: PASS.
+- 22 suites headless de mapa, colisiones, integración de juego, GV01–03, GM01–04 y GE03–05: PASS; listado detallado en `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
+- `run_gj05_menu_lan_test.ps1`: PASS, host y cliente recorren el menú y observan roster=2.
+- `lobby_presentation_test.gd`: PASS.
+- `run_lobby_slots_test.ps1`: PASS; host + cinco clientes, séptimo rechazado, desconexión y roster actualizado.
+- `run_disconnect_match_test.ps1`: PASS tras la correccion de cierre de sesion de `2026-10-10-0800-Juan-disconnect-runtime-fix.md`; el handoff historico del fallo anterior se conserva.
+- Dependencias Turn C: TC01, TC02, TC03 y TC04 continúan `TODO` en los specs de sus responsables; TC05 por ello no puede cerrarse.
 
 ## Aceptación observable
 

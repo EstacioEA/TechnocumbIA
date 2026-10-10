@@ -32,6 +32,7 @@ var _snapshot_elapsed := 0.0
 var _last_remote_revision := -1
 var _round_models_ready := false
 var _suppress_snapshot_rpc := false
+var _network_session_ended := false
 
 
 func configure_network_manager(manager: Node) -> void:
@@ -48,12 +49,12 @@ func _ready() -> void:
 	if _network_manager != null:
 		_network_manager.peer_left.connect(_on_peer_left)
 		_network_manager.status_changed.connect(_on_network_status_changed)
-		if multiplayer.is_server():
+		if _is_active_server():
 			_begin_network_match.call_deferred()
 
 
 func start_from_lobby_roster(roster: Array[Dictionary]) -> bool:
-	if not multiplayer.is_server():
+	if not _is_active_server():
 		return false
 	if not _game_state.configure_lobby(roster):
 		return false
@@ -61,7 +62,7 @@ func start_from_lobby_roster(roster: Array[Dictionary]) -> bool:
 
 
 func request_host_action(peer_id: int, action: StringName) -> bool:
-	if not multiplayer.is_server():
+	if not _is_active_server():
 		return false
 	return _perform_validated_action(peer_id, action)
 
@@ -77,7 +78,7 @@ func get_player_node(peer_id: int) -> Node2D:
 func _begin_network_match() -> void:
 	# Let every peer finish instantiating this RPC endpoint after lobby_start.
 	await get_tree().create_timer(0.25).timeout
-	if not is_inside_tree() or _network_manager == null or not multiplayer.is_server():
+	if not is_inside_tree() or _network_manager == null or not _is_active_server():
 		return
 	var roster: Array[Dictionary] = []
 	for entry: Dictionary in _network_manager.get_lobby_snapshot():
@@ -89,7 +90,7 @@ func _begin_network_match() -> void:
 
 
 func _process(delta: float) -> void:
-	if not multiplayer.is_server():
+	if not _is_active_server():
 		return
 	if _capture_state != null:
 		_capture_state.tick(delta)
@@ -106,7 +107,7 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not multiplayer.is_server():
+	if not _is_active_server():
 		return
 	for peer_id_variant: Variant in _movement_directions:
 		var peer_id := int(peer_id_variant)
@@ -143,7 +144,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
 func _rpc_movement_intent(direction: Vector2) -> void:
-	if not multiplayer.is_server() or not _is_valid_direction(direction):
+	if not _is_active_server() or not _is_valid_direction(direction):
 		return
 	var sender_id := multiplayer.get_remote_sender_id()
 	if not _player_nodes.has(sender_id):
@@ -153,7 +154,7 @@ func _rpc_movement_intent(direction: Vector2) -> void:
 
 @rpc("any_peer", "call_remote", "reliable")
 func _rpc_action_request(action: StringName, payload: Dictionary) -> void:
-	if not multiplayer.is_server() or not payload.is_empty():
+	if not _is_active_server() or not payload.is_empty():
 		return
 	var sender_id := multiplayer.get_remote_sender_id()
 	if not _player_nodes.has(sender_id):
@@ -163,7 +164,7 @@ func _rpc_action_request(action: StringName, payload: Dictionary) -> void:
 
 @rpc("authority", "call_remote", "reliable")
 func _rpc_receive_match_snapshot(snapshot: Dictionary) -> void:
-	if multiplayer.is_server():
+	if _is_active_server() or not _is_transport_connected():
 		return
 	var validated: Variant = MatchStateData.from_dictionary(snapshot)
 	if validated == null or validated.revision <= _last_remote_revision:
@@ -173,17 +174,19 @@ func _rpc_receive_match_snapshot(snapshot: Dictionary) -> void:
 
 
 func _submit_action(action: StringName) -> void:
+	if not _is_transport_connected():
+		return
 	var local_peer_id := multiplayer.get_unique_id()
-	if multiplayer.is_server():
+	if _is_active_server():
 		_perform_validated_action(local_peer_id, action)
-	elif multiplayer.multiplayer_peer != null:
+	else:
 		_rpc_action_request.rpc_id(1, action, {})
 
 
 func _on_player_movement_intent(direction: Vector2, peer_id: int) -> void:
-	if multiplayer.is_server():
+	if _is_active_server():
 		_movement_directions[peer_id] = direction.limit_length(1.0)
-	elif multiplayer.multiplayer_peer != null:
+	elif _is_transport_connected():
 		_rpc_movement_intent.rpc_id(1, direction.limit_length(1.0))
 
 
@@ -340,7 +343,7 @@ func _on_escape_reached(_carrier_id: int) -> void:
 
 
 func _on_authoritative_state_changed(snapshot: Dictionary) -> void:
-	if not multiplayer.is_server():
+	if not _is_active_server():
 		return
 	_ensure_player_nodes(snapshot)
 	_render_snapshot(_compose_snapshot(snapshot))
@@ -348,7 +351,7 @@ func _on_authoritative_state_changed(snapshot: Dictionary) -> void:
 
 
 func _on_round_started(_round_number: int, snapshot: Dictionary) -> void:
-	if not multiplayer.is_server():
+	if not _is_active_server():
 		return
 	_configure_round_models(snapshot)
 	_reset_player_positions(snapshot)
@@ -401,7 +404,7 @@ func _ensure_player_nodes(snapshot: Dictionary) -> void:
 	var defenders: Array = spawn_points["defenders"]
 	var attacker_index := 0
 	var defender_index := 0
-	var local_peer_id := multiplayer.get_unique_id()
+	var local_peer_id := multiplayer.get_unique_id() if _is_transport_connected() else -1
 	for player: Dictionary in snapshot.players:
 		var peer_id := int(player.get("peer_id", -1))
 		if peer_id <= 0 or _player_nodes.has(peer_id) or not player.has("side"):
@@ -512,7 +515,7 @@ func _compose_snapshot(source: Dictionary) -> Dictionary:
 func _render_snapshot(snapshot: Dictionary) -> void:
 	_ensure_player_nodes(snapshot)
 	var local_snapshot := snapshot.duplicate(true)
-	local_snapshot["local_peer_id"] = multiplayer.get_unique_id()
+	local_snapshot["local_peer_id"] = multiplayer.get_unique_id() if _is_transport_connected() else -1
 	_hud.apply_match_snapshot(local_snapshot)
 	for player: Dictionary in snapshot.get("players", []):
 		var actor := get_player_node(int(player.get("peer_id", -1)))
@@ -526,12 +529,12 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 
 
 func _schedule_snapshot() -> void:
-	if multiplayer.is_server():
+	if _is_active_server():
 		_snapshot_dirty = true
 
 
 func _publish_snapshot() -> void:
-	if not multiplayer.is_server():
+	if not _is_active_server():
 		return
 	var snapshot: Dictionary = _compose_snapshot(_game_state.get_snapshot())
 	_render_snapshot(snapshot)
@@ -539,7 +542,7 @@ func _publish_snapshot() -> void:
 	_snapshot_elapsed = 0.0
 	if _suppress_snapshot_rpc:
 		return
-	if multiplayer.multiplayer_peer != null and multiplayer.get_peers().size() > 0:
+	if _is_transport_connected() and multiplayer.get_peers().size() > 0:
 		_rpc_receive_match_snapshot.rpc(snapshot)
 
 
@@ -552,7 +555,7 @@ func _on_match_finished(_winner: int, _snapshot: Dictionary) -> void:
 
 
 func _on_peer_left(peer_id: int) -> void:
-	if not multiplayer.is_server() or _game_state == null:
+	if not _is_active_server() or _game_state == null:
 		return
 	_suppress_snapshot_rpc = true
 	var phase := int(_game_state.get_snapshot().phase)
@@ -571,7 +574,20 @@ func _flush_disconnect_snapshot() -> void:
 
 func _on_network_status_changed(message: String) -> void:
 	if _hud != null:
-		_hud.set_connection_status(true, message)
+		var connected := _is_transport_connected()
+		_hud.set_connection_status(connected, message)
+		if not connected:
+			_network_session_ended = true
+
+
+func _is_transport_connected() -> bool:
+	if _network_session_ended or multiplayer.multiplayer_peer == null:
+		return false
+	return multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED
+
+
+func _is_active_server() -> bool:
+	return _is_transport_connected() and multiplayer.is_server()
 
 
 func _player_position(peer_id: int) -> Vector2:

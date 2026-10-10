@@ -41,17 +41,36 @@
 - Spec: `docs/specs/Krystal_Giraldo/graphics-spec.md`; turno B; no depende del Theme de Edwar.
 
 ### GK01 — Suelo y rutas
-- Estado: TODO; dependencia: mapa actual.
+- Estado: DONE; remapeo oficial validado visualmente en runtime.
 - Aceptación: ruta transitable contrasta con suelo/decoración; paredes no parecen camino.
+- Evidencia: `tests/qa/gk01_map_visuals_test.gd`, regresión `tests/qa/k01_map_test.gd` y `docs/handoffs/captura vista fix krystal 4.png`.
 
 ### GK02 — Bases y spawns
-- Estado: TODO; puede hacerse en paralelo con GK01.
+- Estado: DONE; posiciones del remapeo validadas visualmente en runtime.
 - Aceptación: bases y spawns visibles mediante forma/icono/etiqueta, sin mover coordenadas lógicas.
+- Evidencia: `tests/qa/gk02_base_spawn_visuals_test.gd`, `tests/qa/gk01_map_visuals_test.gd`, `tests/qa/k01_map_test.gd` y `docs/handoffs/captura vista fix krystal 4.png`.
 
 ### GK03 — Olla y barrera
-- Estado: TODO; sin dependencia técnica de GK01/GK02.
+- Estado: DONE; implementación reubicada a Torre y estados cerrado/abierto validados en runtime.
 - Aceptación: olla y barrera abierta/cerrada legibles; visual no cambia colisión/objetivo.
+- Evidencia: `tests/qa/gk03_pot_barrier_visuals_test.gd`, `docs/handoffs/captura vista fix krystal 4.png` y `docs/handoffs/captura pantalla krystal 5 - estado abierto.png`.
 
 ### GK04 — Contraste/evidencia
-- Estado: TODO; depende de GK01–GK03.
+- Estado: DONE; contraste, overlay y legibilidad del HUD validados en runtime a 1280×720.
 - Aceptación: overlay no esconde rutas/objetivos/HUD; pruebas mapa conservadas; captura y fuentes de assets documentadas.
+- Evidencia: `tests/qa/gk04_contrast_evidence_test.gd`, `scenes/map/papoi_map_gk04_contrast_preview.tscn`, `docs/handoffs/captura 7 vision normal.png` y `docs/handoffs/captura 7.1 vision activa.png`.
+
+## K06 — Remapeo oficial del mapa
+- Estado: DONE; autorizado explícitamente para alinear lógica, colisiones y presentación con `assets/maps/Mapa Base.jpeg`.
+- Decisión funcional: Hall de Auditorios = base atacante/escape; Biblio = base defensora; Summan = zona de captura; Piedritas = corredor central; Torre = sala de la olla y entrada de Bestia.
+- Evidencia técnica: `K01_MAP_TEST`, `K02_POT_ZONE_TEST`, `K03_COOKING_ESCAPE_TEST`, `GK01_MAP_VISUALS_TEST`, `GK02_BASE_SPAWN_VISUALS_TEST` y `GK03_POT_BARRIER_VISUALS_TEST` pasan con Godot 4.7.2 headless.
+- Evidencia final: capturas runtime a 1280×720 con barrera cerrada y abierta; no se afirma licencia externa del JPEG.
+
+## TC02 — Límites y zonas jugables
+- Estado: TODO; depende de: K01–K06, V03.
+- Rama sugerida: `Krystal_Giraldo/map-playable-boundaries`.
+- Delimitar bordes, pasillos transitables, edificios bloqueados y zonas de objetivo con colisiones coherentes con el mapa oficial.
+- Aceptación: el jugador no atraviesa edificios ni abandona el área jugable; los pasillos conectan Hall, Piedritas, Summan, Torre y Biblio; captura, olla, escape y barrera conservan sus zonas lógicas.
+- Regla visual: `papoi_map.tscn` se muestra limpio durante gameplay; recuadros, títulos y estados solo se habilitan en previews.
+- Evidencia técnica inicial: `tests/qa/tc02_clean_map_test.gd` pasa y confirma que overlays de debug están ocultos por defecto y solo se activan explícitamente en previews.
+- Evidencia requerida: prueba de colisión/rutas, preview de debug separado y captura runtime limpia.

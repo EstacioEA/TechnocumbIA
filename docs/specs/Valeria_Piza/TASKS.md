@@ -54,3 +54,10 @@
 ### GV03 — Seis instancias y contraste
 - Estado: DONE; depende de: GV01/GV02.
 - Aceptación: seis jugadores distinguibles con visión activa/inactiva; sin cambios de spawn/input; captura y procedencia en handoff.
+
+## TC01 — Avatares con sprites
+- Estado: TODO; depende de: GV01–GV03, M01.
+- Rama sugerida: `Valeria_Piza/avatar-sprites`.
+- Integrar sprites de los roles disponibles en el componente visual del jugador y conservar la distinción de equipo/local.
+- Aceptación: Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas usan avatar reconocible; no aparece el punto de color como representación principal; collider, input, cámara y autoridad permanecen intactos.
+- Evidencia requerida: preview de seis jugadores, prueba de instanciación y handoff con procedencia de sprites.

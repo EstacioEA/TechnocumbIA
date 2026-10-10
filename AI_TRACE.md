@@ -318,6 +318,50 @@
 - Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
 - Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
 
+## 2026-10-10 — GM01 iconos de roles y pasivas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear iconos HUD monocromos y una preview para los seis roles/pasivas de Miguel.
+- Rama: `Miguel_Pabon/graphics-role-icons`, basada en `develop`.
+- Archivos: `assets/ui/roles/papa.svg`, `assets/ui/roles/trolazzo.svg`, `assets/ui/roles/bestia.svg`, `assets/ui/roles/tanque.svg`, `assets/ui/roles/cazador.svg`, `assets/ui/roles/porta_papas.svg`, `tests/ui/gm01_role_icons_preview.gd`, `tests/ui/gm01_role_icons_test.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0540-GM01-role-icons.md`.
+- Resumen: se añadieron seis símbolos SVG de 64×64 con nombres visibles en una cuadrícula de preview; la prueba confirma que todos cargan como texturas y conservan el tamaño HUD.
+- Pruebas: `gm01_role_icons_test.gd` y `git diff --check` pasaron con Godot 4.7.2.
+- Limitaciones: son recursos provisionales G00; no están conectados todavía a eventos de roles o HUD runtime.
+
+## 2026-10-10 — GM02 indicadores de cooldown y acción
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear feedback visual para estados disponible, bloqueado y cuenta regresiva recibida.
+- Rama: `Miguel_Pabon/graphics-cooldown-feedback`, basada en `Miguel_Pabon/graphics-role-icons`.
+- Archivos: `assets/ui/feedback/cooldown_ready.svg`, `assets/ui/feedback/cooldown_blocked.svg`, `assets/ui/feedback/cooldown_countdown.svg`, `scripts/ui/cooldown_feedback.gd`, `scenes/ui/cooldown_feedback.tscn`, `tests/ui/gm02_cooldown_feedback_test.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0549-GM02-cooldown-feedback.md`.
+- Resumen: se creó un componente aislado que presenta el estado y el texto recibido sin calcular cooldowns ni modificar gameplay.
+- Pruebas: GM02 y regresión GM01 pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: falta conectar el componente a los datos reales del host durante la integración de HUD.
+
+## 2026-10-10 — GM03 estados visuales de Papa y objetivo
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear feedback visual diferenciado para Papa capturada, transportada, cocinándose, rescatada y escapada.
+- Rama: `Miguel_Pabon/graphics-papa-feedback`, basada en `Miguel_Pabon/graphics-cooldown-feedback`.
+- Archivos: `assets/ui/feedback/papa_captured.svg`, `assets/ui/feedback/papa_transporting.svg`, `assets/ui/feedback/papa_cooking.svg`, `assets/ui/feedback/papa_rescued.svg`, `assets/ui/feedback/papa_escaped.svg`, `scripts/ui/papa_objective_feedback.gd`, `scenes/ui/papa_objective_feedback.tscn`, `tests/ui/gm03_papa_feedback_test.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0559-GM03-papa-feedback.md`.
+- Resumen: se añadió un componente visual aislado que muestra cinco estados recibidos, con iconos y etiquetas distintas, sin modificar el estado de gameplay.
+- Pruebas: GM03 y regresión GM02 pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: los eventos reales todavía deben conectarse durante GM04/integración.
+
+## 2026-10-10 — GM04 feedback de impactos, desconexión y preview
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear feedback visual de impactos/acciones y desconexión, con hoja que separa señales reales de previews simuladas.
+- Rama: `Miguel_Pabon/graphics-role-feedback`, basada en `Miguel_Pabon/graphics-papa-feedback`.
+- Archivos: `assets/ui/feedback/impact.svg`, `assets/ui/feedback/action.svg`, `assets/ui/feedback/disconnect.svg`, `scripts/ui/role_feedback.gd`, `scenes/ui/role_feedback.tscn`, `tests/ui/gm04_role_feedback_test.gd`, `tests/ui/gm04_role_feedback_preview.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0609-GM04-role-feedback.md`.
+- Resumen: se añadió un panel compacto que diferencia impacto, acción y desconexión, etiqueta la fuente real/simulada y evita cubrir jugador, Papa o HUD.
+- Pruebas: GM04 y regresiones GM02/GM03 pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: la preview usa datos simulados y la conexión a señales reales del host queda para integración posterior.
+
 ## 2026-10-10 — E04 integración y smoke test
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -347,6 +391,26 @@
 - Archivos: `tests/qa/p0_lan_3v3_matrix.md`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0235-K05-qa-matrix.md`, `AI_TRACE.md`.
 - Resumen: se ejecutaron pruebas headless de mapa, colisiones, spawns, Papa/olla, cocción, rescate, escape, HUD, resultados, estados de combate, transporte LAN y ready/start. La matriz queda con P0-01 a P0-11 PASS y P0-12 BLOCKED.
 - Limitaciones: el runner de lobby detecta `SEVENTH_REJECTED`, pero falla porque el proceso rechazado no termina; por dependencia del pre-match, la prueba de desconexión durante partida no puede completarse. No se modificó la red ni el runner fuera del alcance de K05. Esta entrada se mantiene local y no se publica remotamente.
+
+## 2026-10-10 — GK01 suelo y rutas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: iniciar GK01 del turno B con una capa visual separada para suelo, rutas y paredes del mapa.
+- Rama: `Krystal_Giraldo/map-visuals`, basada en `develop` actualizado.
+- Archivos: `scenes/map/visuals/papoi_map_visuals.gd`, `scenes/map/visuals/papoi_map_visuals.tscn`, `scenes/map/papoi_map.tscn`, `tests/qa/gk01_map_visuals_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0545-GK01-map-visuals.md`.
+- Resumen: se añadió una capa visual original que contrasta rutas transitables, suelo y paredes, instanciada como hija del mapa sin modificar geometría, colisiones, spawns u objetivos. `GK01_MAP_VISUALS_TEST` y la regresión `K01_MAP_TEST` pasan con Godot 4.7.2 headless.
+- Limitaciones: GK01 queda `IN_PROGRESS` porque falta captura/revisión visual del mapa completo; no se afirma licencia legal de arte externo. Esta entrada se mantiene local y no se publica remotamente.
+
+## 2026-10-10 — GK02 bases y spawns
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: iniciar GK02 del turno B con visuales identificables para bases y puntos de spawn.
+- Rama: `Krystal_Giraldo/base-spawn-visuals`, basada en `develop` actualizado.
+- Archivos: `scenes/map/visuals/papoi_base_spawn_visuals.gd`, `scenes/map/visuals/papoi_base_spawn_visuals.tscn`, `scenes/map/papoi_map.tscn`, `tests/qa/gk02_base_spawn_visuals_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0600-GK02-base-spawn-visuals.md`.
+- Resumen: se añadieron etiquetas, formas y marcadores visuales para bases, atacantes, defensores, Papa y Bestia; la prueba confirma que no se alteran las coordenadas lógicas. GK02 y regresiones K01/GK01 pasan con Godot 4.7.2 headless.
+- Limitaciones: GK02 queda `IN_PROGRESS` porque falta captura/revisión visual; no se afirma licencia legal de arte externo. Esta entrada se mantiene local y no se publica remotamente.
 
 ## 2026-10-10 — Planeación gráfica por relevos
 - TEAM_ID: TechnocumbIA
@@ -496,3 +560,69 @@
 - Limitaciones: el panel HUD escala con `canvas_items`; no se revisó 1920×1080. Las previews emplean snapshots simulados y están rotuladas. No se creó commit ni se hizo push.
 - Handoff: `docs/handoffs/2026-10-10-0437-GE06-preview-scaling.md`.
 - Siguiente paso: GE01–GE06 del turno gráfico de Edwar están completas; revisar la matriz GINT junto con los entregables de Juan, Valeria, Krystal y Miguel.
+
+## 2026-10-10 — K06 remapeo oficial del mapa
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DESIGN / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: alinear el mapa jugable con `assets/maps/Mapa Base.jpeg` después de la autorización explícita de `full_remap`.
+- Archivos: `scripts/map/papoi_map.gd`, `scenes/map/papoi_map.tscn`, `scenes/map/visuals/papoi_map_visuals.gd`, `scenes/map/visuals/papoi_base_spawn_visuals.gd`, `scenes/map/visuals/papoi_pot_barrier_visuals.gd`, `tests/qa/k01_map_test.gd`, `tests/qa/k02_pot_zone_test.gd`, `tests/qa/gk03_pot_barrier_visuals_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0700-K06-official-map-remap.md`.
+- Resumen: se reemplazó el layout abstracto por la referencia oficial escalada a 1280×720; Hall de Auditorios funciona como base atacante/escape, Biblio como base defensora, Summan como captura, Piedritas como corredor y Torre como sala de olla. Se añadieron paredes de colisión aproximadas para la Torre y se conservó la autorización del host para la barrera.
+- Pruebas: `K01_MAP_TEST`, `K02_POT_ZONE_TEST`, `K03_COOKING_ESCAPE_TEST`, `GK01_MAP_VISUALS_TEST`, `GK02_BASE_SPAWN_VISUALS_TEST` y `GK03_POT_BARRIER_VISUALS_TEST` pasan con Godot 4.7.2; `git diff --check` pasa.
+- Evidencia runtime: `docs/handoffs/captura vista fix krystal 4.png` confirma el mapa completo a 1280×720 con olla en Torre y barrera cerrada.
+- Evidencia abierta: `docs/handoffs/captura pantalla krystal 5 - estado abierto.png` confirma `ESTADO: ABIERTA` en Torre.
+- Limitaciones: no se afirma licencia externa de la imagen; no se creó push automático.
+
+## 2026-10-10 — GK04 contraste y evidencia del mapa
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: preparar una evidencia reproducible de contraste del mapa con overlay de visión activo/inactivo y HUD legible.
+- Archivos: `scenes/map/papoi_map_gk04_contrast_preview.gd`, `scenes/map/papoi_map_gk04_contrast_preview.tscn`, `tests/qa/gk04_contrast_evidence_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0715-GK04-contrast-evidence.md`.
+- Resumen: se añadió un preview a 1280×720 con mapa oficial, HUD de demostración y tecla `V` para alternar el overlay. El HUD queda sobre el overlay mediante capas 30 y 20.
+- Pruebas: `GK04_CONTRAST_EVIDENCE_TEST` y escaneo/importación de Godot 4.7.2 pasan.
+- Evidencia runtime: `docs/handoffs/captura 7 vision normal.png` y `docs/handoffs/captura 7.1 vision activa.png` a 1280×720. La captura activa conserva el HUD legible sobre el overlay.
+- Limitaciones: el fondo `Mapa Base.jpeg` se documenta como recurso proporcionado por el equipo sin afirmar licencia externa.
+
+## 2026-10-10 — TC turno C de remediaciones
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- EVENT_ID: GameJam
+- Tipo: DESIGN / DOCUMENTATION / DEBUGGING
+- Tarea: repartir equitativamente las observaciones pendientes de integración entre los cinco integrantes.
+- Archivos: `docs/specs/TURN-C-REMEDIATION.md`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Juan_Balanta/TASKS.md`, `scripts/map/papoi_map.gd`, `scenes/map/papoi_map_gk03_open_preview.gd`, `scenes/map/papoi_map_gk04_contrast_preview.gd`.
+- Resumen: Valeria recibe avatares con sprites; Krystal, límites, pasillos y zonas; Miguel, verificación funcional de roles/pasivas; Edwar, contrato visible de snapshots/HUD; Juan, integración y QA final. Los recuadros, títulos y estados quedan restringidos a previews, mientras el gameplay normal usa el mapa limpio.
+- Pruebas: `GK04_CONTRAST_EVIDENCE_TEST`, `K01_MAP_TEST`, `GK03_POT_BARRIER_VISUALS_TEST` y `TC02_CLEAN_MAP_TEST` pasan; los overlays debug quedan ocultos por defecto y solo se activan explícitamente en previews.
+- Limitaciones: TC01–TC05 aún no están implementadas; no se creó commit ni push.
+
+## 2026-10-10 — checkpoint GINT y revalidación QA de Juan
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: iniciar GINT (integración/QA visual) y determinar si TC05 puede cerrarse según sus dependencias actuales.
+- Rama: `Juan_Balanta/turn-c-remediation-qa`, basada en `develop` (`ff38375`).
+- Archivos: `docs/specs/graphics/GINT.md`, `docs/specs/Juan_Balanta/TASKS.md`, `tests/qa/p0_lan_3v3_matrix.md` (addendum de revalidación), `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
+- Resumen: 22 suites de mapas, jugadores, roles y HUD pasan; flujo menú-host-cliente y lobby presentation pasan; lobby de seis slots/rechazo/desconexión pasa. La prueba de desconexión durante partida ahora alcanza invalidación autoritativa y entrega resultado a un cliente, pero termina FAIL por getters/RPC en clientes que siguen procesando tras cerrar el peer. Se documentó sin cambiar código del juego.
+- Limitaciones: GINT queda IN_PROGRESS por el fallo de teardown y falta de evidencia 1920×1080/recorrido runtime completo. TC01–TC04 están todavía TODO en los specs responsables, por lo que TC05 queda bloqueada. No se sobrescribieron capturas ni se modificaron sus módulos.
+- Handoff: `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
+- Siguiente paso: asignar/corregir el teardown de desconexión; esperar TC01–TC04; completar 1920×1080 y retomar GINT/TC05.
+## 2026-10-10 — TC03 verificación de diferencias de roles y pasivas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar diferencias funcionales entre Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas.
+- Rama: `Miguel_Pabon/role-differences-verification`, basada en `develop`.
+- Archivos: `tests/combat/test_role_differences_verification.gd`, `docs/handoffs/2026-10-10-0733-TC03-role-differences-verification.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `AI_TRACE.md`.
+- Resumen: se añadió una matriz con casos positivos y rechazos para cada rol/pasiva, además de comprobaciones de host, vidas, cooldowns, captura, acceso de Bestia y enfurecimiento.
+- Limitaciones: la identificación final de Bestia y la aplicación física de multiplicadores aún requieren integración con GameState y el sistema de impactos; no se ejecutó LAN de seis clientes.
+
+## 2026-10-10 - Juan Diego Balanta: cierre seguro de sesion multiplayer
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tipo: AI_ASSISTED / DEBUGGING / TESTING / DOCUMENTATION
+- Tarea: corregir errores runtime de clientes despues de desconexion del host durante partida.
+- Archivos: `scripts/game/papoi_game_session.gd`, `tests/qa/p0_lan_3v3_matrix.md`, `docs/specs/graphics/GINT.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0800-Juan-disconnect-runtime-fix.md`, `AI_TRACE.md`.
+- Resumen: se agregaron guardas de transporte activo alrededor de autoridad, procesamiento, intents, snapshots y callbacks; la UI conserva el estado desconectado. No cambian reglas, combate ni el protocolo LAN.
+- Pruebas: `tests/network/run_disconnect_match_test.ps1`, `tests/game/game_integration_test.gd` y `tests/game/game_state_test.gd` PASS; se documentan warnings esperados del ultimo.
+- Limitaciones: pruebas locales multiproceso, sin validacion LAN fisica; TC05 continua bloqueada por TC01-TC04 y GINT mantiene evidencia 1920x1080 pendiente.
