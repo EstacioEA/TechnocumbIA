@@ -15,11 +15,11 @@
 - Aceptación: estados y transiciones se validan en host; golpe al portador suelta sin quitar vida. Evidencia: `tests/combat/test_papa_capture_state.gd`.
 
 ## M03 — Impactos, vidas y respawn
-- Estado: TODO
+- Estado: DONE
 - Depende de: M02, E02
 - Rama sugerida: `Miguel_Pabon/combat-lives`
 - Golpe sin Papa, pérdida de vida, respawn en 3 s y reinicio por ronda.
-- Aceptación: pierde exactamente una vida; respawn ocurre una vez; cero vidas activa resultado defensor.
+- Aceptación: pierde exactamente una vida; respawn ocurre una vez; cero vidas activa resultado defensor. Evidencia: `tests/combat/test_combat_lives_state.gd`.
 
 ## M04 — Bestia y acceso a olla
 - Estado: TODO
