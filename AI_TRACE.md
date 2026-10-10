@@ -59,3 +59,16 @@
 - Resultado: no se modificó código. En la rama se detectó `?? .godot/` y no existe `docs/specs/Edwar_Estacio/TASKS.md`; el archivo de asignación está en `develop`.
 - Limitaciones: no se borró ni ocultó `.godot/`; no se ejecutaron pruebas. `CLI_BRANCH_POLICY.md` indica `main`, mientras `SDD_CONTINUE_PROTOCOL.md` indica `develop`; se requiere resolver la discrepancia y mantener la asignación disponible en la base aprobada.
 - Siguiente paso: resolver el estado local y la política de base; continuar E02 en rama limpia con sus specs y asignación disponibles.
+
+## 2026-10-10 — E02 máquina de estados de ronda
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING
+- Solicitud: completar E02 y resolver los bloqueos de rama y estado local documentados anteriormente.
+- Rama: `Edwar_Estacio/round-state-machine-impl`, nueva desde `develop` actualizado; la rama `Edwar_Estacio/round-state-machine` anterior ya estaba integrada en `develop`.
+- Archivos: `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0105-E02-round-state-machine.md`.
+- Resumen: se centralizaron las transiciones válidas con autoridad del host y restricciones de progresión; se parametrizó el límite de 7 minutos; se añadieron pruebas de flujo válido, transiciones rechazadas sin mutación, timeout, eliminación durante cocción y desempate 2-2 que completa la quinta ronda sin permitir una sexta.
+- Pruebas: escaneo editor headless, test de estado, smoke de escena principal, test de combate y escena de jugador pasaron en Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
+- Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.
