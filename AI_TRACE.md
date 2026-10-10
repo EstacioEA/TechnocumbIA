@@ -881,3 +881,16 @@
 - Pruebas: `F5_GAME_START_VISIBILITY_TEST`, `RUNTIME_MAP_VISIBILITY_TEST`, `GAME_INTEGRATION_TEST` y `git diff --check` pasaron.
 - Limitaciones: queda pendiente la comprobación manual gráfica con seis procesos LAN; la causa del mapa tapado quedó cubierta por una prueba automatizada del flujo F5.
 - Handoff: `docs/handoffs/2026-10-10-1332-Miguel-f5-menu-overlay-fix.md`.
+
+## 2026-10-10 — Miguel Pabon: llave de torre visible e integrada
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: integrar la llave de `feat/tower-key` en la partida normal de `develop`.
+- Rama: `develop`.
+- Archivos: `scripts/game/papoi_game_session.gd`, `tests/game/tower_key_runtime_test.gd`, `docs/handoffs/2026-10-10-1343-Miguel-tower-key-runtime.md`, `AI_TRACE.md`.
+- Resumen: la llave ahora aparece al comenzar cada ronda en `TOWER_KEY_SPAWN`, puede recogerse con `E` por un atacante y abre la entrada de la torre mediante validación host-side.
+- Pruebas: `tower_key_state_test`, `TOWER_KEY_RUNTIME_TEST`, `GAME_INTEGRATION_TEST` y `git diff --check` pasaron.
+- Limitaciones: falta validar manualmente la interacción en una sesión LAN de seis procesos; no se creó commit automático.
+- Handoff: `docs/handoffs/2026-10-10-1343-Miguel-tower-key-runtime.md`.
