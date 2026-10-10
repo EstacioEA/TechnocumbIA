@@ -3,6 +3,7 @@ extends SceneTree
 const MAP_SCENE := preload("res://scenes/map/papoi_map.tscn")
 const VISUALS_SCENE := preload("res://scenes/map/visuals/papoi_map_visuals.tscn")
 const VISUALS_SCRIPT := preload("res://scenes/map/visuals/papoi_map_visuals.gd")
+const MAP_TEXTURE := preload("res://assets/maps/Mapa Base.jpeg")
 
 var _failures: Array[String] = []
 
@@ -35,6 +36,18 @@ func _assert_visual_contract(visuals: Node2D) -> void:
 		_fail("map visual layer has an unexpected script")
 	if visuals.z_index >= 0:
 		_fail("visual layer must stay behind gameplay overlays")
+	var background := visuals.get_node_or_null("MapBackground") as Sprite2D
+	if background == null:
+		_fail("map visual layer must contain an explicit background sprite")
+		return
+	if background.texture != MAP_TEXTURE:
+		_fail("map background sprite must use the reference map texture")
+	if not background.visible:
+		_fail("map background sprite must be visible")
+	if background.position != Vector2(640.0, 360.0):
+		_fail("map background must be centered in the 1280x720 gameplay area")
+	if background.scale != Vector2(0.8, 0.8):
+		_fail("map background must scale the 1600x900 reference to 1280x720")
 
 func _fail(message: String) -> void:
 	_failures.append(message)

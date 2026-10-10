@@ -29,8 +29,6 @@ const ROUTES := [
 	Rect2(1100.0, 380.0, 120.0, 240.0),
 	Rect2(1130.0, 550.0, 124.0, 162.0),
 ]
-const REFERENCE_MAP := preload("res://assets/maps/Mapa Base.jpeg")
-
 const COLOR_BOUNDARY := Color("#21161E")
 const COLOR_FOLIAGE_DARK := Color("#0E4F22")
 const COLOR_FOLIAGE := Color("#397823")
@@ -47,7 +45,6 @@ func _ready() -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	draw_texture_rect(REFERENCE_MAP, MAP_BOUNDS, false)
 	if show_route_debug:
 		_draw_routes()
 

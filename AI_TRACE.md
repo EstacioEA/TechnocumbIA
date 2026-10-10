@@ -842,3 +842,16 @@
 - Pruebas: M06, K03, GameState, integración de partida, indicador de salida y carga del editor Godot 4.7.2 pasaron; `git diff --check` pasó.
 - Limitaciones: falta validar el flujo completo con seis peers en LAN mediante J05; no se creó commit automático.
 - Handoff: `docs/handoffs/2026-10-10-1248-Miguel-M06-pot-rescue-runtime.md`.
+
+## 2026-10-10 — Miguel Pabon: integración del juego y mapa visible
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: DEBUGGING / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: corregir la carga visual del mapa al iniciar una partida e integrar la escena jugable en `develop`.
+- Rama: `develop`.
+- Archivos: `scenes/map/visuals/papoi_map_visuals.gd`, `scenes/map/visuals/papoi_map_visuals.tscn`, `tests/qa/gk01_map_visuals_test.gd`, `tests/game/integrated_game_visual_test.gd`, `docs/handoffs/2026-10-10-1305-Miguel-integrated-game-map-fix.md`.
+- Resumen: se reemplazó el dibujo implícito del fondo por un `Sprite2D` explícito de 1280×720, garantizando que el mapa se vea junto con las colisiones, jugadores, cámara, HUD, captura, vidas, Bestia, pasivas, cocción, rescate y escape.
+- Pruebas: `INTEGRATED_GAME_VISUAL_TEST`, `GK01_MAP_VISUALS_TEST`, `GAME_INTEGRATION_TEST`, carga de Godot 4.7.2 y `git diff --check` pasaron.
+- Limitaciones: falta la validación LAN completa de seis peers; Godot dejó cambios locales de caché/importación y existe un warning preexistente de mayúsculas en el recurso de Bestia.
+- Handoff: `docs/handoffs/2026-10-10-1305-Miguel-integrated-game-map-fix.md`.

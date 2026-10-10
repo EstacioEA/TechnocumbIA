@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/map/visuals/papoi_map_visuals.gd" id="1_visuals"]
+[ext_resource type="Texture2D" path="res://assets/maps/Mapa Base.jpeg" id="2_map_texture"]
 
 [node name="PapoiMapVisuals" type="Node2D"]
 script = ExtResource("1_visuals")
+
+[node name="MapBackground" type="Sprite2D" parent="."]
+texture = ExtResource("2_map_texture")
+position = Vector2(640, 360)
+scale = Vector2(0.8, 0.8)
+z_index = -1
