@@ -805,3 +805,14 @@
 - Pruebas: Godot 4.7.2 headless — `game_state_test.gd` PASS (incluye un atacante suficiente, rechazo de defensor/fase/duplicados, alternancia, máximo de cinco rondas y cierre a tres); `ge03_phase_timers_test.gd` PASS; `tc04_role_snapshot_hud_test.gd` PASS; `ge05_result_hierarchy_test.gd` PASS; `game_integration_test.gd` PASS; `run_ready_start_test.ps1` PASS con host + cinco clientes; editor scan headless PASS; `git diff --check` PASS. Las pruebas de integración y red presentan un warning existente de sensibilidad a mayúsculas en el import del sprite de Bestia.
 - Limitaciones: M06 aún debe retirar el contador paralelo de 30 s en `PapoiCookingEscape`, permitir cruce de cualquier atacante con posición host-side e invocar `GameState.register_escape(peer_id)`. La integración de esos cambios y la prueba visual/manual de partida no se afirman como realizadas. Los metadatos/cachés regenerados por Godot se restauraron porque el árbol estaba limpio antes de las pruebas. Sin commit ni push.
 - Handoff: `docs/handoffs/2026-10-10-1222-Edwar-E05-pot-escape-state-score.md`.
+## 2026-10-10 — V06 indicador de salida y recorrido atacante
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: V06 — indicador visual de salida y recorrido de atacante.
+- Rama: `Valeria_Piza/escape-exit-indicator`, basada en `origin/develop` actualizado (`fd50357`).
+- Archivos: `scripts/map/escape_exit_indicator.gd`, `scenes/map/escape_exit_indicator.tscn`, `tests/map/escape_exit_indicator_test.gd`, `tests/player/v06_escape_route_test.gd`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/handoffs/2026-10-10-1215-V06-escape-exit-indicator.md`.
+- Resumen: se añadió un indicador visual cerrado/activo con etiqueta e icono y API `set_escape_available(bool)`. La actualización es idempotente y no agrega colisiones, timers ni autoridad. La prueba conserva intactas las zonas existentes y verifica checkpoints de recorrido WASD hacia la olla y la salida.
+- Pruebas: `V06_ESCAPE_EXIT_INDICATOR_TEST`, `V06_ESCAPE_ROUTE_TEST` y carga del editor Godot 4.7.2 pasaron; `git diff --check` pendiente antes del commit.
+- Limitaciones: el recorrido automatizado valida acciones y conectividad geométrica por checkpoints; la prueba manual interactiva con WASD sigue siendo necesaria para validar sensación visual.
+- Handoff: `docs/handoffs/2026-10-10-1215-V06-escape-exit-indicator.md`.

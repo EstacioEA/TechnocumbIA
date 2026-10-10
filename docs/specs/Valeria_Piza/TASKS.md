@@ -63,7 +63,7 @@
 - Evidencia requerida: preview de seis jugadores, prueba de instanciación y handoff con procedencia de sprites.
 
 ## V06 — Indicador de salida y recorrido de atacante
-- Estado: READY; puede avanzar en paralelo con E05-A.
+- Estado: DONE; puede avanzar en paralelo con E05-A.
 - Depende de: zonas existentes de K01/K02/K06 y contrato visual `set_escape_available(bool)` de `docs/specs/POT_ESCAPE_RUNTIME.md`.
 - Rama sugerida: `Valeria_Piza/escape-exit-indicator`.
 - Archivos: `scenes/map/escape_exit_indicator.tscn` (nuevo), `scripts/map/escape_exit_indicator.gd` (nuevo), `tests/map/escape_exit_indicator_test.gd` (nuevo) y pruebas de recorrido bajo `tests/player/`.
