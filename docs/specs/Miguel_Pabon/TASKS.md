@@ -65,3 +65,12 @@
 - Aceptación: cada rol tiene al menos un caso positivo y uno de rechazo/limitación; los cooldowns, vidas, captura, rescate y enfurecimiento no se confunden entre roles; el host valida las acciones.
 - Evidencia requerida: matriz de roles, pruebas automatizadas y handoff con diferencias observadas y bloqueos.
 - Evidencia: `tests/combat/test_role_differences_verification.gd`; `docs/handoffs/2026-10-10-0733-TC03-role-differences-verification.md`.
+
+## M06 — Depósito de Papa y rescate de Bestia en runtime
+- Estado: READY tras congelar E05-A; M02/M04 y K02/K03 son dependencias DONE a nivel de componente, no aceptación de la ruta LAN completa.
+- Depende de: E05-A, V06 API de salida, M02, M04, K02/K03.
+- Rama sugerida: `Miguel_Pabon/pot-rescue-runtime`.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `scripts/game/papoi_game_session.gd`, `scripts/combat/beast_access_state.gd` solo si se justifica; test runtime bajo `tests/game/` o `tests/combat/`.
+- Integrar E/`papoi_interact` para que el portador de Papa la deposite dentro de `POT_ZONE`, dejar a Papa en olla y liberar al portador. Integrar rescate contextual con la misma interacción: Bestia válida y aparecida, dentro de distancia existente; el host cancela y reinicia a ACTIVE. Consumir la transición/timer único de GameState y activar el indicador V06 solo al entrar en ESCAPE. Cada ataque a escape usa posición de player host-side.
+- No duplicar reloj, fases ni marcador; no recibir autoridad/posición por payload cliente; no mover geometría del mapa.
+- Aceptación: pruebas positivas/negativas para interacción, rol, fase, portador y proximidad; rescate no deja timer/estado residual; seis peers renderizan el mismo resultado del host.

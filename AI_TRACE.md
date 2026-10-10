@@ -764,3 +764,31 @@
 - Pruebas: no se ejecutaron pruebas de juego; `git diff --check` PASS. Se verificó lectura del runtime de sesión/lobby como fuente documental.
 - Limitaciones: TC02 sigue pendiente de evidencia de colisiones y rutas; TC05 no se cierra hasta resolverlo, repetir los runners y completar el recorrido visual runtime. Cambios locales de imports/cachés observados durante la tarea quedaron intactos. Sin commit ni push.
 - Handoff: `docs/handoffs/2026-10-10-1050-Juan-doc-consistency.md`.
+
+## 2026-10-10 — Descomposición runtime de olla y escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: DESIGN / DOCUMENTATION
+- Tarea: revisar las specs/código de olla, rescate y escape y repartir el cierre de integración runtime entre Juan, Valeria, Miguel y Edwar.
+- Rama: `develop`, actualizada fast-forward a `23fd0a7` antes de editar.
+- Archivos: `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/TASK_BOARD.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1202-Edwar-pot-escape-task-breakdown.md`, `AI_TRACE.md`.
+- Resumen: se asignaron E05-A/B (estado/timer/HUD y marcador), V06 (indicador de salida/recorrido), M06 (depósito/rescate/integración) y J05 (test LAN vertical). Se conservaron K02/K03/M02/M04 como componentes previos DONE, aclarando que no equivalen a aceptación del flujo LAN integrado.
+- Hallazgos: el repo tiene reloj de olla a 30s en GameState y PapoiCookingEscape; hay doble contador; el escape actual valida solo al portador y concede resolución de ronda desde un único cruce. La petición nueva requiere 20s, escape por atacante e indicador de activación.
+- Decisión pendiente: “un punto por atacante escapado” puede contradecir el mejor-de-cinco, primero a tres puntos. E05-B/J05 score quedaron bloqueadas hasta que el equipo defina escapes parciales y cierre de ronda.
+- Pruebas: no se ejecutaron pruebas porque el cambio es solo documental. `git diff --check` PASS; `develop` estaba limpio antes de editar y quedó al día con `origin/develop`. Capturas previas de `error/` se preservaron y no se tocaron.
+- Limitaciones: no se implementó gameplay ni se afirma que el flujo haya sido validado en runtime; la integración y prueba multiinstancia siguen pendientes.
+- Handoff: `docs/handoffs/2026-10-10-1202-Edwar-pot-escape-task-breakdown.md`.
+
+## 2026-10-10 — decisión de puntuación olla/escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: DESIGN / DOCUMENTATION
+- Tarea: actualizar la spec de integración tras la confirmación de que un escape basta para ganar la ronda y el equipo recibe un solo punto.
+- Rama: `develop`.
+- Archivos: `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/TASK_BOARD.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`, `AI_TRACE.md`.
+- Resumen: el primer atacante que cruza la salida activa resuelve la ronda; se suma exactamente un punto al equipo atacante, sin requerir que escape todo el equipo. La partida sigue al mejor de cinco y termina a 3 puntos. E05-B y J05 se marcan READY; se elimina la necesidad de serializar una lista de atacantes escapados.
+- Pruebas: `git diff --check` ejecutado tras la edición; resultados registrados en el handoff.
+- Limitaciones: actualización documental solamente; no se modificó gameplay ni se ejecutaron pruebas de Godot.
+- Handoff: `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`.

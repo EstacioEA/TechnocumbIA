@@ -75,3 +75,19 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: cada jugador muestra contexto coherente con su rol; cooldown listo/bloqueado y tiempo recibido son distinguibles; una ausencia o dato inválido se muestra explícitamente sin fallback engañoso.
 - Evidencia requerida: prueba de snapshot/HUD, preview rotulado y handoff de interfaces revisadas.
 - Evidencia: `tests/ui/tc04_role_snapshot_hud_test.gd`; preview interactiva rotulada `scenes/ui/tc04_role_state_preview.tscn` y captura `docs/handoffs/evidence/tc04/tc04-role-state-1280x720.png`; handoff de interfaces en `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`.
+
+## E05-A — Reloj y contrato autoritativo de olla/escape
+- Estado: READY.
+- Depende de: E01–E04.
+- Rama sugerida: `Edwar_Estacio/pot-escape-state`.
+- Archivos: `scripts/shared/game_rules.gd` (nuevo), `scripts/game/game_state.gd`, `scripts/game/match_state.gd`, `scripts/ui/papoi_hud.gd`, `tests/game/`, `tests/ui/`.
+- Crear una única duración compartida de olla de 20 s, estado serializable de disponibilidad de salida y barra HUD read-only del snapshot. `GameState.phase_time_remaining` es el único reloj; no mantener un timer paralelo en HUD ni en `PapoiCookingEscape`.
+- Aceptación: estado host pasa POT_COOKING→ESCAPE al llegar el reloj a cero; rescate cancela antes de cero; snapshot round-trip/validación cubre campos nuevos; clientes no cambian autoridad; HUD refleja tiempo y salida sin calcular reglas.
+
+## E05-B — Marcador y resultado según escape confirmado
+- Estado: READY; decisión confirmada el 2026-10-10 en `docs/specs/POT_ESCAPE_RUNTIME.md`.
+- Regla: el primer atacante que cruza la salida activa resuelve la ronda y otorga exactamente un punto al equipo; no es necesario que escape todo el equipo. La partida al mejor de cinco termina al alcanzar 3 puntos.
+- Depende de: E05-A.
+- Rama sugerida: `Edwar_Estacio/escape-scoring`.
+- Archivos: `scripts/game/game_state.gd`, `scripts/game/match_state.gd`, `tests/game/`, HUD solo para renderizar el resultado recibido.
+- Validar cruce solo en fase `ESCAPE`, rechazo de defensores y cruces duplicados/posteriores, una sola suma por ronda, alternancia de equipos y cierre al llegar a 3.

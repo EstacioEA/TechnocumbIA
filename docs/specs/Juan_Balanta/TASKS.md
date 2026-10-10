@@ -86,3 +86,11 @@
 - Discrepancia del runner de inicio (seguimiento: Juan/Edwar): seis procesos llegaron a GAME_SESSION_READY, pero la reejecución 10:41 falló al comprobar el código vacío de client1; Edwar había documentado tres PASS previos. Aún no se ha determinado si es teardown o salida del proceso.
 - Revalidación del runner de desconexión (seguimiento: Juan): la fase de lobby expiró esperando seventh-rejected; por eso esa ejecución no probó la desconexión durante partida. J04 conserva su PASS histórico separado.
 - Cierre requerido: evidencia de TC02 integrada; runners repetibles; recorrido visual de seis peers y matriz completa a 1280×720, 1600×900 y 1920×1080, separando previews de runtime.
+
+## J05 — Prueba LAN vertical de olla y escape
+- Estado: READY tras M06/V06/E05-B.
+- Depende de: J01–J04, E05-A, M06 y V06.
+- Rama sugerida: `Juan_Balanta/lan-pot-escape-test`.
+- Archivos: `tests/network/`, runner PowerShell, handoff y `AI_TRACE.md`.
+- Crear runner reproducible host + cinco clientes con logs por proceso, timeout, limpieza ordenada y uso de acciones/RPC normales. Validar en los seis peers: lobby_start, inicio autoritativo, snapshot POT_COOKING y progreso, cancelación por rescate, un segundo intento que completa, ESCAPE activo, primer cruce válido, ROUND_RESULT y marcador incrementado una vez. No escribir snapshot/posición/phase directamente desde el cliente ni alterar scripts de producción.
+- Aceptación: tres ejecuciones loopback PASS sin errores; snapshots coherentes para seis peers; un solo punto por ronda y cierre al llegar a tres; preparar pasos separados de LAN física.
