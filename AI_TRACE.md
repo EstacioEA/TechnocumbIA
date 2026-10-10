@@ -596,3 +596,14 @@
 - Resumen: Valeria recibe avatares con sprites; Krystal, límites, pasillos y zonas; Miguel, verificación funcional de roles/pasivas; Edwar, contrato visible de snapshots/HUD; Juan, integración y QA final. Los recuadros, títulos y estados quedan restringidos a previews, mientras el gameplay normal usa el mapa limpio.
 - Pruebas: `GK04_CONTRAST_EVIDENCE_TEST`, `K01_MAP_TEST`, `GK03_POT_BARRIER_VISUALS_TEST` y `TC02_CLEAN_MAP_TEST` pasan; los overlays debug quedan ocultos por defecto y solo se activan explícitamente en previews.
 - Limitaciones: TC01–TC05 aún no están implementadas; no se creó commit ni push.
+
+## 2026-10-10 — checkpoint GINT y revalidación QA de Juan
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: iniciar GINT (integración/QA visual) y determinar si TC05 puede cerrarse según sus dependencias actuales.
+- Rama: `Juan_Balanta/turn-c-remediation-qa`, basada en `develop` (`ff38375`).
+- Archivos: `docs/specs/graphics/GINT.md`, `docs/specs/Juan_Balanta/TASKS.md`, `tests/qa/p0_lan_3v3_matrix.md` (addendum de revalidación), `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
+- Resumen: 22 suites de mapas, jugadores, roles y HUD pasan; flujo menú-host-cliente y lobby presentation pasan; lobby de seis slots/rechazo/desconexión pasa. La prueba de desconexión durante partida ahora alcanza invalidación autoritativa y entrega resultado a un cliente, pero termina FAIL por getters/RPC en clientes que siguen procesando tras cerrar el peer. Se documentó sin cambiar código del juego.
+- Limitaciones: GINT queda IN_PROGRESS por el fallo de teardown y falta de evidencia 1920×1080/recorrido runtime completo. TC01–TC04 están todavía TODO en los specs responsables, por lo que TC05 queda bloqueada. No se sobrescribieron capturas ni se modificaron sus módulos.
+- Handoff: `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
+- Siguiente paso: asignar/corregir el teardown de desconexión; esperar TC01–TC04; completar 1920×1080 y retomar GINT/TC05.

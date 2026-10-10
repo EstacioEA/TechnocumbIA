@@ -32,3 +32,11 @@ Rama de ejecución: `Krystal_Giraldo/qa-matrix`
 - **P0 bloqueante:** corregir el cierre del proceso rechazado en `tests/network/lobby_slots_test.gd` o su runner; mientras tanto P0-12 no tiene evidencia multiinstancia completa.
 - **P0 de integración:** conectar en el host `set_papa_in_pot`, `start_cooking`, `rescue_by_beast`, `apply_cooking_result` y `mark_escape_reached`.
 - **P1:** la dirección exacta del arte oficial del mapa y su licencia no están confirmadas; no se afirma autorización legal.
+
+## Revalidación — 2026-10-10, `Juan_Balanta/turn-c-remediation-qa`
+
+Esta ejecución actualiza el resultado observado desde el estado integrado; conserva arriba el registro original de K05.
+
+- `run_lobby_slots_test.ps1`: PASS. El pre-match completa seis jugadores, rechazo del séptimo, desconexión y actualización del roster. El fallo original del runner no se reprodujo.
+- `run_disconnect_match_test.ps1`: FAIL en teardown. El host confirma `DISCONNECT_HOST_MATCH_INVALIDATED` y un cliente recibe resultado; después, los clientes aún activos reportan llamadas a `get_unique_id()` y RPC con el peer cerrado. Backtrace en `scripts/game/papoi_game_session.gd` (`_process`, `_physics_process`, `_on_player_movement_intent`, `_on_peer_left`).
+- Acción sugerida: guardear/desactivar el procesamiento y los intents de movimiento al terminar la sesión de red, y repetir `run_disconnect_match_test.ps1`. Responsable por asignar; esta revalidación no modifica el módulo de juego.

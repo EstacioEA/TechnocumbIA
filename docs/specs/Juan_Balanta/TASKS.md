@@ -70,13 +70,15 @@
 
 ## GINT — Integración visual por relevos (Juan + Edwar)
 - Spec: `docs/specs/graphics/GINT.md`.
-- Estado: TODO; subtareas GINT01–GINT03.
+- Estado: IN_PROGRESS; checkpoint y matriz en `docs/specs/graphics/GINT.md`; handoff `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
 - Dependencias: GJ01–GJ05, GE01–GE06, GV01–GV03, GK01–GK04 y GM01–GM04.
 - GINT01 ensambla/recorre; GINT02 completa matriz y resoluciones; GINT03 deja capturas y handoff.
+- Bloqueo actual: flujo runtime de desconexión deja errores multiplayer en clientes; falta evidencia 1920×1080 y las integraciones TC01–TC04.
 
 ## TC05 — Integración y QA final de remediaciones
-- Estado: TODO; depende de: TC01–TC04.
+- Estado: TODO — bloqueada por TC01–TC04, que aún aparecen TODO en los specs de Valeria, Krystal, Miguel y Edwar. No se modificaron sus tareas ni sus módulos.
 - Rama sugerida: `Juan_Balanta/turn-c-remediation-qa`.
 - Recorrer el flujo con seis jugadores y comprobar sprites, límites, pasillos, zonas, roles, pasivas, HUD y overlay en la integración real.
 - Aceptación: matriz `PASS/FAIL/BLOCKED` con evidencia a 1280×720, 1600×900 y 1920×1080; ningún recuadro/título de debug aparece en gameplay normal; los defectos tienen responsable y siguiente acción.
 - Evidencia requerida: handoff final y actualización de `docs/specs/graphics/GINT.md`.
+- Requiere reanudar cuando TC01–TC04 tengan implementación y evidencia integradas; ver hallazgo P0-12 en el handoff GINT.
