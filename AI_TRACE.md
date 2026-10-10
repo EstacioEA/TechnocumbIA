@@ -617,6 +617,7 @@
 - Resumen: se añadió una matriz con casos positivos y rechazos para cada rol/pasiva, además de comprobaciones de host, vidas, cooldowns, captura, acceso de Bestia y enfurecimiento.
 - Limitaciones: la identificación final de Bestia y la aplicación física de multiplicadores aún requieren integración con GameState y el sistema de impactos; no se ejecutó LAN de seis clientes.
 
+<<<<<<< HEAD
 ## 2026-10-10 - Juan Diego Balanta: cierre seguro de sesion multiplayer
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Juan Diego Balanta
@@ -650,3 +651,15 @@
 - Pruebas: TC04_ROLE_SNAPSHOT_HUD_TEST (incluida validación/serialización MatchState), GE04_ROLE_COOLDOWN_HUD_TEST, GAME_INTEGRATION_TEST, editor scan de Godot 4.7.2 y `git diff --check` pasaron.
 - Limitaciones: los productores de cooldown de habilidades para todos los roles no están conectados al snapshot runtime; donde no hay fuente host se conserva `sin datos`. Sin LAN de seis equipos ni nueva captura runtime; preview GE04 revisado es simulado.
 - Handoff: `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`.
+=======
+## 2026-10-10 — Preview interactivo de TC03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: crear un preview manual para probar las diferencias de roles, pasivas, Papa, vidas, Bestia, cooldowns y autoridad host.
+- Rama: `Miguel_Pabon/role-differences-preview`, basada en `Miguel_Pabon/role-differences-verification`.
+- Archivos: `scripts/ui/role_differences_preview.gd`, `scenes/ui/role_differences_preview.tscn`, `tests/ui/role_differences_preview_test.gd`, `docs/handoffs/2026-10-10-0822-TC03-role-differences-preview.md`.
+- Resumen: se añadió una escena interactiva con seis pestañas y botones para ejecutar acciones positivas y rechazos usando los módulos reales, sin modificar la partida principal ni la red.
+- Pruebas: `ROLE_DIFFERENCES_PREVIEW_TEST: PASS — 6 interactive tabs`; `git diff --check` pasó.
+- Limitaciones: es una simulación local para revisión manual, no una partida LAN de seis clientes.
+>>>>>>> 41c48f31a51b575d10e6d97b3713ba27f66c16ae
