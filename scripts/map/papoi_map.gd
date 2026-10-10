@@ -10,7 +10,8 @@ const DEFENDER_BASE := Vector2(1140.0, 600.0)
 const POT_ROOM_CENTER := Vector2(1000.0, 112.0)
 const TOWER_KEY_SPAWN := Vector2(620.0, 330.0)
 const BEAST_GATE_POSITION := Vector2(920.0, 220.0)
-const BEAST_GATE_ACCESS_POSITION := Vector2(920.0, 270.0)
+const BEAST_GATE_ACCESS_ZONE := Rect2(970.0, 178.0, 114.0, 90.0)
+const BEAST_GATE_APPROACH_ZONE := Rect2(858.0, 258.0, 122.0, 82.0)
 const ATTACKER_SPAWNS := [
 	Vector2(160.0, 340.0),
 	Vector2(160.0, 400.0),
@@ -72,8 +73,8 @@ const TORRE_WALLS := [
 	Rect2(880.0, 16.0, 288.0, 12.0),
 	Rect2(880.0, 16.0, 12.0, 224.0),
 	Rect2(1156.0, 16.0, 12.0, 224.0),
-	Rect2(880.0, 228.0, 30.0, 12.0),
-	Rect2(930.0, 228.0, 238.0, 12.0),
+	Rect2(880.0, 228.0, 20.0, 12.0),
+	Rect2(960.0, 228.0, 208.0, 12.0),
 ]
 
 var _beast_gate_open := false
@@ -141,8 +142,9 @@ func is_beast_gate_open() -> bool:
 func get_beast_gate_position() -> Vector2:
 	return to_global(BEAST_GATE_POSITION)
 
-func get_beast_gate_access_position() -> Vector2:
-	return to_global(BEAST_GATE_ACCESS_POSITION)
+func is_position_in_beast_gate_access(position: Vector2) -> bool:
+	var local_position := to_local(position)
+	return BEAST_GATE_ACCESS_ZONE.has_point(local_position) or BEAST_GATE_APPROACH_ZONE.has_point(local_position)
 
 func set_debug_overlay_visible(enabled: bool) -> void:
 	_show_debug_overlay = enabled
@@ -245,6 +247,8 @@ func _create_zone(zone_name: String, rectangle: Rect2) -> void:
 	_zones[zone_name] = area
 
 func _draw() -> void:
+	draw_rect(BEAST_GATE_ACCESS_ZONE, Color("#f0c674", 0.22), true)
+	draw_rect(BEAST_GATE_ACCESS_ZONE, Color("#f0c674", 0.75), false, 2.0)
 	if not _show_debug_overlay:
 		return
 	draw_rect(CAPTURE_ZONE, Color("#813f58", 0.25), true)

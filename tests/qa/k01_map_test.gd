@@ -14,6 +14,7 @@ func _init() -> void:
 	await process_frame
 
 	_assert_map_structure(map)
+	_assert_gate_access_zone(map)
 	await physics_frame
 	_assert_boundary_collision(map)
 	_assert_gate_collision(map)
@@ -47,21 +48,49 @@ func _assert_boundary_collision(map: PapoiMap) -> void:
 	body.queue_free()
 
 func _assert_gate_collision(map: PapoiMap) -> void:
-	var body := _create_probe(Vector2(880.0, 220.0))
+	var body := _create_probe(Vector2(908.0, 200.0))
 	map.add_child(body)
 	var collision := body.move_and_collide(Vector2(100.0, 0.0))
 	if collision == null:
 		_fail("closed Beast gate did not block probe movement")
 	if map.is_beast_gate_open():
 		_fail("Beast gate must start closed")
-	body.queue_free()
 
-func _create_probe(position: Vector2) -> CharacterBody2D:
+	if not map.set_beast_gate_open(true, true):
+		_fail("host could not open Beast gate for passage test")
+		body.queue_free()
+		return
+	var open_collision := body.move_and_collide(Vector2(100.0, 0.0))
+	if open_collision != null:
+		_fail("open Beast gate still blocks passage")
+	map.set_beast_gate_open(false, true)
+
+	if not map.set_beast_gate_open(true, true):
+		_fail("host could not reopen Beast gate for player-size passage test")
+		return
+	var player_shape := body.get_child(0).shape as CircleShape2D
+	player_shape.radius = 18.0
+	body.position = Vector2(911.0, 200.0)
+	var player_size_collision := body.move_and_collide(Vector2(60.0, 0.0))
+	if player_size_collision != null:
+		_fail("open Beast gate does not fit the player collision radius")
+	body.queue_free()
+	map.set_beast_gate_open(false, true)
+
+func _assert_gate_access_zone(map: PapoiMap) -> void:
+	if not map.is_position_in_beast_gate_access(Vector2(1002.0, 180.0)):
+		_fail("gate access zone does not include the upper approach corridor")
+	if not map.is_position_in_beast_gate_access(Vector2(1082.0, 266.0)):
+		_fail("gate access zone does not include the full upper approach corridor")
+	if not map.is_position_in_beast_gate_access(Vector2(900.0, 300.0)):
+		_fail("gate approach zone does not include the exterior corridor")
+
+func _create_probe(position: Vector2, radius: float = 8.0) -> CharacterBody2D:
 	var body := CharacterBody2D.new()
 	body.position = position
 	var collision := CollisionShape2D.new()
 	var shape := CircleShape2D.new()
-	shape.radius = 8.0
+	shape.radius = radius
 	collision.shape = shape
 	body.add_child(collision)
 	return body
