@@ -650,3 +650,16 @@
 - Pruebas: TC04_ROLE_SNAPSHOT_HUD_TEST (incluida validación/serialización MatchState), GE04_ROLE_COOLDOWN_HUD_TEST, GAME_INTEGRATION_TEST, editor scan de Godot 4.7.2 y `git diff --check` pasaron.
 - Limitaciones: los productores de cooldown de habilidades para todos los roles no están conectados al snapshot runtime; donde no hay fuente host se conserva `sin datos`. Sin LAN de seis equipos ni nueva captura runtime; preview GE04 revisado es simulado.
 - Handoff: `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`.
+
+## 2026-10-10 - Edwar Estacio: preview interactiva TC04
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DESIGN / DOCUMENTATION
+- Tarea: crear una preview local para inspeccionar el contrato HUD de TC04 en los seis roles.
+- Rama: `develop` local, base `de552bb`; trabajo deliberadamente sin commit. Al revisar el remoto, `origin/develop` tenía tres commits pendientes, incluyendo el preview independiente TC03; no se incorporaron.
+- Archivos: `scripts/ui/tc04_role_state_preview.gd`, `scenes/ui/tc04_role_state_preview.tscn`, `docs/handoffs/evidence/tc04/tc04-role-state-1280x720.png`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0834-TC04-role-state-preview.md`, `AI_TRACE.md`.
+- Resumen: se añadió una escena interactiva con seis perfiles seleccionables por botones o teclas 1–6, rotulada como preview simulada. Incluye ejemplos de cooldown listo, bloqueado con tiempo y sin datos; F12 guarda la vista actual. Captura generada a 1280×720.
+- Verificación: Godot 4.7.2 gráfico abrió la escena y escribió la captura; la imagen se revisó visualmente.
+- Limitaciones: ejemplos simulados, sin LAN ni snapshot de host en vivo. No se creó commit.
+- Handoff: `docs/handoffs/2026-10-10-0834-TC04-role-state-preview.md`.

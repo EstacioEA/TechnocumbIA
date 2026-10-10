@@ -74,4 +74,4 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Verificar que el snapshot autoritativo entregue al HUD el rol, la pasiva y los cooldowns recibidos para los seis roles, sin que la UI recalcule reglas.
 - Aceptación: cada jugador muestra contexto coherente con su rol; cooldown listo/bloqueado y tiempo recibido son distinguibles; una ausencia o dato inválido se muestra explícitamente sin fallback engañoso.
 - Evidencia requerida: prueba de snapshot/HUD, preview rotulado y handoff de interfaces revisadas.
-- Evidencia: `tests/ui/tc04_role_snapshot_hud_test.gd`; preview rotulado GE04 en `docs/handoffs/GE04-hud-cooldowns-1280x720.png`; interfaces revisadas en `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`.
+- Evidencia: `tests/ui/tc04_role_snapshot_hud_test.gd`; preview interactiva rotulada `scenes/ui/tc04_role_state_preview.tscn` y captura `docs/handoffs/evidence/tc04/tc04-role-state-1280x720.png`; handoff de interfaces en `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`.
