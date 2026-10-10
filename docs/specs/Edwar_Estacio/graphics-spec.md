@@ -35,7 +35,8 @@ Edwar mantiene sus archivos de Theme/HUD separados de los archivos de menú/lobb
 - Aceptación: ROUND_RESULT y MATCH_RESULT tienen encabezado y jerarquía distintos y muestran datos proporcionados por GameState; no calculan ganador.
 
 ### GE06 — Preview y escalado
-- Estado: TODO; depende de: GE01–GE05.
+- Estado: DONE — preview etiquetada de ACTIVE, POT_COOKING, ESCAPE, ROUND_RESULT y MATCH_RESULT; 10 capturas (1280×720 y 1600×900) generadas y revisadas; prueba de límites/texto PASS.
+- Depende de: GE01–GE05.
 - Archivos: `tests/ui/`, handoff y `AI_TRACE.md`.
 - Aceptación: previews etiquetados de cinco fases/resultados; captura en 1280×720 y 1600×900; no hay texto recortado. Separar pruebas de preview y runtime en el handoff.
 

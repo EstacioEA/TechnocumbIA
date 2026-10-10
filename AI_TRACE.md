@@ -483,3 +483,16 @@
 - Limitaciones: capturas de preview usan snapshots simulados y no constituyen una partida real; no se probó 1600×900. No se creó commit ni se hizo push.
 - Handoff: `docs/handoffs/2026-10-10-0431-GE05-result-hierarchy.md`.
 - Siguiente paso: GE06 — revisar previews/escalado en cinco estados a 1280×720 y 1600×900, separando evidencia simulada de pruebas runtime.
+
+## 2026-10-10 — GE06 preview y escalado del HUD
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tarea: verificar cinco estados del HUD en 1280×720 y 1600×900, registrar evidencia simulada y revisar recortes.
+- Rama: `Edwar_Estacio/hud-preview-scaling`, creada desde `develop` actualizado; sin commit automático.
+- Archivos: `tests/ui/ge06_hud_preview_test.gd`, specs de Edwar, este registro, `docs/handoffs/2026-10-10-0437-GE06-preview-scaling.md` y diez capturas en `docs/handoffs/evidence/ge06/{1280x720,1600x900}/`.
+- Resumen: el test genera previews rotuladas ACTIVE, POT_COOKING, ESCAPE, ROUND_RESULT y MATCH_RESULT a ambas resoluciones; verifica tamaño de imagen, límites del HUD y ancho mínimo de labels sin wrap. Las diez imágenes se inspeccionaron visualmente.
+- Pruebas preview: Godot 4.7.2 gráfico `tests/ui/ge06_hud_preview_test.gd` PASS — 5 estados × 2 resoluciones, sin fallas geométricas.
+- Pruebas runtime/headless: Godot editor scan PASS; GE03, GE04, GE05, K04 e integración PASS; estos tests aplican snapshots/casos en Godot y no representan una partida LAN física.
+- Limitaciones: el panel HUD escala con `canvas_items`; no se revisó 1920×1080. Las previews emplean snapshots simulados y están rotuladas. No se creó commit ni se hizo push.
+- Handoff: `docs/handoffs/2026-10-10-0437-GE06-preview-scaling.md`.
+- Siguiente paso: GE01–GE06 del turno gráfico de Edwar están completas; revisar la matriz GINT junto con los entregables de Juan, Valeria, Krystal y Miguel.

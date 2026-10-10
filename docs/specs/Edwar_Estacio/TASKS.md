@@ -63,5 +63,6 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: ROUND_RESULT distinto a MATCH_RESULT; muestra resultado recibido sin calcular reglas.
 
 ### GE06 — Preview y tamaños
-- Estado: TODO; depende de: GE01–GE05.
+- Estado: DONE — cinco estados etiquetados capturados en 1280×720 y 1600×900; verificación geométrica de labels y revisión visual PASS; handoff separa preview simulada de pruebas runtime.
+- Depende de: GE01–GE05.
 - Aceptación: previews rotulados; capturas a 1280×720/1600×900; handoff separa comprobaciones reales y simuladas.
