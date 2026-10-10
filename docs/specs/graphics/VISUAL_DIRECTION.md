@@ -19,6 +19,14 @@
 - Controles con estados normal/hover/pressed/disabled y foco de teclado visible. Usar fuente incluida con Godot hasta que el equipo aporte una aprobada.
 - No comunicar roles/equipos solo mediante color. Usar también texto, icono o forma. Overlay nunca cubre HUD ni mensajes críticos.
 
+## HUD
+
+- Barra superior de 6–8 % de alto para fase/objetivo, temporizadores y marcador; fondo oscuro.
+- Panel compacto, sólido y alineado abajo a la izquierda para rol, pasiva, vidas y cooldowns, con márgenes de 2–3 %.
+- Resultados en modal central con overlay oscuro cercano al 60 %; HUD permanece por encima y legible.
+- Usar `Control`, anchors y containers para el layout, sin posiciones absolutas.
+- Si no hay dato de cooldown, mostrar `sin datos`. El HUD solo presenta la señal/datos recibidos y no calcula cooldowns. `TODO(GM01)`: Miguel debe confirmar publicación y formato (segundos, fracción o ticks); interfaz prevista `cooldown_changed(slot, remaining, total)`.
+
 ## Estados que deben tener representación inequívoca
 
 | Estado | Tratamiento visible |

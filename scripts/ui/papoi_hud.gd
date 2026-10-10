@@ -15,6 +15,8 @@ var objective_label: Label
 var status_label: Label
 var result_panel: PanelContainer
 var result_label: Label
+var result_overlay: ColorRect
+var status_panel: PanelContainer
 
 var _last_snapshot: Dictionary = {}
 
@@ -57,7 +59,10 @@ func apply_snapshot(snapshot: Dictionary) -> void:
 
 func apply_match_snapshot(snapshot: Dictionary) -> void:
 	_last_snapshot = snapshot.duplicate(true)
+	result_panel.visible = false
+	result_overlay.visible = false
 	var phase := int(snapshot.get("phase", GameEnums.GamePhase.LOBBY))
+	status_panel.visible = phase != GameEnums.GamePhase.ROUND_RESULT and phase != GameEnums.GamePhase.MATCH_RESULT
 	phase_label.text = "FASE: %s" % _phase_text(phase)
 	round_label.text = "RONDA: %s" % str(snapshot.get("round_number", "-"))
 	timer_label.text = "RONDA: %s | FASE: %s" % [
@@ -87,16 +92,21 @@ func set_player_context(lives: int, role: String, passive: String, cooldowns: Di
 	role_label.text = "ROL: %s" % role
 	passive_label.text = "PASIVA: %s" % passive
 	var cooldown_text := []
+	# TODO(GM01): confirmar fuente y unidades del cooldown; el HUD solo presenta datos recibidos.
 	for ability in cooldowns:
 		cooldown_text.append("%s %.1fs" % [ability, float(cooldowns[ability])])
-	cooldown_label.text = "COOLDOWNS: %s" % (", ".join(cooldown_text) if not cooldown_text.is_empty() else "listos")
+	cooldown_label.text = "COOLDOWNS: %s" % (
+		", ".join(cooldown_text) if not cooldown_text.is_empty() else "sin datos"
+	)
 
 func show_round_result(text: String) -> void:
 	status_label.text = "RESULTADO DE RONDA: %s" % text
+	status_panel.visible = false
 	_show_result("RESULTADO DE RONDA\n%s" % text)
 
 func show_match_result(text: String) -> void:
 	status_label.text = "RESULTADO DE PARTIDA: %s" % text
+	status_panel.visible = false
 	_show_result("RESULTADO DE PARTIDA\n%s" % text)
 
 func show_round_result_from_snapshot(snapshot: Dictionary) -> void:
@@ -120,37 +130,121 @@ func set_connection_status(connected: bool, message: String = "") -> void:
 		)
 
 func _build_view() -> void:
-	var panel := PanelContainer.new()
-	panel.position = Vector2(20.0, 20.0)
-	panel.size = Vector2(430.0, 210.0)
-	add_child(panel)
-	var content := VBoxContainer.new()
-	panel.add_child(content)
-	phase_label = _add_label(content)
-	round_label = _add_label(content)
-	timer_label = _add_label(content)
-	score_label = _add_label(content)
-	lives_label = _add_label(content)
-	role_label = _add_label(content)
-	passive_label = _add_label(content)
-	cooldown_label = _add_label(content)
-	objective_label = _add_label(content)
-	status_label = _add_label(content)
+	var ui_root := Control.new()
+	ui_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ui_root.theme = load("res://scenes/ui/papoi_theme.tres")
+	add_child(ui_root)
+
+	var margins := MarginContainer.new()
+	margins.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	margins.add_theme_constant_override("margin_left", 24)
+	margins.add_theme_constant_override("margin_top", 16)
+	margins.add_theme_constant_override("margin_right", 24)
+	margins.add_theme_constant_override("margin_bottom", 16)
+	ui_root.add_child(margins)
+
+	var layout := VBoxContainer.new()
+	layout.add_theme_constant_override("separation", 12)
+	margins.add_child(layout)
+
+	var top_bar := PanelContainer.new()
+	top_bar.custom_minimum_size.y = 56.0
+	_apply_compact_panel_margins(top_bar, 16.0, 5.0)
+	layout.add_child(top_bar)
+	var top_row := HBoxContainer.new()
+	top_row.add_theme_constant_override("separation", 20)
+	top_bar.add_child(top_row)
+
+	var phase_group := VBoxContainer.new()
+	phase_group.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	phase_group.add_theme_constant_override("separation", 2)
+	top_row.add_child(phase_group)
+	phase_label = _add_label(phase_group)
+	phase_label.add_theme_font_size_override("font_size", 20)
+	objective_label = _add_label(phase_group)
+	objective_label.add_theme_font_size_override("font_size", 14)
+
+	timer_label = _add_label(top_row)
+	round_label = _add_label(top_row)
+	score_label = _add_label(top_row)
+	timer_label.add_theme_font_size_override("font_size", 16)
+	round_label.add_theme_font_size_override("font_size", 16)
+	score_label.add_theme_font_size_override("font_size", 18)
+
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	layout.add_child(spacer)
+
+	var bottom_row := HBoxContainer.new()
+	bottom_row.add_theme_constant_override("separation", 16)
+	layout.add_child(bottom_row)
+
+	var player_panel := PanelContainer.new()
+	player_panel.custom_minimum_size.x = 340.0
+	_apply_compact_panel_margins(player_panel, 16.0, 12.0)
+	bottom_row.add_child(player_panel)
+	var player_context := VBoxContainer.new()
+	player_context.add_theme_constant_override("separation", 4)
+	player_panel.add_child(player_context)
+	lives_label = _add_label(player_context)
+	role_label = _add_label(player_context)
+	passive_label = _add_label(player_context)
+	cooldown_label = _add_label(player_context)
+
+	var bottom_spacer := Control.new()
+	bottom_spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bottom_row.add_child(bottom_spacer)
+
+	status_panel = PanelContainer.new()
+	status_panel.size_flags_horizontal = Control.SIZE_SHRINK_END
+	status_panel.size_flags_vertical = Control.SIZE_SHRINK_END
+	_apply_compact_panel_margins(status_panel, 16.0, 12.0)
+	bottom_row.add_child(status_panel)
+	status_label = _add_label(status_panel)
+	status_label.add_theme_font_size_override("font_size", 16)
+
 	set_player_context(0, "sin asignar", "sin asignar", {})
+
+	result_overlay = ColorRect.new()
+	result_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	result_overlay.color = ui_root.theme.get_color("ui_overlay", "PapoiTokens")
+	result_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	result_overlay.z_index = 10
+	result_overlay.visible = false
+	ui_root.add_child(result_overlay)
+
+	var result_center := CenterContainer.new()
+	result_center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	result_overlay.add_child(result_center)
 	result_panel = PanelContainer.new()
-	result_panel.position = Vector2(420.0, 260.0)
-	result_panel.size = Vector2(440.0, 160.0)
+	result_panel.custom_minimum_size = Vector2(520.0, 180.0)
+	_apply_compact_panel_margins(result_panel, 28.0, 24.0)
 	result_panel.visible = false
-	add_child(result_panel)
+	result_center.add_child(result_panel)
 	result_label = Label.new()
 	result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	result_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	result_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	result_label.add_theme_font_size_override("font_size", 24)
 	result_panel.add_child(result_label)
+
+	# El modal oscurece el mundo; el HUD queda arriba y sigue legible.
+	margins.z_index = 20
 
 func _add_label(parent: Node) -> Label:
 	var label := Label.new()
 	parent.add_child(label)
 	return label
+
+func _apply_compact_panel_margins(panel: PanelContainer, horizontal: float, vertical: float) -> void:
+	panel.theme = load("res://scenes/ui/papoi_theme.tres")
+	var panel_style := panel.get_theme_stylebox("panel", "PanelContainer").duplicate() as StyleBoxFlat
+	panel_style.content_margin_left = horizontal
+	panel_style.content_margin_right = horizontal
+	panel_style.content_margin_top = vertical
+	panel_style.content_margin_bottom = vertical
+	panel.add_theme_stylebox_override("panel", panel_style)
 
 func _format_seconds(seconds: float) -> String:
 	var total := maxi(0, ceili(seconds))
@@ -237,6 +331,7 @@ func _objective_for_phase(phase: int, papa_state: int) -> String:
 
 func _show_result(text: String) -> void:
 	result_label.text = text
+	result_overlay.visible = true
 	result_panel.visible = true
 
 const _FORMAT_COOKING := "cociendo"

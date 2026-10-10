@@ -42,7 +42,9 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: Theme con estados normal/hover/pressed/disabled, foco y colores provisionales; preview observable.
 
 ### GE02 — Jerarquía del HUD
-- Estado: TODO; depende de: GE01.
+- Estado: DONE — K04 PASS y capturas revisadas a 1280×720; overlay de resultado conserva el HUD visible.
+- Depende de: GE01.
+- Archivos: `scenes/ui/papoi_hud.tscn`, `scripts/ui/papoi_hud.gd` solo presentación, `scenes/ui/papoi_hud_preview.tscn`, `scripts/ui/papoi_hud_preview.gd` y captura de handoff.
 - Aceptación: fase/objetivo, tiempos, marcador, vidas y contexto agrupados; HUD sobre overlay; captura 1280×720.
 
 ### GE03 — Fases y temporizadores

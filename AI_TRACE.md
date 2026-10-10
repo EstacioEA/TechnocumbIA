@@ -386,6 +386,17 @@
 - Pruebas: Godot 4.7.2 `--headless --path . --editor --quit` PASS; carga `res://scenes/ui/papoi_theme_preview.tscn` con `--headless --quit-after 2` PASS; `git diff --check` PASS.
 - Limitaciones: no se hizo revisión visual interactiva ni capturas a resoluciones múltiples; tampoco se cambió la resolución del proyecto. No se creó commit.
 
+## 2026-10-10 — GE02 jerarquía del HUD
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tipo: AI_ASSISTED / DESIGN / TESTING
+- Tarea: reorganizar el HUD en una barra superior, contexto compacto inferior y modal de resultados; agregar una preview etiquetada.
+- Rama: `Edwar_Estacio/hud-hierarchy`, basada en `develop` actualizado (`6af472e`), que ya contiene GE01 y mantiene todas las carpetas del proyecto.
+- Archivos: `scripts/ui/papoi_hud.gd`, `scenes/ui/papoi_theme.tres`, `scenes/ui/papoi_hud_preview.tscn`, `scripts/ui/papoi_hud_preview.gd`, `docs/specs/graphics/VISUAL_DIRECTION.md`, `docs/specs/Edwar_Estacio/graphics-spec.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0412-GE02-hud-hierarchy.md`, capturas `GE02-hud-cooking-1280x720.png` y `GE02-hud-result-1280x720.png`.
+- Resumen: fase/objetivo, timers y marcador se agrupan arriba; vidas, rol, pasiva y cooldowns abajo a la izquierda. Resultado usa overlay oscurecido detrás del HUD. La preview usa el mapa del proyecto y lleva etiqueta `PREVIEW · DATOS SIMULADOS`. Sin cooldown recibido muestra `sin datos`.
+- Pruebas: Godot 4.7.2 headless cargó la escena de preview; `tests/qa/k04_hud_results_test.gd` PASS. Godot 4.7.2 gráfico generó las dos capturas a 1280×720, revisadas visualmente. `git diff --check` se ejecutó al cierre.
+- Limitaciones: el primer intento de capturar desde renderer headless falló porque el renderer dummy no expone textura de viewport; no produjo evidencia y se cambió a renderer gráfico. No se probaron 1600×900 ni 1920×1080. `TODO(GM01)` mantiene pendiente el contrato/unidades del cooldown. No se creó commit.
+
 ## 2026-10-10 — GJ04 presentación del lobby
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Juan Diego Balanta

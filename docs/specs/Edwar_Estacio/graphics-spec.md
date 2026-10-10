@@ -11,8 +11,9 @@ Edwar mantiene sus archivos de Theme/HUD separados de los archivos de menú/lobb
 - Aceptación: paleta provisional, estilos normal/hover/pressed/disabled y foco visible implementados en Theme; una preview permite ver sus controles.
 
 ### GE02 — Jerarquía base del HUD
-- Estado: TODO; depende de: GE01.
-- Archivos: `scenes/ui/papoi_hud.tscn`, `scripts/ui/papoi_hud.gd` solo presentación.
+- Estado: DONE — K04 PASS y capturas revisadas a 1280×720; overlay de resultado conserva el HUD visible.
+- Depende de: GE01.
+- Archivos: `scenes/ui/papoi_hud.tscn`, `scripts/ui/papoi_hud.gd` solo presentación, `scenes/ui/papoi_hud_preview.tscn`, `scripts/ui/papoi_hud_preview.gd` y captura de handoff.
 - Aceptación: fase/objetivo, timers, marcador, vidas y contexto de jugador agrupados en orden legible; overlay no tapa el HUD; captura en 1280×720.
 
 ### GE03 — Presentación de fase y temporizadores
