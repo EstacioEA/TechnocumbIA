@@ -793,6 +793,18 @@
 - Limitaciones: actualización documental solamente; no se modificó gameplay ni se ejecutaron pruebas de Godot.
 - Handoff: `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`.
 
+## 2026-10-10 — Eliminación visual al agotar vidas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: asegurar que un jugador sin vidas desaparezca de la ronda y que la eliminación total otorgue la ronda a los defensores.
+- Rama: `Valeria_Piza/player-elimination`, basada en `origin/develop` (`c6ceb95`).
+- Archivos: `scripts/game/papoi_game_session.gd`, `tests/game/player_elimination_test.gd`, `docs/handoffs/2026-10-10-1425-player-elimination.md`.
+- Resumen: la sesión aplica `active`/`lives` del snapshot autoritativo a la visibilidad y control del actor. Los jugadores en respawn permanecen ocultos; los jugadores con cero vidas quedan eliminados. No se duplicaron descuentos ni reglas de victoria: `GameState` conserva `ATTACKERS_ELIMINATED` y la victoria defensora.
+- Pruebas: `PLAYER_ELIMINATION_TEST`, `GAME_INTEGRATION_TEST` y `combat_lives_state_test` pasaron con Godot 4.7.2 headless.
+- Limitaciones: la evidencia automatizada es headless; la revisión visual interactiva de desaparición durante una partida LAN queda para el runner manual/multiinstancia.
+- Handoff: `docs/handoffs/2026-10-10-1425-player-elimination.md`.
+
 ## 2026-10-10 — E05 estado de olla y scoring por primer escape
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -894,3 +906,49 @@
 - Pruebas: `tower_key_state_test`, `TOWER_KEY_RUNTIME_TEST`, `GAME_INTEGRATION_TEST` y `git diff --check` pasaron.
 - Limitaciones: falta validar manualmente la interacción en una sesión LAN de seis procesos; no se creó commit automático.
 - Handoff: `docs/handoffs/2026-10-10-1343-Miguel-tower-key-runtime.md`.
+
+## 2026-10-10 — Miguel Pabon: transiciones automáticas de ronda y retorno al lobby
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING
+- Tarea: iniciar automáticamente la siguiente ronda cinco segundos después de terminar una ronda y volver al lobby cinco segundos después de terminar la partida.
+- Rama: `develop`.
+- Archivos: `scripts/game/game_state.gd`, `scripts/game/papoi_game_session.gd`, `scripts/ui/lobby/lobby.gd`, `scripts/ui/papoi_hud.gd`, `AI_TRACE.md`.
+- Resumen: `GameState` usa una espera autoritativa de cinco segundos para la transición de `ROUND_RESULT`; al terminar `MATCH_RESULT`, la sesión emite retorno al lobby y conserva la conexión LAN. El HUD muestra la cuenta regresiva centrada.
+- Limitaciones: pendiente validar manualmente con seis procesos LAN; no se creó commit automático.
+
+## 2026-10-10 — Miguel Pabon: flujo automático de ronda y retorno al lobby
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: reiniciar rondas automáticamente cinco segundos después del resultado y regresar al lobby cinco segundos después del resultado final.
+- Rama: `develop`.
+- Archivos: `scripts/game/game_state.gd`, `scripts/game/papoi_game_session.gd`, `scripts/ui/lobby/lobby.gd`, `scripts/ui/papoi_hud.gd`, `docs/handoffs/2026-10-10-1418-Miguel-auto-round-lobby-flow.md`, `AI_TRACE.md`.
+- Resumen: se agregaron temporizadores autoritativos de cinco segundos, cuenta regresiva centrada para `COUNTDOWN`, `ROUND_RESULT` y `MATCH_RESULT`, reinicio automático de rondas y retorno al lobby existente sin pasar por el menú.
+- Pruebas: `game_state_test`, `GAME_INTEGRATION_TEST`, carga headless del proyecto y `git diff --check` pasaron. El preview gráfico del HUD requiere renderer.
+- Limitaciones: falta validación manual con seis procesos LAN; no se creó commit automático.
+
+## 2026-10-10 — Edwar Estacio: HUD visible sobre el campo de visión
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / BUGFIX / TESTING
+- Tarea: mantener visibles durante la partida las estadísticas y controles del HUD aunque esté activo el campo de visión.
+- Rama: `develop`.
+- Archivos: `scenes/ui/papoi_hud.tscn`, `tests/game/integrated_game_visual_test.gd`, `AI_TRACE.md`.
+- Resumen: se asignó la capa 30 al HUD para que se dibuje sobre el overlay de visión de capa 20; la prueba visual integrada ahora verifica esa prioridad.
+- Limitaciones: prueba modificada, pero no ejecutada en esta tarea.
+
+## 2026-10-10 — Valeria Piza: Trolazzo comparte las capacidades de Bestia
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: adaptar Trolazzo para usar las capacidades de Bestia mientras se mantiene su identidad visual y la lógica histórica de trampas.
+- Rama: `Valeria_Piza/trolazzo-beast-role`, basada en `origin/develop` en `36b87fe`.
+- Archivos: `scripts/combat/beast_access_state.gd`, `scripts/game/papoi_game_session.gd`, `tests/game/beast_attack_runtime_test.gd`, `tests/combat/test_role_differences_verification.gd`, `docs/handoffs/2026-10-10-1530-trolazzo-beast-role.md`, `AI_TRACE.md`.
+- Resumen: Trolazzo puede usar `beast_attack`, entrar a la sala de la olla y rescatar a Papa con las mismas validaciones autoritativas de Bestia; los cooldowns se separan por propietario y el HUD conserva sus claves públicas.
+- Pruebas: ataque runtime de Bestia/Trolazzo, diferencias de roles, flujo de cocción, snapshot/HUD, integración de partida, estado de juego, combate legacy y `git diff --check` pasaron.
+- Limitaciones: la ejecución headless mantiene un warning preexistente por la diferencia de mayúsculas en el path del sprite de Bestia; no se corrigió por estar fuera del alcance.

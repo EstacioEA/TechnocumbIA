@@ -78,14 +78,19 @@ func _verify_trollazzo_difference() -> void:
 func _verify_beast_difference() -> void:
 	var beast := BeastAccess.new(true)
 	var client_beast := BeastAccess.new(false)
-	_check(beast.configure_round([6, 5, 4], [1, 2, 3]), "host configures Bestia access")
+	_check(beast.configure_round([6, 5, 4], [1, 2, 3], [6, 5]), "host configures Bestia-compatible access")
 	_check(not client_beast.configure_round([6, 5, 4], [1, 2, 3]), "client cannot configure Bestia access")
+	_check(beast.is_beast_compatible(5), "Trolazzo shares Bestia access")
 	_check(not beast.request_basic_attack(1), "Bestia cannot attack before appearing")
 	_check(not beast.can_enter_pot_room(), "Bestia is blocked from the pot room outside cooking")
 	beast.tick(BeastAccess.BEAST_APPEARANCE_SECONDS)
 	_check(beast.appeared, "Bestia appears at the configured delay")
 	_check(beast.request_basic_attack(1), "appeared Bestia can perform a basic attack")
 	_check(not beast.request_basic_attack(2), "basic attack cooldown blocks repeated use")
+	beast.tick(BeastAccess.BASIC_ATTACK_COOLDOWN_SECONDS)
+	_check(beast.request_basic_attack(2), "basic attack cooldown expires after five seconds")
+	_check(beast.request_basic_attack(3, 5), "Trolazzo uses the same attack contract independently")
+	_check(not beast.request_basic_attack(3, 5), "Trolazzo has its own cooldown")
 	_check(beast.set_pot_cooking(true), "host opens pot access during cooking")
 	_check(beast.can_enter_pot_room(), "Bestia can enter the pot room during cooking")
 
@@ -122,4 +127,3 @@ func _check(condition: bool, label: String) -> void:
 	_checks += 1
 	if not condition:
 		_failures.append(label)
-

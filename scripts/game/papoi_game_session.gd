@@ -1,6 +1,8 @@
 extends Node2D
 class_name PapoiGameSession
 
+signal return_to_lobby_requested
+
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
 const MatchStateData = preload("res://scripts/game/match_state.gd")
 const PlayerScene = preload("res://scenes/player/player.tscn")
@@ -40,6 +42,7 @@ var _suppress_snapshot_rpc := false
 var _suppress_flow_sync := false
 var _network_session_ended := false
 var _local_preview_mode := false
+var _match_return_started := false
 
 
 func configure_network_manager(manager: Node) -> void:
@@ -150,6 +153,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("papoi_interact"):
 		_submit_action(&"interact")
+	elif event.is_action_pressed("papoi_beast_attack"):
+		_submit_action(&"beast_attack")
 	elif event.is_action_pressed("papoi_drop"):
 		_submit_action(&"drop_papa")
 	elif event.is_action_pressed("papoi_attack"):
@@ -247,6 +252,8 @@ func _perform_validated_action(peer_id: int, action: StringName) -> bool:
 			elif phase == GameEnums.GamePhase.ESCAPE:
 				return _finish_escape_if_at_base(peer_id)
 			return false
+		&"beast_attack":
+			return _attack_nearby_attacker(peer_id, true)
 		&"drop_papa":
 			return _drop_papa(peer_id)
 		&"attack":
@@ -323,14 +330,16 @@ func _drop_papa(peer_id: int) -> bool:
 	return true
 
 
-func _attack_nearby_attacker(defender_id: int) -> bool:
+func _attack_nearby_attacker(defender_id: int, beast_attack: bool = false) -> bool:
 	var snapshot: Dictionary = _game_state.get_snapshot()
 	if int(snapshot.phase) not in [GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ESCAPE]:
 		return false
 	if _is_attacker(defender_id):
 		return false
 	var defender_role := _role_for_peer(defender_id)
-	if defender_role not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
+	if beast_attack and defender_role not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
+		return false
+	if not beast_attack and defender_role not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 		return false
 	var target_id := -1
 	var nearest_distance := HIT_DISTANCE
@@ -344,6 +353,11 @@ func _attack_nearby_attacker(defender_id: int) -> bool:
 			nearest_distance = distance
 	if target_id < 0:
 		return false
+	if beast_attack:
+		if _beast_state == null or not _beast_state.is_beast_compatible(defender_id):
+			return false
+		if not _beast_state.request_basic_attack(target_id, defender_id):
+			return false
 	if int(_capture_state.carrier_id) == target_id:
 		if not _capture_state.request_hit_carrier(target_id):
 			return false
@@ -362,9 +376,9 @@ func _attack_nearby_attacker(defender_id: int) -> bool:
 func _rescue_papa(peer_id: int) -> bool:
 	if _game_state.get_snapshot().phase != GameEnums.GamePhase.POT_COOKING:
 		return false
-	if _beast_state == null or peer_id != int(_beast_state.beast_id):
+	if _beast_state == null or not _beast_state.is_beast_compatible(peer_id):
 		return false
-	if _role_for_peer(peer_id) != GameEnums.DefenderRole.BESTIA:
+	if _role_for_peer(peer_id) not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 		return false
 	if _player_position(peer_id).distance_to(_map.to_global(_map.POT_ROOM_CENTER)) > CAPTURE_DISTANCE:
 		return false
@@ -424,12 +438,14 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 				porta_papas_ids.append(peer_id)
 		else:
 			defender_ids.append(peer_id)
+	var compatible_beast_ids: Array[int] = []
 	for player: Dictionary in snapshot.players:
 		if int(player.get("role", -1)) == GameEnums.DefenderRole.BESTIA:
 			var beast_id := int(player.peer_id)
 			defender_ids.erase(beast_id)
 			defender_ids.push_front(beast_id)
-			break
+		if int(player.get("role", -1)) in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
+			compatible_beast_ids.append(int(player.peer_id))
 	_capture_state = PapaCaptureStateData.new(true)
 	_lives_state = CombatLivesStateData.new(true)
 	_beast_state = BeastAccessStateData.new(true)
@@ -441,7 +457,7 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 	if not _lives_state.start_round(player_ids, attacker_ids):
 		_push_integration_error("CombatLivesState rechazó la configuración de ronda.")
 		return
-	if not _beast_state.configure_round(defender_ids, attacker_ids):
+	if not _beast_state.configure_round(defender_ids, attacker_ids, compatible_beast_ids):
 		_push_integration_error("BeastAccessState rechazó la configuración de ronda.")
 		return
 	if not _tower_key_state.configure_round(attacker_ids):
@@ -610,12 +626,18 @@ func _compose_snapshot(source: Dictionary) -> Dictionary:
 		# Role/passive come from GameState. Cooldowns are copied only from the
 		# host-side combat model that owns them; unsupported roles stay unavailable.
 		var player_cooldowns: Dictionary = {}
-		if _beast_state != null and peer_id == int(_beast_state.beast_id) \
-			and int(player.get("role", -1)) == GameEnums.DefenderRole.BESTIA:
+		if _beast_state != null and _beast_state.is_beast_compatible(peer_id) \
+			and int(player.get("role", -1)) in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 			var beast_snapshot: Dictionary = _beast_state.get_snapshot()
 			var beast_cooldowns: Variant = beast_snapshot.get("cooldowns", {})
 			if beast_cooldowns is Dictionary:
-				player_cooldowns = beast_cooldowns.duplicate(true)
+				for action in [&"beast_basic", &"beast_special"]:
+					var owner_key := StringName("%d_%s" % [peer_id, action])
+					if beast_cooldowns.has(owner_key):
+						player_cooldowns[action] = beast_cooldowns[owner_key]
+					elif peer_id == int(_beast_state.beast_id) and beast_cooldowns.has(action):
+						# Preserve snapshots produced by the previous single-owner model.
+						player_cooldowns[action] = beast_cooldowns[action]
 		player["cooldowns"] = player_cooldowns
 		var actor := get_player_node(peer_id)
 		if actor != null:
@@ -647,11 +669,15 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 	var local_snapshot := snapshot.duplicate(true)
 	local_snapshot["local_peer_id"] = multiplayer.get_unique_id() if _is_transport_connected() else -1
 	_hud.apply_match_snapshot(local_snapshot)
+	if int(snapshot.get("phase", GameEnums.GamePhase.LOBBY)) == GameEnums.GamePhase.MATCH_RESULT and not _match_return_started:
+		_match_return_started = true
+		_return_to_lobby_after_delay.call_deferred()
 	for player: Dictionary in snapshot.get("players", []):
 		var actor := get_player_node(int(player.get("peer_id", -1)))
 		if actor != null and player.get("position") is Vector2:
 			actor.global_position = player["position"]
 		if actor != null:
+			_apply_player_life_state(actor, player)
 			var visual := actor.get_node_or_null("PlayerVisual") as Node2D
 			if visual != null:
 				visual.set("team", 0 if player.get("side", "") == "attacker" else 1)
@@ -668,6 +694,21 @@ func _render_snapshot(snapshot: Dictionary) -> void:
 			_tower_key_marker.global_position = snapshot["tower_key_position"]
 		if bool(snapshot.get("tower_open", false)):
 			_map.apply_beast_gate_state(true)
+
+
+func _apply_player_life_state(actor: CharacterBody2D, player: Dictionary) -> void:
+	if not player.has("active") or not player.has("lives"):
+		return
+	var lives := int(player.get("lives", 0))
+	var active := bool(player.get("active", false))
+	var eliminated := lives <= 0
+	actor.visible = active and not eliminated
+	if not actor.visible:
+		actor.velocity = Vector2.ZERO
+		actor.set("local_control_enabled", false)
+	elif actor.has_method("set_local_control"):
+		var local_peer_id := multiplayer.get_unique_id() if _is_transport_connected() else -1
+		actor.call("set_local_control", int(player.get("peer_id", -1)) == local_peer_id)
 
 
 func _schedule_snapshot() -> void:
@@ -694,6 +735,12 @@ func _on_round_finished(_winner: int, _reason: int, _snapshot: Dictionary) -> vo
 
 func _on_match_finished(_winner: int, _snapshot: Dictionary) -> void:
 	_publish_snapshot()
+
+
+func _return_to_lobby_after_delay() -> void:
+	await get_tree().create_timer(5.0).timeout
+	if is_inside_tree():
+		return_to_lobby_requested.emit()
 
 
 func _on_peer_left(peer_id: int) -> void:
@@ -757,6 +804,7 @@ func _role_for_peer(peer_id: int) -> int:
 
 func _register_game_input() -> void:
 	_add_key_action("papoi_interact", KEY_E)
+	_add_key_action("papoi_beast_attack", KEY_Q)
 	_add_key_action("papoi_drop", KEY_Q)
 	_add_key_action("papoi_attack", KEY_F)
 	_add_key_action("papoi_rescue", KEY_R)

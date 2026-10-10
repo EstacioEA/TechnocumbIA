@@ -11,6 +11,8 @@ const POINTS_TO_WIN_MATCH := 3
 const MAX_ROUND_DURATION_SECONDS := 7.0 * 60.0
 const ROUND_DURATION_SECONDS := MAX_ROUND_DURATION_SECONDS
 const COUNTDOWN_DURATION_SECONDS := 3.0 # Pendiente: confirmar duración de cuenta regresiva.
+const ROUND_RESTART_DELAY_SECONDS := 5.0
+const MATCH_RETURN_DELAY_SECONDS := 5.0
 const POT_COOKING_DURATION_SECONDS := GameRules.POT_COOKING_DURATION_SECONDS
 const STARTING_LIVES_PER_ATTACKER := 3 # Pendiente: persistir y consumir vidas al integrar combate.
 
@@ -210,26 +212,33 @@ func resolve_round(winner_team: int, reason: int) -> bool:
 	if is_disconnect_invalidation:
 		_state.match_winner = -1
 		_set_phase(GameEnums.GamePhase.ROUND_RESULT)
+		_state.phase_time_remaining = ROUND_RESTART_DELAY_SECONDS
 		_emit_state()
 		round_finished.emit(-1, reason, get_snapshot())
 		_set_phase(GameEnums.GamePhase.MATCH_RESULT)
+		_state.phase_time_remaining = MATCH_RETURN_DELAY_SECONDS
 		_emit_state()
 		match_finished.emit(-1, get_snapshot())
 		return true
 	var score_key := MatchStateData.team_score_key(winner_team)
 	_state.scores[score_key] = int(_state.scores[score_key]) + 1
+	var match_is_finished := int(_state.scores[score_key]) >= POINTS_TO_WIN_MATCH or _state.round_number >= BEST_OF_ROUNDS
 	_set_phase(GameEnums.GamePhase.ROUND_RESULT)
+	_state.phase_time_remaining = ROUND_RESTART_DELAY_SECONDS
 	_emit_state()
 	round_finished.emit(winner_team, reason, get_snapshot())
-	if _state.scores[score_key] >= POINTS_TO_WIN_MATCH:
-		_state.match_winner = winner_team
+	if match_is_finished:
+		var team_a_score := int(_state.scores[MatchStateData.team_score_key(GameEnums.TeamSide.TEAM_A)])
+		var team_b_score := int(_state.scores[MatchStateData.team_score_key(GameEnums.TeamSide.TEAM_B)])
+		_state.match_winner = GameEnums.TeamSide.TEAM_A if team_a_score >= team_b_score else GameEnums.TeamSide.TEAM_B
 		_set_phase(GameEnums.GamePhase.MATCH_RESULT)
+		_state.phase_time_remaining = MATCH_RETURN_DELAY_SECONDS
 		_emit_state()
-		match_finished.emit(winner_team, get_snapshot())
+		match_finished.emit(_state.match_winner, get_snapshot())
 	return true
 
 
-func start_next_round() -> bool:
+func start_next_round(auto_start: bool = false) -> bool:
 	if not _require_host("start_next_round"):
 		return false
 	if _state.phase != GameEnums.GamePhase.ROUND_RESULT:
@@ -247,7 +256,7 @@ func start_next_round() -> bool:
 	_round_resolved = false
 	_assign_round_roles()
 	_set_phase(GameEnums.GamePhase.COUNTDOWN)
-	_state.phase_time_remaining = COUNTDOWN_DURATION_SECONDS
+	_state.phase_time_remaining = 0.0 if auto_start else COUNTDOWN_DURATION_SECONDS
 	_emit_state()
 	return true
 
@@ -281,6 +290,16 @@ func _process(delta: float) -> void:
 			_state.phase_time_remaining = 0.0
 			_emit_state()
 		else:
+			_emit_state()
+	elif _state.phase == GameEnums.GamePhase.ROUND_RESULT:
+		_state.phase_time_remaining = maxf(0.0, _state.phase_time_remaining - delta)
+		if _state.phase_time_remaining <= 0.0:
+			start_next_round(true)
+		else:
+			_emit_state()
+	elif _state.phase == GameEnums.GamePhase.MATCH_RESULT:
+		_state.phase_time_remaining = maxf(0.0, _state.phase_time_remaining - delta)
+		if _state.phase_time_remaining > 0.0:
 			_emit_state()
 
 

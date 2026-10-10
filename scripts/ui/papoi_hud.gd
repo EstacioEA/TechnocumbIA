@@ -24,6 +24,8 @@ var result_header_label: Label
 var result_detail_label: Label
 var result_score_label: Label
 var result_overlay: ColorRect
+var countdown_overlay: ColorRect
+var countdown_label: Label
 var status_panel: PanelContainer
 var result_card: PapoiResultCard
 
@@ -72,6 +74,7 @@ func apply_match_snapshot(snapshot: Dictionary) -> void:
 	result_panel.visible = false
 	result_overlay.visible = false
 	var phase := int(snapshot.get("phase", GameEnums.GamePhase.LOBBY))
+	_update_countdown(phase, float(snapshot.get("phase_time_remaining", 0.0)))
 	status_panel.visible = phase != GameEnums.GamePhase.ROUND_RESULT and phase != GameEnums.GamePhase.MATCH_RESULT
 	phase_label.text = "FASE: %s" % _phase_text(phase)
 	phase_tag_label.text = _phase_tag(phase)
@@ -309,6 +312,26 @@ func _build_view() -> void:
 	# El modal oscurece el mundo; el HUD queda arriba y sigue legible.
 	margins.z_index = 20
 
+	countdown_overlay = ColorRect.new()
+	countdown_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	countdown_overlay.color = Color(0.02, 0.04, 0.06, 0.48)
+	countdown_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	countdown_overlay.z_index = 30
+	countdown_overlay.visible = false
+	ui_root.add_child(countdown_overlay)
+	var countdown_center := CenterContainer.new()
+	countdown_center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	countdown_overlay.add_child(countdown_center)
+	countdown_label = Label.new()
+	countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	countdown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	countdown_label.add_theme_color_override("font_color", Color("#f7d779"))
+	countdown_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
+	countdown_label.add_theme_constant_override("shadow_offset_x", 3)
+	countdown_label.add_theme_constant_override("shadow_offset_y", 3)
+	countdown_label.add_theme_font_size_override("font_size", 42)
+	countdown_center.add_child(countdown_label)
+
 func _add_label(parent: Node) -> Label:
 	var label := Label.new()
 	parent.add_child(label)
@@ -469,5 +492,22 @@ func _objective_for_phase(phase: int, papa_state: int) -> String:
 func _show_result() -> void:
 	result_overlay.visible = true
 	result_card.visible = true
+
+func _update_countdown(phase: int, remaining: float) -> void:
+	if countdown_overlay == null or countdown_label == null:
+		return
+	var seconds := maxi(0, ceili(remaining))
+	var text := ""
+	match phase:
+		GameEnums.GamePhase.COUNTDOWN:
+			text = "LA RONDA COMIENZA EN\n%d" % seconds
+		GameEnums.GamePhase.ROUND_RESULT:
+			text = "SIGUIENTE RONDA EN\n%d" % seconds
+		GameEnums.GamePhase.MATCH_RESULT:
+			text = "VOLVIENDO AL LOBBY EN\n%d" % seconds
+		_:
+			text = ""
+	countdown_label.text = text
+	countdown_overlay.visible = not text.is_empty() and seconds > 0
 
 const _FORMAT_COOKING := "cociendo"
