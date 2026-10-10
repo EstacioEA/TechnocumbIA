@@ -161,6 +161,15 @@
   headless.
 - Siguiente tarea: V05 — Prueba de instancias.
 
+## 2026-10-10 — V05 prueba de instancias
+
+- Rama: `Valeria_Piza/player-smoke-test`, basada en `develop` actualizado.
+- Resultado: dos jugadores instancian correctamente; solo el jugador local
+  procesa WASD y el remoto acepta únicamente velocidad aplicada por el host.
+- Prueba: `tests/player/player_smoke_test.gd` ejecutada con Godot 4.7.2
+  headless.
+- Resultado del bloque de tareas Valeria: V01 a V05 completadas.
+
 
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA

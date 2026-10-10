@@ -32,8 +32,10 @@
   aura del 80%; HUD puede ubicarse sobre la capa del overlay.
 
 ## V05 — Prueba de instancias
-- Estado: TODO
+- Estado: DONE
 - Depende de: V03, V04
 - Rama sugerida: `Valeria_Piza/player-smoke-test`
 - Verificar dos jugadores y documentar integración con el host sin autoridad local.
-- Aceptación: prueba ejecutada o bloqueo explícito con causa.
+- Aceptación: dos jugadores instancian sin errores; solo el jugador local
+  procesa WASD; el remoto se mueve únicamente con velocidad aplicada por el
+  host.
