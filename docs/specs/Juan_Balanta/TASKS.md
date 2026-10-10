@@ -51,8 +51,10 @@
 - Aceptación: Host abre panel; puerto inicial 2456; rango 1–65535 validado inline; puerto válido emite señal; Volver regresa al menú; no modificar ENet.
 
 ### GJ03 — Unirse por IP
-- Estado: TODO; dependencia: GJ01.
-- Aceptación: IP/puerto editables, validación inline y estados conectando/rechazo/desconexión con mensaje; usar red existente.
+- Estado: BLOCKED — panel implementado; pendiente revisión visual en runtime.
+- Dependencia: artefacto GJ01 existente; su revisión visual sigue pendiente.
+- Archivos: `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd` y glue de vista en `scripts/ui/menu/main_menu.gd`.
+- Aceptación de este corte: IP/puerto editables y validados inline, emitir `join_requested(address, port)`, volver al menú, comunicar que falta integrar transporte. GJ05 conectará la intención con la sesión; esta tarea no cambia la red.
 
 ### GJ04 — Lobby
 - Estado: TODO; dependencia de navegación: GJ02/GJ03; el preview puede avanzar en escena propia.

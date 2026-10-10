@@ -17,9 +17,10 @@ Juan puede completar GJ01–GJ05 sin esperar el Theme ni una revisión de Edwar.
 - Aceptación: Host abre el panel; puerto inicial 2456 editable; Crear valida rango 1–65535 y da error inline; puerto válido emite `create_requested(port)` y comunica claramente que esta subtarea aún no inicia ENet; Volver regresa al menú. No cambia ENet ni protocolo.
 
 ### GJ03 — Panel de conexión por IP
-- Estado: TODO; depende de: GJ01.
-- Archivos: nuevos `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd`.
-- Aceptación: IP y puerto editables; IP/puerto inválidos se señalan antes de conectar; estados conectando/rechazo/desconexión tienen texto legible. Usa las APIs existentes de red.
+- Estado: BLOCKED — panel implementado; falta abrir y revisar el flujo visual. La integración con el transporte no forma parte de este corte.
+- Depende de: artefacto de escena GJ01 (su revisión visual queda pendiente; GJ03 es un panel aislado).
+- Archivos: nuevos `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd`; conexión de vista en `scripts/ui/menu/main_menu.gd`.
+- Aceptación: IP y puerto editables; IP/puerto inválidos se señalan antes de emitir; entrada válida emite `join_requested(address, port)`; volver regresa al menú. El panel comunica que transporte/estados de conexión aún no están integrados. No llama ni modifica ENet/NetworkManager; GJ05 conectará la intención a la sesión cuando integre navegación.
 
 ### GJ04 — Presentación de lobby
 - Estado: TODO; depende de: GJ02 y GJ03 por navegación; puede construirse en archivo/escena propia antes de integrar.

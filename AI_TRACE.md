@@ -363,3 +363,14 @@
 - Pruebas: `git diff --check` PASS. No se ejecutó Godot ni revisión visual, así que GJ02 queda BLOCKED hasta validar en runtime.
 - Limitaciones: transporte de servidor se conecta en tarea posterior; GJ01 aún tiene su revisión visual pendiente.
 - Siguiente paso: implementar GJ03 (panel join por IP); luego volver a verificar los paneles y el menú.
+
+## 2026-10-10 — GJ03 panel para unirse por IP
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: crear el panel UI de conexión por IP y enlazarlo al menú.
+- Rama: `Juan_Balanta/gj03-join-panel`, basada en `develop`.
+- Archivos: `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd`, `scripts/ui/menu/main_menu.gd`, `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0327-GJ03-join-panel.md`.
+- Resumen: panel con campos IP/puerto, validación local IPv4/IPv6 y rango 1–65535, mensajes inline, señal `join_requested(address, port)` y navegación de regreso. No inicia ni modifica transporte de red.
+- Pruebas: `git diff --check` PASS. No se ejecutó Godot ni revisión visual/runtime; GJ03 queda BLOCKED hasta revisar la escena.
+- Limitaciones: estados reales de conexión, rechazo y desconexión aparecen al integrar la intención con NetworkManager en GJ05; aquí solo se informa que el transporte está pendiente.
+- Siguiente paso: implementar GJ04 (preview/presentación independiente del lobby) y después GJ05 (integración y revisión visual).

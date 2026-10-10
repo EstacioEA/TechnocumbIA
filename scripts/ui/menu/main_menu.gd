@@ -1,6 +1,7 @@
 extends Control
 
 const HOST_PANEL_SCENE := preload("res://scenes/menu/host_panel.tscn")
+const JOIN_PANEL_SCENE := preload("res://scenes/menu/join_panel.tscn")
 
 signal host_requested
 signal join_requested
@@ -12,6 +13,7 @@ signal join_requested
 @onready var status_label: Label = %StatusLabel
 
 var _host_panel: Control
+var _join_panel: Control
 
 
 func _ready() -> void:
@@ -88,8 +90,24 @@ func _on_host_create_requested(port: int) -> void:
 
 
 func _on_join_pressed() -> void:
-	status_label.text = "La conexión por IP se conectará en la siguiente tarea."
 	join_requested.emit()
+	menu_panel.visible = false
+	_join_panel = JOIN_PANEL_SCENE.instantiate()
+	_join_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_join_panel.connect("cancel_requested", _on_join_cancelled)
+	_join_panel.connect("join_requested", _on_join_requested)
+	add_child(_join_panel)
+
+
+func _on_join_cancelled() -> void:
+	_join_panel.queue_free()
+	_join_panel = null
+	menu_panel.visible = true
+	join_button.grab_focus()
+
+
+func _on_join_requested(address: String, port: int) -> void:
+	status_label.text = "Destino validado: %s:%d. El transporte se integrará en otra tarea." % [address, port]
 
 
 func _on_exit_pressed() -> void:

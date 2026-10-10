@@ -1,0 +1,137 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/menu/join_panel.gd" id="1_join_panel"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.113725, 0.164706, 0.207843, 1)
+border_color = Color(0.207843, 0.286275, 0.34902, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[node name="JoinPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_join_panel")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0627451, 0.0980392, 0.137255, 1)
+
+[node name="TopGlow" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.012
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.94902, 0.756863, 0.305882, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoinCard" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(560, 500)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/JoinCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 38
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 34
+
+[node name="Content" type="VBoxContainer" parent="CenterContainer/JoinCard/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Eyebrow" type="Label" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.407843, 0.827451, 0.576471, 1)
+theme_override_font_sizes/font_size = 14
+text = "PAPOI  /  PARTIDA LAN"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.956863, 0.945098, 0.870588, 1)
+theme_override_font_sizes/font_size = 38
+text = "Unirse por IP"
+horizontal_alignment = 1
+
+[node name="AddressLabel" type="Label" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.823529, 0.866667, 0.870588, 1)
+text = "Dirección del host"
+
+[node name="AddressInput" type="LineEdit" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+placeholder_text = "Ejemplo: 192.168.1.20"
+max_length = 45
+clear_button_enabled = true
+focus_mode = 2
+
+[node name="PortLabel" type="Label" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.823529, 0.866667, 0.870588, 1)
+text = "Puerto"
+
+[node name="PortInput" type="LineEdit" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+placeholder_text = "2456"
+max_length = 5
+virtual_keyboard_type = 3
+focus_mode = 2
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.713726, 0.772549, 0.796078, 1)
+theme_override_font_sizes/font_size = 13
+text = "Ingresa la IP y el puerto que comparte el host."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ButtonRow" type="HBoxContainer" parent="CenterContainer/JoinCard/MarginContainer/Content"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="JoinButton" type="Button" parent="CenterContainer/JoinCard/MarginContainer/Content/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CONECTAR"
+
+[node name="CancelButton" type="Button" parent="CenterContainer/JoinCard/MarginContainer/Content/ButtonRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "VOLVER"
