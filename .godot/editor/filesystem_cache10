@@ -1,6 +1,6 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1791634462
-AI_TRACE.md::TextFile::-1::1791634462::0::1::::<><><>0<>0<><>::
+::res://::1791642270
+AI_TRACE.md::TextFile::-1::1791639267::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1791595013::0::1::::<><><>0<>0<><>::
 ::res://assets/::1791629326
 ::res://assets/characteres/::1791617690
@@ -46,7 +46,7 @@ README.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
 SDD_CONTINUE_PROTOCOL.md::TextFile::-1::1791605493::0::1::::<><><>0<>0<><>::
 SDD_ORCHESTRATOR.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
 TASK_BOARD.md::TextFile::-1::1791605493::0::1::::<><><>0<>0<><>::
-::res://docs/handoffs/::1791634463
+::res://docs/handoffs/::1791636933
 2026-10-09-2224-player-camera.md::TextFile::-1::1791605013::0::1::::<><><>0<>0<><>::
 2026-10-09-2229-game-state.md::TextFile::-1::1791604356::0::1::::<><><>0<>0<><>::
 2026-10-09-2233-combat-roles.md::TextFile::-1::1791604738::0::1::::<><><>0<>0<><>::
@@ -111,8 +111,8 @@ TASK_BOARD.md::TextFile::-1::1791605493::0::1::::<><><>0<>0<><>::
 2026-10-10-0715-GK04-contrast-evidence.md::TextFile::-1::1791634463::0::1::::<><><>0<>0<><>::
 2026-10-10-graphics-atomic-breakdown.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 2026-10-10-graphics-plan.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
-captura 7 vision normal.png::CompressedTexture2D::5374184870187033191::1791634463::1791634533::1::::<><><>0<>0<>8ee1f1eb27ee46468d5338543502dd95<>res://.godot/imported/captura 7 vision normal.png-c8c1c90b9f2e89e6c52c3731067e331c.ctex::
-captura 7.1 vision activa.png::CompressedTexture2D::4802699478799488055::1791634463::1791634533::1::::<><><>0<>0<>0c032d4c769b09e77adffa7bd23e6833<>res://.godot/imported/captura 7.1 vision activa.png-5047e3667ef8619f3cac18eb5e3a4814.ctex::
+captura 7 vision normal.png::CompressedTexture2D::5374184870187033191::1791634463::1791636932::1::::<><><>0<>0<>8ee1f1eb27ee46468d5338543502dd95<>res://.godot/imported/captura 7 vision normal.png-c8c1c90b9f2e89e6c52c3731067e331c.ctex::
+captura 7.1 vision activa.png::CompressedTexture2D::4802699478799488055::1791634463::1791636933::1::::<><><>0<>0<>0c032d4c769b09e77adffa7bd23e6833<>res://.godot/imported/captura 7.1 vision activa.png-5047e3667ef8619f3cac18eb5e3a4814.ctex::
 Captura de pantalla Krystal 6.png::CompressedTexture2D::583759031570476054::1791634463::1791634533::1::::<><><>0<>0<>07d8403af4a8f5a15afb32ac90bfc7b4<>res://.godot/imported/Captura de pantalla Krystal 6.png-19fdf1eaa46277fe3825d13b8f1477b3.ctex::
 captura pantalla krystal 5 - estado abierto.png::CompressedTexture2D::7925405628515508668::1791633138::1791634533::1::::<><><>0<>0<>0c34367b12acb03f346adf91a205431c<>res://.godot/imported/captura pantalla krystal 5 - estado abierto.png-0d380d89a534e4c2dc9d5d823e328b78.ctex::
 captura vista fix krystal 4.png::CompressedTexture2D::8557194837720723470::1791633138::1791633395::1::::<><><>0<>0<>d002544beeecc37608b4435a2c5fbdce<>res://.godot/imported/captura vista fix krystal 4.png-9a99840621ba265a600f117d5fd4345a.ctex::
@@ -159,7 +159,7 @@ lobby-rejected-preview_1600x900.png::CompressedTexture2D::4668560780926858791::1
 lobby-rejected_1600x900.png::CompressedTexture2D::1658047919641719976::1791628036::1791633394::1::::<><><>0<>0<>ce965f396cbaf1a38233051ad8fae881<>res://.godot/imported/lobby-rejected_1600x900.png-993bd75e4787b8300a8d19b0b55085c0.ctex::
 menu_1600x900.png::CompressedTexture2D::3389736759137816406::1791628036::1791633394::1::::<><><>0<>0<>fa2fbb96d479d2d72bb79f340b18e4f7<>res://.godot/imported/menu_1600x900.png-156c6e42fd395e7a310313d8d39962ea.ctex::
 ::res://docs/maps/::1791617452
-::res://docs/specs/::1791628036
+::res://docs/specs/::1791635177
 00-game-general.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
 01-network-lan.md::TextFile::-1::1791617691::0::1::::<><><>0<>0<><>::
 02-round-roles-abilities.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
@@ -167,45 +167,49 @@ menu_1600x900.png::CompressedTexture2D::3389736759137816406::1791628036::1791633
 04-input-ui.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
 atomic-team-split.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
 INDIVIDUAL_SPECS_README.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
-::res://docs/specs/Edwar_Estacio/::1791628036
+TURN-C-REMEDIATION.md::TextFile::-1::1791635177::0::1::::<><><>0<>0<><>::
+::res://docs/specs/Edwar_Estacio/::1791635177
 graphics-spec.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 individual-spec.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
-TASKS.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
+TASKS.md::TextFile::-1::1791635177::0::1::::<><><>0<>0<><>::
 ::res://docs/specs/graphics/::1791628129
 GINT.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 VISUAL_DIRECTION.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
-::res://docs/specs/Juan_Balanta/::1791628036
+::res://docs/specs/Juan_Balanta/::1791635177
 graphics-spec.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 individual-spec.md::TextFile::-1::1791617452::0::1::::<><><>0<>0<><>::
-TASKS.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
-::res://docs/specs/Krystal_Giraldo/::1791634463
+TASKS.md::TextFile::-1::1791635177::0::1::::<><><>0<>0<><>::
+::res://docs/specs/Krystal_Giraldo/::1791635177
 graphics-spec.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 individual-spec.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
-TASKS.md::TextFile::-1::1791634463::0::1::::<><><>0<>0<><>::
-::res://docs/specs/Miguel_Pabon/::1791631964
+TASKS.md::TextFile::-1::1791637856::0::1::::<><><>0<>0<><>::
+::res://docs/specs/Miguel_Pabon/::1791635177
 graphics-spec.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 individual-spec.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
-TASKS.md::TextFile::-1::1791631964::0::1::::<><><>0<>0<><>::
-::res://docs/specs/Valeria_Piza/::1791628036
+TASKS.md::TextFile::-1::1791635177::0::1::::<><><>0<>0<><>::
+::res://docs/specs/Valeria_Piza/::1791635177
 graphics-spec.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
 individual-spec.md::TextFile::-1::1791603020::0::1::::<><><>0<>0<><>::
-TASKS.md::TextFile::-1::1791628036::0::1::::<><><>0<>0<><>::
+TASKS.md::TextFile::-1::1791635177::0::1::::<><><>0<>0<><>::
 ::res://scenes/::1791628036
 ::res://scenes/game/::1791628129
 papoi_game.tscn::PackedScene::-1::1791628036::0::1::::<><><>0<>0<><>::res://scripts/game/papoi_game_session.gd<>res://scripts/game/game_state.gd<>res://scenes/map/papoi_map.tscn<>res://scenes/ui/papoi_hud.tscn
 ::res://scenes/lobby/::1791617691
 lobby.tscn::PackedScene::-1::1791617691::0::1::::<><><>0<>0<><>::res://scripts/ui/lobby/lobby.gd<>res://scripts/network/network_manager.gd<>res://scripts/game/game_state.gd<>res://scripts/network/network_game_bridge.gd
-::res://scenes/map/::1791634463
+::res://scenes/map/::1791641017
 papoi_map.tscn::PackedScene::-1::1791633138::0::1::::<><><>0<>0<><>::res://scripts/map/papoi_map.gd<>res://scenes/map/visuals/papoi_map_visuals.tscn<>res://scenes/map/visuals/papoi_base_spawn_visuals.tscn<>res://scenes/map/visuals/papoi_pot_barrier_visuals.tscn
-papoi_map_gk03_open_preview.gd::GDScript::7217887768607775559::1791633138::0::1::::<>Node2D<><>0<>0<><>::
+papoi_map_gk03_open_preview.gd::GDScript::7217887768607775559::1791635177::0::1::::<>Node2D<><>0<>0<><>::
 papoi_map_gk03_open_preview.tscn::PackedScene::-1::1791633138::0::1::::<><><>0<>0<><>::res://scenes/map/papoi_map_gk03_open_preview.gd
-papoi_map_gk04_contrast_preview.gd::GDScript::443691682998381677::1791634463::0::1::::<>Node2D<><>0<>0<><>::
+papoi_map_gk04_contrast_preview.gd::GDScript::443691682998381677::1791635177::0::1::::<>Node2D<><>0<>0<><>::
 papoi_map_gk04_contrast_preview.tscn::PackedScene::-1::1791634463::0::1::::<><><>0<>0<><>::res://scenes/map/papoi_map_gk04_contrast_preview.gd
+papoi_map_tc02_boundary_overlay.gd::GDScript::7504607323620829044::1791642164::0::1::::<>Node2D<><>0<>0<><>::
+papoi_map_tc02_playable_preview.gd::GDScript::6316989492175235891::1791641007::0::1::::<>Node2D<><>0<>0<><>::
+papoi_map_tc02_playable_preview.tscn::PackedScene::-1::1791636919::0::1::::<><><>0<>0<><>::res://scenes/map/papoi_map_tc02_playable_preview.gd
 ::res://scenes/map/visuals/::1791633138
 papoi_base_spawn_visuals.gd::GDScript::1805892858428229826::1791633138::0::1::::<>Node2D<><>0<>0<><>::
 papoi_base_spawn_visuals.tscn::PackedScene::-1::1791629551::0::1::::<><><>0<>0<><>::res://scenes/map/visuals/papoi_base_spawn_visuals.gd
-papoi_map_visuals.gd::GDScript::6130980669737283048::1791633138::0::1::::PapoiMapVisuals<>Node2D<><>0<>0<><>::
+papoi_map_visuals.gd::GDScript::6130980669737283048::1791642164::0::1::::PapoiMapVisuals<>Node2D<><>0<>0<><>::
 papoi_map_visuals.tscn::PackedScene::-1::1791629077::0::1::::<><><>0<>0<><>::res://scenes/map/visuals/papoi_map_visuals.gd
 papoi_pot_barrier_visuals.gd::GDScript::5383279084863242856::1791633138::0::1::::<>Node2D<><>0<>0<><>::
 papoi_pot_barrier_visuals.tscn::PackedScene::-1::1791633138::0::1::::<><><>0<>0<><>::res://scenes/map/visuals/papoi_pot_barrier_visuals.gd
@@ -242,8 +246,8 @@ papa_capture_state.gd::GDScript::1630778751224475302::1791615854::0::1::::PapaCa
 game_state.gd::GDScript::2568438623370501018::1791628036::0::1::::GameState<>Node<><>0<>0<><>::
 match_state.gd::GDScript::7610468528282603918::1791613235::0::1::::MatchState<>RefCounted<><>0<>0<><>::
 papoi_game_session.gd::GDScript::6155085817942240605::1791628036::0::1::::PapoiGameSession<>Node2D<><>0<>0<><>::
-::res://scripts/map/::1791633138
-papoi_map.gd::GDScript::6357855453770774956::1791633138::0::1::::PapoiMap<>Node2D<><>0<>0<><>::
+::res://scripts/map/::1791641894
+papoi_map.gd::GDScript::6357855453770774956::1791642163::0::1::::PapoiMap<>Node2D<><>0<>0<><>::
 ::res://scripts/network/::1791630076
 network_game_bridge.gd::GDScript::1702494993653774034::1791617691::0::1::::NetworkGameBridge<>Node<><>0<>0<><>::
 network_manager.gd::GDScript::1840794961632271335::1791628036::0::1::::<>Node<><>0<>0<><>::
@@ -255,7 +259,7 @@ papoi_pot_zone.gd::GDScript::1540728696846196074::1791613103::0::1::::PapoiPotZo
 gv01_preview.gd::GDScript::5667675265326327567::1791628036::0::1::::<>Node2D<><>0<>0<><>::
 gv03_preview.gd::GDScript::4895130849356545974::1791628036::0::1::::<>Node2D<><>0<>0<><>::
 player_base.gd::GDScript::7393452876120864175::1791608683::0::1::::PapoiPlayerBase<>CharacterBody2D<><>0<>0<><>::
-player_controller.gd::GDScript::6498934671015700151::1791605013::0::1::::PapoiPlayerController<>CharacterBody2D<><>0<>0<><>::
+player_controller.gd::GDScript::6498934671015700151::1791637498::0::1::::PapoiPlayerController<>CharacterBody2D<><>0<>0<><>::
 player_visual.gd::GDScript::3790722213309482488::1791628036::0::1::::PapoiPlayerVisual<>Node2D<><>0<>0<><>::
 ::res://scripts/roles/::1791630076
 role_combat_system.gd::GDScript::235638450510728383::1791608683::0::1::::RoleCombatSystem<>RefCounted<><>0<>0<><>::
@@ -300,7 +304,7 @@ player_movement_test.gd::GDScript::4036814712143332897::1791615854::0::1::::<>No
 player_movement_test.tscn::PackedScene::-1::1791615854::0::1::::<><><>0<>0<><>::res://scenes/player/player.tscn<>res://tests/player/player_movement_test.gd
 player_smoke_test.gd::GDScript::5281468108393422889::1791615854::0::1::::<>SceneTree<><>0<>0<><>::
 player_test.tscn::PackedScene::-1::1791605013::0::1::::<><><>0<>0<><>::res://scenes/player/player.tscn
-::res://tests/qa/::1791634463
+::res://tests/qa/::1791636932
 gk01_map_visuals_test.gd::GDScript::5655636027603551217::1791629077::0::1::::<>SceneTree<><>0<>0<><>::
 gk02_base_spawn_visuals_test.gd::GDScript::4188522055307717548::1791629551::0::1::::<>SceneTree<><>0<>0<><>::
 gk03_pot_barrier_visuals_test.gd::GDScript::3520285509836040476::1791633138::0::1::::<>SceneTree<><>0<>0<><>::
@@ -310,6 +314,8 @@ k02_pot_zone_test.gd::GDScript::6896237060325590943::1791633138::0::1::::<>Scene
 k03_cooking_escape_test.gd::GDScript::9067253494373545211::1791616458::0::1::::<>SceneTree<><>0<>0<><>::
 k04_hud_results_test.gd::GDScript::3119981672874076913::1791628036::0::1::::<>SceneTree<><>0<>0<><>::
 p0_lan_3v3_matrix.md::TextFile::-1::1791617708::0::1::::<><><>0<>0<><>::
+tc02_clean_map_test.gd::GDScript::6409817308634428365::1791636630::0::1::::<>Node<><>0<>0<><>::
+tc02_clean_map_test.tscn::PackedScene::-1::1791636631::0::1::::<><><>0<>0<><>::res://tests/qa/tc02_clean_map_test.gd
 v03_player_collision_test.gd::GDScript::2137624822200757710::1791615854::0::1::::<>SceneTree<><>0<>0<><>::
 v04_camera_vision_test.gd::GDScript::7915294446766019910::1791615854::0::1::::<>SceneTree<><>0<>0<><>::
 ::res://tests/ui/::1791632205

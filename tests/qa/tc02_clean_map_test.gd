@@ -1,17 +1,17 @@
-extends SceneTree
+extends Node
 
 const MAP_SCENE := preload("res://scenes/map/papoi_map.tscn")
 
 var _failures: Array[String] = []
 
-func _init() -> void:
+func _ready() -> void:
 	var map := MAP_SCENE.instantiate() as PapoiMap
 	if map == null:
 		_fail("map scene did not instantiate")
 		_finish()
 		return
-	root.add_child(map)
-	await process_frame
+	add_child(map)
+	await get_tree().process_frame
 
 	var base_visuals := map.get_node_or_null("BaseSpawnVisuals") as Node2D
 	var pot_visuals := map.get_node_or_null("PotBarrierVisuals") as Node2D
@@ -32,8 +32,8 @@ func _fail(message: String) -> void:
 func _finish() -> void:
 	if _failures.is_empty():
 		print("TC02_CLEAN_MAP_TEST: PASS")
-		quit(0)
+		get_tree().quit(0)
 		return
 	for failure in _failures:
 		push_error("TC02_CLEAN_MAP_TEST: %s" % failure)
-	quit(1)
+	get_tree().quit(1)
