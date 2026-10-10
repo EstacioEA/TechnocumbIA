@@ -209,6 +209,15 @@
   headless.
 - Resultado del bloque de tareas Valeria: V01 a V05 completadas.
 
+## 2026-10-10 — GV01 siluetas y equipos
+
+- Rama: `Valeria_Piza/graphics-characters`, basada en `develop` actualizado.
+- Resultado: siluetas procedurales originales para atacantes y defensores,
+  distinguibles por color y forma, visibles sobre un preview del mapa.
+- Prueba: `tests/ui/gv01_characters_test.gd` ejecutada con Godot 4.7.2
+  headless; collider del jugador conservado.
+- Siguiente tarea: GV02 — Orientación y jugador local.
+
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
