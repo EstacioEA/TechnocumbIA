@@ -34,3 +34,11 @@
 - Inspecciones realizadas: estado/branch/HEAD, estados E05-A/E05-B/M06/V06, símbolos del runtime y contrato `POT_ESCAPE_RUNTIME.md`.
 - No se modificó gameplay, UI, autoridad, payloads ni pruebas. No se alteraron archivos de compañeros.
 - La spec marca J05 como lista tras sus dependencias; este handoff aclara que ese estado es condicional y que, en `f1c04f4`, E05-A, M06 y E05-B no están integradas.
+
+## Seguimiento tras actualizar referencias remotas
+
+- `origin/Edwar_Estacio/pot-escape-state` ahora apunta a `6b86109`, que contiene el commit `43a1a8b` con trabajo de E05-A/E05-B aún fuera de `origin/develop`.
+- En esa rama E05-A figura **IN_PROGRESS**: ya aparecen la constante compartida de 20 s y el campo serializable de salida, pero la propia spec asigna a M06 retirar el reloj paralelo e integrar la sesión.
+- E05-B figura **API DONE**; falta que M06 conecte `register_escape(peer_id)` al cruce autoritativo dentro de la ruta runtime.
+- M06 sigue **READY** en `origin/develop` y no aparece una rama remota de Miguel para esa tarea. J05 continúa bloqueada; no se ejecutaron pruebas ni se copiaron cambios de la rama de Edwar.
+- Referencia de entrega parcial de Edwar: `docs/handoffs/2026-10-10-1222-Edwar-E05-pot-escape-state-score.md`.
