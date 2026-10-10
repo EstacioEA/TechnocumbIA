@@ -560,3 +560,15 @@
 - Limitaciones: el panel HUD escala con `canvas_items`; no se revisó 1920×1080. Las previews emplean snapshots simulados y están rotuladas. No se creó commit ni se hizo push.
 - Handoff: `docs/handoffs/2026-10-10-0437-GE06-preview-scaling.md`.
 - Siguiente paso: GE01–GE06 del turno gráfico de Edwar están completas; revisar la matriz GINT junto con los entregables de Juan, Valeria, Krystal y Miguel.
+
+## 2026-10-10 — K06 remapeo oficial del mapa
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DESIGN / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: alinear el mapa jugable con `assets/maps/Mapa Base.jpeg` después de la autorización explícita de `full_remap`.
+- Archivos: `scripts/map/papoi_map.gd`, `scenes/map/papoi_map.tscn`, `scenes/map/visuals/papoi_map_visuals.gd`, `scenes/map/visuals/papoi_base_spawn_visuals.gd`, `scenes/map/visuals/papoi_pot_barrier_visuals.gd`, `tests/qa/k01_map_test.gd`, `tests/qa/k02_pot_zone_test.gd`, `tests/qa/gk03_pot_barrier_visuals_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0700-K06-official-map-remap.md`.
+- Resumen: se reemplazó el layout abstracto por la referencia oficial escalada a 1280×720; Hall de Auditorios funciona como base atacante/escape, Biblio como base defensora, Summan como captura, Piedritas como corredor y Torre como sala de olla. Se añadieron paredes de colisión aproximadas para la Torre y se conservó la autorización del host para la barrera.
+- Pruebas: `K01_MAP_TEST`, `K02_POT_ZONE_TEST`, `K03_COOKING_ESCAPE_TEST`, `GK01_MAP_VISUALS_TEST`, `GK02_BASE_SPAWN_VISUALS_TEST` y `GK03_POT_BARRIER_VISUALS_TEST` pasan con Godot 4.7.2; `git diff --check` pasa.
+- Evidencia runtime: `docs/handoffs/captura vista fix krystal 4.png` confirma el mapa completo a 1280×720 con olla en Torre y barrera cerrada.
+- Limitaciones: falta captura runtime con barrera abierta para cerrar GK03; no se afirma licencia externa de la imagen; no se creó commit ni se hizo push.

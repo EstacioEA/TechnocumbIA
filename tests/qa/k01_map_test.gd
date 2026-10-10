@@ -47,7 +47,7 @@ func _assert_boundary_collision(map: PapoiMap) -> void:
 	body.queue_free()
 
 func _assert_gate_collision(map: PapoiMap) -> void:
-	var body := _create_probe(Vector2(640.0, 384.0))
+	var body := _create_probe(Vector2(880.0, 220.0))
 	map.add_child(body)
 	var collision := body.move_and_collide(Vector2(100.0, 0.0))
 	if collision == null:

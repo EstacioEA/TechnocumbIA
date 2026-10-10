@@ -1,20 +1,14 @@
 class_name PapoiMapVisuals
 extends Node2D
 
-const MAP_BOUNDS := Rect2(64.0, 64.0, 1152.0, 640.0)
-const PLAYABLE_AREA := Rect2(80.0, 160.0, 1040.0, 448.0)
+const MAP_BOUNDS := Rect2(0.0, 0.0, 1280.0, 720.0)
 const ROUTES := [
-	Rect2(208.0, 288.0, 272.0, 192.0),
-	Rect2(720.0, 288.0, 272.0, 192.0),
-	Rect2(480.0, 176.0, 240.0, 64.0),
-	Rect2(480.0, 528.0, 240.0, 64.0),
+	Rect2(280.0, 280.0, 360.0, 160.0),
+	Rect2(640.0, 260.0, 320.0, 160.0),
+	Rect2(920.0, 120.0, 160.0, 200.0),
+	Rect2(960.0, 400.0, 240.0, 240.0),
 ]
-const WALLS := [
-	Rect2(80.0, 160.0, 1040.0, 128.0),
-	Rect2(80.0, 480.0, 1040.0, 128.0),
-	Rect2(80.0, 288.0, 128.0, 192.0),
-	Rect2(992.0, 288.0, 128.0, 192.0),
-]
+const REFERENCE_MAP := preload("res://assets/maps/Mapa Base.jpeg")
 
 const COLOR_BOUNDARY := Color("#21161E")
 const COLOR_FOLIAGE_DARK := Color("#0E4F22")
@@ -30,31 +24,13 @@ func _ready() -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	draw_rect(MAP_BOUNDS, COLOR_BOUNDARY, true)
-	draw_rect(PLAYABLE_AREA, COLOR_FOLIAGE_DARK, true)
-	_draw_foliage_bands()
-	_draw_walls()
+	draw_texture_rect(REFERENCE_MAP, MAP_BOUNDS, false)
 	_draw_routes()
-
-func _draw_foliage_bands() -> void:
-	for band_index in range(7):
-		var y := 176.0 + float(band_index) * 64.0
-		var band := Rect2(96.0, y, 992.0, 32.0)
-		draw_rect(band, COLOR_FOLIAGE if band_index % 2 == 0 else COLOR_FOLIAGE_LIGHT, true)
-		for marker_index in range(12):
-			var x := 112.0 + float(marker_index) * 88.0 + (32.0 if band_index % 2 == 0 else 0.0)
-			draw_circle(Vector2(x, y + 16.0), 5.0, COLOR_FOLIAGE_DARK)
-
-func _draw_walls() -> void:
-	for wall in WALLS:
-		draw_rect(wall, COLOR_WALL, true)
-		draw_line(wall.position + Vector2(0.0, 8.0), Vector2(wall.end.x, wall.position.y + 8.0), COLOR_WALL_HIGHLIGHT, 4.0)
-		draw_line(Vector2(wall.position.x, wall.end.y - 8.0), wall.end - Vector2(0.0, 8.0), COLOR_WALL_HIGHLIGHT, 4.0)
 
 func _draw_routes() -> void:
 	for route in ROUTES:
-		draw_rect(route, COLOR_ROUTE, true)
-		draw_rect(route, COLOR_ROUTE_EDGE, false, 4.0)
+		draw_rect(route, Color(COLOR_ROUTE, 0.16), true)
+		draw_rect(route, Color(COLOR_ROUTE_EDGE, 0.65), false, 3.0)
 		_draw_route_markers(route)
 
 func _draw_route_markers(route: Rect2) -> void:

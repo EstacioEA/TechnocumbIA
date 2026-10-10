@@ -24,11 +24,11 @@ func _init() -> void:
 func _assert_capture_zone(map) -> void:
 	if map.get_node_or_null("CaptureZone") == null:
 		_fail("capture zone node is missing")
-	if not map.is_position_in_capture_zone(Vector2(1000.0, 384.0)):
-		_fail("defender base position must be inside capture zone")
+	if not map.is_position_in_capture_zone(Vector2(960.0, 316.0)):
+		_fail("Summan capture approach position must be inside capture zone")
 
 func _assert_pot_validation(flow, map) -> void:
-	var papa_position := Vector2(600.0, 384.0)
+	var papa_position := Vector2(1000.0, 120.0)
 	if not map.is_position_in_pot(papa_position):
 		_fail("pot center must be inside pot zone")
 	if flow.detect_papa_in_pot(7, GameEnums.PapaState.FREE, true, true):

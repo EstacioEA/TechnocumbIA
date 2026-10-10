@@ -41,19 +41,25 @@
 - Spec: `docs/specs/Krystal_Giraldo/graphics-spec.md`; turno B; no depende del Theme de Edwar.
 
 ### GK01 — Suelo y rutas
-- Estado: IN_PROGRESS; dependencia: mapa actual.
+- Estado: DONE; remapeo oficial validado visualmente en runtime.
 - Aceptación: ruta transitable contrasta con suelo/decoración; paredes no parecen camino.
-- Evidencia parcial: `tests/qa/gk01_map_visuals_test.gd` y regresión `tests/qa/k01_map_test.gd` pasan con Godot 4.7.2 headless; la captura del mapa completo queda pendiente de revisión visual.
+- Evidencia: `tests/qa/gk01_map_visuals_test.gd`, regresión `tests/qa/k01_map_test.gd` y `docs/handoffs/captura vista fix krystal 4.png`.
 
 ### GK02 — Bases y spawns
-- Estado: IN_PROGRESS; puede hacerse en paralelo con GK01.
+- Estado: DONE; posiciones del remapeo validadas visualmente en runtime.
 - Aceptación: bases y spawns visibles mediante forma/icono/etiqueta, sin mover coordenadas lógicas.
-- Evidencia parcial: `tests/qa/gk02_base_spawn_visuals_test.gd`, `tests/qa/gk01_map_visuals_test.gd` y `tests/qa/k01_map_test.gd` pasan con Godot 4.7.2 headless; la captura/revisión visual queda pendiente.
+- Evidencia: `tests/qa/gk02_base_spawn_visuals_test.gd`, `tests/qa/gk01_map_visuals_test.gd`, `tests/qa/k01_map_test.gd` y `docs/handoffs/captura vista fix krystal 4.png`.
 
 ### GK03 — Olla y barrera
-- Estado: TODO; sin dependencia técnica de GK01/GK02.
+- Estado: IN_PROGRESS; implementación preservada y reubicada a Torre; pendiente de captura runtime cerrada/abierta.
 - Aceptación: olla y barrera abierta/cerrada legibles; visual no cambia colisión/objetivo.
 
 ### GK04 — Contraste/evidencia
 - Estado: TODO; depende de GK01–GK03.
 - Aceptación: overlay no esconde rutas/objetivos/HUD; pruebas mapa conservadas; captura y fuentes de assets documentadas.
+
+## K06 — Remapeo oficial del mapa
+- Estado: IN_PROGRESS; autorizado explícitamente para alinear lógica, colisiones y presentación con `assets/maps/Mapa Base.jpeg`.
+- Decisión funcional: Hall de Auditorios = base atacante/escape; Biblio = base defensora; Summan = zona de captura; Piedritas = corredor central; Torre = sala de la olla y entrada de Bestia.
+- Evidencia técnica: `K01_MAP_TEST`, `K02_POT_ZONE_TEST`, `K03_COOKING_ESCAPE_TEST`, `GK01_MAP_VISUALS_TEST`, `GK02_BASE_SPAWN_VISUALS_TEST` y `GK03_POT_BARRIER_VISUALS_TEST` pasan con Godot 4.7.2 headless.
+- Pendiente de aceptación: captura runtime con barrera abierta y revisión visual de colisiones/rutas; no se afirma licencia externa del JPEG.

@@ -1,7 +1,7 @@
 extends Node2D
 
-const ATTACKER_BASE := Rect2(80.0, 288.0, 128.0, 192.0)
-const DEFENDER_BASE := Rect2(992.0, 288.0, 128.0, 192.0)
+const ATTACKER_BASE := Rect2(32.0, 280.0, 320.0, 240.0)
+const DEFENDER_BASE := Rect2(1040.0, 496.0, 224.0, 224.0)
 const BASE_BORDER := Color("#E38452")
 const ATTACKER_COLOR := Color("#B62A2A", 0.28)
 const DEFENDER_COLOR := Color("#2E9CC1", 0.28)
