@@ -39,3 +39,7 @@ El runner reserva `Port - 1` para el escenario prepartida y ejecuta el test de J
 - El test conecta explícitamente `NetworkManager.peer_left` con `GameState.resolve_round(DISCONNECT)` en el fixture. El código de runtime aún no contiene ese puente automático; la integración de red y estado debe completarse en la integración del juego.
 - El cliente que abandona no recibe el resultado posterior; los cuatro peers restantes confirman el snapshot.
 - Sin commit ni push.
+
+## Actualización posterior — estado de integración runtime (2026-10-10)
+
+El límite descrito arriba era válido para el checkpoint J04 de las 02:04. La integración posterior conecta `NetworkManager.peer_left` con `GameState.resolve_round(DISCONNECT)` desde `PapoiGameSession._on_peer_left()` (`scripts/game/papoi_game_session.gd`), y `lobby.gd` inyecta el gestor de red en la sesión. La reejecución GINT de las 10:41 no verificó de nuevo ese evento: se detuvo antes de entrar al escenario de partida por timeout en la fase de lobby. La prueba entre computadores físicos y firewall LAN sigue pendiente. Ver también `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.

@@ -31,8 +31,8 @@
 - Rama sugerida: `Juan_Balanta/lan-test-harness`
 - Documentar y ejecutar host + clientes; cubrir desconexiones antes y durante partida.
 - Aceptación: procedimiento reproducible; resultados PASS/FAIL/BLOCKED en handoff.
-- Evidencia: `tests/network/run_disconnect_match_test.ps1` PASS en Godot 4.7.2. Ejecuta primero el lobby de seis slots y desconexión prepartida de J02; luego host + cinco clientes, ready, inicio, desconexión durante ACTIVE, invalidación sin ganador ni puntos y recepción del snapshot en los cuatro clientes conectados. `tests/game/game_state_test.gd` y regresión J03 PASS. Handoff: `docs/handoffs/2026-10-10-0204-J04-disconnect-harness.md`.
-- Limitación: la invalidación al recibir `peer_left` se conecta mediante un adaptador del test; el runtime todavía no integra automáticamente `NetworkManager` con `GameState`. Probar en LAN física y completar esa integración son pendientes de integración del juego.
+- Evidencia histórica (checkpoint J04 del handoff 02:04): `tests/network/run_disconnect_match_test.ps1` PASS en Godot 4.7.2. El runner probó lobby de seis slots, salida prepartida, inicio con seis listos, desconexión durante ACTIVE e invalidación sin ganador ni puntos; los cuatro clientes restantes recibieron el snapshot. `tests/game/game_state_test.gd` y regresión J03 PASS. La reejecución GINT 10:41 quedó BLOCKED antes del escenario de partida, por timeout del lobby.
+- Limitación vigente: la desconexión se probó solo en loopback; no hay verificación entre equipos físicos ni firewall LAN. La limitación histórica de integrar `peer_left` con `GameState` quedó resuelta en runtime por `PapoiGameSession._on_peer_left()` (`scripts/game/papoi_game_session.gd`); la reejecución GINT del 10:41 no alcanzó el escenario de desconexión durante partida.
 
 ## Tareas gráficas — Turno A de Juan (independiente de Edwar)
 - Specs: `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/graphics/README.md`.
@@ -52,15 +52,15 @@
 
 ### GJ03 — Unirse por IP
 - Estado: DONE — validación inline y unión de cliente desde el menú verificadas; e2e host/cliente localhost con roster de dos.
-- Dependencia: artefacto GJ01 existente; su revisión visual sigue pendiente.
+- Dependencia: artefacto GJ01 existente y revisado visualmente a 1280×720 y 1600×900; GJ05 verificó la integración del flujo.
 - Archivos: `scenes/menu/join_panel.tscn`, `scripts/ui/menu/join_panel.gd` y glue de vista en `scripts/ui/menu/main_menu.gd`.
-- Aceptación de este corte: IP/puerto editables y validados inline, emitir `join_requested(address, port)`, volver al menú, comunicar que falta integrar transporte. GJ05 conectará la intención con la sesión; esta tarea no cambia la red.
+- Criterios del corte aislado GJ03: IP/puerto editables y validados inline; entrada válida emite `join_requested(address, port)` y Volver regresa al menú. En ese corte se informaba que faltaba integrar transporte; GJ05 integró después la intención con la sesión LAN.
 
 ### GJ04 — Lobby
 - Estado: DONE — preview aislado comprobado; la navegación desde menú es GJ05.
 - Dependencia: GJ02/GJ03 solo para navegación, no para construir/probar escena propia.
 - Archivos: `scripts/ui/lobby/lobby.gd`, `tests/ui/lobby_presentation_test.gd`, `tests/network/ready_start_test.gd` (expectativa de cliente actualizada a botón visible deshabilitado), handoff y `AI_TRACE.md`.
-- Evidencia: Godot 4.7.2 headless editor PASS; `lobby_presentation_test.gd` PASS; `run_lobby_slots_test.ps1` PASS con seis jugadores, rechazo del séptimo y desconexión. `run_ready_start_test.ps1` comprobó host/cliente e inicio y alcanzó los marcadores PASS, pero el runner termina FAIL por llamadas multiplayer durante cierre de clientes en `papoi_game_session.gd`; se registra para seguimiento, sin cambios a red/autoridad.
+- Evidencia de tarea: Godot 4.7.2 headless editor, `lobby_presentation_test.gd` y `run_lobby_slots_test.ps1` PASS. El primer `run_ready_start_test.ps1` alcanzó los marcadores de inicio pero falló durante el teardown; Edwar documentó la corrección y tres PASS en `docs/handoffs/2026-10-10-1023-Edwar-lan-match-runner.md`. La reejecución GINT del 10:41 alcanzó `GAME_SESSION_READY` en seis procesos y falló al comprobar el código vacío de salida de `client1`; ver discrepancia vigente en GINT.
 
 ### GJ05 — Navegación, tamaños y handoff Turno A
 - Estado: DONE — verificado a 1280×720 y 1600×900; e2e menú-host-cliente aprobado. Handoff: `docs/handoffs/2026-10-10-0358-GJ05-menu-lobby-integration.md`.
@@ -73,16 +73,16 @@
 - Estado: IN_PROGRESS; resultados vigentes y defectos reproducibles en `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.
 - Dependencias: GJ01–GJ05, GE01–GE06, GV01–GV03, GK01–GK04 y GM01–GM04.
 - TC01 (Valeria), TC03 (Miguel) y TC04 (Edwar) están integradas; TC02 (Krystal) sigue pendiente de evidencia de colisiones/rutas.
-- GINT01: integración automatizada parcial; seis peers alcanzan GAME_SESSION_READY, pero el runner falló al validar la salida de client1 y el recorrido visual completo permanece pendiente.
-- GINT02: preview HUD de cinco estados PASS a 1920×1080; flujo real LAN a las tres resoluciones pendiente.
-- GINT03: handoff y AI_TRACE incrementales actualizados; cierre final depende de TC02 y del recorrido integrado.
+- GINT01: integración automatizada parcial (`GAME_INTEGRATION_TEST`, GV03, TC04, V04 y GK04 PASS); el runner de inicio tiene tres PASS previos reportados por Edwar y una discrepancia de teardown en la reejecución del 10:41. Falta el recorrido visual runtime completo con seis peers.
+- GINT02: preview HUD de cinco estados PASS a 1920×1080; el flujo real LAN a las tres resoluciones sigue pendiente.
+- GINT03: handoff y AI_TRACE incrementales actualizados; cierre final depende de TC02, runners repetibles y recorrido integrado.
 
 ## TC05 — Integración y QA final de remediaciones
 - Estado: TODO / BLOCKED por evidencia técnica pendiente de TC02 y por inconsistencia reproducida en los runners de seis jugadores y desconexión. TC01 (Valeria), TC03 (Miguel) y TC04 (Edwar) están integradas; no se atribuye el bloqueo a esas tareas.
-- Rama actual: `Juan_Balanta/gint-turn-c-integration`.
+- Checkpoint de GINT integrado en `develop`: `e49aed5` (`test(qa): revalidate GINT integration checkpoint`).
 - Revalidación: `docs/handoffs/2026-10-10-1041-Juan-GINT-runtime-recheck.md`.
 - Resultado parcial: integración de juego, GV03, contrato TC04, V04, GK04 y preview HUD 1920×1080 PASS. El preview a 1920×1080 es simulado; no equivale a sesión LAN real.
 - Bloqueo TC02 (owner: Krystal): falta demostrar límites y corredores mediante prueba de colisiones/rutas y captura de gameplay limpio. `tc02_clean_map_test.tscn` solo pasa el control de overlays de depuración ocultos.
-- Bloqueo de runner de inicio (owners propuestos: Juan/Edwar): los seis procesos reportan `GAME_SESSION_READY`, pero una reejecución falla al comprobar código de salida vacío de `client1`; el handoff de Edwar reporta tres PASS anteriores.
-- Bloqueo de runner de desconexión (owner propuesto: Juan): la fase de lobby expira esperando `seventh-rejected`, así que esta reejecución no alcanzó la desconexión durante partida.
+- Discrepancia del runner de inicio (seguimiento: Juan/Edwar): seis procesos llegaron a GAME_SESSION_READY, pero la reejecución 10:41 falló al comprobar el código vacío de client1; Edwar había documentado tres PASS previos. Aún no se ha determinado si es teardown o salida del proceso.
+- Revalidación del runner de desconexión (seguimiento: Juan): la fase de lobby expiró esperando seventh-rejected; por eso esa ejecución no probó la desconexión durante partida. J04 conserva su PASS histórico separado.
 - Cierre requerido: evidencia de TC02 integrada; runners repetibles; recorrido visual de seis peers y matriz completa a 1280×720, 1600×900 y 1920×1080, separando previews de runtime.

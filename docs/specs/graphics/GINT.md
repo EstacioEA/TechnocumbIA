@@ -19,7 +19,7 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 ## Tareas atómicas
 
 ### GINT01 — Ensamblar y recorrer el flujo
-- Estado: IN_PROGRESS — tests automatizados de integración pasan; recorrido visual runtime completo con seis peers pendiente. La reejecución del runner de inicio alcanzó GAME_SESSION_READY en seis procesos y falló al validar el código de salida vacío de client1.
+- Estado: IN_PROGRESS — `GAME_INTEGRATION_TEST`, GV03, TC04 HUD, V04 y GK04 pasan; la reejecución del runner de inicio alcanzó GAME_SESSION_READY en seis procesos y falló al comprobar el código de salida vacío de client1. Falta el recorrido visual runtime completo.
 - Aceptación: revisar diff/handoff de cada área; recorrer menú→lobby→juego→resultado; documentar referencias rotas con responsable.
 
 ### GINT02 — Matriz visual y resoluciones
@@ -39,22 +39,22 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 5. Repetir las comprobaciones de composición en 1280×720, 1600×900 y 1920×1080. Confirmar foco teclado, texto sin recorte y HUD sobre overlay.
 6. Ejecutar pruebas automatizadas disponibles para escenas/componentes tocados. Separar resultado de pruebas automatizadas del resultado visual manual.
 
-## Matriz — completar durante el relevo
+## Matriz vigente — revalidación 2026-10-10 10:41
 
-| Caso | Resultado inicial | Evidencia |
+| Caso | Estado vigente | Evidencia |
 |---|---|---|
 | Menú y navegación teclado | PASS | GJ05 `gj05_visual_capture_test.gd`; GJ05 `run_gj05_menu_lan_test.ps1` (host+cliente desde menú); evidencia `docs/handoffs/evidence/gj05/`. |
-| Errores/validación de red visibles | PASS | GJ05 captura de validación/rechazo; `run_lobby_slots_test.ps1` confirma rechazo del séptimo peer. |
-| Lobby 1/6, 6/6, ready/no-ready, host/cliente | BLOCKED en reejecución actual | Los handoffs anteriores registran PASS; ahora el runner de inicio falla en el cierre de client1 y el de desconexión expira esperando `seventh-rejected`. Ver handoff 10:40. |
+| Errores/validación de red visibles | PASS en validación UI previa; BLOCKED en reejecución del rechazo del séptimo | GJ05 conserva capturas legibles; el runner anidado agotó el timeout esperando el marcador de rechazo en la revalidación 10:41. |
+| Lobby 1/6, 6/6, ready/no-ready, host/cliente | BLOCKED en reejecución actual | Handoffs previos registran PASS; el runner de inicio falló al comprobar el cierre de client1 y el de desconexión expiró antes del escenario de partida. Ver handoff 10:41. |
 | Personajes/equipos/roles distinguibles | BLOCKED para recorrido visual integrado; pruebas automatizadas PASS | TC01 integrado; `gv03_six_players_test.gd` PASS. Revisar los seis peers durante el flujo runtime. |
 | Mapa, bases, rutas, olla y barrera legibles | BLOCKED | TC02 aún requiere prueba de colisiones/rutas y captura runtime limpia; clean-map PASS solo confirma overlays ocultos. |
 | HUD y feedback de acciones sobre visión | BLOCKED para flujo runtime; pruebas de componentes PASS | TC04 snapshot/HUD integrado; `tc04_role_snapshot_hud_test.gd` y V04 PASS. Cooldowns de preview son fixtures, no productores runtime. |
-| Estados de resultado de ronda/partida | PASS | `GAME_INTEGRATION_TEST`, `K04_HUD_RESULTS_TEST`, `GE05_RESULT_HIERARCHY_TEST` PASS; GE06 previews distinguidas como simuladas. |
-| Layout 1280×720 | PASS | Capturas de GJ05, GK04, GE06 y GM01; automatización de GJ05/GE06 PASS. |
-| Layout 1600×900 | PASS | GJ05 y GE06 generan/verifican previews a 1600×900; son previews, no partida LAN real. |
+| Estados de resultado de ronda/partida | PASS automatizado/preview; BLOCKED para flujo runtime completo | `GAME_INTEGRATION_TEST`, `K04_HUD_RESULTS_TEST`, `GE05_RESULT_HIERARCHY_TEST` PASS; GE06 distingue previews simuladas. |
+| Layout 1280×720 | PASS para menú/previews; BLOCKED para flujo gameplay integrado | GJ05, GK04, GE06 y GM01 tienen evidencia en esta resolución; no equivale al recorrido LAN completo. |
+| Layout 1600×900 | PASS para menú/previews; BLOCKED para flujo gameplay integrado | GJ05 y GE06 tienen evidencia en esta resolución; son previews, no partida LAN real. |
 | Layout 1920×1080 | PASS preview HUD; BLOCKED runtime | Cinco estados simulados en `evidence/gint/1920x1080/`; no hay captura de partida LAN real. |
 
-## Revalidación GINT — 2026-10-10
+## Estado del checkpoint histórico GINT — 2026-10-10 07:45
 
 - Godot 4.7.2 editor import/scan: PASS.
 - 22 suites headless de mapa, colisiones, integración de juego, GV01–03, GM01–04 y GE03–05: PASS; listado detallado en `docs/handoffs/2026-10-10-0745-Juan-GINT-integration-qa.md`.
@@ -62,7 +62,7 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 - `lobby_presentation_test.gd`: PASS.
 - `run_lobby_slots_test.ps1`: PASS; host + cinco clientes, séptimo rechazado, desconexión y roster actualizado.
 - `run_disconnect_match_test.ps1`: PASS tras la correccion de cierre de sesion de `2026-10-10-0800-Juan-disconnect-runtime-fix.md`; el handoff historico del fallo anterior se conserva.
-- Dependencias Turn C: TC01, TC02 y TC04 continúan `TODO` en los specs de sus responsables; TC03 está `DONE`. TC05 no puede cerrarse hasta integrar TC01, TC02 y TC04.
+- Estado de dependencias en ese checkpoint: TC01, TC02 y TC04 todavía figuraban TODO; TC03 estaba DONE. Es un registro histórico; el estado vigente está resumido abajo.
 
 ## Aceptación observable
 
@@ -74,7 +74,7 @@ No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN.
 - [ ] `AI_TRACE.md` recibe una entrada incremental; no hay commit automático.
 
 
-## Estado vigente — revalidación 2026-10-10 10:40 (Juan)
+## Estado vigente — revalidación 2026-10-10 10:41 (Juan)
 
 Este bloque actualiza el checkpoint vigente; los resultados históricos anteriores se conservan como registro. TC01 sprites está integrado, TC03 está DONE y TC04 snapshot/HUD está integrado con preview. TC02 continúa TODO: su prueba `tc02_clean_map_test.tscn` solo confirma que los overlays de debug están ocultos, no demuestra colisiones ni conectividad de los pasillos. Por ello TC05 aún no puede cerrarse.
 
