@@ -17,11 +17,11 @@
 - Evidencia: `tests/qa/k02_pot_zone_test.gd` pasó con Godot 4.7.2 headless; validó zona de captura, Papa capturada dentro de olla y rechazo de detecciones inválidas/no autorizadas.
 
 ## K03 — Cocción, rescate y escape
-- Estado: BLOCKED
+- Estado: DONE
 - Depende de: K02, M02, E02
 - Implementar cocción, cancelación por Bestia, cambio a escape y zona de base atacante.
 - Aceptación: cocción completa cambia objetivo; rescate cancela; regreso a base emite evento de resultado.
-- Bloqueo: requiere `M02` (captura/transporte de Papa), que permanece `TODO`; no se implementa lógica duplicada ni se altera el contrato de Miguel.
+- Evidencia: `tests/qa/k03_cooking_escape_test.gd` pasó con Godot 4.7.2 headless; validó autorización host, cocción, acceso/rescate de Bestia, transición a escape y base atacante.
 
 ## K04 — HUD y pantallas de resultado
 - Estado: TODO

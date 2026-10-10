@@ -154,6 +154,25 @@
 - Resumen: K02 y E02 están DONE, pero K03 depende de M02, que sigue TODO. No se implementó lógica duplicada de captura, cocción o escape.
 - Limitaciones: se requiere la entrega/integración de M02 antes de crear la rama de implementación de K03; no se creó commit ni se publicó AI_TRACE.md.
 
+## 2026-10-10 — K03 cocción, rescate y escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: implementar cocción host-autoritativa, rescate de Bestia, transición a escape y detección de base atacante.
+- Rama: `Krystal_Giraldo/cooking-rescue-escape`, basada en `develop` actualizado.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0210-K03-cooking-rescue-escape.md`.
+- Resumen: se reutilizaron `PapaCaptureState` y `BeastAccessState`; el coordinador exige Papa capturada y host, abre acceso de Bestia durante cocción, cancela por rescate, cambia a escape al completar y emite `escape_reached` solo dentro de la base atacante.
+- Limitaciones: `escape_reached` debe conectarse al GameState del host para resolver la ronda; este módulo no adjudica puntos ni victoria. AI_TRACE.md permanece local y no se publica remotamente.
+
+## 2026-10-10 — validación K03
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Krystal Giraldo
+- Tipo: TESTING / DEBUGGING
+- Tarea: validar la secuencia de cocción, rescate de Bestia y escape de K03.
+- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/handoffs/2026-10-10-0210-K03-cooking-rescue-escape.md`.
+- Resumen: se corrigió la guarda que impedía rescates antes de la aparición de Bestia. `K03_COOKING_ESCAPE_TEST`, `K01_MAP_TEST` y `K02_POT_ZONE_TEST` pasaron con Godot 4.7.2.
+- Limitaciones: la señal `escape_reached` aún debe conectarse al GameState autoritativo para resolver la ronda; no se creó commit ni se publicó AI_TRACE.md.
+
 ## 2026-10-10 — V02 input y movimiento
 
 - Rama: `Valeria_Piza/player-movement`, basada en `main` actualizado.
