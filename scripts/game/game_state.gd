@@ -229,7 +229,7 @@ func start_next_round() -> bool:
 
 func _process(delta: float) -> void:
 	var peer: MultiplayerPeer = multiplayer.multiplayer_peer
-	if peer != null and peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
+	if peer == null or peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
 		return
 	if not multiplayer.is_server() or delta <= 0.0:
 		return

@@ -726,3 +726,15 @@
 - Pruebas: `GAME_INTEGRATION_TEST: PASS` con Godot 4.7.2; runner `run_ready_start_test.ps1 -Port 2456` confirmó seis jugadores listos y `lobby_start` en host y cinco clientes, pero terminó fallando porque el host reportó `Unable to send packet on channel 0` durante el cierre simultáneo de los procesos. El test del menú LAN a lobby había pasado anteriormente en este mismo turno.
 - Limitaciones: no se verificó conectividad entre computadores físicos; el error de cierre del runner deja incompleta la verificación automatizada del ciclo completo aunque la transición lobby_start se observó en los seis procesos. La importación de PNG debe regenerarse localmente por Godot; cachés/imports de editor generados durante la prueba se restauraron.
 - Handoff: `docs/handoffs/2026-10-10-1013-Edwar-lan-match-flow.md`.
+## 2026-10-10 — Cierre estable de prueba LAN e inicio de ronda
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DEBUGGING / TESTING / DOCUMENTATION
+- Tarea: encontrar y corregir el error de cierre en el runner multiinstancia y comprobar el flujo hasta el estado inicial de la partida.
+- Rama: `Edwar_Estacio/lan-match-runner`, iniciada desde el checkpoint de la tarea LAN anterior (`a54fdc7`), sin modificar historial.
+- Archivos: `tests/network/ready_start_test.gd`, `tests/network/run_ready_start_test.ps1`, `scripts/game/game_state.gd`, `AI_TRACE.md`, `docs/handoffs/2026-10-10-1023-Edwar-lan-match-runner.md`.
+- Resumen: el runner ya no finaliza los seis procesos simultáneamente. Ahora confirma en el host el GameState en ronda 1 y en cada cliente el snapshot autoritativo recibido, pide cierre uno por uno y deja al host cerrar al final. La guarda de `GameState._process()` ahora exige un peer conectado antes de consultar autoridad, evitando errores cuando el transporte termina.
+- Pruebas: `run_ready_start_test.ps1 -Port 2456` pasó tres veces consecutivas con Godot 4.7.2; las seis instancias informaron `GAME_SESSION_READY` y no hubo errores Godot/ENet. `game_state_test.gd`: PASS. `run_gj05_menu_lan_test.ps1 -Port 2456`: PASS. `git diff --check`: PASS.
+- Limitaciones: integración automatizada en loopback; no reemplaza una prueba entre computadores físicos con firewall y red LAN reales. El cierre escalonado de clientes es limpieza del harness de prueba y no una acción del flujo normal del juego.
+- Handoff: `docs/handoffs/2026-10-10-1023-Edwar-lan-match-runner.md`.
