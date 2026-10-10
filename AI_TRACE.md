@@ -793,6 +793,18 @@
 - Limitaciones: actualización documental solamente; no se modificó gameplay ni se ejecutaron pruebas de Godot.
 - Handoff: `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`.
 
+## 2026-10-10 — Eliminación visual al agotar vidas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: asegurar que un jugador sin vidas desaparezca de la ronda y que la eliminación total otorgue la ronda a los defensores.
+- Rama: `Valeria_Piza/player-elimination`, basada en `origin/develop` (`c6ceb95`).
+- Archivos: `scripts/game/papoi_game_session.gd`, `tests/game/player_elimination_test.gd`, `docs/handoffs/2026-10-10-1425-player-elimination.md`.
+- Resumen: la sesión aplica `active`/`lives` del snapshot autoritativo a la visibilidad y control del actor. Los jugadores en respawn permanecen ocultos; los jugadores con cero vidas quedan eliminados. No se duplicaron descuentos ni reglas de victoria: `GameState` conserva `ATTACKERS_ELIMINATED` y la victoria defensora.
+- Pruebas: `PLAYER_ELIMINATION_TEST`, `GAME_INTEGRATION_TEST` y `combat_lives_state_test` pasaron con Godot 4.7.2 headless.
+- Limitaciones: la evidencia automatizada es headless; la revisión visual interactiva de desaparición durante una partida LAN queda para el runner manual/multiinstancia.
+- Handoff: `docs/handoffs/2026-10-10-1425-player-elimination.md`.
+
 ## 2026-10-10 — E05 estado de olla y scoring por primer escape
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
