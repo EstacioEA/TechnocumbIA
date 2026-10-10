@@ -134,6 +134,9 @@ func is_beast_gate_open() -> bool:
 
 func set_debug_overlay_visible(enabled: bool) -> void:
 	_show_debug_overlay = enabled
+	var map_visuals := get_node_or_null("Visuals") as Node2D
+	if map_visuals and map_visuals.has_method("set_route_debug_visible"):
+		map_visuals.call("set_route_debug_visible", enabled)
 	var base_visuals := get_node_or_null("BaseSpawnVisuals") as Node2D
 	var pot_visuals := get_node_or_null("PotBarrierVisuals") as Node2D
 	if base_visuals:

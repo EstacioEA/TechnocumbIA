@@ -1,5 +1,5 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1791642270
+::res://::1791643176
 AI_TRACE.md::TextFile::-1::1791639267::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1791595013::0::1::::<><><>0<>0<><>::
 ::res://assets/::1791629326
@@ -204,12 +204,12 @@ papoi_map_gk03_open_preview.tscn::PackedScene::-1::1791633138::0::1::::<><><>0<>
 papoi_map_gk04_contrast_preview.gd::GDScript::443691682998381677::1791635177::0::1::::<>Node2D<><>0<>0<><>::
 papoi_map_gk04_contrast_preview.tscn::PackedScene::-1::1791634463::0::1::::<><><>0<>0<><>::res://scenes/map/papoi_map_gk04_contrast_preview.gd
 papoi_map_tc02_boundary_overlay.gd::GDScript::7504607323620829044::1791642164::0::1::::<>Node2D<><>0<>0<><>::
-papoi_map_tc02_playable_preview.gd::GDScript::6316989492175235891::1791641007::0::1::::<>Node2D<><>0<>0<><>::
+papoi_map_tc02_playable_preview.gd::GDScript::6316989492175235891::1791643149::0::1::::<>Node2D<><>0<>0<><>::
 papoi_map_tc02_playable_preview.tscn::PackedScene::-1::1791636919::0::1::::<><><>0<>0<><>::res://scenes/map/papoi_map_tc02_playable_preview.gd
 ::res://scenes/map/visuals/::1791633138
 papoi_base_spawn_visuals.gd::GDScript::1805892858428229826::1791633138::0::1::::<>Node2D<><>0<>0<><>::
 papoi_base_spawn_visuals.tscn::PackedScene::-1::1791629551::0::1::::<><><>0<>0<><>::res://scenes/map/visuals/papoi_base_spawn_visuals.gd
-papoi_map_visuals.gd::GDScript::6130980669737283048::1791642164::0::1::::PapoiMapVisuals<>Node2D<><>0<>0<><>::
+papoi_map_visuals.gd::GDScript::6130980669737283048::1791642872::0::1::::PapoiMapVisuals<>Node2D<><>0<>0<><>::
 papoi_map_visuals.tscn::PackedScene::-1::1791629077::0::1::::<><><>0<>0<><>::res://scenes/map/visuals/papoi_map_visuals.gd
 papoi_pot_barrier_visuals.gd::GDScript::5383279084863242856::1791633138::0::1::::<>Node2D<><>0<>0<><>::
 papoi_pot_barrier_visuals.tscn::PackedScene::-1::1791633138::0::1::::<><><>0<>0<><>::res://scenes/map/visuals/papoi_pot_barrier_visuals.gd
@@ -247,7 +247,7 @@ game_state.gd::GDScript::2568438623370501018::1791628036::0::1::::GameState<>Nod
 match_state.gd::GDScript::7610468528282603918::1791613235::0::1::::MatchState<>RefCounted<><>0<>0<><>::
 papoi_game_session.gd::GDScript::6155085817942240605::1791628036::0::1::::PapoiGameSession<>Node2D<><>0<>0<><>::
 ::res://scripts/map/::1791641894
-papoi_map.gd::GDScript::6357855453770774956::1791642163::0::1::::PapoiMap<>Node2D<><>0<>0<><>::
+papoi_map.gd::GDScript::6357855453770774956::1791642882::0::1::::PapoiMap<>Node2D<><>0<>0<><>::
 ::res://scripts/network/::1791630076
 network_game_bridge.gd::GDScript::1702494993653774034::1791617691::0::1::::NetworkGameBridge<>Node<><>0<>0<><>::
 network_manager.gd::GDScript::1840794961632271335::1791628036::0::1::::<>Node<><>0<>0<><>::

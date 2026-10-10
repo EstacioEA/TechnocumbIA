@@ -2,7 +2,6 @@ extends Node2D
 
 const MAP_SCENE := preload("res://scenes/map/papoi_map.tscn")
 const PLAYER_SCENE := preload("res://scenes/player/player.tscn")
-const BOUNDARY_OVERLAY := preload("res://scenes/map/papoi_map_tc02_boundary_overlay.gd")
 
 func _ready() -> void:
 	var map := MAP_SCENE.instantiate() as PapoiMap
@@ -10,9 +9,7 @@ func _ready() -> void:
 		push_error("TC02 playable preview could not instantiate PapoiMap")
 		return
 	add_child(map)
-	map.set_debug_overlay_visible(true)
-	var boundary_overlay := BOUNDARY_OVERLAY.new()
-	add_child(boundary_overlay)
+	map.set_debug_overlay_visible(false)
 
 	var player := PLAYER_SCENE.instantiate() as PapoiPlayerController
 	if player == null:

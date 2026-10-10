@@ -40,13 +40,20 @@ const COLOR_ROUTE_EDGE := Color("#B77D59")
 const COLOR_WALL := Color("#76412E")
 const COLOR_WALL_HIGHLIGHT := Color("#E38452")
 
+var show_route_debug := false
+
 func _ready() -> void:
 	z_index = -1
 	queue_redraw()
 
 func _draw() -> void:
 	draw_texture_rect(REFERENCE_MAP, MAP_BOUNDS, false)
-	_draw_routes()
+	if show_route_debug:
+		_draw_routes()
+
+func set_route_debug_visible(enabled: bool) -> void:
+	show_route_debug = enabled
+	queue_redraw()
 
 func _draw_routes() -> void:
 	for route in ROUTES:

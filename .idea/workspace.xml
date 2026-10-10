@@ -6,17 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.godot/editor/project_metadata.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/project_metadata.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.godot/uid_cache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/uid_cache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI_TRACE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AI_TRACE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/captura 7 vision normal.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/captura 7 vision normal.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/captura 7.1 vision activa.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/captura 7.1 vision activa.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/specs/Krystal_Giraldo/TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/specs/Krystal_Giraldo/TASKS.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/map/visuals/papoi_map_visuals.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/map/papoi_map.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/map/papoi_map.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/player/player_controller.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/player/player_controller.gd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/qa/tc02_clean_map_test.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/qa/tc02_clean_map_test.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
