@@ -352,3 +352,14 @@
 - Pruebas: `git diff --check` PASS. No se ejecutó Godot ni se capturó la pantalla; por ello GJ01 queda BLOCKED hasta confirmar visualmente carga y foco.
 - Limitaciones: conexión y creación de host aún corresponden a GJ02/GJ03; no se necesita a Edwar para continuar.
 - Siguiente paso: abrir el proyecto y verificar la escena a 1280×720; luego implementar GJ02.
+
+## 2026-10-10 — GJ02 panel de crear partida
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: construir el panel visual de host y validación de puerto para GJ02.
+- Rama: `Juan_Balanta/gj02-host-panel`, basada en `develop` actualizado.
+- Archivos: `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd`, `scripts/ui/menu/main_menu.gd`, `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/handoffs/2026-10-10-0322-GJ02-host-panel.md`.
+- Resumen: Host abre un panel con puerto por defecto 2456; valida rango 1–65535, muestra errores/confirmación, emite intención de crear y permite volver. El panel no abre ENet; no depende del trabajo de Edwar.
+- Pruebas: `git diff --check` PASS. No se ejecutó Godot ni revisión visual, así que GJ02 queda BLOCKED hasta validar en runtime.
+- Limitaciones: transporte de servidor se conecta en tarea posterior; GJ01 aún tiene su revisión visual pendiente.
+- Siguiente paso: implementar GJ03 (panel join por IP); luego volver a verificar los paneles y el menú.

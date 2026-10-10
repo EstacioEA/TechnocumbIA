@@ -45,8 +45,10 @@
 - Aceptación: ejecutar el proyecto abre título, Host, Unirse y Salir; foco teclado visible; Host/Unirse emiten señales UI.
 
 ### GJ02 — Crear partida/host
-- Estado: TODO; dependencia: GJ01.
-- Aceptación: puerto visible, botón Crear y estados disponibles/error presentados sin consola; no modificar ENet.
+- Estado: BLOCKED — implementación creada; falta revisar el flujo visual.
+- Requiere la escena GJ01 existente, no su validación visual; panel aislado mientras tanto.
+- Archivos: nuevos `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd` y glue visual en `scripts/ui/menu/main_menu.gd`.
+- Aceptación: Host abre panel; puerto inicial 2456; rango 1–65535 validado inline; puerto válido emite señal; Volver regresa al menú; no modificar ENet.
 
 ### GJ03 — Unirse por IP
 - Estado: TODO; dependencia: GJ01.

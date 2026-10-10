@@ -1,5 +1,7 @@
 extends Control
 
+const HOST_PANEL_SCENE := preload("res://scenes/menu/host_panel.tscn")
+
 signal host_requested
 signal join_requested
 
@@ -8,6 +10,8 @@ signal join_requested
 @onready var join_button: Button = %JoinButton
 @onready var exit_button: Button = %ExitButton
 @onready var status_label: Label = %StatusLabel
+
+var _host_panel: Control
 
 
 func _ready() -> void:
@@ -63,8 +67,24 @@ func _apply_button_style(button: Button, is_primary: bool) -> void:
 
 
 func _on_host_pressed() -> void:
-	status_label.text = "La configuración de anfitrión se conectará en la siguiente tarea."
 	host_requested.emit()
+	menu_panel.visible = false
+	_host_panel = HOST_PANEL_SCENE.instantiate()
+	_host_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_host_panel.connect("cancel_requested", _on_host_cancelled)
+	_host_panel.connect("create_requested", _on_host_create_requested)
+	add_child(_host_panel)
+
+
+func _on_host_cancelled() -> void:
+	_host_panel.queue_free()
+	_host_panel = null
+	menu_panel.visible = true
+	host_button.grab_focus()
+
+
+func _on_host_create_requested(port: int) -> void:
+	status_label.text = "Puerto %d validado; el transporte se conectará en otra tarea." % port
 
 
 func _on_join_pressed() -> void:

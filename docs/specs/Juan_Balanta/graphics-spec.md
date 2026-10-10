@@ -11,9 +11,10 @@ Juan puede completar GJ01–GJ05 sin esperar el Theme ni una revisión de Edwar.
 - Aceptación: ejecutar el proyecto abre el menú con título Papoi y acciones Host, Unirse y Salir; disposición y foco de teclado son visibles a 1280×720; las acciones Host/Unirse emiten señales de UI sin mutar la red.
 
 ### GJ02 — Panel de crear partida
-- Estado: TODO; depende de: GJ01.
-- Archivos: nuevos `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd`.
-- Aceptación: presenta puerto editable con valor inicial visible, botón Crear y estados disponible/validación/error; muestra errores en pantalla. No cambia ENet ni protocolo.
+- Estado: BLOCKED — implementación creada; falta revisar el flujo visual.
+- Depende del artefacto de escena GJ01 (su revisión visual queda pendiente, pero GJ02 es un panel aislado).
+- Archivos: nuevos `scenes/menu/host_panel.tscn`, `scripts/ui/menu/host_panel.gd`; conexión de vista en `scripts/ui/menu/main_menu.gd`.
+- Aceptación: Host abre el panel; puerto inicial 2456 editable; Crear valida rango 1–65535 y da error inline; puerto válido emite `create_requested(port)` y comunica claramente que esta subtarea aún no inicia ENet; Volver regresa al menú. No cambia ENet ni protocolo.
 
 ### GJ03 — Panel de conexión por IP
 - Estado: TODO; depende de: GJ01.
