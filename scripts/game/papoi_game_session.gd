@@ -37,6 +37,7 @@ var _snapshot_elapsed := 0.0
 var _last_remote_revision := -1
 var _round_models_ready := false
 var _suppress_snapshot_rpc := false
+var _suppress_flow_sync := false
 var _network_session_ended := false
 var _local_preview_mode := false
 
@@ -241,6 +242,8 @@ func _perform_validated_action(peer_id: int, action: StringName) -> bool:
 					return _start_cooking_if_at_pot(peer_id)
 				if int(_capture_state.carrier_id) < 0:
 					return _capture_papa_if_near(peer_id)
+			elif phase == GameEnums.GamePhase.POT_COOKING:
+				return _rescue_papa(peer_id)
 			elif phase == GameEnums.GamePhase.ESCAPE:
 				return _finish_escape_if_at_base(peer_id)
 			return false
@@ -280,10 +283,15 @@ func _start_cooking_if_at_pot(peer_id: int) -> bool:
 		return false
 	if int(_capture_state.carrier_id) != peer_id or not _map.is_position_in_pot(_player_position(peer_id)):
 		return false
-	if not _game_state.begin_pot_cooking():
+	_suppress_flow_sync = true
+	var game_state_started: bool = _game_state.begin_pot_cooking()
+	_suppress_flow_sync = false
+	if not game_state_started:
 		return false
 	if not _cooking_flow.start_cooking(true):
+		_suppress_flow_sync = true
 		_game_state.cancel_pot_cooking()
+		_suppress_flow_sync = false
 		return false
 	_papa_marker.global_position = _map.to_global(_map.POT_ROOM_CENTER)
 	_schedule_snapshot()
@@ -291,14 +299,14 @@ func _start_cooking_if_at_pot(peer_id: int) -> bool:
 
 
 func _finish_escape_if_at_base(peer_id: int) -> bool:
-	if _capture_state == null or _cooking_flow == null:
+	if _cooking_flow == null or not _is_attacker(peer_id):
 		return false
-	if int(_capture_state.carrier_id) != peer_id:
+	if not _map.is_position_in_escape(_player_position(peer_id)):
 		return false
-	return _cooking_flow.reach_escape(
-		_player_position(peer_id),
-		_map.ESCAPE_ZONE
-	)
+	if not _game_state.register_escape(peer_id):
+		return false
+	_schedule_snapshot()
+	return true
 
 
 func _drop_papa(peer_id: int) -> bool:
@@ -360,9 +368,14 @@ func _rescue_papa(peer_id: int) -> bool:
 		return false
 	if _player_position(peer_id).distance_to(_map.to_global(_map.POT_ROOM_CENTER)) > CAPTURE_DISTANCE:
 		return false
-	if _cooking_flow == null or not _cooking_flow.rescue_by_beast():
+	if _cooking_flow == null:
 		return false
-	if not _game_state.cancel_pot_cooking():
+	_suppress_flow_sync = true
+	var game_state_cancelled: bool = _game_state.cancel_pot_cooking()
+	_suppress_flow_sync = false
+	if not game_state_cancelled:
+		return false
+	if not _cooking_flow.sync_from_game_snapshot(_game_state.get_snapshot()):
 		return false
 	if _tower_key_state != null:
 		_tower_key_state.spawn_at(_map.to_global(_map.TOWER_KEY_SPAWN))
@@ -372,22 +385,18 @@ func _rescue_papa(peer_id: int) -> bool:
 
 
 func _on_cooking_completed(_papa_id: int) -> void:
-	if _capture_state != null:
-		_capture_state.papa_state = GameEnums.PapaState.COOKED
 	_schedule_snapshot()
 
 
-func _on_escape_reached(_carrier_id: int) -> void:
-	var snapshot: Dictionary = _game_state.get_snapshot()
-	_game_state.resolve_round(int(snapshot.attacking_team), GameEnums.RoundEndReason.ESCAPE_SUCCESS)
-	_publish_snapshot()
+func _on_cooking_cancelled(_papa_id: int) -> void:
+	_schedule_snapshot()
 
 
 func _on_authoritative_state_changed(snapshot: Dictionary) -> void:
 	if not _is_active_server():
 		return
-	if _cooking_flow != null:
-		_cooking_flow.apply_authoritative_state(snapshot)
+	if _cooking_flow != null and not _suppress_flow_sync:
+		_cooking_flow.sync_from_game_snapshot(snapshot)
 	_ensure_player_nodes(snapshot)
 	_render_snapshot(_compose_snapshot(snapshot))
 	_schedule_snapshot()
@@ -439,9 +448,8 @@ func _configure_round_models(snapshot: Dictionary) -> void:
 		_push_integration_error("TowerKeyState rechazó la configuración de ronda.")
 		return
 	_cooking_flow = CookingEscapeData.new(true, _capture_state, _beast_state)
-	_cooking_flow.apply_authoritative_state(snapshot)
 	_cooking_flow.cooking_completed.connect(_on_cooking_completed)
-	_cooking_flow.escape_reached.connect(_on_escape_reached)
+	_cooking_flow.cooking_cancelled.connect(_on_cooking_cancelled)
 	_round_models_ready = true
 
 
@@ -630,6 +638,9 @@ func _compose_snapshot(source: Dictionary) -> Dictionary:
 
 func _render_snapshot(snapshot: Dictionary) -> void:
 	_ensure_player_nodes(snapshot)
+	var escape_indicator := _map.get_node_or_null("EscapeExitIndicator")
+	if escape_indicator != null and escape_indicator.has_method("set_escape_available"):
+		escape_indicator.call("set_escape_available", bool(snapshot.get("escape_available", false)))
 	var local_snapshot := snapshot.duplicate(true)
 	local_snapshot["local_peer_id"] = multiplayer.get_unique_id() if _is_transport_connected() else -1
 	_hud.apply_match_snapshot(local_snapshot)

@@ -830,27 +830,15 @@
 - Limitaciones: el runner multiinstancia, tres corridas loopback y prueba LAN física quedan pendientes hasta integrar E05-A, M06 y E05-B.
 - Handoff: `docs/handoffs/2026-10-10-1231-J05-prerequisite-blocker.md`.
 
-## 2026-10-10 — Edwar completa E05-A: reloj autoritativo de olla
+## 2026-10-10 — Miguel Pabon: M06 depósito, rescate y escape runtime
 - TEAM_ID: TechnocumbIA
-- PARTICIPANT_ID: Edwar Estacio
+- PARTICIPANT_ID: Miguel Pabon
 - EVENT_ID: GameJam
-- Tipo: AI_ASSISTED / DEBUGGING / TESTING / DOCUMENTATION
-- Tarea: E05-A — retirar el reloj paralelo y hacer que el objetivo refleje el snapshot autoritativo.
-- Rama: `Edwar_Estacio/pot-escape-clock`, creada desde `main` actualizado y avanzó por fast-forward a `develop` (`0e988e0`) para incluir dependencias E01–E04; `main` no se modificó.
-- Archivos: `scripts/objectives/papoi_cooking_escape.gd`, `scripts/game/papoi_game_session.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1244-Edwar-E05A-authoritative-pot-clock.md`, `AI_TRACE.md`.
-- Resumen: se eliminó `COOKING_DURATION_SECONDS` de 30 s y `advance_host_clock`; GameSession deja de decrementar el reloj local. PapoiCookingEscape refleja fase, tiempo, Papa y salida desde GameState y emite eventos por transiciones recibidas.
-- Pruebas: Godot 4.7.2 headless — `tests/qa/k03_cooking_escape_test.gd` PASS; `tests/game/game_integration_test.gd` PASS (warning previo por casing de import Bestia); `tests/game/game_state_test.gd` PASS (warnings esperados de rechazos probados). `git diff --check` se ejecuta al cierre de esta entrada.
-- Limitaciones: M06 aún debe completar la interacción de depósito/rescate y validar el cruce host-side de cualquier atacante para llamar `register_escape`; J05 y la prueba LAN manual siguen pendientes. Sin commit ni push.
-- Handoff: `docs/handoffs/2026-10-10-1244-Edwar-E05A-authoritative-pot-clock.md`.
-## 2026-10-10 — Seguimiento J05 tras fetch de prerequisitos
-- TEAM_ID: TechnocumbIA
-- PARTICIPANT_ID: Juan Diego Balanta
-- EVENT_ID: GameJam
-- Tipo: DOCUMENTATION / BLOCKER_RECHECK
-- Tarea: revisar si el avance remoto de E05-A/E05-B desbloquea J05.
-- Rama: `Juan_Balanta/lan-pot-escape-test`.
-- Archivos: `docs/handoffs/2026-10-10-1231-J05-prerequisite-blocker.md`, `AI_TRACE.md`.
-- Resumen: se detectó `origin/Edwar_Estacio/pot-escape-state` (`6b86109`, con `43a1a8b`), que contiene avance aún no integrado: E05-A IN_PROGRESS y E05-B API DONE. M06 sigue READY y debe integrar el runtime; J05 permanece bloqueada.
-- Pruebas: no ejecutadas; fue una revisión de referencias/código. No se declara ningún PASS.
-- Limitaciones: J05 requiere integración en `develop` de E05-A, M06 y el uso runtime de E05-B antes de implementar y correr el flujo vertical.
-- Handoff: `docs/handoffs/2026-10-10-1231-J05-prerequisite-blocker.md`.
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: M06 — integrar depósito de Papa, rescate de Bestia y cruce de salida en la sesión runtime.
+- Rama: `Miguel_Pabon/pot-rescue-runtime`.
+- Archivos: `scripts/combat/papa_capture_state.gd`, `scripts/objectives/papoi_cooking_escape.gd`, `scripts/game/papoi_game_session.gd`, `scenes/map/papoi_map.tscn`, `tests/game/m06_pot_rescue_runtime_test.gd`, `tests/qa/k03_cooking_escape_test.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1248-Miguel-M06-pot-rescue-runtime.md`.
+- Resumen: el portador se libera al depositar Papa, Bestia puede rescatar con `papoi_interact` durante `POT_COOKING`, `GameState` conserva el único reloj de 20 s, y cualquier atacante válido puede registrar el primer escape desde `ESCAPE_ZONE`.
+- Pruebas: M06, K03, GameState, integración de partida, indicador de salida y carga del editor Godot 4.7.2 pasaron; `git diff --check` pasó.
+- Limitaciones: falta validar el flujo completo con seis peers en LAN mediante J05; no se creó commit automático.
+- Handoff: `docs/handoffs/2026-10-10-1248-Miguel-M06-pot-rescue-runtime.md`.
