@@ -31,3 +31,11 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Rama sugerida: `Edwar_Estacio/game-integration`
 - Integrar contratos sin asumir estados locales y ejecutar smoke test de una ronda.
 - Aceptación: el flujo completo arranca, llega a resultado o registra bloqueo reproducible; no rompe módulos existentes.
+
+## Tareas gráficas — G00 / GE01
+- Spec: `docs/specs/Edwar_Estacio/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
+- Estado: TODO
+- Turno: A con Juan; integración en Turno C.
+- Dependencia: ninguna; G00 es contrato para las demás áreas.
+- Entrega: Theme compartido, HUD, objetivos y resultados con datos existentes; no alterar reglas de GameState.
+- Aceptación: contrato G00 revisado por Juan; Theme aplicado; estados/fases/cooldowns/resultados legibles; previews rotulados; capturas en dos resoluciones y handoff.

@@ -17,3 +17,5 @@ Cada carpeta contiene el spec y el prompt operativo de una persona:
 6. Entrega handoff y evidencia antes de integrar.
 
 Los prompts son guías de ejecución: la CLI debe detenerse y documentar cualquier conflicto, dependencia faltante o decisión no definida.
+
+El plan transversal de presentación visual por relevos está en `docs/specs/graphics/README.md`; cada integrante tiene un `graphics-spec.md` con entrega y criterios observables.

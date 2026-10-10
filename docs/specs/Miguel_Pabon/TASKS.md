@@ -34,3 +34,9 @@
 - Rama sugerida: `Miguel_Pabon/abilities-enrage`
 - Trampa MVP, efecto Tanque/Cazador/Porta Papas y enfurecimiento tras cocción.
 - Aceptación: cada pasiva tiene efecto observable; cooldown de trampa funciona; Bestia obtiene boost/enrage. Evidencia: `tests/combat/test_abilities_enrage_state.gd`.
+
+## Tarea gráfica — GM01
+- Spec: `docs/specs/Miguel_Pabon/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
+- Estado: TODO
+- Turno: B, después del handoff G00.
+- Aceptación: seis roles con nombre/icono distinguibles; cooldown y feedback legibles; desconexión no parece victoria; señales reales/simuladas anotadas; sin tocar reglas.
