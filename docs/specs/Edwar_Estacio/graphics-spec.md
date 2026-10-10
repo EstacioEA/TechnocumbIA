@@ -1,24 +1,38 @@
 # Spec gráfico — Edwar Estacio
 
-## GE01 — Theme, HUD de partida y resultados
+## Turno A — Edwar Estacio
 
-- Turno: A con Juan; Edwar lidera G00. Revisión final en Turno C.
-- Estado: TODO.
+Edwar mantiene sus archivos de Theme/HUD separados de los archivos de menú/lobby de Juan. Juan puede terminar su turno sin esperar estas tareas; su revisión del Theme será recomendación para GINT, no gate para GJ01–GJ05.
 
-### Objetivo
-Definir el estilo visual compartido y mostrar estados existentes de partida con jerarquía clara.
+### GE01 — Recurso Theme
+- Estado: TODO; depende de: ninguna.
+- Archivos: `scenes/ui/papoi_theme.tres`, `docs/specs/graphics/VISUAL_DIRECTION.md`.
+- Aceptación: paleta provisional, estilos normal/hover/pressed/disabled y foco visible implementados en Theme; una preview permite ver sus controles.
 
-### Alcance y archivos
-Definir `docs/specs/graphics/VISUAL_DIRECTION.md`; crear `scenes/ui/papoi_theme.tres`; aplicar Theme a `scenes/ui/papoi_hud.tscn` y `scripts/ui/papoi_hud.gd`; presentar fase, objetivo, timers, marcador, vidas/rol/pasiva/cooldowns y paneles de resultado. `scenes/game/` solo para presentación. No cambiar reglas, cálculos ni `GameState`.
+### GE02 — Jerarquía base del HUD
+- Estado: TODO; depende de: GE01.
+- Archivos: `scenes/ui/papoi_hud.tscn`, `scripts/ui/papoi_hud.gd` solo presentación.
+- Aceptación: fase/objetivo, timers, marcador, vidas y contexto de jugador agrupados en orden legible; overlay no tapa el HUD; captura en 1280×720.
 
-### Aceptación observable
-- [ ] G00 define paleta, escala, foco, contraste y tratamiento de estados; Juan revisa menú/lobby.
-- [ ] Theme aplicado al HUD o pantalla de juego.
-- [ ] Se leen fase, ronda, tiempos, marcador, rol/pasiva, vidas/cooldowns y objetivo sin consola.
-- [ ] Timer de cocción se distingue del timer de ronda; resultado de ronda se distingue del de partida.
-- [ ] Preview enseña ACTIVE, POT_COOKING, ESCAPE, ROUND_RESULT y MATCH_RESULT y lo identifica como preview.
-- [ ] Runtime muestra datos reales; no se duplican reglas en la capa gráfica.
-- [ ] Capturas a 1280×720 y 1600×900; overlay no tapa información crítica.
+### GE03 — Presentación de fase y temporizadores
+- Estado: TODO; depende de: GE02.
+- Archivos: HUD UI y pruebas/preview UI.
+- Aceptación: ACTIVE, POT_COOKING y ESCAPE se distinguen; timer de cocción no se confunde con timer de ronda; runtime usa señales/datos ya existentes.
 
-### Prompt operativo
-> Lee contexto, orquestador, política de ramas, plan gráfico, G00, spec de UI y este spec. Implementa solo Theme/HUD/resultados en el alcance indicado, conserva el modelo autoritativo, prueba la vista, registra AI_TRACE y handoff con capturas y limitaciones. Marca preview y runtime por separado.
+### GE04 — Contexto de rol y cooldowns
+- Estado: TODO; depende de: GE02.
+- Archivos: HUD UI; no editar `scripts/roles/` ni `scripts/combat/`.
+- Aceptación: rol/pasiva y cooldown recibido visibles; disponible/bloqueado se distingue con icono/etiqueta y no solo color.
+
+### GE05 — Resultados
+- Estado: TODO; depende de: GE01.
+- Archivos: componentes UI nuevos bajo `scenes/ui/` y enlaces visuales al HUD existente.
+- Aceptación: ROUND_RESULT y MATCH_RESULT tienen encabezado y jerarquía distintos y muestran datos proporcionados por GameState; no calculan ganador.
+
+### GE06 — Preview y escalado
+- Estado: TODO; depende de: GE01–GE05.
+- Archivos: `tests/ui/`, handoff y `AI_TRACE.md`.
+- Aceptación: previews etiquetados de cinco fases/resultados; captura en 1280×720 y 1600×900; no hay texto recortado. Separar pruebas de preview y runtime en el handoff.
+
+### Reglas y prompt operativo
+Leer contexto, orquestador, política de ramas, plan visual, G00 y spec UI. Implementar cada subtask sin cambiar `GameState`, reglas o red; probar lo correspondiente y guardar capturas. Juan no necesita aprobar ni integrar GE01 para avanzar con menú/lobby. Registrar AI_TRACE y handoff incremental.

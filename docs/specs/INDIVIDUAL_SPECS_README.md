@@ -19,3 +19,5 @@ Cada carpeta contiene el spec y el prompt operativo de una persona:
 Los prompts son guías de ejecución: la CLI debe detenerse y documentar cualquier conflicto, dependencia faltante o decisión no definida.
 
 El plan transversal de presentación visual por relevos está en `docs/specs/graphics/README.md`; cada integrante tiene un `graphics-spec.md` con entrega y criterios observables.
+
+Desglose atómico gráfico: consulta `docs/specs/graphics/README.md` y las subtareas GJ/GE/GV/GK/GM de cada `TASKS.md`; las instrucciones visuales están en cada carpeta como `graphics-spec.md`. Juan no necesita esperar al Theme de Edwar para completar GJ01–GJ05.

@@ -40,8 +40,17 @@
   procesa WASD; el remoto se mueve únicamente con velocidad aplicada por el
   host.
 
-## Tarea gráfica — GV01
-- Spec: `docs/specs/Valeria_Piza/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
-- Estado: TODO
-- Turno: B, después del handoff G00.
-- Aceptación: seis jugadores distinguibles por equipo/forma; jugador local identificado; orientación legible; colisiones/input intactos; captura sobre mapa con overlay.
+## Tareas gráficas — GV01–GV03
+- Spec: `docs/specs/Valeria_Piza/graphics-spec.md`; turno B; baseline G00 disponible sin esperar Theme.
+
+### GV01 — Siluetas y equipo
+- Estado: TODO; dependencia: escena jugador.
+- Aceptación: dos equipos legibles por color y forma; captura sobre mapa; collider intacto.
+
+### GV02 — Orientación y jugador local
+- Estado: TODO; depende de: GV01.
+- Aceptación: orientación y marcador local/remoto visibles sin tapar personaje.
+
+### GV03 — Seis instancias y contraste
+- Estado: TODO; depende de: GV01/GV02.
+- Aceptación: seis jugadores distinguibles con visión activa/inactiva; sin cambios de spawn/input; captura y procedencia en handoff.

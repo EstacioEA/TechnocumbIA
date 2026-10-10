@@ -6,10 +6,10 @@ Completar una capa visual coherente y demostrable para menú, lobby, mapa, perso
 ## Relevos de trabajo
 
 ### Turno A — Juan + Edwar (ahora)
-1. Edwar lidera G00: contrato visual común y Theme inicial. Juan revisa que el contrato cubra el flujo de menú/lobby.
-2. Juan lidera GJ01: menú inicial y presentación del lobby LAN, con estados visibles.
-3. Edwar lidera GE01: Theme aplicado al HUD, objetivos y paneles de resultado, sin alterar reglas de GameState.
-4. Antes del relevo dejan handoff, decisiones, capturas y pendientes. No necesitan esperar al otro turno para avanzar en sus carpetas separadas.
+1. Los tokens provisionales G00 ya están escritos y pueden usarse desde ahora. Juan puede completar GJ01–GJ05 sin esperar Theme, código o revisión de Edwar.
+2. Juan trabaja en menú/lobby; Edwar, en paralelo, en Theme/HUD/resultados con archivos separados.
+3. La revisión de Juan al Theme es útil, pero no bloquea las tareas de Juan. La adopción del Theme refinado ocurre en GINT.
+4. Cada cual deja handoff, decisiones, capturas y pendientes antes del relevo.
 
 ### Turno B — Valeria + Krystal + Miguel (cuando se incorporen)
 Cada persona toma su spec en una rama propia después de leer el handoff A y G00: Valeria hace personajes; Krystal, mapa; Miguel, roles y feedback. Los archivos están separados para reducir conflictos. Si requieren tocar una escena compartida, primero acuerdan la interfaz y lo anotan en el handoff.
@@ -21,15 +21,17 @@ Juan recorre menú → lobby → partida; Edwar revisa HUD y resultados. Juntos 
 
 | ID | Responsable | Entrega revisable | Depende de |
 |---|---|---|---|
-| G00 | Edwar; Juan revisa | Contrato visual y Theme | Ninguna |
-| GJ01 | Juan | Menú y lobby LAN | G00 |
-| GE01 | Edwar | HUD, objetivos y resultados | G00 |
-| GV01 | Valeria | Seis jugadores visualmente distinguibles | G00 |
-| GK01 | Krystal | Mapa y zonas legibles | G00 |
-| GM01 | Miguel | Roles e indicadores de acciones | G00 |
-| GINT | Juan + Edwar | Flujo visual completo y matriz | GJ01, GE01, GV01, GK01, GM01 |
+| GJ01–GJ03 | Juan | Cascarón, host y conexión por IP | Ninguna; GJ02/GJ03 requieren GJ01 |
+| GJ04–GJ05 | Juan | Lobby, navegación y evidencia Turno A | GJ02/GJ03; GJ05 requiere GJ01–GJ04 |
+| GE01–GE06 | Edwar | Theme, HUD, fases, rol/cooldown, resultados y preview | Secuencia interna GE01→GE02→GE03/GE04; GE05 depende GE01; GE06 requiere conjunto |
+| GV01–GV03 | Valeria | Siluetas, orientación/marca local y preview seis jugadores | GV01→GV02→GV03 |
+| GK01–GK04 | Krystal | Rutas, bases/spawns, olla/barrera y legibilidad | GK01 y GK02 en paralelo; GK03 independiente; GK04 tras conjunto |
+| GM01–GM04 | Miguel | Roles, cooldown, estados Papa y preview de feedback | GM01→GM02→GM04; GM03 puede ir en paralelo |
+| GINT01–GINT03 | Juan + Edwar | Ensamblaje, matriz visual y cierre de relevo | Entregas de Juan, Edwar, Valeria, Krystal y Miguel |
 
 ## Reglas comunes
+
+- G00 escrito en `VISUAL_DIRECTION.md` es baseline suficiente para todas las personas. El Theme es una mejora de implementación de Edwar, no una dependencia para comenzar el trabajo visual de Juan.
 
 - Base de diseño 1280×720; revisar también 1600×900 y 1920×1080.
 - Los estados importantes se distinguen con texto/icono/forma además de color. Overlay de visión no cubre HUD ni alertas.

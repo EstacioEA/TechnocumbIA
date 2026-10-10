@@ -330,3 +330,14 @@
 - Pruebas: revisión documental, rama y estado Git; no se ejecutaron pruebas del juego porque no hubo cambios de código.
 - Limitaciones: no se especificaron horas de sueño/retorno, así que el relevo se activa por disponibilidad. La licencia del arte pendiente se cubre con placeholders propios.
 - Siguiente paso: completar y revisar G00; después iniciar GJ01/GE01 y entregar handoff al Turno B.
+
+## 2026-10-10 — Desglose atómico de tareas gráficas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta (solicitante); tareas distribuidas entre los cinco integrantes.
+- Tarea: dividir el plan visual en entregas observables pequeñas y minimizar bloqueos entre turnos.
+- Rama: `Juan_Balanta/graphics-atomic-tasks`, basada en `develop` actualizado.
+- Archivos: cinco `graphics-spec.md`, cinco `TASKS.md`, `docs/specs/graphics/README.md`, `docs/specs/graphics/GINT.md`, `docs/handoffs/2026-10-10-graphics-atomic-breakdown.md`.
+- Resumen: Juan queda con GJ01–GJ05 sin dependencia de Edwar; puede usar el baseline provisional G00. Edwar trabaja en paralelo GE01–GE06; Valeria, Krystal y Miguel reciben tareas separadas para el Turno B; GINT se desglosa en tres pasos.
+- Pruebas: revisión documental y `git diff --check`; no se ejecutaron pruebas del juego porque no hubo cambios de código.
+- Limitaciones: menú/lobby de Juan usará estilos provisionales hasta que se aplique el Theme refinado en integración.
+- Siguiente paso: Juan comienza GJ01; Edwar puede iniciar GE01 en paralelo.

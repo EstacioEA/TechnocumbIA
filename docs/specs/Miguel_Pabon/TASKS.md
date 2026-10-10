@@ -35,8 +35,21 @@
 - Trampa MVP, efecto Tanque/Cazador/Porta Papas y enfurecimiento tras cocción.
 - Aceptación: cada pasiva tiene efecto observable; cooldown de trampa funciona; Bestia obtiene boost/enrage. Evidencia: `tests/combat/test_abilities_enrage_state.gd`.
 
-## Tarea gráfica — GM01
-- Spec: `docs/specs/Miguel_Pabon/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
-- Estado: TODO
-- Turno: B, después del handoff G00.
-- Aceptación: seis roles con nombre/icono distinguibles; cooldown y feedback legibles; desconexión no parece victoria; señales reales/simuladas anotadas; sin tocar reglas.
+## Tareas gráficas — GM01–GM04
+- Spec: `docs/specs/Miguel_Pabon/graphics-spec.md`; turno B; puede usar iconos preview antes de integrar eventos.
+
+### GM01 — Iconos roles/pasivas
+- Estado: TODO; dependencia: ninguna.
+- Aceptación: seis roles con nombre/icono distinguibles a tamaño HUD y monocromo.
+
+### GM02 — Estado de cooldown
+- Estado: TODO; depende de: GM01.
+- Aceptación: disponible/bloqueado/tiempo recibido se distinguen; sin implementar cálculo.
+
+### GM03 — Estados de Papa/objetivo
+- Estado: TODO; puede avanzar en paralelo con GM01.
+- Aceptación: capturada, transportada, cocinando, rescatada y escapada tienen indicadores distintos.
+
+### GM04 — Impacto/desconexión y preview
+- Estado: TODO; depende de: GM02/GM03.
+- Aceptación: señales no confunden desconexión con victoria; hoja distingue eventos reales de simulados; HUD y jugadores no se tapan.

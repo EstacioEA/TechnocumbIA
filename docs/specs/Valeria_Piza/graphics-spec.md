@@ -1,23 +1,23 @@
 # Spec gráfico — Valeria Piza
 
-## GV01 — Siluetas y orientación de jugadores
+## Turno B — Valeria Piza
 
-- Turno: B, al incorporarse Valeria.
-- Depende de: G00 y escena de partida disponible.
-- Estado: TODO.
+Usa el contrato provisional G00 y no espera que Edwar termine el Theme.
 
-### Objetivo y alcance
-Hacer distinguibles seis jugadores sobre el mapa y marcar el jugador local sin cambiar input, movimiento, colisiones ni autoridad. Usar variantes ligeras o placeholders originales.
+### GV01 — Siluetas y equipos
+- Estado: TODO; depende de: escena de jugador disponible.
+- Archivos: `assets/characters/players/` nuevo; nodo visual aislado en `scenes/player/`.
+- Aceptación: dos siluetas/equipos distinguibles mediante color y forma/marca; captura superpuesta al mapa; colisión intacta.
 
-### Archivos permitidos
-Nodos de presentación en `scenes/player/` preservando scripts/colliders; nuevos `assets/characters/players/`; escena/preview en `tests/ui/`; handoff y `AI_TRACE.md`. No editar scripts de movimiento/cámara/sync sin coordinación.
+### GV02 — Orientación y jugador local
+- Estado: TODO; depende de: GV01.
+- Archivos: componente visual de jugador y preview.
+- Aceptación: dirección de movimiento legible y jugador local marcado sin tapar sprite; se diferencia local/remoto en captura.
 
-### Aceptación observable
-- [ ] Preview enseña seis avatares a escala de gameplay.
-- [ ] Equipos distinguidos por color y forma/marca; jugador local con contorno/marcador.
-- [ ] Orientación/dirección legible; HUD permanece encima del overlay.
-- [ ] Apariencias no cambian tamaño de colisión ni spawn.
-- [ ] Captura de los seis sobre el mapa y notas de placeholders/licencias en handoff.
+### GV03 — Variantes y preview de seis jugadores
+- Estado: TODO; depende de: GV01, GV02.
+- Archivos: assets propios y `tests/ui/`.
+- Aceptación: seis instancias visibles a escala real, distinción de equipo/local a visión encendida y apagada, sin cambiar spawn/input/collider; captura y procedencia de assets en handoff.
 
-### Prompt operativo
-> Lee contexto, orquestador, política de ramas, plan gráfico, G00, specs de mapa/cámara y este spec. Implementa solo presentación de personajes; conserva movimiento, autoridad y colisiones. Prueba seis instancias con overlay, registra AI_TRACE y handoff con captura y defectos visuales.
+### Reglas
+No editar movimiento, cámara, colisiones ni sincronización. Si la integración necesita esos scripts, solicitar interfaz al responsable y dejarla como pendiente, sin bloquear las variantes visuales. Por tarea: captura, verificación real, AI_TRACE incremental y handoff.

@@ -32,10 +32,30 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Integrar contratos sin asumir estados locales y ejecutar smoke test de una ronda.
 - Aceptación: el flujo completo arranca, llega a resultado o registra bloqueo reproducible; no rompe módulos existentes.
 
-## Tareas gráficas — G00 / GE01
+## Tareas gráficas — Turno A de Edwar
 - Spec: `docs/specs/Edwar_Estacio/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
-- Estado: TODO
-- Turno: A con Juan; integración en Turno C.
-- Dependencia: ninguna; G00 es contrato para las demás áreas.
-- Entrega: Theme compartido, HUD, objetivos y resultados con datos existentes; no alterar reglas de GameState.
-- Aceptación: contrato G00 revisado por Juan; Theme aplicado; estados/fases/cooldowns/resultados legibles; previews rotulados; capturas en dos resoluciones y handoff.
+- Edwar trabaja Theme/HUD/resultados; no modifica menú/lobby de Juan.
+
+### GE01 — Theme compartido
+- Estado: TODO; dependencia: ninguna.
+- Aceptación: Theme con estados normal/hover/pressed/disabled, foco y colores provisionales; preview observable.
+
+### GE02 — Jerarquía del HUD
+- Estado: TODO; depende de: GE01.
+- Aceptación: fase/objetivo, tiempos, marcador, vidas y contexto agrupados; HUD sobre overlay; captura 1280×720.
+
+### GE03 — Fases y temporizadores
+- Estado: TODO; depende de: GE02.
+- Aceptación: ACTIVE/POT_COOKING/ESCAPE distinguibles; timers no se confunden; runtime toma datos existentes.
+
+### GE04 — Rol, pasiva y cooldown
+- Estado: TODO; depende de: GE02.
+- Aceptación: rol/pasiva y cooldown recibido visibles; listo/bloqueado se distingue sin depender solo del color.
+
+### GE05 — Resultados
+- Estado: TODO; depende de: GE01.
+- Aceptación: ROUND_RESULT distinto a MATCH_RESULT; muestra resultado recibido sin calcular reglas.
+
+### GE06 — Preview y tamaños
+- Estado: TODO; depende de: GE01–GE05.
+- Aceptación: previews rotulados; capturas a 1280×720/1600×900; handoff separa comprobaciones reales y simuladas.

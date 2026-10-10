@@ -37,8 +37,21 @@
 - Aceptación: cada caso tiene PASS/FAIL/BLOCKED, evidencia y prioridad; defectos críticos tienen siguiente acción.
 - Evidencia: `tests/qa/p0_lan_3v3_matrix.md` actualizada con 11 casos PASS y P0-12 BLOCKED por defecto reproducible en el runner de lobby/desconexión; handoff `docs/handoffs/2026-10-10-0235-K05-qa-matrix.md`.
 
-## Tarea gráfica — GK01
-- Spec: `docs/specs/Krystal_Giraldo/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
-- Estado: TODO
-- Turno: B, después del handoff G00.
-- Aceptación: bases, rutas, olla, barrera y spawns identificables; decoración no confunde colisiones; overlay preserva objetivos; pruebas del mapa conservadas; procedencia de assets documentada.
+## Tareas gráficas — GK01–GK04
+- Spec: `docs/specs/Krystal_Giraldo/graphics-spec.md`; turno B; no depende del Theme de Edwar.
+
+### GK01 — Suelo y rutas
+- Estado: TODO; dependencia: mapa actual.
+- Aceptación: ruta transitable contrasta con suelo/decoración; paredes no parecen camino.
+
+### GK02 — Bases y spawns
+- Estado: TODO; puede hacerse en paralelo con GK01.
+- Aceptación: bases y spawns visibles mediante forma/icono/etiqueta, sin mover coordenadas lógicas.
+
+### GK03 — Olla y barrera
+- Estado: TODO; sin dependencia técnica de GK01/GK02.
+- Aceptación: olla y barrera abierta/cerrada legibles; visual no cambia colisión/objetivo.
+
+### GK04 — Contraste/evidencia
+- Estado: TODO; depende de GK01–GK03.
+- Aceptación: overlay no esconde rutas/objetivos/HUD; pruebas mapa conservadas; captura y fuentes de assets documentadas.

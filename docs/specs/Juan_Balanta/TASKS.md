@@ -34,16 +34,32 @@
 - Evidencia: `tests/network/run_disconnect_match_test.ps1` PASS en Godot 4.7.2. Ejecuta primero el lobby de seis slots y desconexión prepartida de J02; luego host + cinco clientes, ready, inicio, desconexión durante ACTIVE, invalidación sin ganador ni puntos y recepción del snapshot en los cuatro clientes conectados. `tests/game/game_state_test.gd` y regresión J03 PASS. Handoff: `docs/handoffs/2026-10-10-0204-J04-disconnect-harness.md`.
 - Limitación: la invalidación al recibir `peer_left` se conecta mediante un adaptador del test; el runtime todavía no integra automáticamente `NetworkManager` con `GameState`. Probar en LAN física y completar esa integración son pendientes de integración del juego.
 
-## Tareas gráficas — GJ01
-- Spec: `docs/specs/Juan_Balanta/graphics-spec.md`; plan: `docs/specs/graphics/README.md`.
-- Estado: TODO
-- Turno: A con Edwar; integración en Turno C.
-- Dependencia: G00 — contrato visual compartido.
-- Entrega: menú inicial y presentación del lobby LAN; no cambiar autoridad ni protocolo.
-- Aceptación: Host/Unirse/Salir; errores IP/conexión visibles; seis slots y estados reales; host/cliente distinguidos; foco de teclado; capturas en dos resoluciones y handoff.
+## Tareas gráficas — Turno A de Juan (independiente de Edwar)
+- Specs: `docs/specs/Juan_Balanta/graphics-spec.md`, `docs/specs/graphics/README.md`.
+- Todas las tareas GJ usan el baseline provisional de `VISUAL_DIRECTION.md`; ninguna espera el Theme ni la aprobación de Edwar.
+
+### GJ01 — Cascarón del menú
+- Estado: TODO; dependencia: ninguna.
+- Aceptación: título, Host, Unirse y Salir visibles y teclado enfocado.
+
+### GJ02 — Crear partida/host
+- Estado: TODO; dependencia: GJ01.
+- Aceptación: puerto visible, botón Crear y estados disponibles/error presentados sin consola; no modificar ENet.
+
+### GJ03 — Unirse por IP
+- Estado: TODO; dependencia: GJ01.
+- Aceptación: IP/puerto editables, validación inline y estados conectando/rechazo/desconexión con mensaje; usar red existente.
+
+### GJ04 — Lobby
+- Estado: TODO; dependencia de navegación: GJ02/GJ03; el preview puede avanzar en escena propia.
+- Aceptación: seis slots; host/cliente y ready/no-ready distinguidos; inicio host habilitado según datos existentes; salida/error visible.
+
+### GJ05 — Navegación, tamaños y handoff Turno A
+- Estado: TODO; depende de: GJ01–GJ04.
+- Aceptación: flujo menú→lobby usable con teclado y mouse; capturas 1280×720 y 1600×900; sin texto cortado; lista de estados cubiertos y pendientes.
 
 ## GINT — Integración visual por relevos (Juan + Edwar)
 - Spec: `docs/specs/graphics/GINT.md`.
-- Estado: TODO
-- Dependencias: GJ01, GE01, GV01, GK01, GM01.
-- Aceptación: recorrer el flujo visual integrado; completar matriz con PASS/FAIL/BLOCKED y capturas en 1280×720, 1600×900 y 1920×1080; separar preview de runtime y registrar handoff.
+- Estado: TODO; subtareas GINT01–GINT03.
+- Dependencias: GJ01–GJ05, GE01–GE06, GV01–GV03, GK01–GK04 y GM01–GM04.
+- GINT01 ensambla/recorre; GINT02 completa matriz y resoluciones; GINT03 deja capturas y handoff.

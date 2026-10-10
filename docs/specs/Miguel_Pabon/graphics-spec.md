@@ -1,24 +1,28 @@
 # Spec gráfico — Miguel Pabon
 
-## GM01 — Roles e indicadores de acciones
+## Turno B — Miguel Pabon
 
-- Turno: B, al incorporarse Miguel.
-- Depende de: G00 y señales/estados de gameplay disponibles.
-- Estado: TODO.
+Usa los colores/iconos provisionales G00; puede producir recursos aun si los eventos reales todavía no están conectados.
 
-### Objetivo y alcance
-Ayudar a reconocer los roles y acciones sin añadir reglas. Presentar cooldown y señales de captura, transporte, cocción, rescate, impacto, escape e invalidación/desconexión.
+### GM01 — Iconos de roles y pasivas
+- Estado: TODO; depende de: ninguna.
+- Archivos: `assets/ui/roles/` nuevo y preview en `tests/ui/`.
+- Aceptación: icono y nombre para Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas; se distinguen en monocromo y a tamaño HUD.
 
-### Archivos permitidos
-Nuevos `scenes/ui/role_feedback.tscn`, `scripts/ui/role_feedback.gd`, `assets/ui/roles/`, `assets/ui/feedback/`; `tests/ui/` preview; handoff y `AI_TRACE.md`. Recibe estados/eventos y solo los presenta. No editar combate/roles/GameState ni victoria.
+### GM02 — Indicadores de cooldown/acción
+- Estado: TODO; depende de: GM01 para reutilizar el mismo vocabulario visual.
+- Archivos: `assets/ui/feedback/` y componente UI separado.
+- Aceptación: disponible, bloqueado y cuenta regresiva recibida son estados visuales distintos; sin introducir cálculos de cooldown.
 
-### Aceptación observable
-- [ ] Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas tienen nombre e icono distinguible incluso en monocromo.
-- [ ] Cooldown listo/bloqueado refleja datos recibidos y el tiempo mostrado.
-- [ ] Captura, transporte, cocción, rescate, impacto y escape se reconocen en capturas sin logs.
-- [ ] Desconexión no parece resultado de victoria.
-- [ ] Efectos no ocultan jugador, Papa, objetivo ni HUD.
-- [ ] Handoff incluye hoja de iconos y separa señales conectadas de previews simulados.
+### GM03 — Estados de Papa y objetivo
+- Estado: TODO; puede correr en paralelo con GM01, en archivos propios.
+- Archivos: componentes/íconos de feedback Papa/objetivo.
+- Aceptación: capturada, transportada, en olla/cocinándose, rescatada y escapada tienen feedback visible diferenciado.
 
-### Prompt operativo
-> Lee contexto, orquestador, política de ramas, plan gráfico, G00, specs de roles/UI y este spec. Crea únicamente feedback visual que consuma estados existentes. No implementes reglas ni autoridad. Prueba preview, registra señales reales/simuladas, AI_TRACE y handoff con evidencia.
+### GM04 — Impactos, desconexión y hoja de preview
+- Estado: TODO; depende de: GM02 y GM03.
+- Archivos: `scenes/ui/role_feedback.tscn`, `scripts/ui/role_feedback.gd`, `tests/ui/`.
+- Aceptación: impacto/acción y desconexión visibles sin confundirse con victoria; hoja de preview indica qué señales son reales y cuáles simuladas; efectos no cubren jugador, Papa ni HUD.
+
+### Reglas
+Solo dibuja estados/eventos recibidos; no edita combate, roles, GameState o condiciones de victoria. Registrar capturas, fuentes de assets, AI_TRACE incremental y handoff.

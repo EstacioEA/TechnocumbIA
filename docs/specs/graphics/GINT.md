@@ -2,7 +2,7 @@
 
 - Responsables: Juan Diego Balanta y Edwar Estacio
 - Turno: C, después de GJ01, GE01, GV01, GK01 y GM01.
-- Estado: TODO.
+- Estado: TODO; dividido en GINT01–GINT03.
 
 ## Objetivo
 
@@ -15,6 +15,20 @@ Revisar el resultado de las cinco áreas visuales en el mismo flujo ejecutable, 
 - `docs/specs/graphics/`, `docs/handoffs/`, `AI_TRACE.md`.
 
 No cambiar autoridad, reglas, combate, movimiento, colisiones ni transporte LAN. No integrar automáticamente ramas sin revisar el diff y el handoff de su responsable.
+
+## Tareas atómicas
+
+### GINT01 — Ensamblar y recorrer el flujo
+- Estado: TODO; depende de que estén listos los cinco specs individuales.
+- Aceptación: revisar diff/handoff de cada área; recorrer menú→lobby→juego→resultado; documentar referencias rotas con responsable.
+
+### GINT02 — Matriz visual y resoluciones
+- Estado: TODO; depende de: GINT01.
+- Aceptación: completar la matriz para los escenarios descritos abajo; revisar 1280×720, 1600×900 y 1920×1080; cada fila tiene PASS/FAIL/BLOCKED y evidencia.
+
+### GINT03 — Cierre y relevo
+- Estado: TODO; depende de: GINT02.
+- Aceptación: capturas identifican versión/resolución; handoff distingue pruebas manuales/automatizadas y previews/runtime; AI_TRACE incremental y defects priorizados.
 
 ## Secuencia de verificación
 
