@@ -804,3 +804,16 @@
 - Pruebas: `V06_ESCAPE_EXIT_INDICATOR_TEST`, `V06_ESCAPE_ROUTE_TEST` y carga del editor Godot 4.7.2 pasaron; `git diff --check` pendiente antes del commit.
 - Limitaciones: el recorrido automatizado valida acciones y conectividad geométrica por checkpoints; la prueba manual interactiva con WASD sigue siendo necesaria para validar sensación visual.
 - Handoff: `docs/handoffs/2026-10-10-1215-V06-escape-exit-indicator.md`.
+
+## 2026-10-10 — J05 bloqueada por prerequisitos runtime
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: DOCUMENTATION / BLOCKER
+- Tarea: J05 — prueba LAN vertical de olla y escape.
+- Rama: `Juan_Balanta/lan-pot-escape-test`, basada en `develop` (`f1c04f4`).
+- Archivos: `docs/handoffs/2026-10-10-1231-J05-prerequisite-blocker.md`, `AI_TRACE.md`.
+- Resumen: se comprobó que V06 está DONE, mientras E05-A, M06 y E05-B continúan READY y no están integradas. El runtime aún tiene dos temporizadores de cocción de 30 s y el snapshot no serializa `escape_available`; se documentó por qué no se puede crear/validar aún el runner vertical J05.
+- Pruebas: no se ejecutaron pruebas J05 porque faltan los prerequisitos; no se afirma PASS. `git diff --check` PASS.
+- Limitaciones: el runner multiinstancia, tres corridas loopback y prueba LAN física quedan pendientes hasta integrar E05-A, M06 y E05-B.
+- Handoff: `docs/handoffs/2026-10-10-1231-J05-prerequisite-blocker.md`.
