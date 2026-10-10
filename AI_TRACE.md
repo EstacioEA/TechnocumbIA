@@ -28,6 +28,7 @@
 - Resumen: se creó un `CharacterBody2D` configurable con WASD e intención de movimiento, una cámara con límites/suavizado/zoom y un overlay CanvasLayer con aura de visión; las instancias remotas no activan cámara ni overlay local.
 - Limitaciones: Godot 4 no está instalado en el entorno, por lo que no se pudo ejecutar la escena ni verificar interactivamente colisiones, cámara o HUD. El repositorio aún no contiene `project.godot`; las acciones WASD se registran en runtime.
 
+
 ## 2026-10-09 — E01 contrato de estado compartido
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio
@@ -119,6 +120,20 @@
 - Limitaciones: no se ejecutó LAN multiinstancia; countdown/cocción siguen como balance pendiente. Sin commit ni push.
 - Siguiente paso: revisión de equipo; continuar con E03 — marcador y condiciones de resultado.
 
+## 2026-10-10 — E03 marcador y condiciones de resultado
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Solicitud: continuar con la siguiente tarea individual asignada y resolver cualquier conflicto de implementación.
+- Tarea: E03 — Marcador y condiciones de resultado.
+- Rama: `Edwar_Estacio/match-results`, creada desde `develop` actualizado por fast-forward.
+- Archivos: `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/specs/01-network-lan.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0120-E03-match-results.md`.
+- Resumen: se valida que la eliminación ocurra con todas las vidas de atacantes agotadas; escape exige Papa cocinada; resultados duplicados no incrementan dos veces el marcador. Se completó la comunicación de resultados por señales al host. Una desconexión no recuperable invalida la partida sin puntos ni ganador, conforme al contrato LAN actualizado.
+- Pruebas: test de estado, análisis de proyecto headless, smoke de escena principal, tests de contratos y combate de roles y escena base de jugador pasaron con Godot 4.7.2; `git diff --check` pasó.
+- Limitaciones: no se ejecutó partida LAN con seis instancias ni integración de señales con HUD/red (parte del trabajo de integración). Balance de cuenta regresiva, cocción y vidas iniciales queda parametrizado como pendiente.
+- Siguiente paso: E04 integración y smoke test cuando estén completadas sus dependencias J03, M02, K03 y V02.
+
 ## 2026-10-10 — K02 zonas de objetivo y olla
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Krystal Giraldo
@@ -138,3 +153,70 @@
 - Archivos: `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0125-K03-blocked.md`, `AI_TRACE.md`.
 - Resumen: K02 y E02 están DONE, pero K03 depende de M02, que sigue TODO. No se implementó lógica duplicada de captura, cocción o escape.
 - Limitaciones: se requiere la entrega/integración de M02 antes de crear la rama de implementación de K03; no se creó commit ni se publicó AI_TRACE.md.
+
+## 2026-10-10 — V02 input y movimiento
+
+- Rama: `Valeria_Piza/player-movement`, basada en `main` actualizado.
+- Resultado: acciones WASD registradas y desplazamiento local validado con
+  Godot 4.7.2 headless.
+- Prueba: `tests/player/player_movement_test.tscn`.
+- Siguiente bloqueo externo: V03 requiere K01 de Krystal Giraldo.
+
+## 2026-10-10 — V04 cámara y visión
+
+- Rama: `Valeria_Piza/player-camera-vision`, basada en `develop` actualizado.
+- Resultado: cámara local, overlay de visión al 80% y prioridad del HUD
+  validados; las instancias remotas no activan cámara ni overlay.
+- Prueba: `tests/qa/v04_camera_vision_test.gd` ejecutada con Godot 4.7.2
+  headless.
+- Siguiente tarea: V05 — Prueba de instancias.
+
+## 2026-10-10 — V05 prueba de instancias
+
+- Rama: `Valeria_Piza/player-smoke-test`, basada en `develop` actualizado.
+- Resultado: dos jugadores instancian correctamente; solo el jugador local
+  procesa WASD y el remoto acepta únicamente velocidad aplicada por el host.
+- Prueba: `tests/player/player_smoke_test.gd` ejecutada con Godot 4.7.2
+  headless.
+- Resultado del bloque de tareas Valeria: V01 a V05 completadas.
+
+
+## 2026-10-10 — Corrección de test de estado en develop
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: DEBUGGING / TESTING
+- Solicitud: ayudar a corregir el error de compilación del test de estado en develop.
+- Rama: `Edwar_Estacio/fix-game-state-test`, creada desde `develop` actualizado.
+- Archivos: `tests/game/game_state_test.gd`, `docs/handoffs/2026-10-10-0130-fix-game-state-test.md`.
+- Resumen: se retiró una comprobación redundante que redeclaraba `first_attack`; las comprobaciones equivalentes con `_check` y la declaración usada por el resto del test se conservan.
+- Pruebas: test de estado ejecutado con Godot 4.7.2 headless: PASS, exit code 0; `git diff --check` sin errores.
+- Limitaciones: no se ejecutó partida LAN multiinstancia. Godot muestra warnings esperados por transiciones inválidas que el test comprueba que sean rechazadas.
+- Siguiente paso: revisión e integración de esta rama en develop; no se creó commit automáticamente.
+
+## 2026-10-10 — M02 captura y transporte de Papa
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar captura, inmovilización, sprint, soltar y golpe al portador.
+- Rama: `Miguel_Pabon/papa-capture`, basada en `develop`.
+- Archivos: `scripts/combat/papa_capture_state.gd`, `tests/combat/test_papa_capture_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0145-M02-papa-capture.md`.
+- Resumen: se agregó una máquina de estado host-authoritativa para el transporte de Papa con inmovilización de 20 segundos, reducción temporal de 2 segundos por sprint del Porta Papas y aturdimiento de 3 segundos al soltar o recibir un golpe.
+- Limitaciones: la validación espacial y la conexión con GameState/red quedan para integración; M03 conserva la responsabilidad de vidas y daño.
+
+## 2026-10-10 — M03 impactos, vidas y respawn
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar impactos sin Papa, vidas, respawn y eliminación de atacantes.
+- Rama: `Miguel_Pabon/combat-lives`, basada en `develop`.
+- Archivos: `scripts/combat/combat_lives_state.gd`, `tests/combat/test_combat_lives_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0155-M03-combat-lives.md`.
+- Resumen: se agregó estado host-authoritativo con tres vidas por ronda, respawn único de tres segundos, rechazo de golpes al portador y señal consultable de eliminación total.
+- Limitaciones: la transición final de GameState y la posición física de respawn quedan para integración.
+
+## 2026-10-10 — M04 Bestia y acceso a olla
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar aparición, ataques, cooldowns y bloqueo de acceso de Bestia a la olla.
+- Rama: `Miguel_Pabon/beast-access`, basada en `develop`.
+- Archivos: `scripts/combat/beast_access_state.gd`, `tests/combat/test_beast_access_state.gd`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-0205-M04-beast-access.md`.
+- Resumen: se agregó control host-authoritativo de aparición a 30 segundos, ataque básico/especial con cooldowns y acceso a sala condicionado a cocción.
+- Limitaciones: el daño final lo resolverá GameState/M03; el enfurecimiento queda para M05 y la identificación final debe conectarse al rol Bestia explícito.

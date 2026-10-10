@@ -38,13 +38,15 @@ Permitir que un host cree la partida y que hasta cinco clientes se conecten por 
 6. El sistema debe limpiar peers desconectados.
 
 ## Criterios de aceptación
-- [ ] Un host puede crear una partida LAN con puerto configurable.
-- [ ] Un cliente puede conectarse introduciendo la IP del host.
-- [ ] El lobby muestra correctamente hasta seis jugadores.
-- [ ] El séptimo intento de conexión es rechazado con mensaje visible.
-- [ ] El botón de inicio no está disponible para clientes no host.
-- [ ] Una desconexión elimina al jugador de la lista y actualiza el estado.
-- [ ] Existe un comando o procedimiento documentado para ejecutar host y clientes localmente.
+- [x] Un host puede crear una partida LAN con puerto configurable.
+- [x] Un cliente puede conectarse introduciendo la IP del host.
+- [x] El lobby muestra correctamente hasta seis jugadores.
+- [x] El séptimo intento de conexión es rechazado con mensaje visible.
+- [x] El botón de inicio no está disponible para clientes no host.
+- [x] Una desconexión elimina al jugador de la lista y actualiza el estado.
+- [x] Existe un comando o procedimiento documentado para ejecutar host y clientes localmente.
+
+Evidencia: criterios de host/cliente/procedimiento en `docs/handoffs/2026-10-10-0124-J01-lan-transport.md`; seis jugadores, rechazo del séptimo y desconexión en `docs/handoffs/2026-10-10-0137-J02-lobby-slots.md`; disponibilidad del inicio solo para host en `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`. Las pruebas usaron procesos separados en loopback; no validan dos equipos físicos ni firewall LAN.
 
 ## Entregable de sesión
 Crear un handoff con evidencias de conexión, desconexión, límite de jugadores y cualquier limitación de prueba.

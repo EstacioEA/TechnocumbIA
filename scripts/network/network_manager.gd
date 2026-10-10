@@ -119,9 +119,14 @@ func _on_peer_connected(peer_id: int) -> void:
 	if players.size() >= MAX_PLAYERS:
 		var reason := "Lobby lleno: el máximo es de seis jugadores."
 		_rpc_lobby_rejected.rpc_id(peer_id, reason)
+		var rejecting_peer: MultiplayerPeer = multiplayer.multiplayer_peer
 		get_tree().create_timer(0.25).timeout.connect(func() -> void:
-			if multiplayer.multiplayer_peer != null:
-				multiplayer.multiplayer_peer.disconnect_peer(peer_id)
+			if multiplayer.multiplayer_peer != rejecting_peer:
+				return
+			if rejecting_peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
+				return
+			if multiplayer.get_peers().has(peer_id):
+				rejecting_peer.disconnect_peer(peer_id)
 		)
 		return
 	players[peer_id] = {"name": "Jugador %d" % peer_id, "ready": false}
