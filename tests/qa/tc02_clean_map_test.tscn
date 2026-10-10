@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://da7lrd0i4g3j2"]
 
-[ext_resource type="Script" path="res://tests/qa/tc02_clean_map_test.gd" id="1_test"]
+[ext_resource type="Script" uid="uid://becfbkuaxv8pg" path="res://tests/qa/tc02_clean_map_test.gd" id="1_test"]
 
-[node name="TC02CleanMapTest" type="Node"]
+[sub_resource type="Animation" id="Animation_lskrw"]
+resource_name = "Trolazo_Atras"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1m8ui"]
+_data = {
+&"Trolazo_Atras": SubResource("Animation_lskrw")
+}
+
+[node name="TC02CleanMapTest" type="Node" unique_id=1841506398]
 script = ExtResource("1_test")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1626836275]
+libraries/ = SubResource("AnimationLibrary_1m8ui")
