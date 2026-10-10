@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/camera/local_camera.gd" id="2_camera"]
+[ext_resource type="Script" path="res://scripts/camera/vision_overlay.gd" id="3_vision"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 18.0
+
+[sub_resource type="Shader" id="Shader_vision"]
+code = "shader_type canvas_item;
+uniform vec2 vision_center = vec2(0.5);
+uniform float vision_radius = 0.4;
+
+void fragment() {
+	vec2 corrected_uv = UV;
+	corrected_uv.x *= SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x;
+	vec2 corrected_center = vision_center;
+	corrected_center.x *= SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x;
+	float distance_to_target = distance(corrected_uv, corrected_center);
+	float edge = smoothstep(vision_radius, vision_radius - 0.025, distance_to_target);
+	COLOR = vec4(COLOR.rgb, COLOR.a * edge);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vision"]
+shader = SubResource("Shader_vision")
+
+[node name="PapoiPlayer" type="CharacterBody2D"]
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_player")
+
+[node name="LocalCamera" type="Camera2D" parent="."]
+script = ExtResource("2_camera")
+
+[node name="VisionOverlay" type="CanvasLayer" parent="."]
+script = ExtResource("3_vision")
+
+[node name="OverlayRect" type="ColorRect" parent="VisionOverlay"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_vision")
+mouse_filter = 2
