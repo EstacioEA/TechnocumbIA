@@ -1,0 +1,36 @@
+# Tareas atómicas — Miguel Pabon
+
+## M01 — Contratos de roles y pasivas
+- Estado: TODO
+- Depende de: E01
+- Rama sugerida: `Miguel_Pabon/role-contracts`
+- Definir asignación y datos de Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas.
+- Aceptación: seis jugadores reciben datos serializables; repetición de roles permitida; test de asignación.
+
+## M02 — Captura y transporte de Papa
+- Estado: TODO
+- Depende de: M01, V02
+- Rama sugerida: `Miguel_Pabon/papa-capture`
+- Implementar captura, inmovilidad 20 s, reducción por sprint, soltar y stun de 3 s.
+- Aceptación: estados y transiciones se validan en host; golpe al portador suelta sin quitar vida.
+
+## M03 — Impactos, vidas y respawn
+- Estado: TODO
+- Depende de: M02, E02
+- Rama sugerida: `Miguel_Pabon/combat-lives`
+- Golpe sin Papa, pérdida de vida, respawn en 3 s y reinicio por ronda.
+- Aceptación: pierde exactamente una vida; respawn ocurre una vez; cero vidas activa resultado defensor.
+
+## M04 — Bestia y acceso a olla
+- Estado: TODO
+- Depende de: M01, K02
+- Rama sugerida: `Miguel_Pabon/beast-access`
+- Aparición a 30 s, ataque básico/especial y bloqueo fuera de cocción.
+- Aceptación: no ataca antes de aparecer; no entra fuera de cocción; cooldowns validan host.
+
+## M05 — Trampa, pasivas y enfurecimiento
+- Estado: TODO
+- Depende de: M03, M04, K03
+- Rama sugerida: `Miguel_Pabon/abilities-enrage`
+- Trampa MVP, efecto Tanque/Cazador/Porta Papas y enfurecimiento tras cocción.
+- Aceptación: cada pasiva tiene efecto observable; cooldown de trampa funciona; Bestia obtiene boost/enrage.
