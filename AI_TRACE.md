@@ -17,3 +17,11 @@
 - Archivo creado: `docs/CLI_BRANCH_POLICY.md`.
 - Convención establecida: `Integrante/Funcionalidad`, usando nombres normalizados como `Edwar_Estacio/game-state`.
 - Reglas añadidas: partir desde `main`, no implementar directamente en `main`, detenerse si existen cambios locales o la rama ya existe, y registrar rama, base, commits y pruebas en el handoff.
+
+## 2026-10-09 — combat-roles
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tarea: implementar roles, pasivas, captura de Papa, combate, vidas, cooldowns, trampas y Bestia.
+- Archivos: `scripts/roles/role_combat_system.gd`, `tests/combat/test_role_combat_system.gd`, `docs/handoffs/2026-10-09-2233-combat-roles.md`.
+- Resumen: se creó un núcleo GDScript host-authoritativo con captura/liberación, inmovilización, sprint, golpes, respawn, Bestia, cooldowns, trampa MVP y efectos verificables de las tres pasivas.
+- Limitaciones: el repositorio aún no contiene escenas/proyecto Godot ni módulo de red; los valores de balance no definidos se marcaron como constantes temporales en el handoff.
