@@ -1,0 +1,144 @@
+[gd_resource type="Theme" format=3]
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+bg_color = Color(0.129412, 0.086275, 0.117647, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.890196, 0.517647, 0.321569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+bg_color = Color(0.129412, 0.086275, 0.117647, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.964706, 0.72549, 0.317647, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 15.0
+content_margin_top = 9.0
+content_margin_right = 15.0
+content_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
+bg_color = Color(0.462745, 0.254902, 0.180392, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.964706, 0.72549, 0.317647, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="ButtonDisabled"]
+bg_color = Color(0.129412, 0.086275, 0.117647, 0.55)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.890196, 0.517647, 0.321569, 0.45)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="ButtonFocus"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.964706, 0.72549, 0.317647, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="Panel"]
+bg_color = Color(0.129412, 0.086275, 0.117647, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.890196, 0.517647, 0.321569, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="ProgressBackground"]
+bg_color = Color(0.129412, 0.086275, 0.117647, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.890196, 0.517647, 0.321569, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="ProgressFill"]
+bg_color = Color(0.964706, 0.72549, 0.317647, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[resource]
+default_font_size = 18
+Button/colors/font_color = Color(0.929412, 0.792157, 0.588235, 1)
+Button/colors/font_hover_color = Color(0.929412, 0.792157, 0.588235, 1)
+Button/colors/font_pressed_color = Color(0.929412, 0.792157, 0.588235, 1)
+Button/colors/font_disabled_color = Color(0.929412, 0.792157, 0.588235, 0.45)
+Button/styles/normal = SubResource("ButtonNormal")
+Button/styles/hover = SubResource("ButtonHover")
+Button/styles/pressed = SubResource("ButtonPressed")
+Button/styles/disabled = SubResource("ButtonDisabled")
+Button/styles/focus = SubResource("ButtonFocus")
+Label/colors/font_color = Color(0.929412, 0.792157, 0.588235, 1)
+Label/colors/font_shadow_color = Color(0.129412, 0.086275, 0.117647, 1)
+PanelContainer/styles/panel = SubResource("Panel")
+ProgressBar/styles/background = SubResource("ProgressBackground")
+ProgressBar/styles/fill = SubResource("ProgressFill")
+LineEdit/colors/font_color = Color(0.929412, 0.792157, 0.588235, 1)
+LineEdit/colors/font_placeholder_color = Color(0.929412, 0.792157, 0.588235, 0.55)
+LineEdit/styles/normal = SubResource("ButtonNormal")
+LineEdit/styles/focus = SubResource("ButtonHover")
+LineEdit/styles/read_only = SubResource("ButtonDisabled")
+PapoiTokens/colors/ui_panel = Color(0.129412, 0.086275, 0.117647, 1)
+PapoiTokens/colors/ui_text = Color(0.929412, 0.792157, 0.588235, 1)
+PapoiTokens/colors/ui_accent = Color(0.964706, 0.72549, 0.317647, 1)
+PapoiTokens/colors/ui_danger = Color(0.713725, 0.164706, 0.164706, 1)
+PapoiTokens/colors/ui_border = Color(0.890196, 0.517647, 0.321569, 1)
+PapoiTokens/colors/ui_panel_pressed = Color(0.462745, 0.254902, 0.180392, 1)
+PapoiTokens/colors/ui_text_muted = Color(0.929412, 0.792157, 0.588235, 0.55)
+PapoiTokens/colors/team_red = Color(0.713725, 0.164706, 0.164706, 1)
+PapoiTokens/colors/team_blue = Color(0.180392, 0.611765, 0.756863, 1)
+PapoiTokens/colors/team_lilac = Color(0.705882, 0.564706, 0.819608, 1)

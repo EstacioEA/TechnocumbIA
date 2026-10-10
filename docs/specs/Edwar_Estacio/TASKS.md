@@ -37,7 +37,8 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Edwar trabaja Theme/HUD/resultados; no modifica menú/lobby de Juan.
 
 ### GE01 — Theme compartido
-- Estado: TODO; dependencia: ninguna.
+- Estado: DONE — Theme y preview cargan en Godot 4.7.2 headless; verificación visual manual pendiente para QA global.
+- Dependencia: ninguna.
 - Aceptación: Theme con estados normal/hover/pressed/disabled, foco y colores provisionales; preview observable.
 
 ### GE02 — Jerarquía del HUD

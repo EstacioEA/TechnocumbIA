@@ -5,8 +5,9 @@
 Edwar mantiene sus archivos de Theme/HUD separados de los archivos de menú/lobby de Juan. Juan puede terminar su turno sin esperar estas tareas; su revisión del Theme será recomendación para GINT, no gate para GJ01–GJ05.
 
 ### GE01 — Recurso Theme
-- Estado: TODO; depende de: ninguna.
-- Archivos: `scenes/ui/papoi_theme.tres`, `docs/specs/graphics/VISUAL_DIRECTION.md`.
+- Estado: DONE — Theme y escena de preview cargan en Godot 4.7.2 headless; revisión visual interactiva queda pendiente para QA global G00/GE06.
+- Depende de: ninguna.
+- Archivos: `scenes/ui/papoi_theme.tres`, `scenes/ui/papoi_theme_preview.tscn`, `docs/specs/graphics/VISUAL_DIRECTION.md`.
 - Aceptación: paleta provisional, estilos normal/hover/pressed/disabled y foco visible implementados en Theme; una preview permite ver sus controles.
 
 ### GE02 — Jerarquía base del HUD

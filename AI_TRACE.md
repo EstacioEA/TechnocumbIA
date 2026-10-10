@@ -375,6 +375,17 @@
 - Limitaciones: estados reales de conexión, rechazo y desconexión aparecen al integrar la intención con NetworkManager en GJ05; aquí solo se informa que el transporte está pendiente.
 - Siguiente paso: implementar GJ04 (preview/presentación independiente del lobby) y después GJ05 (integración y revisión visual).
 
+## 2026-10-10 — GE01 Theme gráfico
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tipo: AI_GENERATED / DESIGN / TESTING
+- Tarea: implementar Theme UI compartido de Papoi con tokens, estados de botón y escena de preview.
+- Rama: `Edwar_Estacio/theme-tokens`, basada en `develop` actualizado (`d20c174`); se escogió esta base por instrucción del participante de conservar todas las carpetas del proyecto.
+- Archivos: `scenes/ui/papoi_theme.tres`, `scenes/ui/papoi_theme_preview.tscn`, `docs/specs/graphics/VISUAL_DIRECTION.md`, `docs/specs/Edwar_Estacio/graphics-spec.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0354-GE01-theme.md`, `AI_TRACE.md`.
+- Resumen: Theme centraliza los colores UI derivados de los assets y define estilos normal/hover/pressed/disabled y foco; preview presenta esos estados con navegación de teclado e interacción de puntero. Se documentó la paleta de mapa/personajes, la jerarquía UI y decisiones de escalado aún abiertas.
+- Pruebas: Godot 4.7.2 `--headless --path . --editor --quit` PASS; carga `res://scenes/ui/papoi_theme_preview.tscn` con `--headless --quit-after 2` PASS; `git diff --check` PASS.
+- Limitaciones: no se hizo revisión visual interactiva ni capturas a resoluciones múltiples; tampoco se cambió la resolución del proyecto. No se creó commit.
+
 ## 2026-10-10 — GJ04 presentación del lobby
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Juan Diego Balanta
