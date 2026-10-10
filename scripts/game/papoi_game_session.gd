@@ -496,6 +496,16 @@ func _compose_snapshot(source: Dictionary) -> Dictionary:
 	var snapshot := source.duplicate(true)
 	for player: Dictionary in snapshot.get("players", []):
 		var peer_id := int(player.get("peer_id", -1))
+		# Role/passive come from GameState. Cooldowns are copied only from the
+		# host-side combat model that owns them; unsupported roles stay unavailable.
+		var player_cooldowns: Dictionary = {}
+		if _beast_state != null and peer_id == int(_beast_state.beast_id) \
+			and int(player.get("role", -1)) == GameEnums.DefenderRole.BESTIA:
+			var beast_snapshot: Dictionary = _beast_state.get_snapshot()
+			var beast_cooldowns: Variant = beast_snapshot.get("cooldowns", {})
+			if beast_cooldowns is Dictionary:
+				player_cooldowns = beast_cooldowns.duplicate(true)
+		player["cooldowns"] = player_cooldowns
 		var actor := get_player_node(peer_id)
 		if actor != null:
 			player["position"] = actor.global_position

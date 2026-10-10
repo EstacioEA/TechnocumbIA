@@ -310,15 +310,53 @@ func _update_player_context_from_snapshot(snapshot: Dictionary) -> void:
 	var local_peer_id := int(snapshot.get("local_peer_id", -1))
 	var players: Array = snapshot.get("players", [])
 	for player in players:
+		if not player is Dictionary:
+			continue
 		if int(player.get("peer_id", -1)) != local_peer_id:
 			continue
+		var cooldowns: Variant = player.get("cooldowns", {})
+		if not cooldowns is Dictionary:
+			cooldowns = {}
 		set_player_context(
-			int(player.get("lives", 0)),
-			_role_text(int(player.get("role", -1))),
-			_passive_text(int(player.get("passive", -1))),
-			player.get("cooldowns", {})
+			int(player.get("lives", -1)),
+			_role_context_text(player),
+			_passive_context_text(player),
+			cooldowns
 		)
 		return
+	_clear_player_context()
+
+func _clear_player_context() -> void:
+	lives_label.text = "VIDAS: sin datos"
+	role_label.text = "ROL: SIN DATOS"
+	passive_label.text = "PASIVA: SIN DATOS"
+	cooldown_label.text = "COOLDOWNS: sin datos"
+	cooldown_status_label.text = "ESTADO: sin datos"
+
+func _role_context_text(player: Dictionary) -> String:
+	if not player.has("role") or not _is_integer_value(player["role"]):
+		return "SIN DATOS"
+	var role := int(player["role"])
+	if role == -1:
+		return "ATACANTE"
+	if role < 0 or role >= GameEnums.DefenderRole.size():
+		return "SIN DATOS"
+	return GameEnums.DefenderRole.keys()[role]
+
+func _passive_context_text(player: Dictionary) -> String:
+	if not player.has("passive") or not _is_integer_value(player["passive"]):
+		return "SIN DATOS"
+	var passive := int(player["passive"])
+	if passive == -1:
+		return "NINGUNA"
+	if passive < 0 or passive >= GameEnums.AttackerPassive.size():
+		return "SIN DATOS"
+	return GameEnums.AttackerPassive.keys()[passive]
+
+func _is_integer_value(value: Variant) -> bool:
+	return typeof(value) == TYPE_INT or (
+		typeof(value) == TYPE_FLOAT and is_finite(value) and is_equal_approx(value, round(value))
+	)
 
 func _phase_text(phase: int) -> String:
 	if phase < 0 or phase >= GameEnums.GamePhase.size():

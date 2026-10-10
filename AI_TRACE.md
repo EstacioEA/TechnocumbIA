@@ -637,3 +637,16 @@
 - Archivos: `docs/specs/graphics/GINT.md`, `docs/specs/Juan_Balanta/TASKS.md`, `AI_TRACE.md`.
 - Resumen: GINT01 pasa de BLOCKED a IN_PROGRESS porque la regresion automatizada ya pasa, aunque el recorrido visual de seis peers sigue pendiente. TC05 sigue TODO y bloqueada por TC01, TC02 y TC04; TC03 figura DONE.
 - Limitaciones: no se cambio el estado de tareas de otros integrantes ni se ejecuto una nueva prueba; el recorrido visual y evidencia 1920x1080 siguen pendientes.
+
+## 2026-10-10 - Edwar Estacio: TC04 contrato de snapshot y HUD
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: TC04 — entregar al HUD el contexto autoritativo de rol, pasiva y cooldown, y mostrar claramente datos ausentes o inválidos.
+- Rama: `Edwar_Estacio/role-state-hud-contract`, basada en el checkpoint integrado `develop` (`e566f7c`); `main` aún no contiene la tarea TC04 ni sus dependencias del relevo.
+- Archivos: `scripts/game/papoi_game_session.gd`, `scripts/ui/papoi_hud.gd`, `tests/ui/tc04_role_snapshot_hud_test.gd`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`, `AI_TRACE.md`.
+- Resumen: la sesión host agrega cooldowns por jugador desde su modelo autoritativo disponible y conserva rol/pasiva del GameState; el HUD no asume valores faltantes y limpia datos obsoletos. Se añadió cobertura determinística de los seis tipos de rol/pasiva y estados de cooldown.
+- Pruebas: TC04_ROLE_SNAPSHOT_HUD_TEST (incluida validación/serialización MatchState), GE04_ROLE_COOLDOWN_HUD_TEST, GAME_INTEGRATION_TEST, editor scan de Godot 4.7.2 y `git diff --check` pasaron.
+- Limitaciones: los productores de cooldown de habilidades para todos los roles no están conectados al snapshot runtime; donde no hay fuente host se conserva `sin datos`. Sin LAN de seis equipos ni nueva captura runtime; preview GE04 revisado es simulado.
+- Handoff: `docs/handoffs/2026-10-10-0826-TC04-role-snapshot-hud-contract.md`.
