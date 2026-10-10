@@ -428,3 +428,15 @@
 - Limitaciones: el rechazo en la captura visual es preview de UI (rechazo real del séptimo cliente probado por slots); e2e en localhost, no dos máquinas. Persiste el fallo al cerrar clientes reportado por ready/start en `papoi_game_session.gd`; fuera del alcance GJ05.
 - Handoff: `docs/handoffs/2026-10-10-0358-GJ05-menu-lobby-integration.md`.
 - Siguiente paso: revisar diff/capturas y crear commit según flujo del equipo; GJ01–GJ05 completos, GINT espera dependencias del resto del equipo.
+
+## 2026-10-10 — GE03 presentación de fases y temporizadores
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tarea: diferenciar visualmente ACTIVE, POT_COOKING y ESCAPE; mostrar los datos de tiempo recibidos sin mezclar el timer de ronda con el de cocción.
+- Rama: `Edwar_Estacio/phase-timers`, creada desde `develop` actualizado; sin commit automático.
+- Archivos: `scripts/ui/papoi_hud.gd`, `scripts/ui/papoi_hud_preview.gd`, `tests/ui/ge03_phase_timers_test.gd`, `docs/specs/Edwar_Estacio/graphics-spec.md`, `docs/specs/Edwar_Estacio/TASKS.md`, este registro, `docs/handoffs/2026-10-10-0418-GE03-phase-timers.md`, y tres capturas `docs/handoffs/GE03-phase-{active,cooking,escape}-1280x720.png`.
+- Resumen: el HUD mantiene los identificadores de fase existentes y añade etiquetas textuales con iconos distintos para partida en curso, cocción y escape. El timer de cocción se presenta explícitamente en el panel de estado; la barra superior mantiene por separado ronda y fase. Runtime sigue leyendo snapshots existentes; previews usan snapshots simulados identificados como tales.
+- Pruebas: Godot 4.7.2 `tests/ui/ge03_phase_timers_test.gd` PASS; `tests/qa/k04_hud_results_test.gd` PASS; carga headless de `scenes/ui/papoi_hud_preview.tscn` PASS; ejecución gráfica generó capturas 1280×720, verificadas visualmente; `git diff --check` PASS al cierre.
+- Limitaciones: previews no representan una partida real ni prueban actualización en red; no se probó 1600×900. Los cooldowns continúan como `sin datos` cuando no son proporcionados; `TODO(GM01)` queda pendiente de contrato/unidades.
+- Handoff: `docs/handoffs/2026-10-10-0418-GE03-phase-timers.md`.
+- Siguiente paso: GE04 — presentar rol, pasiva y cooldown recibido, sin modificar roles ni combate.

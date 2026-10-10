@@ -48,7 +48,8 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: fase/objetivo, tiempos, marcador, vidas y contexto agrupados; HUD sobre overlay; captura 1280×720.
 
 ### GE03 — Fases y temporizadores
-- Estado: TODO; depende de: GE02.
+- Estado: DONE — estados ACTIVE/POT_COOKING/ESCAPE rotulados con texto e icono; timer de cocción identificado por separado; pruebas GE03/K04 PASS; capturas a 1280×720.
+- Depende de: GE02.
 - Aceptación: ACTIVE/POT_COOKING/ESCAPE distinguibles; timers no se confunden; runtime toma datos existentes.
 
 ### GE04 — Rol, pasiva y cooldown

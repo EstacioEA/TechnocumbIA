@@ -2,7 +2,9 @@ extends Control
 
 const HUD_SCENE := preload("res://scenes/ui/papoi_hud.tscn")
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
-const COOKING_CAPTURE_PATH := "res://docs/handoffs/GE02-hud-cooking-1280x720.png"
+const ACTIVE_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-active-1280x720.png"
+const COOKING_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-cooking-1280x720.png"
+const ESCAPE_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-escape-1280x720.png"
 const RESULT_CAPTURE_PATH := "res://docs/handoffs/GE02-hud-result-1280x720.png"
 
 func _ready() -> void:
@@ -18,22 +20,7 @@ func _ready() -> void:
 
 	var hud := HUD_SCENE.instantiate() as PapoiHUD
 	add_child(hud)
-	hud.apply_match_snapshot({
-		"phase": GameEnums.GamePhase.POT_COOKING,
-		"round_number": 3,
-		"round_time_remaining": 300.0,
-		"phase_time_remaining": 18.0,
-		"scores": {"TEAM_A": 2, "TEAM_B": 1},
-		"papa_state": GameEnums.PapaState.BEING_COOKED,
-		"players": [{
-			"peer_id": 1,
-			"role": -1,
-			"passive": GameEnums.AttackerPassive.PORTA_PAPAS,
-			"lives": 2,
-			"cooldowns": {},
-		}],
-		"local_peer_id": 1,
-	})
+	hud.apply_match_snapshot(_phase_snapshot(GameEnums.GamePhase.POT_COOKING))
 	_add_preview_badge(hud, papoi_theme)
 	call_deferred("_capture_graphical_previews", hud)
 
@@ -43,6 +30,16 @@ func _capture_graphical_previews(hud: PapoiHUD) -> void:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	if not _save_capture(COOKING_CAPTURE_PATH):
+		return
+	hud.apply_match_snapshot(_phase_snapshot(GameEnums.GamePhase.ACTIVE))
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	if not _save_capture(ACTIVE_CAPTURE_PATH):
+		return
+	hud.apply_match_snapshot(_phase_snapshot(GameEnums.GamePhase.ESCAPE))
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	if not _save_capture(ESCAPE_CAPTURE_PATH):
 		return
 
 	hud.apply_match_snapshot({
@@ -58,6 +55,29 @@ func _capture_graphical_previews(hud: PapoiHUD) -> void:
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	_save_capture(RESULT_CAPTURE_PATH)
+
+func _phase_snapshot(phase: int) -> Dictionary:
+	var papa_state := GameEnums.PapaState.FREE
+	if phase == GameEnums.GamePhase.POT_COOKING:
+		papa_state = GameEnums.PapaState.BEING_COOKED
+	elif phase == GameEnums.GamePhase.ESCAPE:
+		papa_state = GameEnums.PapaState.COOKED
+	return {
+		"phase": phase,
+		"round_number": 3,
+		"round_time_remaining": 300.0,
+		"phase_time_remaining": 18.0 if phase == GameEnums.GamePhase.POT_COOKING else 120.0,
+		"scores": {"TEAM_A": 2, "TEAM_B": 1},
+		"papa_state": papa_state,
+		"players": [{
+			"peer_id": 1,
+			"role": -1,
+			"passive": GameEnums.AttackerPassive.PORTA_PAPAS,
+			"lives": 2,
+			"cooldowns": {},
+		}],
+		"local_peer_id": 1,
+	}
 
 func _save_capture(path: String) -> bool:
 	var capture := get_viewport().get_texture().get_image()
