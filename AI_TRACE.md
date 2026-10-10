@@ -218,6 +218,16 @@
   headless; collider del jugador conservado.
 - Siguiente tarea: GV02 — Orientación y jugador local.
 
+## 2026-10-10 — GV02 orientación y jugador local
+
+- Rama: `Valeria_Piza/graphics-player-orientation`, basada en `develop`
+  actualizado.
+- Resultado: orientación visual basada en velocidad y marcadores local/remoto
+  validados sin cubrir la silueta.
+- Prueba: `tests/ui/gv02_orientation_test.gd` ejecutada con Godot 4.7.2
+  headless.
+- Siguiente tarea: GV03 — Variantes y preview de seis jugadores.
+
 ## 2026-10-10 — Corrección de test de estado en develop
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Edwar Estacio

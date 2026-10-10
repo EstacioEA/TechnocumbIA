@@ -48,7 +48,7 @@
 - Aceptación: dos equipos legibles por color y forma; captura sobre mapa; collider intacto.
 
 ### GV02 — Orientación y jugador local
-- Estado: TODO; depende de: GV01.
+- Estado: DONE; depende de: GV01.
 - Aceptación: orientación y marcador local/remoto visibles sin tapar personaje.
 
 ### GV03 — Seis instancias y contraste
