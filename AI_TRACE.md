@@ -27,6 +27,7 @@
 - Archivos: `scripts/player/player_controller.gd`, `scripts/camera/local_camera.gd`, `scripts/camera/vision_overlay.gd`, `scenes/player/player.tscn`, `tests/player/player_test.tscn`, `tests/player/manual_test.md`, `docs/handoffs/2026-10-09-2224-player-camera.md`.
 - Resumen: se creó un `CharacterBody2D` configurable con WASD e intención de movimiento, una cámara con límites/suavizado/zoom y un overlay CanvasLayer con aura de visión; las instancias remotas no activan cámara ni overlay local.
 - Limitaciones: Godot 4 no está instalado en el entorno, por lo que no se pudo ejecutar la escena ni verificar interactivamente colisiones, cámara o HUD. El repositorio aún no contiene `project.godot`; las acciones WASD se registran en runtime.
+<<<<<<< HEAD
 
 ## 2026-10-09 — E01 contrato de estado compartido
 - TEAM_ID: TechnocumbIA
@@ -141,3 +142,12 @@
 - Archivos: `scripts/map/papoi_map.gd`, `scripts/objectives/papoi_pot_zone.gd`, `scripts/objectives/papoi_objective_flow.gd`, `scenes/objectives/papoi_objective_flow.tscn`, `tests/qa/k02_pot_zone_test.gd`, `docs/specs/Krystal_Giraldo/TASKS.md`, `docs/handoffs/2026-10-10-0055-K02-pot-zone.md`.
 - Resumen: se añadió `CaptureZone`, un validador separado de zona de olla y una detección host-autorizada que acepta únicamente Papa capturada dentro de la olla, sin iniciar cocción ni modificar victoria.
 - Limitaciones: la validación LAN completa no pertenece a K02; `AI_TRACE.md` se mantiene solo local y no se publica remotamente.
+=======
+## 2026-10-10 — V02 input y movimiento
+
+- Rama: `Valeria_Piza/player-movement`, basada en `main` actualizado.
+- Resultado: acciones WASD registradas y desplazamiento local validado con
+  Godot 4.7.2 headless.
+- Prueba: `tests/player/player_movement_test.tscn`.
+- Siguiente bloqueo externo: V03 requiere K01 de Krystal Giraldo.
+>>>>>>> 1b8f98cfaeaa9d634b5424334aa9d3d775009298

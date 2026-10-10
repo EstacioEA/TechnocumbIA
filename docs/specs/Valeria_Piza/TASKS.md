@@ -8,11 +8,12 @@
 - Aceptación: escena carga sin errores; se puede instanciar dos veces; no depende de red.
 
 ## V02 — Input y movimiento
-- Estado: TODO
+- Estado: DONE
 - Depende de: V01
 - Rama sugerida: `Valeria_Piza/player-movement`
 - Configurar WASD, velocidad parametrizada y movimiento local.
-- Aceptación: cuatro direcciones funcionan; velocidad no depende de FPS; input está documentado.
+- Aceptación: acciones WASD registradas, movimiento con velocidad parametrizada
+  y prueba headless de desplazamiento ejecutada.
 
 ## V03 — Colisiones y límites
 - Estado: TODO
