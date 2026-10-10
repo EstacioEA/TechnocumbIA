@@ -35,6 +35,28 @@ func get_snapshot() -> Dictionary:
 	return _state.to_dictionary()
 
 
+func apply_host_snapshot(snapshot: Dictionary) -> bool:
+	if multiplayer.is_server():
+		return _reject("apply_host_snapshot", "el host no aplica snapshots de clientes")
+	var parsed: MatchStateData = MatchStateData.from_dictionary(snapshot)
+	if parsed == null:
+		return _reject("apply_host_snapshot", "snapshot remoto inválido")
+	if parsed.revision <= _state.revision:
+		return _reject("apply_host_snapshot", "snapshot remoto obsoleto")
+	var previous_phase := _state.phase
+	var previous_papa_state := _state.papa_state
+	var previous_players := _state.players.duplicate(true)
+	_state = parsed
+	if previous_phase != _state.phase:
+		phase_changed.emit(previous_phase, _state.phase)
+	if previous_papa_state != _state.papa_state:
+		papa_state_changed.emit(_state.papa_state)
+	if previous_players != _state.players:
+		players_changed.emit(_state.players.duplicate(true))
+	state_changed.emit(get_snapshot())
+	return true
+
+
 func configure_lobby(roster: Array[Dictionary]) -> bool:
 	if not _require_host("configure_lobby"):
 		return false
@@ -191,6 +213,9 @@ func start_next_round() -> bool:
 
 
 func _process(delta: float) -> void:
+	var peer: MultiplayerPeer = multiplayer.multiplayer_peer
+	if peer != null and peer.get_connection_status() != MultiplayerPeer.CONNECTION_CONNECTED:
+		return
 	if not multiplayer.is_server() or delta <= 0.0:
 		return
 	if _state.phase == GameEnums.GamePhase.COUNTDOWN:

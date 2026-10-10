@@ -243,6 +243,27 @@
 
 ## 2026-10-10 — M04 Bestia y acceso a olla
 - TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar inicio exclusivo del host con seis jugadores listos y propagación de `lobby_start`.
+- Rama: `Juan_Balanta/lobby-ready-start`, basada en J02.
+- Archivos: `tests/network/ready_start_test.gd`, `tests/network/run_ready_start_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0149-J03-lobby-ready-start.md`.
+- Resumen: se añadió una prueba con host + cinco clientes que cubre bloqueo con cinco jugadores, bloqueo mientras falte ready, rechazo del inicio solicitado por clientes, UI restringida a host y recepción de `lobby_start` por los seis peers.
+- Pruebas: escaneo de proyecto Godot 4.7.2 PASS; runners J01, J02 y J03 PASS; `git diff --check` PASS en revisión final.
+- Limitaciones: procesos locales en loopback, sin prueba de LAN física ni firewall; desconexiones durante partida pendientes de J04. Sin commit ni push.
+
+## 2026-10-10 — J04 arnés de desconexiones multiproceso
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: crear un procedimiento reproducible para desconexiones antes y durante partida con host y clientes separados.
+- Rama: `Juan_Balanta/lan-test-harness`, basada en `develop` con J03 integrado.
+- Archivos: `tests/network/disconnect_match_test.gd`, `tests/network/disconnect_test_actor.gd`, `tests/network/run_disconnect_match_test.ps1`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0204-J04-disconnect-harness.md`.
+- Resumen: el runner cubre salida de lobby antes del inicio, inicio con seis peers, desconexión durante ACTIVE, invalidación host-authoritative sin puntos/ganador y réplica del snapshot a los cuatro peers que permanecen conectados.
+- Pruebas: runner J04 PASS; `game_state_test.gd` PASS; runner J03 PASS; `git diff --check` PASS.
+- Limitaciones: loopback; el puente `peer_left` a `GameState` es explícito en el fixture y aún no está conectado en runtime; sin commit ni push.
 - PARTICIPANT_ID: Miguel Pabon
 - Tarea: implementar aparición, ataques, cooldowns y bloqueo de acceso de Bestia a la olla.
 - Rama: `Miguel_Pabon/beast-access`, basada en `develop`.
@@ -269,3 +290,13 @@
 - Resumen: M05 pasó su prueba específica y la regresión de Bestia; K03 pasó después de relajar las referencias tipadas del coordinador a `RefCounted`, manteniendo la autoridad del host.
 - Pruebas: `test_abilities_enrage_state.gd`, `test_beast_access_state.gd`, `k03_cooking_escape_test.gd` y `git diff --check` pasaron.
 - Limitaciones: la señal de cocción, multiplicadores y reducción de sprint todavía requieren conexión con los coordinadores autoritativos durante la integración.
+## 2026-10-10 — J05 puente runtime LAN/GameState y J06 verificación física
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Juan Diego Balanta
+- Tarea: integrar el inicio del lobby y las desconexiones con GameState autoritativo; dejar procedimiento verificable para la prueba LAN física pendiente.
+- Rama: `Juan_Balanta/runtime-disconnect-bridge`, basada en `origin/develop` actualizado.
+- Archivos: `scripts/network/network_game_bridge.gd`, `scripts/network/network_manager.gd`, `scripts/game/game_state.gd`, `scenes/lobby/lobby.tscn`, `tests/network/disconnect_match_test.gd`, `tests/network/run_disconnect_match_test.ps1`, `tests/network/run_lobby_slots_test.ps1`, `docs/specs/01-network-lan.md`, `docs/specs/Juan_Balanta/TASKS.md`, `docs/specs/Juan_Balanta/individual-spec.md`, `docs/handoffs/2026-10-10-0226-J05-runtime-disconnect-bridge.md`, `docs/handoffs/2026-10-10-0226-J06-lan-physical-blocked.md`.
+- Resumen: el bridge inicializa GameState desde el lobby, replica snapshots autoritativos y convierte una salida en partida activa en resultado inválido sin ganador ni puntos. Se rechaza entrada tardía. J05 queda DONE; J06 queda BLOCKED hasta probar en un segundo equipo físico.
+- Pruebas: Godot 4.7.2 headless/editor PASS; runners J01-J04 PASS; runner de desconexión con bridge real, cinco clientes, entrada tardía y desconexión activa PASS; `tests/game/game_state_test.gd` PASS; `git diff --check` PASS.
+- Limitaciones: todas las pruebas de red ejecutadas usan procesos locales; no se ejecutó conexión física por IP ni comprobación de firewall. Handoff J06 contiene el procedimiento, y sus resultados siguen pendientes.
+- Siguiente paso: ejecutar el smoke test J06 con dos computadoras Windows en la misma LAN. No se creó commit ni se hizo push.

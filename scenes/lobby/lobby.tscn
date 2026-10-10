@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/lobby/lobby.gd" id="1_lobby"]
 [ext_resource type="Script" path="res://scripts/network/network_manager.gd" id="2_network"]
+[ext_resource type="Script" path="res://scripts/game/game_state.gd" id="3_game_state"]
+[ext_resource type="Script" path="res://scripts/network/network_game_bridge.gd" id="4_network_game_bridge"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -14,3 +16,9 @@ script = ExtResource("1_lobby")
 
 [node name="NetworkManager" type="Node" parent="."]
 script = ExtResource("2_network")
+
+[node name="GameState" type="Node" parent="."]
+script = ExtResource("3_game_state")
+
+[node name="NetworkGameBridge" type="Node" parent="."]
+script = ExtResource("4_network_game_bridge")
