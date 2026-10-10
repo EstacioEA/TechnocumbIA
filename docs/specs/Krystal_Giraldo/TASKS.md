@@ -1,11 +1,12 @@
 # Tareas atómicas — Krystal Giraldo
 
 ## K01 — Mapa y puntos de spawn
-- Estado: TODO
+- Estado: DONE
 - Depende de: ninguno
 - Rama sugerida: `Krystal_Giraldo/map-spawns`
 - Montar mapa, colisiones, bases, sala de olla, barrera y spawns.
 - Aceptación: mapa carga; límites funcionan; spawns identificables; rutas transitables.
+- Evidencia: `tests/qa/k01_map_test.gd` pasó con Godot 4.7.2 headless; verificó carga, límites, barrera cerrada, spawns y rutas.
 
 ## K02 — Zonas de objetivo y olla
 - Estado: TODO
