@@ -32,9 +32,6 @@ func run() -> void:
 	_check(game.start_match(), "el host inicia la partida")
 	_check(GameStateNode.MAX_ROUND_DURATION_SECONDS == 420.0, "el límite de ronda está parametrizado en siete minutos")
 	game._process(4.0)
-	assert(game.get_snapshot().phase == GameEnums.GamePhase.ACTIVE)
-	var first_attack: int = game.get_snapshot().attacking_team
-	assert(not game.resolve_round(first_attack, GameEnums.RoundEndReason.ESCAPE_SUCCESS))
 	var countdown_snapshot: Dictionary = game.get_snapshot()
 	_check(countdown_snapshot.phase == GameEnums.GamePhase.ACTIVE, "COUNTDOWN transiciona a ACTIVE")
 	_check(countdown_snapshot.round_time_remaining == GameStateNode.MAX_ROUND_DURATION_SECONDS, "ACTIVE inicia con el máximo de siete minutos")
