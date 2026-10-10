@@ -1,8 +1,11 @@
 class_name PapoiObjectiveFlow
 extends Node
 
+const GameEnums = preload("res://scripts/shared/game_enums.gd")
+
 signal state_changed(snapshot: Dictionary)
 signal transition_rejected(reason: String)
+signal papa_zone_state_changed(papa_id: int, is_valid: bool)
 
 enum Phase {
 	ACTIVE,
@@ -46,6 +49,28 @@ func set_papa_in_pot(candidate_papa_id: int, is_valid: bool, host_authorized: bo
 	papa_in_pot = is_valid
 	_emit_state()
 	return true
+
+func detect_papa_in_pot(
+	candidate_papa_id: int,
+	papa_state: int,
+	is_inside_zone: bool,
+	host_authorized: bool
+) -> bool:
+	if not host_authorized:
+		return _reject("Solo el host puede validar Papa dentro de la olla.")
+	if candidate_papa_id < 0:
+		return _reject("La Papa requiere un identificador válido.")
+	if phase != Phase.ACTIVE:
+		return _reject("La olla solo acepta Papa durante una ronda activa.")
+	var is_valid := (
+		is_inside_zone
+		and papa_state == GameEnums.PapaState.CAPTURED
+	)
+	papa_id = candidate_papa_id
+	papa_in_pot = is_valid
+	papa_zone_state_changed.emit(papa_id, papa_in_pot)
+	_emit_state()
+	return is_valid
 
 func start_cooking(host_authorized: bool) -> bool:
 	if not host_authorized:
