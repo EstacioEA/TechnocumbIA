@@ -16,7 +16,6 @@ const PLAYER_MOVE_SPEED := 180.0
 const CAPTURE_DISTANCE := 52.0
 const HIT_DISTANCE := 48.0
 const KEY_INTERACTION_DISTANCE := 52.0
-const TOWER_GATE_INTERACTION_DISTANCE := 96.0
 const SNAPSHOT_INTERVAL_SECONDS := 0.1
 
 @onready var _game_state: Node = $GameState
@@ -228,11 +227,11 @@ func _perform_validated_action(peer_id: int, action: StringName) -> bool:
 				):
 					_schedule_snapshot()
 					return true
-				if _tower_key_state != null and _tower_key_state.request_open_tower(
+				if _tower_key_state != null and _map.is_position_in_beast_gate_access(_player_position(peer_id)) and _tower_key_state.request_open_tower(
 					peer_id,
 					_player_position(peer_id),
-					_map.get_beast_gate_access_position(),
-					TOWER_GATE_INTERACTION_DISTANCE
+					_map.get_beast_gate_position(),
+					INF
 				):
 					if _map.set_beast_gate_open(true, true):
 						_schedule_snapshot()

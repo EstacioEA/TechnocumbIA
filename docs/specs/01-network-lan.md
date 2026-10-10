@@ -15,7 +15,7 @@ Sincronizar una partida 3v3 de forma determinista usando host autoritativo y cli
 join(ip, port) -> accepted | rejected(reason)
 player_ready(peer_id, ready)
 request_action(action_name, payload)
-state_snapshot(tick, phase, players, papa, pot, scores, timer, round_number, round_winner, round_end_reason, match_winner)
+state_snapshot(tick, phase, players, papa, pot, escape_available, scores, timer, round_number, round_winner, round_end_reason, match_winner)
 round_result(winner, reason)
 match_result(winner)
 ```
@@ -28,6 +28,7 @@ match_result(winner)
 3. Las acciones tienen payload mínimo y tipos verificables.
 4. Los clientes muestran error de conexión y desconexión.
 5. La ronda se puede ejecutar en dos clientes locales para prueba reducida, pero el objetivo de demo es 3v3.
+6. `escape_available` es un booleano autoritativo del snapshot (`MatchState` schema v2): el host lo activa al completar la cocción y lo desactiva al cancelar o comenzar otra ronda. Los clientes solo lo presentan y no pueden alterarlo.
 
 ## Integración de desconexión con el estado de partida
 - El lobby conecta `NetworkManager.lobby_start` con el `GameState` autoritativo del host e inicia el estado con el roster de seis jugadores listos.

@@ -2,6 +2,7 @@ extends Node
 class_name GameState
 
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
+const GameRules = preload("res://scripts/shared/game_rules.gd")
 const MatchStateData = preload("res://scripts/game/match_state.gd")
 
 const REQUIRED_PLAYER_COUNT := 6
@@ -10,7 +11,7 @@ const POINTS_TO_WIN_MATCH := 3
 const MAX_ROUND_DURATION_SECONDS := 7.0 * 60.0
 const ROUND_DURATION_SECONDS := MAX_ROUND_DURATION_SECONDS
 const COUNTDOWN_DURATION_SECONDS := 3.0 # Pendiente: confirmar duración de cuenta regresiva.
-const POT_COOKING_DURATION_SECONDS := 30.0 # Pendiente: confirmar balance de cocción.
+const POT_COOKING_DURATION_SECONDS := GameRules.POT_COOKING_DURATION_SECONDS
 const STARTING_LIVES_PER_ATTACKER := 3 # Pendiente: persistir y consumir vidas al integrar combate.
 
 signal phase_changed(previous_phase: int, current_phase: int)
@@ -20,6 +21,7 @@ signal round_finished(winner_team: int, reason: int, snapshot: Dictionary)
 signal match_finished(winner_team: int, snapshot: Dictionary)
 signal players_changed(players: Array[Dictionary])
 signal papa_state_changed(papa_state: int)
+signal escape_availability_changed(available: bool)
 signal warning_rejected(operation: String, reason: String)
 
 var _state: MatchStateData = MatchStateData.new()
@@ -45,12 +47,15 @@ func apply_host_snapshot(snapshot: Dictionary) -> bool:
 		return _reject("apply_host_snapshot", "snapshot remoto obsoleto")
 	var previous_phase := _state.phase
 	var previous_papa_state := _state.papa_state
+	var previous_escape_available := _state.escape_available
 	var previous_players := _state.players.duplicate(true)
 	_state = parsed
 	if previous_phase != _state.phase:
 		phase_changed.emit(previous_phase, _state.phase)
 	if previous_papa_state != _state.papa_state:
 		papa_state_changed.emit(_state.papa_state)
+	if previous_escape_available != _state.escape_available:
+		escape_availability_changed.emit(_state.escape_available)
 	if previous_players != _state.players:
 		players_changed.emit(_state.players.duplicate(true))
 	state_changed.emit(get_snapshot())
@@ -142,6 +147,7 @@ func begin_pot_cooking() -> bool:
 	if _state.phase != GameEnums.GamePhase.ACTIVE or _state.papa_state != GameEnums.PapaState.CAPTURED:
 		return _reject("begin_pot_cooking", "la cocción requiere Papa capturada durante ACTIVE")
 	_state.papa_state = GameEnums.PapaState.BEING_COOKED
+	_set_escape_available(false)
 	papa_state_changed.emit(_state.papa_state)
 	_set_phase(GameEnums.GamePhase.POT_COOKING)
 	_state.phase_time_remaining = POT_COOKING_DURATION_SECONDS
@@ -157,11 +163,29 @@ func cancel_pot_cooking() -> bool:
 	if not _is_phase_transition_allowed(_state.phase, GameEnums.GamePhase.ACTIVE):
 		return _reject("cancel_pot_cooking", "transición de rescate no permitida")
 	_state.papa_state = GameEnums.PapaState.FREE
+	_set_escape_available(false)
 	_state.phase_time_remaining = 0.0
 	_set_phase(GameEnums.GamePhase.ACTIVE)
 	papa_state_changed.emit(_state.papa_state)
 	_emit_state()
 	return true
+
+
+func register_escape(attacker_peer_id: int) -> bool:
+	if not _require_host("register_escape"):
+		return false
+	if _state.phase != GameEnums.GamePhase.ESCAPE or not _state.escape_available:
+		return _reject("register_escape", "la salida no está habilitada")
+	if _state.papa_state != GameEnums.PapaState.COOKED:
+		return _reject("register_escape", "Papa debe estar cocinada para escapar")
+	var is_attacker := false
+	for player in _state.players:
+		if int(player.get("peer_id", -1)) == attacker_peer_id:
+			is_attacker = player.get("side", "") == "attacker" and int(player.get("team", -1)) == _state.attacking_team
+			break
+	if not is_attacker:
+		return _reject("register_escape", "solo un atacante de la ronda puede escapar")
+	return resolve_round(_state.attacking_team, GameEnums.RoundEndReason.ESCAPE_SUCCESS)
 
 
 func resolve_round(winner_team: int, reason: int) -> bool:
@@ -219,6 +243,7 @@ func start_next_round() -> bool:
 	_state.round_winner = -1
 	_state.round_end_reason = -1
 	_state.papa_state = GameEnums.PapaState.FREE
+	_set_escape_available(false)
 	_round_resolved = false
 	_assign_round_roles()
 	_set_phase(GameEnums.GamePhase.COUNTDOWN)
@@ -252,6 +277,7 @@ func _process(delta: float) -> void:
 			_state.papa_state = GameEnums.PapaState.COOKED
 			papa_state_changed.emit(_state.papa_state)
 			_set_phase(GameEnums.GamePhase.ESCAPE)
+			_set_escape_available(true)
 			_state.phase_time_remaining = 0.0
 			_emit_state()
 		else:
@@ -292,7 +318,7 @@ func _is_resolution_valid(winner_team: int, reason: int) -> bool:
 	var defending_team := _other_team(_state.attacking_team)
 	match reason:
 		GameEnums.RoundEndReason.ESCAPE_SUCCESS:
-			return _state.phase == GameEnums.GamePhase.ESCAPE and _state.papa_state == GameEnums.PapaState.COOKED and winner_team == _state.attacking_team
+			return _state.phase == GameEnums.GamePhase.ESCAPE and _state.escape_available and _state.papa_state == GameEnums.PapaState.COOKED and winner_team == _state.attacking_team
 		GameEnums.RoundEndReason.ATTACKERS_ELIMINATED:
 			return _state.phase in [GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ESCAPE] and winner_team == defending_team and _all_attackers_eliminated()
 		GameEnums.RoundEndReason.TIME_EXPIRED:
@@ -351,6 +377,13 @@ func _is_phase_transition_allowed(previous_phase: int, next_phase: int) -> bool:
 func _emit_state() -> void:
 	_state.revision += 1
 	state_changed.emit(get_snapshot())
+
+
+func _set_escape_available(available: bool) -> void:
+	if _state.escape_available == available:
+		return
+	_state.escape_available = available
+	escape_availability_changed.emit(available)
 
 
 func _require_host(operation: String) -> bool:

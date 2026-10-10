@@ -39,6 +39,6 @@ Seis jugadores en Windows conectados a la misma red local; un jugador actúa com
 - **Given** una ronda activa, **When** un atacante captura a Papa, **Then** Papa entra en estado inmovilizado durante 20 segundos o el tiempo reducido por sprints.
 - **Given** Papa está en transporte, **When** el portador recibe un golpe, **Then** Papa queda en el mapa y el portador sigue vivo.
 - **Given** un atacante sin Papa recibe un golpe válido, **When** el host procesa el impacto, **Then** pierde exactamente una vida y reaparece tras 3 segundos.
-- **Given** Papa está en la olla, **When** termina el tiempo de cocción sin rescate, **Then** el equipo atacante debe escapar a su base para ganar la ronda.
+- **Given** Papa está en la olla, **When** termina el tiempo de cocción sin rescate, **Then** basta que el primer atacante cruce la salida de su base para ganar la ronda y sumar un punto al equipo.
 - **Given** la Bestia está fuera de fase de cocción, **When** intenta cruzar la entrada de la olla, **Then** no puede entrar.
 - **Given** un equipo alcanza tres rondas ganadas, **When** termina la ronda, **Then** la partida finaliza y no inicia una sexta ronda.

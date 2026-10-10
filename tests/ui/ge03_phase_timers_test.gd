@@ -16,6 +16,7 @@ func run() -> void:
 		"round_number": 2,
 		"round_time_remaining": 300.0,
 		"phase_time_remaining": 18.0,
+		"escape_available": false,
 		"scores": {"TEAM_A": 1, "TEAM_B": 0},
 		"players": [],
 	}
@@ -31,12 +32,17 @@ func run() -> void:
 	hud.apply_match_snapshot(snapshot)
 	_check(hud.phase_tag_label.text == "♨ PAPA EN COCCIÓN", "POT_COOKING has a distinct phase tag")
 	_check(hud.status_label.text == "COCCIÓN: 00:18", "cooking clock is explicitly labeled")
+	_check(hud.cooking_progress_bar.visible, "cooking progress is visible only while cooking")
+	_check(is_equal_approx(hud.cooking_progress_bar.value, 10.0), "HUD derives cooking progress from the host snapshot and shared 20s duration")
 	_check(hud.timer_label.text == "RONDA: 05:00 | FASE: 00:18", "cooking does not overwrite the round clock")
 
 	snapshot["phase"] = GameEnums.GamePhase.ESCAPE
 	snapshot["papa_state"] = GameEnums.PapaState.COOKED
+	snapshot["escape_available"] = true
 	hud.apply_match_snapshot(snapshot)
 	_check(hud.phase_tag_label.text == "➜ ESCAPE", "ESCAPE has a distinct phase tag")
+	_check(not hud.cooking_progress_bar.visible, "cooking progress hides after cooking")
+	_check(hud.status_label.text.begins_with("SALIDA ACTIVA"), "HUD reflects authoritative exit availability")
 	_check(hud.timer_label.text == "RONDA: 05:00 | FASE: 00:18", "escape preserves separate clocks")
 
 	if _failures.is_empty():

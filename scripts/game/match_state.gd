@@ -2,7 +2,7 @@ extends RefCounted
 class_name MatchState
 
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
-const SCHEMA_VERSION := 1
+const SCHEMA_VERSION := 2
 
 var schema_version: int = SCHEMA_VERSION
 var revision: int = 0
@@ -17,6 +17,7 @@ var attacking_team: int = GameEnums.TeamSide.TEAM_A
 var round_time_remaining: float = 0.0
 var phase_time_remaining: float = 0.0
 var papa_state: int = GameEnums.PapaState.FREE
+var escape_available: bool = false
 var round_winner: int = -1
 var round_end_reason: int = -1
 var match_winner: int = -1
@@ -34,6 +35,7 @@ func to_dictionary() -> Dictionary:
 		"round_time_remaining": round_time_remaining,
 		"phase_time_remaining": phase_time_remaining,
 		"papa_state": papa_state,
+		"escape_available": escape_available,
 		"round_winner": round_winner,
 		"round_end_reason": round_end_reason,
 		"match_winner": match_winner,
@@ -66,6 +68,7 @@ static func from_dictionary(data: Dictionary) -> MatchState:
 	result.round_time_remaining = float(data.round_time_remaining)
 	result.phase_time_remaining = float(data.phase_time_remaining)
 	result.papa_state = int(data.papa_state)
+	result.escape_available = data.escape_available
 	result.round_winner = int(data.round_winner)
 	result.round_end_reason = int(data.round_end_reason)
 	result.match_winner = int(data.match_winner)
@@ -134,7 +137,7 @@ static func _has_valid_schema(data: Dictionary) -> bool:
 	var required := [
 		"schema_version", "revision", "phase", "players", "scores", "round_number",
 		"attacking_team", "round_time_remaining", "phase_time_remaining", "papa_state",
-		"round_winner", "round_end_reason", "match_winner",
+		"escape_available", "round_winner", "round_end_reason", "match_winner",
 	]
 	for key in required:
 		if not data.has(key):
@@ -158,6 +161,8 @@ static func _has_valid_schema(data: Dictionary) -> bool:
 	if data.round_time_remaining < 0.0 or data.phase_time_remaining < 0.0:
 		return false
 	if not _is_integer_number(data.papa_state) or data.papa_state < GameEnums.PapaState.FREE or data.papa_state > GameEnums.PapaState.COOKED:
+		return false
+	if typeof(data.escape_available) != TYPE_BOOL:
 		return false
 	if not _is_integer_number(data.round_winner) or (data.round_winner != -1 and not _is_team(int(data.round_winner))):
 		return false

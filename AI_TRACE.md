@@ -793,6 +793,18 @@
 - Limitaciones: actualización documental solamente; no se modificó gameplay ni se ejecutaron pruebas de Godot.
 - Handoff: `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`.
 
+## 2026-10-10 — E05 estado de olla y scoring por primer escape
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- EVENT_ID: GameJam
+- Tipo: AI_ASSISTED / DEBUGGING / TESTING
+- Tarea: implementar el núcleo autoritativo E05-A/B y exponer el contrato que M06 integrará en la sesión.
+- Rama: `Edwar_Estacio/pot-escape-state` en `fd50357` (`develop`). `main` fue actualizado a `3fff61b` y es ancestro de ese checkpoint; la rama activa quedó basada directamente en `develop`. No se modificó `main`.
+- Archivos: `scripts/shared/game_rules.gd`, `scripts/game/game_state.gd`, `scripts/game/match_state.gd`, `scripts/ui/papoi_hud.gd`, `tests/game/game_state_test.gd`, `tests/ui/ge03_phase_timers_test.gd`, `docs/specs/00-game-general.md`, `docs/specs/01-network-lan.md`, `docs/specs/POT_ESCAPE_RUNTIME.md`, `docs/specs/Edwar_Estacio/TASKS.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `docs/handoffs/2026-10-10-1222-Edwar-E05-pot-escape-state-score.md`, `AI_TRACE.md`.
+- Resumen: GameState usa la constante compartida de 20 s, serializa `escape_available` con MatchState schema v2, emite su señal al habilitar la salida y valida `register_escape(peer_id)` en host, fase y equipo. Un atacante resuelve una ronda con un solo punto; el siguiente cruce no puntúa. El HUD presenta progreso derivado solo del snapshot. La spec LAN refleja el nuevo campo.
+- Pruebas: Godot 4.7.2 headless — `game_state_test.gd` PASS (incluye un atacante suficiente, rechazo de defensor/fase/duplicados, alternancia, máximo de cinco rondas y cierre a tres); `ge03_phase_timers_test.gd` PASS; `tc04_role_snapshot_hud_test.gd` PASS; `ge05_result_hierarchy_test.gd` PASS; `game_integration_test.gd` PASS; `run_ready_start_test.ps1` PASS con host + cinco clientes; editor scan headless PASS; `git diff --check` PASS. Las pruebas de integración y red presentan un warning existente de sensibilidad a mayúsculas en el import del sprite de Bestia.
+- Limitaciones: M06 aún debe retirar el contador paralelo de 30 s en `PapoiCookingEscape`, permitir cruce de cualquier atacante con posición host-side e invocar `GameState.register_escape(peer_id)`. La integración de esos cambios y la prueba visual/manual de partida no se afirman como realizadas. Los metadatos/cachés regenerados por Godot se restauraron porque el árbol estaba limpio antes de las pruebas. Sin commit ni push.
+- Handoff: `docs/handoffs/2026-10-10-1222-Edwar-E05-pot-escape-state-score.md`.
 ## 2026-10-10 — V06 indicador de salida y recorrido atacante
 - TEAM_ID: TechnocumbIA
 - PARTICIPANT_ID: Valeria Piza
