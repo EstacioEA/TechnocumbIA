@@ -6,13 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1961012f-de1f-4489-a33b-4a55fbdc1134" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/filesystem_cache10" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.godot/editor/project_metadata.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/editor/project_metadata.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.godot/global_script_class_cache.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/global_script_class_cache.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.godot/uid_cache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.godot/uid_cache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/characteres/bestia/bestia_sprites.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/bestia/bestia_sprites.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/characteres/cazador/cazador_sprites.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/cazador/cazador_sprites.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/characteres/defensora/defensora_sprites.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/defensora/defensora_sprites.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/characteres/papa/papa_sprites.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/papa/papa_sprites.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/characteres/porta_papa/porta_papa_sprites.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/porta_papa/porta_papa_sprites.png.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_01.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_01.png.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_02.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_02.png.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_03.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_03.png.import" afterDir="false" />
@@ -21,77 +19,13 @@
       <change beforePath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_06.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_06.png.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_07.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_07.png.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_08.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/trolazo/Caminar_Adelante/caminar_abajo_08.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/characteres/trolazo/trolazo_sprites.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/characteres/trolazo/trolazo_sprites.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/maps/Mapa Base.jpeg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/maps/Mapa Base.jpeg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/objects/tower_key.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/objects/tower_key.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/action.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/action.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/cooldown_blocked.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/cooldown_blocked.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/cooldown_countdown.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/cooldown_countdown.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/cooldown_ready.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/cooldown_ready.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/disconnect.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/disconnect.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/impact.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/impact.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/papa_captured.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/papa_captured.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/papa_cooking.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/papa_cooking.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/papa_escaped.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/papa_escaped.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/papa_rescued.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/papa_rescued.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/feedback/papa_transporting.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/feedback/papa_transporting.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/roles/bestia.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/roles/bestia.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/roles/cazador.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/roles/cazador.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/roles/papa.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/roles/papa.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/roles/porta_papas.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/roles/porta_papas.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/roles/tanque.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/roles/tanque.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/ui/roles/trolazzo.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/ui/roles/trolazzo.svg.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/Captura de pantalla Krystal 6.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/Captura de pantalla Krystal 6.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE02-hud-cooking-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE02-hud-cooking-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE02-hud-result-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE02-hud-result-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE03-phase-active-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE03-phase-active-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE03-phase-cooking-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE03-phase-cooking-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE03-phase-escape-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE03-phase-escape-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE04-hud-cooldowns-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE04-hud-cooldowns-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE05-match-result-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE05-match-result-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/GE05-round-result-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/GE05-round-result-1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/ZonaInteraccionRequeridaLlave.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/ZonaInteraccionRequeridaLlave.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/captura 7 vision normal.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/captura 7 vision normal.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/captura 7.1 vision activa.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/captura 7.1 vision activa.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/captura pantalla krystal 5 - estado abierto.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/captura pantalla krystal 5 - estado abierto.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/captura vista fix krystal 4.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/captura vista fix krystal 4.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/active_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/active_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/escape_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/escape_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/match_result_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/match_result_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/pot_cooking_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/pot_cooking_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/round_result_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1280x720/round_result_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/active_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/active_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/escape_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/escape_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/match_result_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/match_result_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/pot_cooking_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/pot_cooking_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/round_result_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/ge06/1600x900/round_result_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/active_1920x1080.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/active_1920x1080.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/escape_1920x1080.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/escape_1920x1080.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/match_result_1920x1080.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/match_result_1920x1080.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/pot_cooking_1920x1080.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/pot_cooking_1920x1080.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/round_result_1920x1080.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gint/1920x1080/round_result_1920x1080.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/host-panel_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/host-panel_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/join-panel_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/join-panel_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-connecting_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-connecting_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-connection-state_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-connection-state_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-host-partial_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-host-partial_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-rejected-preview_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-rejected-preview_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-rejected_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/lobby-rejected_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/menu_1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1280x720/menu_1280x720.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/host-panel_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/host-panel_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/join-panel_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/join-panel_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-connecting_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-connecting_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-connection-state_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-connection-state_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-host-partial_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-host-partial_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-rejected-preview_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-rejected-preview_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-rejected_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/lobby-rejected_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/menu_1600x900.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/gj05/1600x900/menu_1600x900.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/evidence/tc04/tc04-role-state-1280x720.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/evidence/tc04/tc04-role-state-1280x720.png.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/handoffs/foto sin fondo del mapa.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/foto sin fondo del mapa.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/limiteAperturaPuerta.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/limiteAperturaPuerta.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/vista oscura deja de seguirme.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/vista oscura deja de seguirme.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/handoffs/vista oscura ok.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/docs/handoffs/vista oscura ok.png.import" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/combat/beast_access_state.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/combat/beast_access_state.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/game/papoi_game_session.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/game/papoi_game_session.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/roles/role_combat_system.gd" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/roles/role_combat_system.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/combat/test_beast_access_state.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/combat/test_beast_access_state.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/combat/test_role_combat_system.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/combat/test_role_combat_system.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/combat/test_role_differences_verification.gd" beforeDir="false" afterPath="$PROJECT_DIR$/tests/combat/test_role_differences_verification.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +51,7 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1791659646" />
+                    <option name="lastUsedInstant" value="1791645366" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="Miguel_Pabon/fix-vision-mask" />

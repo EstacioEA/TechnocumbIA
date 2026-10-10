@@ -2,7 +2,7 @@ class_name BeastAccessState
 extends RefCounted
 
 const BEAST_APPEARANCE_SECONDS := 30.0
-const BASIC_ATTACK_COOLDOWN_SECONDS := 3.0
+const BASIC_ATTACK_COOLDOWN_SECONDS := 5.0
 const SPECIAL_ATTACK_COOLDOWN_SECONDS := 10.0
 
 const ACTION_BASIC := &"beast_basic"

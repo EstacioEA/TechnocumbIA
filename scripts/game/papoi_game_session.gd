@@ -153,6 +153,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("papoi_interact"):
 		_submit_action(&"interact")
+	elif event.is_action_pressed("papoi_beast_attack"):
+		_submit_action(&"beast_attack")
 	elif event.is_action_pressed("papoi_drop"):
 		_submit_action(&"drop_papa")
 	elif event.is_action_pressed("papoi_attack"):
@@ -250,6 +252,8 @@ func _perform_validated_action(peer_id: int, action: StringName) -> bool:
 			elif phase == GameEnums.GamePhase.ESCAPE:
 				return _finish_escape_if_at_base(peer_id)
 			return false
+		&"beast_attack":
+			return _attack_nearby_attacker(peer_id, true)
 		&"drop_papa":
 			return _drop_papa(peer_id)
 		&"attack":
@@ -326,14 +330,16 @@ func _drop_papa(peer_id: int) -> bool:
 	return true
 
 
-func _attack_nearby_attacker(defender_id: int) -> bool:
+func _attack_nearby_attacker(defender_id: int, beast_attack: bool = false) -> bool:
 	var snapshot: Dictionary = _game_state.get_snapshot()
 	if int(snapshot.phase) not in [GameEnums.GamePhase.ACTIVE, GameEnums.GamePhase.POT_COOKING, GameEnums.GamePhase.ESCAPE]:
 		return false
 	if _is_attacker(defender_id):
 		return false
 	var defender_role := _role_for_peer(defender_id)
-	if defender_role not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
+	if beast_attack and defender_role != GameEnums.DefenderRole.BESTIA:
+		return false
+	if not beast_attack and defender_role not in [GameEnums.DefenderRole.TROLAZZO, GameEnums.DefenderRole.BESTIA]:
 		return false
 	var target_id := -1
 	var nearest_distance := HIT_DISTANCE
@@ -347,6 +353,11 @@ func _attack_nearby_attacker(defender_id: int) -> bool:
 			nearest_distance = distance
 	if target_id < 0:
 		return false
+	if beast_attack:
+		if _beast_state == null or defender_id != int(_beast_state.beast_id):
+			return false
+		if not _beast_state.request_basic_attack(target_id):
+			return false
 	if int(_capture_state.carrier_id) == target_id:
 		if not _capture_state.request_hit_carrier(target_id):
 			return false
@@ -785,6 +796,7 @@ func _role_for_peer(peer_id: int) -> int:
 
 func _register_game_input() -> void:
 	_add_key_action("papoi_interact", KEY_E)
+	_add_key_action("papoi_beast_attack", KEY_Q)
 	_add_key_action("papoi_drop", KEY_Q)
 	_add_key_action("papoi_attack", KEY_F)
 	_add_key_action("papoi_rescue", KEY_R)
