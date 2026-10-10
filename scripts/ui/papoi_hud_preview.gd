@@ -6,7 +6,8 @@ const ACTIVE_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-active-1280x720.png
 const COOKING_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-cooking-1280x720.png"
 const ESCAPE_CAPTURE_PATH := "res://docs/handoffs/GE03-phase-escape-1280x720.png"
 const COOLDOWN_CAPTURE_PATH := "res://docs/handoffs/GE04-hud-cooldowns-1280x720.png"
-const RESULT_CAPTURE_PATH := "res://docs/handoffs/GE02-hud-result-1280x720.png"
+const ROUND_RESULT_CAPTURE_PATH := "res://docs/handoffs/GE05-round-result-1280x720.png"
+const MATCH_RESULT_CAPTURE_PATH := "res://docs/handoffs/GE05-match-result-1280x720.png"
 
 func _ready() -> void:
 	var papoi_theme := load("res://scenes/ui/papoi_theme.tres") as Theme
@@ -57,7 +58,21 @@ func _capture_graphical_previews(hud: PapoiHUD) -> void:
 	})
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	_save_capture(RESULT_CAPTURE_PATH)
+	if not _save_capture(ROUND_RESULT_CAPTURE_PATH):
+		return
+	hud.apply_match_snapshot({
+		"phase": GameEnums.GamePhase.MATCH_RESULT,
+		"round_number": 5,
+		"round_time_remaining": 0.0,
+		"phase_time_remaining": 0.0,
+		"scores": {"TEAM_A": 2, "TEAM_B": 3},
+		"papa_state": GameEnums.PapaState.COOKED,
+		"match_winner": GameEnums.TeamSide.TEAM_B,
+		"round_end_reason": -1,
+	})
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	_save_capture(MATCH_RESULT_CAPTURE_PATH)
 
 func _phase_snapshot(phase: int) -> Dictionary:
 	var papa_state := GameEnums.PapaState.FREE

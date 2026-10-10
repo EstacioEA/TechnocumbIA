@@ -48,7 +48,10 @@ func run() -> void:
 		"round_end_reason": GameEnums.RoundEndReason.ESCAPE_SUCCESS,
 	})
 	_check(hud.result_panel.visible, "round result panel is visible")
-	_check(hud.result_label.text == "RESULTADO DE RONDA\nGANA EQUIPO A — escape completado", "round result is readable")
+	_check(hud.result_header_label.text == "RESULTADO DE RONDA · RONDA 2", "round result has a round-specific heading")
+	_check(hud.result_label.text == "GANA EQUIPO A", "round winner is readable")
+	_check(hud.result_detail_label.text == "escape completado", "round reason is readable")
+	_check(hud.result_score_label.text == "MARCADOR DE SERIE: A 2 — 0 B", "round score is read from the snapshot")
 	hud.set_connection_status(false, "host desconectado")
 	_check(hud.status_label.text == "CONEXIÓN: perdida — host desconectado", "disconnect status is visible")
 

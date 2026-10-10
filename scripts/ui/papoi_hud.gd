@@ -2,6 +2,7 @@ class_name PapoiHUD
 extends CanvasLayer
 
 const GameEnums = preload("res://scripts/shared/game_enums.gd")
+const RESULT_CARD_SCENE := preload("res://scenes/ui/papoi_result_card.tscn")
 
 var phase_label: Label
 var phase_tag_label: Label
@@ -17,8 +18,12 @@ var objective_label: Label
 var status_label: Label
 var result_panel: PanelContainer
 var result_label: Label
+var result_header_label: Label
+var result_detail_label: Label
+var result_score_label: Label
 var result_overlay: ColorRect
 var status_panel: PanelContainer
+var result_card: PapoiResultCard
 
 var _last_snapshot: Dictionary = {}
 
@@ -126,24 +131,46 @@ func set_player_context(lives: int, role: String, passive: String, cooldowns: Di
 func show_round_result(text: String) -> void:
 	status_label.text = "RESULTADO DE RONDA: %s" % text
 	status_panel.visible = false
-	_show_result("RESULTADO DE RONDA\n%s" % text)
+	result_card.present_round_result("-", text, "", {})
+	_show_result()
 
 func show_match_result(text: String) -> void:
 	status_label.text = "RESULTADO DE PARTIDA: %s" % text
 	status_panel.visible = false
-	_show_result("RESULTADO DE PARTIDA\n%s" % text)
+	result_card.present_match_result(text, "", {})
+	_show_result()
 
 func show_round_result_from_snapshot(snapshot: Dictionary) -> void:
 	var reason := int(snapshot.get("round_end_reason", -1))
 	var winner := int(snapshot.get("round_winner", -1))
-	show_round_result("%s — %s" % [_winner_text(winner), _reason_text(reason)])
+	status_label.text = "RESULTADO DE RONDA: %s" % _winner_text(winner)
+	status_panel.visible = false
+	result_card.present_round_result(
+		str(snapshot.get("round_number", "-")),
+		_winner_text(winner),
+		_reason_text(reason),
+		snapshot.get("scores", {})
+	)
+	_show_result()
 
 func show_match_result_from_snapshot(snapshot: Dictionary) -> void:
 	var winner := int(snapshot.get("match_winner", -1))
 	if int(snapshot.get("round_end_reason", -1)) == GameEnums.RoundEndReason.DISCONNECT:
-		show_match_result("PARTIDA INVALIDADA POR DESCONEXIÓN")
+		status_label.text = "PARTIDA INVALIDADA POR DESCONEXIÓN"
+		result_card.present_match_result(
+			"PARTIDA INVALIDADA",
+			"Desconexión detectada por GameState.",
+			snapshot.get("scores", {})
+		)
 	else:
-		show_match_result(_winner_text(winner))
+		status_label.text = "RESULTADO DE PARTIDA: %s" % _winner_text(winner)
+		result_card.present_match_result(
+			_winner_text(winner),
+			"Partida completada.",
+			snapshot.get("scores", {})
+		)
+	status_panel.visible = false
+	_show_result()
 
 func set_connection_status(connected: bool, message: String = "") -> void:
 	if connected:
@@ -249,17 +276,14 @@ func _build_view() -> void:
 	var result_center := CenterContainer.new()
 	result_center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	result_overlay.add_child(result_center)
-	result_panel = PanelContainer.new()
-	result_panel.custom_minimum_size = Vector2(520.0, 180.0)
-	_apply_compact_panel_margins(result_panel, 28.0, 24.0)
-	result_panel.visible = false
-	result_center.add_child(result_panel)
-	result_label = Label.new()
-	result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	result_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	result_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	result_label.add_theme_font_size_override("font_size", 24)
-	result_panel.add_child(result_label)
+	result_card = RESULT_CARD_SCENE.instantiate() as PapoiResultCard
+	result_card.visible = false
+	result_center.add_child(result_card)
+	result_panel = result_card
+	result_header_label = result_card.header_label
+	result_label = result_card.primary_label
+	result_detail_label = result_card.detail_label
+	result_score_label = result_card.score_label
 
 	# El modal oscurece el mundo; el HUD queda arriba y sigue legible.
 	margins.z_index = 20
@@ -383,9 +407,8 @@ func _objective_for_phase(phase: int, papa_state: int) -> String:
 		_:
 			return "Objetivo no disponible."
 
-func _show_result(text: String) -> void:
-	result_label.text = text
+func _show_result() -> void:
 	result_overlay.visible = true
-	result_panel.visible = true
+	result_card.visible = true
 
 const _FORMAT_COOKING := "cociendo"

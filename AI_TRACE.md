@@ -471,3 +471,15 @@
 - Limitaciones: GameState no publica actualmente `cooldowns` en el snapshot de jugadores y BeastAccessState no está conectado al HUD/red. La presentación funciona cuando recibe un diccionario numérico; el cero se interpreta como listo y valores positivos como segundos restantes, pendiente de confirmación de Miguel/GM01. No se modificaron combate, roles, snapshot ni contrato de red.
 - Handoff: `docs/handoffs/2026-10-10-0423-GE04-role-cooldown-hud.md`.
 - Siguiente paso: GE05 — distinguir visual y jerárquicamente ROUND_RESULT de MATCH_RESULT con datos recibidos de GameState.
+
+## 2026-10-10 — GE05 jerarquía de resultados
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Edwar Estacio
+- Tarea: diferenciar la tarjeta de resultado de ronda de la de partida y mostrar los datos que proporciona GameState.
+- Rama: `Edwar_Estacio/result-hierarchy`, creada desde `develop` actualizado; sin commit automático.
+- Archivos: `scripts/ui/papoi_hud.gd`, `scripts/ui/papoi_result_card.gd`, `scenes/ui/papoi_result_card.tscn`, `scripts/ui/papoi_hud_preview.gd`, `tests/ui/ge05_result_hierarchy_test.gd`, `tests/qa/k04_hud_results_test.gd`, specs de Edwar, este registro, `docs/handoffs/2026-10-10-0431-GE05-result-hierarchy.md` y capturas `GE05-round-result-1280x720.png`, `GE05-match-result-1280x720.png`.
+- Resumen: el componente de resultados separa encabezado, ganador/estado, motivo y marcador. ROUND_RESULT identifica la ronda y el motivo; MATCH_RESULT tiene jerarquía/tamaño propios y muestra marcador final. La desconexión se rotula como partida invalidada. No se calcula ganador ni se modifican reglas o GameState.
+- Pruebas: Godot 4.7.2 editor scan PASS; `tests/ui/ge05_result_hierarchy_test.gd` PASS; `tests/qa/k04_hud_results_test.gd` PASS; `tests/game/game_integration_test.gd` PASS; preview gráfica generó dos capturas 1280×720, inspeccionadas; `git diff --check` PASS al cierre.
+- Limitaciones: capturas de preview usan snapshots simulados y no constituyen una partida real; no se probó 1600×900. No se creó commit ni se hizo push.
+- Handoff: `docs/handoffs/2026-10-10-0431-GE05-result-hierarchy.md`.
+- Siguiente paso: GE06 — revisar previews/escalado en cinco estados a 1280×720 y 1600×900, separando evidencia simulada de pruebas runtime.

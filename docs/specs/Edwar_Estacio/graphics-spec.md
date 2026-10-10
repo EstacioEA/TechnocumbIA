@@ -29,7 +29,8 @@ Edwar mantiene sus archivos de Theme/HUD separados de los archivos de menú/lobb
 - Aceptación: rol/pasiva y cooldown recibido visibles; disponible/bloqueado se distingue con icono/etiqueta y no solo color.
 
 ### GE05 — Resultados
-- Estado: TODO; depende de: GE01.
+- Estado: DONE — nueva tarjeta separa jerárquicamente resultado de ronda y de partida, muestra ganador/motivo/marcador del snapshot y distingue desconexión; GE05, K04 e integración PASS; capturas 1280×720 revisadas.
+- Depende de: GE01.
 - Archivos: componentes UI nuevos bajo `scenes/ui/` y enlaces visuales al HUD existente.
 - Aceptación: ROUND_RESULT y MATCH_RESULT tienen encabezado y jerarquía distintos y muestran datos proporcionados por GameState; no calculan ganador.
 

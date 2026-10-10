@@ -58,7 +58,8 @@ Estados iniciales: `TODO`. La CLI puede seleccionar automáticamente la primera 
 - Aceptación: rol/pasiva y cooldown recibido visibles; listo/bloqueado se distingue sin depender solo del color.
 
 ### GE05 — Resultados
-- Estado: TODO; depende de: GE01.
+- Estado: DONE — tarjeta nueva diferencia resultado de ronda y partida; muestra datos del snapshot sin calcular ganador y desconexión como invalidación; GE05/K04/integración PASS.
+- Depende de: GE01.
 - Aceptación: ROUND_RESULT distinto a MATCH_RESULT; muestra resultado recibido sin calcular reglas.
 
 ### GE06 — Preview y tamaños
