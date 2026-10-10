@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(1280.0, 32.0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side"]
+size = Vector2(32.0, 720.0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(1280.0, 32.0)
+
+[node name="PlayerMovementTest" type="Node2D"]
+
+[node name="NorthWall" type="StaticBody2D" parent="."]
+position = Vector2(640.0, 16.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NorthWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="SouthWall" type="StaticBody2D" parent="."]
+position = Vector2(640.0, 704.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SouthWall"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="WestWall" type="StaticBody2D" parent="."]
+position = Vector2(16.0, 360.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WestWall"]
+shape = SubResource("RectangleShape2D_side")
+
+[node name="EastWall" type="StaticBody2D" parent="."]
+position = Vector2(1264.0, 360.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EastWall"]
+shape = SubResource("RectangleShape2D_side")
+
+[node name="PlayerOne" parent="." instance=ExtResource("1_player")]
+position = Vector2(420.0, 360.0)
+
+[node name="PlayerTwo" parent="." instance=ExtResource("1_player")]
+position = Vector2(820.0, 360.0)
+local_control_enabled = false

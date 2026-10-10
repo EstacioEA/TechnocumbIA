@@ -18,12 +18,12 @@
 - Convención establecida: `Integrante/Funcionalidad`, usando nombres normalizados como `Edwar_Estacio/game-state`.
 - Reglas añadidas: partir desde `main`, no implementar directamente en `main`, detenerse si existen cambios locales o la rama ya existe, y registrar rama, base, commits y pruebas en el handoff.
 
-## 2026-10-09 — núcleo autoritativo de estado de partida
+## 2026-10-09 — controlador de jugador, cámara y visión limitada
 - TEAM_ID: TechnocumbIA
-- PARTICIPANT_ID: Edwar Estacio
-- EVENT_ID: GameJam
-- Tarea: implementar enums compartidos, estado serializable, ciclo de partida, marcador al mejor de cinco y validación autoritativa.
-- Rama: `Edwar_Estacio/game-state`.
-- Archivos: `scripts/shared/game_enums.gd`, `scripts/game/match_state.gd`, `scripts/game/game_state.gd`, `tests/game/game_state_test.gd`, `docs/handoffs/2026-10-09-2229-game-state.md`.
-- Resumen: se añadió estado versionado y señales para fase, roster, Papa, ronda y partida; el host inicia, controla timers, valida resultados, alterna el ataque y finaliza al tercer punto. El arnés cubre transiciones válidas e inválidas.
-- Limitaciones: no hay `project.godot` ni ejecutable Godot en este checkout, por lo que el arnés no fue ejecutado; falta confirmar countdown/cocción, definir resultado por desconexión e integrar con red/HUD/mapa/combate.
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING
+- Tarea: implementar movimiento reutilizable para Papoi con colisiones, cámara local y visión limitada.
+- Rama: `Valeria_Piza/player-camera`, basada en `main` actualizado.
+- Archivos: `scripts/player/player_controller.gd`, `scripts/camera/local_camera.gd`, `scripts/camera/vision_overlay.gd`, `scenes/player/player.tscn`, `tests/player/player_test.tscn`, `tests/player/manual_test.md`, `docs/handoffs/2026-10-09-2224-player-camera.md`.
+- Resumen: se creó un `CharacterBody2D` configurable con WASD e intención de movimiento, una cámara con límites/suavizado/zoom y un overlay CanvasLayer con aura de visión; las instancias remotas no activan cámara ni overlay local.
+- Limitaciones: Godot 4 no está instalado en el entorno, por lo que no se pudo ejecutar la escena ni verificar interactivamente colisiones, cámara o HUD. El repositorio aún no contiene `project.godot`; las acciones WASD se registran en runtime.
