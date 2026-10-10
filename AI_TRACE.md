@@ -596,3 +596,13 @@
 - Resumen: Valeria recibe avatares con sprites; Krystal, límites, pasillos y zonas; Miguel, verificación funcional de roles/pasivas; Edwar, contrato visible de snapshots/HUD; Juan, integración y QA final. Los recuadros, títulos y estados quedan restringidos a previews, mientras el gameplay normal usa el mapa limpio.
 - Pruebas: `GK04_CONTRAST_EVIDENCE_TEST`, `K01_MAP_TEST`, `GK03_POT_BARRIER_VISUALS_TEST` y `TC02_CLEAN_MAP_TEST` pasan; los overlays debug quedan ocultos por defecto y solo se activan explícitamente en previews.
 - Limitaciones: TC01–TC05 aún no están implementadas; no se creó commit ni push.
+
+## 2026-10-10 — TC03 verificación de diferencias de roles y pasivas
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Miguel Pabon
+- Tipo: AI_ASSISTED / TESTING / DOCUMENTATION
+- Tarea: verificar diferencias funcionales entre Papa, Trolazzo, Bestia, Tanque, Cazador y Porta Papas.
+- Rama: `Miguel_Pabon/role-differences-verification`, basada en `develop`.
+- Archivos: `tests/combat/test_role_differences_verification.gd`, `docs/handoffs/2026-10-10-0733-TC03-role-differences-verification.md`, `docs/specs/Miguel_Pabon/TASKS.md`, `AI_TRACE.md`.
+- Resumen: se añadió una matriz con casos positivos y rechazos para cada rol/pasiva, además de comprobaciones de host, vidas, cooldowns, captura, acceso de Bestia y enfurecimiento.
+- Limitaciones: la identificación final de Bestia y la aplicación física de multiplicadores aún requieren integración con GameState y el sistema de impactos; no se ejecutó LAN de seis clientes.
