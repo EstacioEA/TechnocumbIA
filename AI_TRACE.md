@@ -792,3 +792,15 @@
 - Pruebas: `git diff --check` ejecutado tras la edición; resultados registrados en el handoff.
 - Limitaciones: actualización documental solamente; no se modificó gameplay ni se ejecutaron pruebas de Godot.
 - Handoff: `docs/handoffs/2026-10-10-1208-Edwar-pot-escape-scoring.md`.
+
+## 2026-10-10 — V06 indicador de salida y recorrido atacante
+- TEAM_ID: TechnocumbIA
+- PARTICIPANT_ID: Valeria Piza
+- Tipo: AI_ASSISTED / IMPLEMENTATION / TESTING / DOCUMENTATION
+- Tarea: V06 — indicador visual de salida y recorrido de atacante.
+- Rama: `Valeria_Piza/escape-exit-indicator`, basada en `origin/develop` actualizado (`fd50357`).
+- Archivos: `scripts/map/escape_exit_indicator.gd`, `scenes/map/escape_exit_indicator.tscn`, `tests/map/escape_exit_indicator_test.gd`, `tests/player/v06_escape_route_test.gd`, `docs/specs/Valeria_Piza/TASKS.md`, `docs/handoffs/2026-10-10-1215-V06-escape-exit-indicator.md`.
+- Resumen: se añadió un indicador visual cerrado/activo con etiqueta e icono y API `set_escape_available(bool)`. La actualización es idempotente y no agrega colisiones, timers ni autoridad. La prueba conserva intactas las zonas existentes y verifica checkpoints de recorrido WASD hacia la olla y la salida.
+- Pruebas: `V06_ESCAPE_EXIT_INDICATOR_TEST`, `V06_ESCAPE_ROUTE_TEST` y carga del editor Godot 4.7.2 pasaron; `git diff --check` pendiente antes del commit.
+- Limitaciones: el recorrido automatizado valida acciones y conectividad geométrica por checkpoints; la prueba manual interactiva con WASD sigue siendo necesaria para validar sensación visual.
+- Handoff: `docs/handoffs/2026-10-10-1215-V06-escape-exit-indicator.md`.
